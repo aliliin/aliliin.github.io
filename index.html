@@ -21,9 +21,9 @@
   </script>
 
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Aliliin">
 <meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Aliliin">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Aliliin">
 <meta name="twitter:card" content="summary">
@@ -41,7 +41,7 @@
   };
 </script>
 
-  <title>Hexo</title>
+  <title>Aliliin</title>
   
 
 
@@ -92,7 +92,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">Aliliin</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -116,11 +116,6 @@
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -169,7 +164,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -244,7 +239,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -334,7 +329,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -412,7 +407,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -511,7 +506,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -533,7 +528,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 10:59:57" itemprop="dateModified" datetime="2021-08-27T10:59:57+08:00">2021-08-27</time>
+                <time title="修改时间：2021-08-27 11:21:07" itemprop="dateModified" datetime="2021-08-27T11:21:07+08:00">2021-08-27</time>
               </span>
 
           <br>
@@ -561,7 +556,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="面试题汇总"><a href="#面试题汇总" class="headerlink" title="面试题汇总"></a>面试题汇总</h1><h4 id="1、秒杀流程的清楚？"><a href="#1、秒杀流程的清楚？" class="headerlink" title="1、秒杀流程的清楚？"></a>1、秒杀流程的清楚？</h4><pre><code>使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存。
+          <blockquote class="blockquote-center">blah blah blah</blockquote>
+# 面试题汇总
+
+
+<h4 id="1、秒杀流程的清楚？"><a href="#1、秒杀流程的清楚？" class="headerlink" title="1、秒杀流程的清楚？"></a>1、秒杀流程的清楚？</h4><pre><code>使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存。
 </code></pre>
 <h4 id="2、laravel-的依赖注入？"><a href="#2、laravel-的依赖注入？" class="headerlink" title="2、laravel 的依赖注入？"></a>2、laravel 的依赖注入？</h4><pre><code>  由容器动态的将某个依赖关系注入到组件中，他的目的是为了提升组件使用的频率，来灵活使用它。说白了就是一个对象依赖于另一个对象的技术，他可以通过构造函数直接注入，也可通过接口的方式注入
 </code></pre>
@@ -627,7 +626,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -716,7 +715,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -798,7 +797,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1015,7 +1014,7 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1127,7 +1126,7 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Aliliin">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
