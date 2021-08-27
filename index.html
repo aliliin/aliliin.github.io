@@ -20,10 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="Keep calm and coding.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Aliliin">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="Keep calm and coding.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Aliliin">
 <meta name="twitter:card" content="summary">
@@ -95,6 +97,7 @@
       <h1 class="site-title">Aliliin</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">Keep calm and coding.</p>
   </div>
 
   <div class="site-nav-right">
@@ -165,7 +168,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -191,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:31:26" itemprop="dateModified" datetime="2021-08-27T11:31:26+08:00">2021-08-27</time>
+                <time title="修改时间：2021-08-27 11:38:57" itemprop="dateModified" datetime="2021-08-27T11:38:57+08:00">2021-08-27</time>
               </span>
 
           <br>
@@ -200,7 +203,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>632</span>
+              <span>633</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -219,10 +222,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>golang 的切片插入和删除操作</p>
-<p>#Go<br>#Slice</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	s := []int&#123;1, 2, 4, 7&#125;</span><br><span class="line">	// 结果应该是 5, 1, 2, 4, 7</span><br><span class="line">	s = Add(s, 0, 5)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是5, 9, 1, 2, 4, 7</span><br><span class="line">	s = Add(s, 1, 9)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是5, 9, 1, 2, 4, 7, 13</span><br><span class="line">	s = Add(s, 6, 13)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是5, 9, 2, 4, 7, 13</span><br><span class="line">	s = Delete(s, 2)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是9, 2, 4, 7, 13</span><br><span class="line">	s = Delete(s, 0)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是9, 2, 4, 7</span><br><span class="line">	s = Delete(s, 4)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func Add(s []int, index int, value int) []int &#123;</span><br><span class="line">	return append(s[:index], append([]int&#123;value&#125;, s[index:]...)...)</span><br><span class="line">&#125;</span><br><span class="line">func Delete(s []int, index int) []int &#123;</span><br><span class="line">	return append(s[:index], s[index+1:]...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="golang-的切片插入和删除操作"><a href="#golang-的切片插入和删除操作" class="headerlink" title="golang 的切片插入和删除操作"></a>golang 的切片插入和删除操作</h2><h3 id="执行测试"><a href="#执行测试" class="headerlink" title="执行测试"></a>执行测试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	s := []int&#123;1, 2, 4, 7&#125;</span><br><span class="line"></span><br><span class="line">	// 结果应该是 5, 1, 2, 4, 7</span><br><span class="line">	s = Add(s, 0, 5)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是5, 9, 1, 2, 4, 7</span><br><span class="line">	s = Add(s, 1, 9)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是5, 9, 1, 2, 4, 7, 13</span><br><span class="line">	s = Add(s, 6, 13)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	</span><br><span class="line">	// 结果应该是5, 9, 2, 4, 7, 13</span><br><span class="line">	s = Delete(s, 2)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是9, 2, 4, 7, 13</span><br><span class="line">	s = Delete(s, 0)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	// 结果应该是9, 2, 4, 7</span><br><span class="line">	s = Delete(s, 4)</span><br><span class="line">	fmt.Println(s)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="新增任意位置"><a href="#新增任意位置" class="headerlink" title="新增任意位置"></a>新增任意位置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func Add(s []int, index int, value int) []int &#123;</span><br><span class="line">	return append(s[:index], append([]int&#123;value&#125;, s[index:]...)...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除任意位置"><a href="#删除任意位置" class="headerlink" title="删除任意位置"></a>删除任意位置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func Delete(s []int, index int) []int &#123;</span><br><span class="line">	return append(s[:index], s[index+1:]...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -246,7 +250,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -335,7 +339,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -361,7 +365,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:32:57" itemprop="dateModified" datetime="2021-08-27T11:32:57+08:00">2021-08-27</time>
+                <time title="修改时间：2021-08-27 11:34:19" itemprop="dateModified" datetime="2021-08-27T11:34:19+08:00">2021-08-27</time>
               </span>
 
           <br>
@@ -408,12 +412,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/PHP%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/26/PHP%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">PHP 技巧总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-26 10:55:06" itemprop="dateCreated datePublished" datetime="2021-03-26T10:55:06+08:00">2021-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:48:56" itemprop="dateModified" datetime="2021-08-27T11:48:56+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>364</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="PHP-技巧总结"><a href="#PHP-技巧总结" class="headerlink" title="PHP 技巧总结"></a>PHP 技巧总结</h1><h3 id="二维数组根据某个字段进行排序"><a href="#二维数组根据某个字段进行排序" class="headerlink" title="二维数组根据某个字段进行排序"></a><strong>二维数组根据某个字段进行排序</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个字段排序</span><br><span class="line">array_multisort(array_column($data, &#x27;sort&#x27;), SORT_DESC, $data);</span><br><span class="line">多个字段排序</span><br><span class="line">array_multisort(array_column($data, &#x27;sort1&#x27;), SORT_DESC, array_column($data, &#x27;sort2&#x27;), SORT_DESC, $data);</span><br></pre></td></tr></table></figure>
+
+<h3 id="二维数据根据某个-key-当键名"><a href="#二维数据根据某个-key-当键名" class="headerlink" title="二维数据根据某个 key 当键名"></a><strong>二维数据根据某个 key 当键名</strong></h3><p><code>array_column($arr,$column_name,$key_name)</code></p>
+<h3 id="删除数组中的重复项"><a href="#删除数组中的重复项" class="headerlink" title="删除数组中的重复项"></a><strong>删除数组中的重复项</strong></h3><p><code>array_keys(array_flip($array));</code></p>
+<h3 id="获取随机数组记录"><a href="#获取随机数组记录" class="headerlink" title="获取随机数组记录"></a><strong>获取随机数组记录</strong></h3><p><code>$array[mt_rand(0, count($array) - 1)];</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/23/%E9%A2%98%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -496,7 +583,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -616,7 +703,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -700,12 +787,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">Redis 缓存策略</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-21 08:41:20" itemprop="dateCreated datePublished" datetime="2020-05-21T08:41:20+08:00">2020-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:44:29" itemprop="dateModified" datetime="2021-08-27T11:44:29+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>524</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h1><h4 id="数据脏读脏写-不一致的解决情况"><a href="#数据脏读脏写-不一致的解决情况" class="headerlink" title="数据脏读脏写 不一致的解决情况"></a>数据脏读脏写 不一致的解决情况</h4><p>其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。<br>这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：<br>从缓存中读取数据；<br>如果缓存命中，则直接返回数据；<br>如果缓存不命中，则从数据库中查询数据；<br>查询到数据后，将数据写入到缓存中，并且返回给用户。<br>写策略的步骤是：<br>更新数据库中的记录；<br>删除缓存记录。</p>
+<p>Cache Aside 存在的最大的问题是当写入比较频繁时，缓存中的数据会被频繁地清理，这样会对缓存的命中率有一些影响。如果你的业务对缓存命中率有严格的要求，那么可以考虑两种解决方案：</p>
+<ol>
+<li>一种做法是在更新数据时也更新缓存，只是在更新缓存前先加一个分布式锁，因为这样在同一时间只允许一个线程更新缓存，就不会产生并发问题了。当然这么做对于写入的性能会有一些影响；</li>
+<li>另一种做法同样也是在更新数据时更新缓存，只是给缓存加一个较短的过期时间，这样即使出现缓存不一致的情况，缓存的数据也会很快过期，对业务的影响也是可以接受。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/24/RabbitMQ%20(httplocalhost15672)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -782,12 +953,12 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/03/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/23/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -796,7 +967,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/03/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">PHP的生命周期</a>
+            <a href="/2020/03/23/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">MySQL 学习记录</a>
         </h2>
 
         <div class="post-meta">
@@ -806,14 +977,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-01-03 18:28:42" itemprop="dateCreated datePublished" datetime="2020-01-03T18:28:42+08:00">2020-01-03</time>
+              <time title="创建时间：2020-03-23 15:12:49" itemprop="dateCreated datePublished" datetime="2020-03-23T15:12:49+08:00">2020-03-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:31:36" itemprop="dateModified" datetime="2021-08-27T11:31:36+08:00">2021-08-27</time>
+                <time title="修改时间：2021-08-27 11:50:16" itemprop="dateModified" datetime="2021-08-27T11:50:16+08:00">2021-08-27</time>
               </span>
 
           <br>
@@ -822,224 +993,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="PHP的生命周期"><a href="#PHP的生命周期" class="headerlink" title="PHP的生命周期"></a>PHP的生命周期</h1><h3 id="1-0-先从PHP开始说起"><a href="#1-0-先从PHP开始说起" class="headerlink" title="1.0 先从PHP开始说起"></a>1.0 先从PHP开始说起</h3><pre><code>在介绍PHP的生命周期之前，我们先来看一张图，如图1所示:
-</code></pre>
-<p><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3077.jpg"><br>    图1 PHP的生命周期<br>    首先我们先引入一个概念SAPI，SAPI是PHP的应用接入层，是整个PHP框架最外层的部分，像我们平常用的比较多的Fpm和Cli就是SAPI的具体实现，而main函数也定义在对应的SAPI中。通常来说PHP的生命周期被划分为5个阶段：模块初始化阶段、请求初始化阶段、脚本执行阶段、请求关闭阶段和模块关闭阶段。在不同的SAPI中，各阶段的调用过程也略有不同，像Cli模式基本会按照顺序完整的执行一遍，而在FastCgi也就是Fpm模式中，只会在启动时执行一次模块初始化，后面的每个请求都只会执行请求初始化阶段、脚本执行阶段和请求关闭阶段，最后在SAPI关闭时执行模块关闭阶段。<br><strong>1.1 模块初始化阶段</strong><br>    这个阶段大概流程如图2-1-1所示：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3082.jpg">图1-1 PHP的模块初始化阶段<br>    首先是激活SAPI,对SG宏进行初始化。接着初始化代表PHP输出的OG宏、调用gc_globals_ctor初始化垃圾回收相关的变量。再之后就是正式对Zend引擎进行初始化操作,这块主要进行了如下操作：</p>
-<ul>
-<li><pre><code>启动内存管理器（start_memory_manager）
-</code></pre>
-</li>
-<li><pre><code>设置Zend编译器、执行器函数句柄
-</code></pre>
-zend_compile_file = compile_file;<br>zend_execute_ex = execute_ex;</li>
-<li><pre><code>初始化opcode执行句柄（zend_init_opcodes_handlers）,以供执行阶段执行opcode使用
-</code></pre>
-</li>
-<li><pre><code>为（函数符号表）GLOBAL_FUNCTION_TABLE，（类符号表）GLOBAL_CLASS_TABLE，（超全局符号表）GLOBAL_AUTO_GLOBALS_TABLE和（常量符号表）GLOBAL_CONSTANTS_TABLE分配内存空间并初始化到CG宏中
-</code></pre>
-GLOBAL_FUNCTION_TABLE = (HashTable *) malloc(sizeof(HashTable));<br>GLOBAL_CLASS_TABLE = (HashTable *) malloc(sizeof(HashTable));<br>GLOBAL_AUTO_GLOBALS_TABLE = (HashTable *) malloc(sizeof(HashTable));<br>GLOBAL_CONSTANTS_TABLE = (HashTable *) malloc(sizeof(HashTable));</li>
-<li><pre><code>初始化INI和PHP全局扫描器，这两个扫描器主要是为了解析php.ini文件和PHP脚本
-</code></pre>
-ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(&amp;language_scanner_globals);</li>
-<li><pre><code>初始化$GLOBALS超全局变量
-</code></pre>
-</li>
-<li><pre><code>给registered_zend_ini_directives分配内存并初始化到EG(ini_directives)中
-</code></pre>
-在Zend引擎初始化完毕之后，紧接着又定义了一些PHP的的全局常量，像我们平常使用的PHP_EOL就是在这里定义的。<br>再往下调用php_init_config函数来读取php.ini文件，设置配置参数。接下来的操作可以分为下面几步：</li>
-<li>注册PHP核心模块的ini配置（REGISTER_INI_ENTRIES）</li>
-<li>注册Zend模块的ini配置（zend_register_standard_ini_entries）</li>
-<li>启动静态编译的扩展（php_register_internal_extensions_func）</li>
-<li>启动附加的扩展，注意在Cli模式中是没有附加的扩展的</li>
-<li>根据php.ini的配置加载扩展（php_ini_register_extensions）</li>
-<li>调用各PHP扩展的PHP_MINIT_FUNCTION启动扩展（zend_startup_modules）</li>
-<li>启动Zend扩展（zend_startup_extensions）</li>
-<li>采集各个扩展的其他阶段的方法句柄，包括RINT，RSHUTDOWN,MSHUTDOWN等（zend_collect_module_handlers）</li>
-<li>禁用php.ini配置的类和方法<br>最后关闭SAPI,结束模块初始化阶段，局部关闭内存管理器。在FastCgi模式中该阶段执行完毕后，主进程在生成完子进程之后直接挂起，由子进程Accpect请求之后直接进入循环，执行后面的阶段。</li>
-</ul>
-<p><strong>21.2 请求初始化阶段</strong><br>    这个阶段一般是在请求处理之前经历的一个阶段，即PHP脚本真正执行之前的最后一个阶段。该阶段的执行过程如图2-1-2所示：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3078.jpg">1-2 PHP的请求初始化阶段<br>    首先激活PHP输出、重置全局输出、设置输出栈，接下来激活Zend引擎，相关的操作如下：</p>
-<ul>
-<li><pre><code>重置垃圾回收（gc_reset）
-</code></pre>
-</li>
-<li><pre><code>初始化编译器（init_compiler）
-</code></pre>
-</li>
-<li><pre><code>初始化执行器（init_executor）
-</code></pre>
-</li>
-<li><pre><code>启动扫描器为解析脚本做准备（startup_scanner）
-</code></pre>
-紧接着激活SAPI，这块操作跟模块初始化相同。然后激活Zend引擎的信号处理、设置超时时间、激活超全局变量、构建Request参数<br>php_build_argv(SG(request_info).query_string, &amp;PG(http_globals)[TRACK_VARS_SERVER]);<br>最后调用各PHP扩展的RINT方法，结束该阶段。</li>
-</ul>
-<p><strong>1.3 脚本执行阶段</strong><br>    这个阶段的主要流程如图2-1-3 ：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3081.jpg">图1-3 PHP的脚本执行阶段<br>在这个阶段我们会调用Zend引擎去直接执行脚本文件，在这里我们首先会把脚本文件编译到op_array中<br>，相关的方法我们在模块初始化阶段已经进行过设置，具体编译流程如下：</p>
-<ul>
-<li>使用扫描器解析脚本(open_file_for_scanning)</li>
-<li>编译脚本（zend_compile）<ul>
-<li>清空op_array</li>
-<li>清空AST语法树</li>
-<li>重新创建一个语法树的栈大小32K，栈上偏移24字节用来存放zend_arena结构体</li>
-<li>调用zendparse进行词法解析</li>
-<li>给op_array重新分配内存</li>
-<li>将CG(active_op_array)存到original_active_op_array中</li>
-<li>初始化op_array(init_op_array)并存入CG(active_op_array)</li>
-<li>解析语法树，根据ast生成op_array(zend_compile_top_stmt)</li>
-<li>设置op_array的头和尾<br>  op_array-&gt;line_start = 1;<br>  op_array-&gt;line_end = last_lineno;</li>
-<li><h3 id="生成handler"><a href="#生成handler" class="headerlink" title="生成handler"></a>生成handler</h3>(pass_two)</li>
-<li>将original_active_op_array存到CG(active_op_array)中</li>
-<li>销毁语法树</li>
-<li>销毁语法树空间<br>最后通过调用zend_execute方法执行编译得到的op_array，完成PHP脚本的执行。由此我们可以看到不管是Cli还是FastCgi都是在脚本执行阶段进行PHP代码的解析、编译、执行。但是通常在生产环境中我们的PHP代码是不常变动的，无疑是浪费了不少性能。</li>
-</ul>
-</li>
-<li><em>1.4 请求关闭阶段</em>*<br>   这个阶段具体流程如图2-1-4所示：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3080.jpg">图 1-4<br>   首先是清空EG（current_execute_data），因为在zend_executor回调函数中可能会用到。接下来的操作如下：</li>
-<li><pre><code>调用在register_shutdown_function中注册的所有方法
-</code></pre>
-</li>
-<li><pre><code>调用所有的__destruct方法
-</code></pre>
-</li>
-<li><pre><code>清空输出缓冲区
-</code></pre>
-</li>
-<li><pre><code>重置最大执行时间
-</code></pre>
-</li>
-<li><pre><code>调用所有PHP扩展的RSHUTDOWN方法
-</code></pre>
-</li>
-<li><pre><code>关闭输出层(发送设置的HTTP头，清除输出句柄)
-</code></pre>
-</li>
-<li><pre><code>释放shutdown方法
-</code></pre>
-</li>
-<li><pre><code>销毁超全局变量
-</code></pre>
-</li>
-<li><pre><code>释放请求相关的全局变量
-</code></pre>
-</li>
-<li><pre><code>挂起Zend引擎，关闭扫描器、执行器、编译器
-</code></pre>
-</li>
-<li><pre><code>调用所有扩展的post-RSHUTDOWN方法
-</code></pre>
-</li>
-<li><pre><code>挂起SAPI
-</code></pre>
-</li>
-<li><pre><code>释放虚拟CWD内存
-</code></pre>
-</li>
-<li><pre><code>销毁哈希流
-</code></pre>
-</li>
-<li><pre><code>关闭内存管理器
-</code></pre>
-</li>
-<li><pre><code>重置最大超时时间
-</code></pre>
-在Cli模式中到这个阶段我们的PHP程序已经基本走进尾声了，但在FastCgi模式中，子进程请求关闭阶段执行之后会重新Accepct请求，然后在进入请求初始化，执行脚本…。</li>
-<li><em>1.5 模块关闭阶段</em>*<br>   不管在哪种模式这个阶段都是PHP生命周期的最后一个阶段，其具体流程如图2-1-5所示:<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3079.jpg"></li>
-<li><pre><code>清空SAPI
-</code></pre>
-</li>
-<li><pre><code>关闭Zend引擎
-</code></pre>
-</li>
-<li><pre><code>销毁过滤器和传输器
-</code></pre>
-</li>
-<li><pre><code>关闭ini配置
-</code></pre>
-</li>
-<li><pre><code>关闭输出
-</code></pre>
-</li>
-<li><pre><code>关闭垃圾回收
-</code></pre>
-</li>
-<li><em>1.6 小结</em>*<br>   一般来说我们使用PHP更多的是提供Web服务。从FastCgi相信我们不难理解PHP还有个Cgi模式，在这个模式下每次请求过来都会fork出一个子进程处理请求，每次都会执行上面5个阶段，性能十分低下。而FastCgi模式只进行一次模块初始化，通过预先启动一定数量的子进程（父子进程之间共享内存空间，且写时复制），循环执行请求初始化、执行脚本、请求关闭阶段。避免了模块初始化阶段的重复执行和大量进程反复加载，极大的提升了性能。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/13/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/13/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">第一周算法学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-13 15:17:27" itemprop="dateCreated datePublished" datetime="2019-12-13T15:17:27+08:00">2019-12-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:24:53" itemprop="dateModified" datetime="2021-08-27T11:24:53+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>418</span>
+              <span>780</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1058,120 +1012,30 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第一周算法学习笔记"><a href="#第一周算法学习笔记" class="headerlink" title="第一周算法学习笔记"></a>第一周算法学习笔记</h1><p>#Learning</p>
-<h4 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h4><ul>
-<li><p>数组</p>
-<ol>
-<li>数组是线性的数据结构，用一组连续的内存空间存放一组相同类型的数据</li>
-<li>因为数组在内存是连续存储的，所以可以根据首地址和下标，通过寻址公式就能直接计算出对应的内存地址，找出数据。</li>
-<li>使用的时候需要注意数组会有越界的问题，支持随机访问。</li>
+          <h2 id="MySQL-记录"><a href="#MySQL-记录" class="headerlink" title="MySQL 记录"></a>MySQL 记录</h2><h3 id="1-1-事务的特性（ACID）"><a href="#1-1-事务的特性（ACID）" class="headerlink" title="1.1 事务的特性（ACID）"></a>1.1 事务的特性（ACID）</h3><ol>
+<li>事务要求 ACID 的特性，即：原原子子性性、、一一致致性性、、隔隔离离性性、、持持久久性性。 </li>
+<li>所谓原子性，是指整个数据库的每个事务都是不可分割的单位。只有事务中的所有 SQL 语句都执行成功，才算整个事务成功，事务才会被提交。如果事务<br>中任何一个 SQL 语句执行失败，整个事务都应该被回滚。 </li>
+<li>所谓一致性，是指将数据库从一种一致性状态转换为下一种一致性状态。不允许数据库中的数据出现新老数据都有的情况，要么都是老数据，要么都是新数<br>据。用更书面化的表达就是：数据的完整性约束没有被破坏。 </li>
+<li>所谓隔离性，是指一个事务的影响在该事务提交前对其他事务都不可见，它通过锁机制来实现。 </li>
+<li>所谓持久性，是指事务一旦被提交，其结果就是永久性的。即使发生宕机等故障，数据库也能将数据恢复。 </li>
 </ol>
-</li>
-<li><ul>
-<li>小技巧 **<ol>
-<li>循环遍历 双指针的用法</li>
-<li>升级维度</li>
+<h3 id="1-2-事务的语法"><a href="#1-2-事务的语法" class="headerlink" title="1.2 事务的语法"></a>1.2 事务的语法</h3><ol>
+<li>在 MySQL 命令行的默认设置下，事务是自动提交的，即执行了SQL 语句之后会马上执行 commit 操作，我们可以设置 set autocommit=0 来禁用当前回话<br>的自动提交。 </li>
+<li>还可以用 begin 、start transaction 来显式的开始一个事务。 </li>
+<li>Commit 在默认设置下是等价于 commit work 的，表示提交事务。 </li>
+<li>rollback 在默认设置下等价于 rollback work，表示事务回滚。 </li>
+<li>savepoint xxx 表示定义一个保存点，在一个事务中可以有多个保存点。 </li>
+<li>Release savepoint xxx 表示删除一个保存点，当没有该保存点的时候执行该语句，会抛出一个异常。 </li>
+<li>rollback to [savepoint] xxx 表示回滚到某个保存点。 </li>
 </ol>
-</li>
-</ul>
-</li>
-<li><p>链表 Linked List 、跳表 Skip List（升维）</p>
-<ol>
-<li>单向链表 特点是最后的 tail next 指向 none</li>
-<li>双向链表 指向 head 头的</li>
-<li>随机访问数据不如数组速度快</li>
-<li>跳表是可以实现二分查找的有序链表。Redis 中就在使用</li>
-<li>在跳表中查询任意数据的时间复杂度是 O(logn)</li>
+<h3 id="1-3-事务的生命周期"><a href="#1-3-事务的生命周期" class="headerlink" title="1.3 事务的生命周期"></a>1.3 事务的生命周期</h3><ol>
+<li>开启事务，开始执行此事务</li>
+<li>创建日志文件</li>
+<li>执行业务逻辑 commit （根据实际的sql写入日志文件，但并没有运行sql语句）</li>
+<li>刷新日志文件</li>
+<li>最终执行sql环节，数据写入磁盘</li>
+<li>写入 CKP 日志文件，数据的校验保证一致性</li>
 </ol>
-</li>
-<li><ul>
-<li>小技巧 **<pre><code>1. 要知道 next 节点 list-&gt;next
-2. 理解指针或引用的含义
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for($I = 0 ;$I&lt;$length -1;++$i)&#123;</span><br><span class="line">		for($j=$i+1;$j&lt;$j&lt;$length;++$j)&#123;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" class="post-title-link" itemprop="url">MySQL数据库索引</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-20 22:10:54" itemprop="dateCreated datePublished" datetime="2019-10-20T22:10:54+08:00">2019-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:26:06" itemprop="dateModified" datetime="2021-08-27T11:26:06+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>697</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="数据库索引"><a href="#数据库索引" class="headerlink" title="数据库索引"></a>数据库索引</h2><p>1.索引的作用：提高数据查询效率<br>2.常见索引模型：哈希表、有序数组、搜索树<br>3.哈希表：键 - 值(key - value)。<br>4.哈希思路：把值放在数组里，用一个哈希函数把key换算成一个确定的位置，然后把value放在数组的这个位置<br>5.哈希冲突的处理办法：链表<br>6.哈希表适用场景：只有等值查询的场景<br>7.有序数组：按顺序存储。查询用二分法就可以快速查询，时间复杂度是：O(log(N))<br>8.有序数组查询效率高，更新效率低<br>9.有序数组的适用场景：静态存储引擎。<br>10.二叉搜索树：每个节点的左儿子小于父节点，父节点又小于右儿子<br>11.二叉搜索树：查询时间复杂度O(log(N))，更新时间复杂度O(log(N))<br>12.数据库存储大多不适用二叉树，因为树高过高，会适用N叉树<br>13.InnoDB中的索引模型：B+Tree<br>14.索引类型：主键索引、非主键索引<br>主键索引的叶子节点存的是整行的数据(聚簇索引)，非主键索引的叶子节点内容是主键的值(二级索引)<br>15.主键索引和普通索引的区别：主键索引只要搜索ID这个B+Tree即可拿到数据。普通索引先搜索索引拿到主键值，再到主键索引树搜索一次(回表)<br>16.一个数据页满了，按照B+Tree算法，新增加一个数据页，叫做页分裂，会导致性能下降。空间利用率降低大概50%。当相邻的两个数据页利用率很低的时候会做数据页合并，合并的过程是分裂过程的逆过程。<br>17.从性能和存储空间方面考量，自增主键往往是更合理的选择。</p>
-<h2 id="思考题："><a href="#思考题：" class="headerlink" title="思考题："></a>思考题：</h2><p>如果删除，新建主键索引，会同时去修改普通索引对应的主键索引，性能消耗比较大。<br>删除重建普通索引貌似影响不大，不过要注意在业务低谷期操作，避免影响业务。</p>
 
       
     </div>
@@ -1249,21 +1113,21 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Aliliin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">Keep calm and coding.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1300,13 +1164,13 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">22k</span>
+    <span title="站点总字数">25k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">20 分钟</span>
+    <span title="站点阅读时长">23 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

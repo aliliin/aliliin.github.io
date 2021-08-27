@@ -20,10 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="Keep calm and coding.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Aliliin">
 <meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="Keep calm and coding.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Aliliin">
 <meta name="twitter:card" content="summary">
@@ -95,6 +97,7 @@
       <h1 class="site-title">Aliliin</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">Keep calm and coding.</p>
   </div>
 
   <div class="site-nav-right">
@@ -160,12 +163,421 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/03/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/03/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">PHP的生命周期</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-03 18:28:42" itemprop="dateCreated datePublished" datetime="2020-01-03T18:28:42+08:00">2020-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:31:36" itemprop="dateModified" datetime="2021-08-27T11:31:36+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="PHP的生命周期"><a href="#PHP的生命周期" class="headerlink" title="PHP的生命周期"></a>PHP的生命周期</h1><h3 id="1-0-先从PHP开始说起"><a href="#1-0-先从PHP开始说起" class="headerlink" title="1.0 先从PHP开始说起"></a>1.0 先从PHP开始说起</h3><pre><code>在介绍PHP的生命周期之前，我们先来看一张图，如图1所示:
+</code></pre>
+<p><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3077.jpg"><br>    图1 PHP的生命周期<br>    首先我们先引入一个概念SAPI，SAPI是PHP的应用接入层，是整个PHP框架最外层的部分，像我们平常用的比较多的Fpm和Cli就是SAPI的具体实现，而main函数也定义在对应的SAPI中。通常来说PHP的生命周期被划分为5个阶段：模块初始化阶段、请求初始化阶段、脚本执行阶段、请求关闭阶段和模块关闭阶段。在不同的SAPI中，各阶段的调用过程也略有不同，像Cli模式基本会按照顺序完整的执行一遍，而在FastCgi也就是Fpm模式中，只会在启动时执行一次模块初始化，后面的每个请求都只会执行请求初始化阶段、脚本执行阶段和请求关闭阶段，最后在SAPI关闭时执行模块关闭阶段。<br><strong>1.1 模块初始化阶段</strong><br>    这个阶段大概流程如图2-1-1所示：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3082.jpg">图1-1 PHP的模块初始化阶段<br>    首先是激活SAPI,对SG宏进行初始化。接着初始化代表PHP输出的OG宏、调用gc_globals_ctor初始化垃圾回收相关的变量。再之后就是正式对Zend引擎进行初始化操作,这块主要进行了如下操作：</p>
+<ul>
+<li><pre><code>启动内存管理器（start_memory_manager）
+</code></pre>
+</li>
+<li><pre><code>设置Zend编译器、执行器函数句柄
+</code></pre>
+zend_compile_file = compile_file;<br>zend_execute_ex = execute_ex;</li>
+<li><pre><code>初始化opcode执行句柄（zend_init_opcodes_handlers）,以供执行阶段执行opcode使用
+</code></pre>
+</li>
+<li><pre><code>为（函数符号表）GLOBAL_FUNCTION_TABLE，（类符号表）GLOBAL_CLASS_TABLE，（超全局符号表）GLOBAL_AUTO_GLOBALS_TABLE和（常量符号表）GLOBAL_CONSTANTS_TABLE分配内存空间并初始化到CG宏中
+</code></pre>
+GLOBAL_FUNCTION_TABLE = (HashTable *) malloc(sizeof(HashTable));<br>GLOBAL_CLASS_TABLE = (HashTable *) malloc(sizeof(HashTable));<br>GLOBAL_AUTO_GLOBALS_TABLE = (HashTable *) malloc(sizeof(HashTable));<br>GLOBAL_CONSTANTS_TABLE = (HashTable *) malloc(sizeof(HashTable));</li>
+<li><pre><code>初始化INI和PHP全局扫描器，这两个扫描器主要是为了解析php.ini文件和PHP脚本
+</code></pre>
+ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(&amp;language_scanner_globals);</li>
+<li><pre><code>初始化$GLOBALS超全局变量
+</code></pre>
+</li>
+<li><pre><code>给registered_zend_ini_directives分配内存并初始化到EG(ini_directives)中
+</code></pre>
+在Zend引擎初始化完毕之后，紧接着又定义了一些PHP的的全局常量，像我们平常使用的PHP_EOL就是在这里定义的。<br>再往下调用php_init_config函数来读取php.ini文件，设置配置参数。接下来的操作可以分为下面几步：</li>
+<li>注册PHP核心模块的ini配置（REGISTER_INI_ENTRIES）</li>
+<li>注册Zend模块的ini配置（zend_register_standard_ini_entries）</li>
+<li>启动静态编译的扩展（php_register_internal_extensions_func）</li>
+<li>启动附加的扩展，注意在Cli模式中是没有附加的扩展的</li>
+<li>根据php.ini的配置加载扩展（php_ini_register_extensions）</li>
+<li>调用各PHP扩展的PHP_MINIT_FUNCTION启动扩展（zend_startup_modules）</li>
+<li>启动Zend扩展（zend_startup_extensions）</li>
+<li>采集各个扩展的其他阶段的方法句柄，包括RINT，RSHUTDOWN,MSHUTDOWN等（zend_collect_module_handlers）</li>
+<li>禁用php.ini配置的类和方法<br>最后关闭SAPI,结束模块初始化阶段，局部关闭内存管理器。在FastCgi模式中该阶段执行完毕后，主进程在生成完子进程之后直接挂起，由子进程Accpect请求之后直接进入循环，执行后面的阶段。</li>
+</ul>
+<p><strong>21.2 请求初始化阶段</strong><br>    这个阶段一般是在请求处理之前经历的一个阶段，即PHP脚本真正执行之前的最后一个阶段。该阶段的执行过程如图2-1-2所示：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3078.jpg">1-2 PHP的请求初始化阶段<br>    首先激活PHP输出、重置全局输出、设置输出栈，接下来激活Zend引擎，相关的操作如下：</p>
+<ul>
+<li><pre><code>重置垃圾回收（gc_reset）
+</code></pre>
+</li>
+<li><pre><code>初始化编译器（init_compiler）
+</code></pre>
+</li>
+<li><pre><code>初始化执行器（init_executor）
+</code></pre>
+</li>
+<li><pre><code>启动扫描器为解析脚本做准备（startup_scanner）
+</code></pre>
+紧接着激活SAPI，这块操作跟模块初始化相同。然后激活Zend引擎的信号处理、设置超时时间、激活超全局变量、构建Request参数<br>php_build_argv(SG(request_info).query_string, &amp;PG(http_globals)[TRACK_VARS_SERVER]);<br>最后调用各PHP扩展的RINT方法，结束该阶段。</li>
+</ul>
+<p><strong>1.3 脚本执行阶段</strong><br>    这个阶段的主要流程如图2-1-3 ：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3081.jpg">图1-3 PHP的脚本执行阶段<br>在这个阶段我们会调用Zend引擎去直接执行脚本文件，在这里我们首先会把脚本文件编译到op_array中<br>，相关的方法我们在模块初始化阶段已经进行过设置，具体编译流程如下：</p>
+<ul>
+<li>使用扫描器解析脚本(open_file_for_scanning)</li>
+<li>编译脚本（zend_compile）<ul>
+<li>清空op_array</li>
+<li>清空AST语法树</li>
+<li>重新创建一个语法树的栈大小32K，栈上偏移24字节用来存放zend_arena结构体</li>
+<li>调用zendparse进行词法解析</li>
+<li>给op_array重新分配内存</li>
+<li>将CG(active_op_array)存到original_active_op_array中</li>
+<li>初始化op_array(init_op_array)并存入CG(active_op_array)</li>
+<li>解析语法树，根据ast生成op_array(zend_compile_top_stmt)</li>
+<li>设置op_array的头和尾<br>  op_array-&gt;line_start = 1;<br>  op_array-&gt;line_end = last_lineno;</li>
+<li><h3 id="生成handler"><a href="#生成handler" class="headerlink" title="生成handler"></a>生成handler</h3>(pass_two)</li>
+<li>将original_active_op_array存到CG(active_op_array)中</li>
+<li>销毁语法树</li>
+<li>销毁语法树空间<br>最后通过调用zend_execute方法执行编译得到的op_array，完成PHP脚本的执行。由此我们可以看到不管是Cli还是FastCgi都是在脚本执行阶段进行PHP代码的解析、编译、执行。但是通常在生产环境中我们的PHP代码是不常变动的，无疑是浪费了不少性能。</li>
+</ul>
+</li>
+<li><em>1.4 请求关闭阶段</em>*<br>   这个阶段具体流程如图2-1-4所示：<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3080.jpg">图 1-4<br>   首先是清空EG（current_execute_data），因为在zend_executor回调函数中可能会用到。接下来的操作如下：</li>
+<li><pre><code>调用在register_shutdown_function中注册的所有方法
+</code></pre>
+</li>
+<li><pre><code>调用所有的__destruct方法
+</code></pre>
+</li>
+<li><pre><code>清空输出缓冲区
+</code></pre>
+</li>
+<li><pre><code>重置最大执行时间
+</code></pre>
+</li>
+<li><pre><code>调用所有PHP扩展的RSHUTDOWN方法
+</code></pre>
+</li>
+<li><pre><code>关闭输出层(发送设置的HTTP头，清除输出句柄)
+</code></pre>
+</li>
+<li><pre><code>释放shutdown方法
+</code></pre>
+</li>
+<li><pre><code>销毁超全局变量
+</code></pre>
+</li>
+<li><pre><code>释放请求相关的全局变量
+</code></pre>
+</li>
+<li><pre><code>挂起Zend引擎，关闭扫描器、执行器、编译器
+</code></pre>
+</li>
+<li><pre><code>调用所有扩展的post-RSHUTDOWN方法
+</code></pre>
+</li>
+<li><pre><code>挂起SAPI
+</code></pre>
+</li>
+<li><pre><code>释放虚拟CWD内存
+</code></pre>
+</li>
+<li><pre><code>销毁哈希流
+</code></pre>
+</li>
+<li><pre><code>关闭内存管理器
+</code></pre>
+</li>
+<li><pre><code>重置最大超时时间
+</code></pre>
+在Cli模式中到这个阶段我们的PHP程序已经基本走进尾声了，但在FastCgi模式中，子进程请求关闭阶段执行之后会重新Accepct请求，然后在进入请求初始化，执行脚本…。</li>
+<li><em>1.5 模块关闭阶段</em>*<br>   不管在哪种模式这个阶段都是PHP生命周期的最后一个阶段，其具体流程如图2-1-5所示:<br><img src="PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/3079.jpg"></li>
+<li><pre><code>清空SAPI
+</code></pre>
+</li>
+<li><pre><code>关闭Zend引擎
+</code></pre>
+</li>
+<li><pre><code>销毁过滤器和传输器
+</code></pre>
+</li>
+<li><pre><code>关闭ini配置
+</code></pre>
+</li>
+<li><pre><code>关闭输出
+</code></pre>
+</li>
+<li><pre><code>关闭垃圾回收
+</code></pre>
+</li>
+<li><em>1.6 小结</em>*<br>   一般来说我们使用PHP更多的是提供Web服务。从FastCgi相信我们不难理解PHP还有个Cgi模式，在这个模式下每次请求过来都会fork出一个子进程处理请求，每次都会执行上面5个阶段，性能十分低下。而FastCgi模式只进行一次模块初始化，通过预先启动一定数量的子进程（父子进程之间共享内存空间，且写时复制），循环执行请求初始化、执行脚本、请求关闭阶段。避免了模块初始化阶段的重复执行和大量进程反复加载，极大的提升了性能。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/13/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/13/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">第一周算法学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-13 15:17:27" itemprop="dateCreated datePublished" datetime="2019-12-13T15:17:27+08:00">2019-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:24:53" itemprop="dateModified" datetime="2021-08-27T11:24:53+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>418</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第一周算法学习笔记"><a href="#第一周算法学习笔记" class="headerlink" title="第一周算法学习笔记"></a>第一周算法学习笔记</h1><p>#Learning</p>
+<h4 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h4><ul>
+<li><p>数组</p>
+<ol>
+<li>数组是线性的数据结构，用一组连续的内存空间存放一组相同类型的数据</li>
+<li>因为数组在内存是连续存储的，所以可以根据首地址和下标，通过寻址公式就能直接计算出对应的内存地址，找出数据。</li>
+<li>使用的时候需要注意数组会有越界的问题，支持随机访问。</li>
+</ol>
+</li>
+<li><ul>
+<li>小技巧 **<ol>
+<li>循环遍历 双指针的用法</li>
+<li>升级维度</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>链表 Linked List 、跳表 Skip List（升维）</p>
+<ol>
+<li>单向链表 特点是最后的 tail next 指向 none</li>
+<li>双向链表 指向 head 头的</li>
+<li>随机访问数据不如数组速度快</li>
+<li>跳表是可以实现二分查找的有序链表。Redis 中就在使用</li>
+<li>在跳表中查询任意数据的时间复杂度是 O(logn)</li>
+</ol>
+</li>
+<li><ul>
+<li>小技巧 **<pre><code>1. 要知道 next 节点 list-&gt;next
+2. 理解指针或引用的含义
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for($I = 0 ;$I&lt;$length -1;++$i)&#123;</span><br><span class="line">		for($j=$i+1;$j&lt;$j&lt;$length;++$j)&#123;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" class="post-title-link" itemprop="url">MySQL数据库索引</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-20 22:10:54" itemprop="dateCreated datePublished" datetime="2019-10-20T22:10:54+08:00">2019-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:26:06" itemprop="dateModified" datetime="2021-08-27T11:26:06+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>697</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="数据库索引"><a href="#数据库索引" class="headerlink" title="数据库索引"></a>数据库索引</h2><p>1.索引的作用：提高数据查询效率<br>2.常见索引模型：哈希表、有序数组、搜索树<br>3.哈希表：键 - 值(key - value)。<br>4.哈希思路：把值放在数组里，用一个哈希函数把key换算成一个确定的位置，然后把value放在数组的这个位置<br>5.哈希冲突的处理办法：链表<br>6.哈希表适用场景：只有等值查询的场景<br>7.有序数组：按顺序存储。查询用二分法就可以快速查询，时间复杂度是：O(log(N))<br>8.有序数组查询效率高，更新效率低<br>9.有序数组的适用场景：静态存储引擎。<br>10.二叉搜索树：每个节点的左儿子小于父节点，父节点又小于右儿子<br>11.二叉搜索树：查询时间复杂度O(log(N))，更新时间复杂度O(log(N))<br>12.数据库存储大多不适用二叉树，因为树高过高，会适用N叉树<br>13.InnoDB中的索引模型：B+Tree<br>14.索引类型：主键索引、非主键索引<br>主键索引的叶子节点存的是整行的数据(聚簇索引)，非主键索引的叶子节点内容是主键的值(二级索引)<br>15.主键索引和普通索引的区别：主键索引只要搜索ID这个B+Tree即可拿到数据。普通索引先搜索索引拿到主键值，再到主键索引树搜索一次(回表)<br>16.一个数据页满了，按照B+Tree算法，新增加一个数据页，叫做页分裂，会导致性能下降。空间利用率降低大概50%。当相邻的两个数据页利用率很低的时候会做数据页合并，合并的过程是分裂过程的逆过程。<br>17.从性能和存储空间方面考量，自增主键往往是更合理的选择。</p>
+<h2 id="思考题："><a href="#思考题：" class="headerlink" title="思考题："></a>思考题：</h2><p>如果删除，新建主键索引，会同时去修改普通索引对应的主键索引，性能消耗比较大。<br>删除重建普通索引貌似影响不大，不过要注意在业务低谷期操作，避免影响业务。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/17/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -249,7 +661,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -325,12 +737,139 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/29/IoC%E4%B8%8EDI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/29/IoC%E4%B8%8EDI/" class="post-title-link" itemprop="url">IoC与DI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-29 09:15:25" itemprop="dateCreated datePublished" datetime="2019-08-29T09:15:25+08:00">2019-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:46:51" itemprop="dateModified" datetime="2021-08-27T11:46:51+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>698</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="IoC与DI"><a href="#IoC与DI" class="headerlink" title="IoC与DI"></a>IoC与DI</h2><ul>
+<li>Ioc，即控制反转，把对象的调用权交给容器，通过容器来实现对象的装配和管理</li>
+<li>DI，即依赖注入，对象之间依赖关系由容器在运行期决定，由容器动态的将依赖关系注入到对象之中</li>
+<li>DI 是对 IoC 更完善的描述</li>
+</ul>
+<h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><ul>
+<li>谁依赖谁？对象实例化依赖容器</li>
+<li>为什么要依赖？对象实例化通过容器自动得到外部依赖</li>
+<li>谁注入谁？容器注入对象的依赖到对象中</li>
+<li>注入了什么？注入了对象的外部依赖</li>
+</ul>
+<h3 id="Hyperf-的依赖注入"><a href="#Hyperf-的依赖注入" class="headerlink" title="Hyperf 的依赖注入"></a>Hyperf 的依赖注入</h3><ul>
+<li>由 hyperf/di 组件提供功能支持</li>
+<li>更符合长生命周期的应用使用</li>
+<li>提供了 注解、注解注入、AOP</li>
+<li>基于 PSR-11 实现，可独立应用于其他框架</li>
+</ul>
+<ol>
+<li>注入方式<ul>
+<li>通过构造方法注入</li>
+<li>通过 @Inject 注解注入</li>
+</ul>
+</li>
+<li>注入类型<ul>
+<li>简单对象注入<ul>
+<li>我们假设 存在一个。UserService 类</li>
+<li>我们希望在其他地方引用该类的依赖</li>
+<li>在类成员属性上定义 @Inject注解，配合@var 的值来完成依赖的注入</li>
+</ul>
+</li>
+<li>抽象工厂注入</li>
+<li>工厂对象注入</li>
+</ul>
+</li>
+</ol>
+<h3 id="注入容器本身"><a href="#注入容器本身" class="headerlink" title="注入容器本身"></a>注入容器本身</h3><ul>
+<li>直接 Psr\Container\ContainerInterface</li>
+<li>通过 Hyperf\Utils\ApplicationContext::getContainer() 获得</li>
+</ul>
+<h3 id="对注解和-DI-的总结"><a href="#对注解和-DI-的总结" class="headerlink" title="对注解和 DI 的总结"></a>对注解和 DI 的总结</h3><ul>
+<li>PHP 语法上没有支持注解，只能基于约束好的规定去从注释上解析</li>
+<li>注解只是元数据定义，实现功能时不利用这些数据的话，没任何作用</li>
+<li>使用了注解的对象必须基于 Hyperf 的DI 容器来创建对象才能生效</li>
+<li>注解可以用在类、类方法、类成员属性上</li>
+<li>DI 容器是负责管理 对象的创建 和 对象的依赖管理的</li>
+<li>DI 容器创建出来的对象是个单例，是长生命周期对象</li>
+<li>通过 $container-&gt;make() 方法 或者 make() 函数创建短生命周期对象</li>
+<li>通过 new 来实例化的对象注解不会生效，依赖需自行管理</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/27/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -442,7 +981,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -527,12 +1066,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/14/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="Keep calm and coding.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/14/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/" class="post-title-link" itemprop="url">什么是 TCP</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-14 09:31:29" itemprop="dateCreated datePublished" datetime="2019-08-14T09:31:29+08:00">2019-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:46:06" itemprop="dateModified" datetime="2021-08-27T11:46:06+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>649</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="什么是-TCP"><a href="#什么是-TCP" class="headerlink" title="什么是 TCP"></a>什么是 TCP</h1><h3 id="TCP-（transmission-Control-Protocol-传输控制协议）-是一种面向连接的、可靠的、基于字节流的传输层通信协议。"><a href="#TCP-（transmission-Control-Protocol-传输控制协议）-是一种面向连接的、可靠的、基于字节流的传输层通信协议。" class="headerlink" title="TCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。"></a>TCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。</h3><h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><ol>
+<li>连接问题，IP 写错，端口写错 链接会被拒绝</li>
+<li>Operation now in progress  连接超时、丢包、错误IP、backlog满了&amp;阻塞&amp;tcp_abort_on_overflow=0</li>
+<li>min(maxconn,backlog). [ ss -it] 查询 backlog 的设置长度</li>
+</ol>
+<h3 id="SYN-Flood-问题"><a href="#SYN-Flood-问题" class="headerlink" title="SYN Flood  问题"></a>SYN Flood  问题</h3><ul>
+<li>tcp_max_syn_backlog </li>
+<li>tcp_synack_retries</li>
+<li>tcp_syncookies</li>
+</ul>
+<h3 id="短链接性能问题"><a href="#短链接性能问题" class="headerlink" title="短链接性能问题"></a>短链接性能问题</h3><ul>
+<li>多余链接</li>
+<li>启动比较慢、慢启动</li>
+<li>握手阶段丢包</li>
+<li>对链接的占用约等于长链接<br>短链接优点</li>
+<li>简单</li>
+<li>理论上链接数会少</li>
+<li>无状态对负载均衡LB友好</li>
+</ul>
+<h3 id="长链接常见问题"><a href="#长链接常见问题" class="headerlink" title="长链接常见问题"></a>长链接常见问题</h3><ul>
+<li>链接失效两种问题<ol>
+<li>redis：timeout(Error while reading line from the server)</li>
+<li>Mysql: wait_timeout &amp; interactive_timeout(has gone away)</li>
+</ol>
+</li>
+<li>链接失效解决方法<ol>
+<li>用的时候多链接几次 （最简单）</li>
+<li>定时发心跳维持链接 （推荐方式）</li>
+<li>利用 swoole 底层的 hearlbeat_idle_time 和 hearlbeat_check_interval (只能针对服务器端，需要客户端配合发心跳）</li>
+</ol>
+</li>
+<li>如何实现应用层心跳<ol>
+<li>制定 ping/pong 协议 （mysql 等自带 ping 协议）</li>
+<li>客户端灵活的发送 ping 心跳包</li>
+<li>服务端 OnRecive 检查可用性回复 pong</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/11/%E5%92%8C%E5%B0%8F%E6%9C%8B%E5%8F%8B%E6%B2%9F%E9%80%9A%E7%9B%B4%E6%8E%A5%E8%AF%B4%E6%84%9F%E8%A7%89%E6%AF%94%E8%AF%B4%E9%81%93%E7%90%86%E6%9C%89%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Keep calm and coding.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -591,448 +1246,6 @@
 <p>但我的这些努力都没有用，小女孩像没听见一样，一会儿就闯进来一下，我的思路不断被打断。有点懊恼的时候，我突然问自己，你在干吗？你竟然试着给一个五六岁的小女孩讲道理，而孩子常常是听不见道理的，他们需要的是你给他们讲感受。</p>
 <p>想明白这一点后，她再一次闯进来时，我看着她的小脸，非常认真地对她说：你一次次不敲门就闯进来，我很不高兴，接下来请你不要再这样做了，我忙完了会出去找你。</p>
 <p>这次她终于听进了我的话，特别是“我很不高兴”这句话，让她突然愣了一下。然后再接下来的半个小时内，她再也没有闯进来，而我利用这段时间把自己的事忙完后，主动打开门找她玩了一会儿。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/16/Git%20Workflow/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/16/Git%20Workflow/" class="post-title-link" itemprop="url">Git Workflow</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-16 14:11:31" itemprop="dateCreated datePublished" datetime="2019-05-16T14:11:31+08:00">2019-05-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:29:45" itemprop="dateModified" datetime="2021-08-27T11:29:45+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>333</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Git-Workflow"><a href="#Git-Workflow" class="headerlink" title="Git Workflow"></a>Git Workflow</h1><ol>
-<li>git remote add upstream // 必须添加一个上由主分支的地址  可以用 git remote -v 来查看 </li>
-<li>git pull upstream master // 拿到项目的主分支代码</li>
-<li>git checkout -b // 创建自己飞分支</li>
-<li>git commit // 写完代码之后提交 </li>
-<li>git checkout 分支名 // 切换到主分支</li>
-<li>git pull upstream master // 提交之前再次获取线上最新代码</li>
-<li>git checkout &amp;&amp; git rebase master</li>
-<li>git push origin branch</li>
-</ol>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>获取上游新建的分支。 git fetch upstream<br>取消红色状态的文件。git checkout — 文件名<br>取消蓝色状态的文件： git reset Head [文件名字]</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/24/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/24/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">Go http 服务默认的路由规则和更好的路由</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-04-24 14:23:13" itemprop="dateCreated datePublished" datetime="2019-04-24T14:23:13+08:00">2019-04-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:30:57" itemprop="dateModified" datetime="2021-08-27T11:30:57+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Go-http-服务默认的路由规则和更好的路由"><a href="#Go-http-服务默认的路由规则和更好的路由" class="headerlink" title="Go http 服务默认的路由规则和更好的路由"></a>Go http 服务默认的路由规则和更好的路由</h1><h2 id="Go-Default-Router"><a href="#Go-Default-Router" class="headerlink" title="Go Default Router"></a>Go Default Router</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request)&#123;</span><br><span class="line">    handler := sh.srv.Handler</span><br><span class="line">    if handler == nil &#123;</span><br><span class="line">        handler = DefaultServeMux // 使用缺省的Router</span><br><span class="line">    &#125;</span><br><span class="line">    if req.RequestURI == “*” &amp;&amp; req.Method == “OPTIONS” &#123;</span><br><span class="line">        handler = globlOptionsHandler&#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    handler.ServeHTTP(rw,req)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="路由规则"><a href="#路由规则" class="headerlink" title="路由规则"></a>路由规则</h2><ul>
-<li>URL 分为两种，末尾是 /： 表示一个子树，后面可以跟其他的子路径；末尾不是 / ，表示一个叶子，固定的路径<br> 以 /结尾的 URL 可以匹配它的任何子路径，比如 /images 回匹配 /images/cute-cat.jpg*</li>
-<li>它采用最长匹配原则，如果多个匹配，一定采用匹配路径最长的那个进行处理</li>
-<li>如果没有找到任何匹配项，会返回404</li>
-</ul>
-<h2 id="更好的-Router"><a href="#更好的-Router" class="headerlink" title="更好的 Router"></a>更好的 Router</h2><p><a target="_blank" rel="noopener" href="https://github.com/julienschmidt/httprouter">https://github.com/julienschmidt/httprouter</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;github.com/julienschmidt/httprouter&quot;</span><br><span class="line">    &quot;net/http&quot;</span><br><span class="line">    &quot;log&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) &#123;</span><br><span class="line">    fmt.Fprint(w, &quot;Welcome!\n&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) &#123;</span><br><span class="line">    fmt.Fprintf(w, &quot;hello, %s!\n&quot;, ps.ByName(&quot;name&quot;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    router := httprouter.New()</span><br><span class="line">    router.GET(&quot;/&quot;, Index)</span><br><span class="line">    router.GET(&quot;/hello/:name&quot;, Hello)</span><br><span class="line"></span><br><span class="line">    log.Fatal(http.ListenAndServe(&quot;:8080&quot;, router))</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Go 内置的 JSON 解析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-04-24 11:18:26" itemprop="dateCreated datePublished" datetime="2019-04-24T11:18:26+08:00">2019-04-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:30:33" itemprop="dateModified" datetime="2021-08-27T11:30:33+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>487</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Go-内置的-JSON-解析"><a href="#Go-内置的-JSON-解析" class="headerlink" title="Go 内置的 JSON 解析"></a>Go 内置的 JSON 解析</h1><ul>
-<li><p>利用反射实现，通过 FelidTag 来标识对应的 json 值</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	**type BasicInfo struct &#123;**</span><br><span class="line">**Name string `json:&quot;name&quot;`**</span><br><span class="line">**Age  int    `json:&quot;age&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br><span class="line">**type JobInfo struct &#123;**</span><br><span class="line">**Skills []string `json:&quot;skills&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br><span class="line">**type Employee struct &#123;**</span><br><span class="line">**BasicInfo BasicInfo `json:&quot;basic_info&quot;`**</span><br><span class="line">**JobInfo   JobInfo   `json:&quot;job_info&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>更快的 JSON 解析<br>EasyJSON 采用代码生成而非反射</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">安装： go get -u github.com/mailru/easyjson/</span><br><span class="line"></span><br><span class="line">使用: easyjson -all &lt;文件名，一般只结构定义的文件&gt;.go</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/18/Go%20Package/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/18/Go%20Package/" class="post-title-link" itemprop="url">Go Package</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-03-18 15:41:15" itemprop="dateCreated datePublished" datetime="2019-03-18T15:41:15+08:00">2019-03-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:31:18" itemprop="dateModified" datetime="2021-08-27T11:31:18+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>185</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Go-Package"><a href="#Go-Package" class="headerlink" title="Go Package"></a>Go Package</h1><ol>
-<li>基本复用模块单元<br>以首字母大写来表明可以被包外代码访问</li>
-<li>代码的 package 可以和所在的目录不一致</li>
-<li>同一目录里面的 Go 代码的 package 要保持一致</li>
-</ol>
-<h4 id="init-方法"><a href="#init-方法" class="headerlink" title="init 方法"></a>init 方法</h4><ul>
-<li>在 main 被执行前,所以依赖的 package  init 方法都会被执行</li>
-<li>不同包的 init 函数按照包倒入的依赖关系决定执行顺序</li>
-<li>每个包可以有多个 init 函数</li>
-<li>包的每个源文件也可以有多个 init 函数 ,这点比较特殊</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aliliin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/" class="post-title-link" itemprop="url">Go 错误处理 Panic 和 Recover</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-03-18 14:08:52" itemprop="dateCreated datePublished" datetime="2019-03-18T14:08:52+08:00">2019-03-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:30:18" itemprop="dateModified" datetime="2021-08-27T11:30:18+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="Go-错误处理-Panic-和-Recover"><a href="#Go-错误处理-Panic-和-Recover" class="headerlink" title="Go 错误处理 Panic 和 Recover"></a>Go 错误处理 Panic 和 Recover</h4><ol>
-<li>Go中没有错误机制</li>
-<li>error 类型实现了 error 接口<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type error interface &#123;</span><br><span class="line">	Error() string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>可以通过 errors.New 来实现快速创建错误信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">errors.New(&quot;n must be in the range [0,10]</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="Panic-的基本定义和使用"><a href="#Panic-的基本定义和使用" class="headerlink" title="Panic 的基本定义和使用"></a>Panic 的基本定义和使用</h4><ol>
-<li>panic  用于不可以恢复的错误</li>
-<li>Panic 退出前会执行 defer 指定的内容、<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func TestPanic(t *testing.T) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;最后结果依旧执行!&quot;) // 这一部分的代码依旧执行</span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;执行开始&quot;)</span><br><span class="line">	panic(errors.New(&quot;错误信息!&quot;))</span><br><span class="line">&#125;</span><br><span class="line">// 输出大致结果如下</span><br><span class="line">开始</span><br><span class="line">最后结果依旧执行!</span><br><span class="line">--- FAIL: TestPanic (0.00s)</span><br><span class="line">panic: 错误信息! [recovered]</span><br><span class="line">panic: 错误信息!</span><br></pre></td></tr></table></figure>
-<h4 id="os-Exit-的基本定义和使用"><a href="#os-Exit-的基本定义和使用" class="headerlink" title="os.Exit 的基本定义和使用"></a>os.Exit 的基本定义和使用</h4></li>
-<li>os.Exit 退出时不调用defer 指定的函数</li>
-<li>os.Exit 退出时不输出当前调用栈信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func TestExit(t *testing.T) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;这段代码不会执行!&quot;) </span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;开始执行&quot;)</span><br><span class="line">	os.Exit(-1) // 直接退出 exit status 255</span><br><span class="line">&#125;</span><br><span class="line">// 输出结果如下</span><br><span class="line">开始执行</span><br><span class="line">exit status 255</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="Recover-的使用"><a href="#Recover-的使用" class="headerlink" title="Recover 的使用"></a>Recover 的使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func TestRecover(t *testing.T) &#123;</span><br><span class="line"></span><br><span class="line">	defer func() &#123;</span><br><span class="line">		if err := recover(); err != nil &#123;</span><br><span class="line">			fmt.Println(&quot;recoverd 开始\n&quot;, err)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;开始执行&quot;)</span><br><span class="line">	panic(errors.New(&quot;错误信息!&quot;))</span><br><span class="line">&#125;</span><br><span class="line">// 输出结果如下:</span><br><span class="line">开始执行</span><br><span class="line">recoverd 开始</span><br><span class="line"> 错误信息!</span><br></pre></td></tr></table></figure>
-<h4 id="异常处理总结"><a href="#异常处理总结" class="headerlink" title="异常处理总结"></a>异常处理总结</h4><pre><code>当一个函数在执行过程中出现了异常或遇到 panic()，正常语句就会立即终止，然后执行 defer 语句，再报告异常信息，最后退出。如果在 defer 中使用了 recover() 函数,则会捕获错误信息，使该错误信息终止报告。
-</code></pre>
 
       
     </div>
@@ -1110,21 +1323,21 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Aliliin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">Keep calm and coding.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1161,13 +1374,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">22k</span>
+    <span title="站点总字数">25k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">20 分钟</span>
+    <span title="站点阅读时长">23 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
