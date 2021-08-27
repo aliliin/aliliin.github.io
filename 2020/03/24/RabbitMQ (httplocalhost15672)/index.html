@@ -20,16 +20,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)#Learning 访问地址是：RabbitMQ ManagementZ帐号密码： guest 安装过程brew update&#x2F;&#x2F; 执行安装brew install rabbitmqbrew install rabbitmq-c &#x2F;&#x2F; 执行安装php扩展git clone https:&#x2F;&#x2F;github.com&#x2F;pdezwart">
+  <meta name="description" content="安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)访问地址是：RabbitMQ ManagementZ帐号密码： guest 安装过程brew update 执行安装brew install rabbitmqbrew install rabbitmq-c 执行安装php扩展12345git clone https:&#x2F;&#x2F;github.com&#x2F;pdezwart&#x2F;php-amqp.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mac 安装 RabbitMQ">
 <meta property="og:url" content="http://example.com/2020/03/24/RabbitMQ%20(httplocalhost15672)/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)#Learning 访问地址是：RabbitMQ ManagementZ帐号密码： guest 安装过程brew update&#x2F;&#x2F; 执行安装brew install rabbitmqbrew install rabbitmq-c &#x2F;&#x2F; 执行安装php扩展git clone https:&#x2F;&#x2F;github.com&#x2F;pdezwart">
+<meta property="og:description" content="安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)访问地址是：RabbitMQ ManagementZ帐号密码： guest 安装过程brew update 执行安装brew install rabbitmqbrew install rabbitmq-c 执行安装php扩展12345git clone https:&#x2F;&#x2F;github.com&#x2F;pdezwart&#x2F;php-amqp.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-24T09:28:26.063Z">
-<meta property="article:modified_time" content="2021-08-26T11:21:50.681Z">
+<meta property="article:modified_time" content="2021-08-27T03:32:35.477Z">
 <meta property="article:author" content="Aliliin">
+<meta property="article:tag" content="RabbitMQ">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2020/03/24/RabbitMQ%20(httplocalhost15672)/">
@@ -122,6 +123,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -190,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-26 19:21:50" itemprop="dateModified" datetime="2021-08-26T19:21:50+08:00">2021-08-26</time>
+                <time title="修改时间：2021-08-27 11:32:35" itemprop="dateModified" datetime="2021-08-27T11:32:35+08:00">2021-08-27</time>
               </span>
 
           <br>
@@ -199,7 +205,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>296</span>
+              <span>288</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -218,10 +224,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="安装-RabbitMQ-http-localhost-15672"><a href="#安装-RabbitMQ-http-localhost-15672" class="headerlink" title="安装 RabbitMQ (http://localhost:15672)"></a>安装 RabbitMQ (<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672</a>)</h1><p>#Learning</p>
-<p>访问地址是：<a target="_blank" rel="noopener" href="http://localhost:15672/">RabbitMQ Management</a><br>Z帐号密码： guest</p>
-<p>安装过程<br>brew update<br>// 执行安装<br>brew install rabbitmq<br>brew install rabbitmq-c</p>
-<p>// 执行安装php扩展<br>git clone <a target="_blank" rel="noopener" href="https://github.com/pdezwart/php-amqp.git">https://github.com/pdezwart/php-amqp.git</a><br>phpize<br>./configure —with-librabbitmq-dir=/usr/local/Cellar/rabbitmq-c/0.10.0<br>make &amp;&amp; make install</p>
+        <h2 id="安装-RabbitMQ-http-localhost-15672"><a href="#安装-RabbitMQ-http-localhost-15672" class="headerlink" title="安装 RabbitMQ (http://localhost:15672)"></a>安装 RabbitMQ (<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672</a>)</h2><p>访问地址是：<a target="_blank" rel="noopener" href="http://localhost:15672/">RabbitMQ Management</a><br>Z帐号密码： guest</p>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><p>brew update</p>
+<h3 id="执行安装"><a href="#执行安装" class="headerlink" title="执行安装"></a>执行安装</h3><p>brew install rabbitmq<br>brew install rabbitmq-c</p>
+<h3 id="执行安装php扩展"><a href="#执行安装php扩展" class="headerlink" title="执行安装php扩展"></a>执行安装php扩展</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/pdezwart/php-amqp.git</span><br><span class="line">phpize</span><br><span class="line">./configure —with-librabbitmq-dir=/usr/local/Cellar/rabbitmq-c/0.10.0</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -230,6 +236,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+          </div>
 
         
 
@@ -302,7 +311,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-RabbitMQ-http-localhost-15672"><span class="nav-number">1.</span> <span class="nav-text">安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-RabbitMQ-http-localhost-15672"><span class="nav-number">1.</span> <span class="nav-text">安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">执行安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%AE%89%E8%A3%85php%E6%89%A9%E5%B1%95"><span class="nav-number">1.3.</span> <span class="nav-text">执行安装php扩展</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -319,6 +328,12 @@
           <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
