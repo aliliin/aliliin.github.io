@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="面试题汇总1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP一次面试的面试题">
+<meta property="og:url" content="http://example.com/2020/08/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="面试题汇总1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-27T13:05:09.097Z">
+<meta property="article:modified_time" content="2021-08-27T02:59:57.175Z">
+<meta property="article:author" content="Aliliin">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/08/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PHP一次面试的面试题 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP一次面试的面试题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-27 21:05:09" itemprop="dateCreated datePublished" datetime="2020-08-27T21:05:09+08:00">2020-08-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 10:59:57" itemprop="dateModified" datetime="2021-08-27T10:59:57+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="面试题汇总"><a href="#面试题汇总" class="headerlink" title="面试题汇总"></a>面试题汇总</h1><h4 id="1、秒杀流程的清楚？"><a href="#1、秒杀流程的清楚？" class="headerlink" title="1、秒杀流程的清楚？"></a>1、秒杀流程的清楚？</h4><pre><code>使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存。
+</code></pre>
+<h4 id="2、laravel-的依赖注入？"><a href="#2、laravel-的依赖注入？" class="headerlink" title="2、laravel 的依赖注入？"></a>2、laravel 的依赖注入？</h4><pre><code>  由容器动态的将某个依赖关系注入到组件中，他的目的是为了提升组件使用的频率，来灵活使用它。说白了就是一个对象依赖于另一个对象的技术，他可以通过构造函数直接注入，也可通过接口的方式注入
+</code></pre>
+<h4 id="3、Laravel-中的app类实现单利模式？"><a href="#3、Laravel-中的app类实现单利模式？" class="headerlink" title="3、Laravel 中的app类实现单利模式？"></a>3、Laravel 中的app类实现单利模式？</h4><h4 id="4、left-join-效率低？"><a href="#4、left-join-效率低？" class="headerlink" title="4、left join 效率低？"></a>4、left join 效率低？</h4><pre><code>它把两个表中的你要查询的数据组成一张新的表，产生临时表，所有查询
+</code></pre>
+<p>起来比较慢。如果使用 join 语句的话，需要让小表做驱动表。但条件是能使用到驱动表中的索引。</p>
+<h4 id="5、订单回收问题。"><a href="#5、订单回收问题。" class="headerlink" title="5、订单回收问题。"></a>5、订单回收问题。</h4><pre><code>如果没有使用缓存的话，就写一个定时任务，定期去回收未支付的订单。
+如果有使用缓存的话，放到队列里面，加一个过期的时间。
+    也可以使用消息队列中间件
+</code></pre>
+<h4 id="6、埋点上报怎么处理？"><a href="#6、埋点上报怎么处理？" class="headerlink" title="6、埋点上报怎么处理？"></a>6、埋点上报怎么处理？</h4><pre><code>如果前端埋点的事件较多，或者说网页内部交互频繁，可以通过本地存储的方式先缓存上报信息，然后定期上报。然后后台再进行处理，
+如果前端实时上报到后端的话，那就通过消费队列的方式定期去处理上报数据。
+</code></pre>
+<h4 id="7、说一下缓存穿透和缓存雪崩？"><a href="#7、说一下缓存穿透和缓存雪崩？" class="headerlink" title="7、说一下缓存穿透和缓存雪崩？"></a>7、说一下缓存穿透和缓存雪崩？</h4><pre><code>如果缓存失效了或者查出来的值是空的，不是立即去数据库进行查询，而是使用缓存本身成功操作的返回值进行返回，并利用redis的互斥锁(mutex key)的方式重新把数据缓存起来。
+雪崩的话，就像解决穿透一样加互斥锁，建立备份的缓存，有一份缓存不设置缓存失效时间，如果A没读到缓存就去读取B，并更新A和B的缓存。
+</code></pre>
+<h4 id="8、在工作中使用-Git-的基本流程？"><a href="#8、在工作中使用-Git-的基本流程？" class="headerlink" title="8、在工作中使用 Git 的基本流程？"></a>8、在工作中使用 Git 的基本流程？</h4><pre><code>提交 git add 、写更新内容 git commit -m 、查不同 git diff 、建立分支 git branch 、切换分支 git checkout、分支合并：git merge、显示本地仓库的所有分支：git branch、
+</code></pre>
+<h4 id="9、简单说下非对称加密？"><a href="#9、简单说下非对称加密？" class="headerlink" title="9、简单说下非对称加密？"></a>9、简单说下非对称加密？</h4><pre><code>非对称加密是有公钥和私钥，他们是成对使用的，公钥是可以给外人看的，私钥要自己保护好。用公钥进行加密而用私钥进行解密。同一队公钥和私钥。
+</code></pre>
+<h4 id="10、你们是怎么把-mysql-的数据同步到-es-上去的？"><a href="#10、你们是怎么把-mysql-的数据同步到-es-上去的？" class="headerlink" title="10、你们是怎么把 mysql 的数据同步到 es 上去的？"></a>10、你们是怎么把 mysql 的数据同步到 es 上去的？</h4><pre><code>最方便的方式可以同时更新，写入数据库的时候，同时写一个队列模块，通过队列的方式同步更新到 es 
+我们就简单的使用 mysql 的binlog （ROW模式）日志进行同步的。
+或者使用mysqldump工具进行同步。或者使用第三方的工具
+</code></pre>
+<h4 id="11、简单说下你怎么实现mysql-主从"><a href="#11、简单说下你怎么实现mysql-主从" class="headerlink" title="11、简单说下你怎么实现mysql 主从"></a>11、简单说下你怎么实现mysql 主从</h4><pre><code>因为mysql binlog的强大，我们把从库和主库维持一个长链接，从你设置的一些访问主库的Ip啊端口啊，用户名密码啊binlog读取的位置啊和主库进行交互，主库验证成功了之后，会从自己本地读取binlog 然后发送给从库。
+当然你也可以使用第三方的工具比如 mycat 去实现。
+</code></pre>
+<h4 id="12、说下你理解的-php-fpm。"><a href="#12、说下你理解的-php-fpm。" class="headerlink" title="12、说下你理解的 php-fpm。"></a>12、说下你理解的 php-fpm。</h4><pre><code>php-FPM 是一个PHP进程管理器 ，包含master 和worker 两种进程,
+首先它会启动一个 master 进程有且有一个，只负责监听端口，接收来自服务器的请求，然后会有多个 worker 进程具体多少根据你的配置，当请求过来的时候，master 会传递给一个 worker，然后立即接受下一个请求，当worker不够用的时候会直接返回502的错误。worker 请求超时的话会返回504，
+当然 php-fpm 也可以配置为动态模式，这样子的话，worker 的进程数量就是按照需求去启动的了。
+</code></pre>
+<h4 id="13、进程线程协程"><a href="#13、进程线程协程" class="headerlink" title="13、进程线程协程"></a>13、进程线程协程</h4><pre><code>进程是通过CPU运行的，一个进程挂了不影响另一个，
+线程属于进程，但是一个线程挂了不但影响其他的线程，还会把整个进程搞挂。
+协程是属于线程的。协程实在线程里面跑的，它没有上下文的切换，它之间的调度切换是通过程序员代码实现的，所以它特别灵活，因此也叫用户态的线程。
+</code></pre>
+<h4 id="14、php关联数组底层结构"><a href="#14、php关联数组底层结构" class="headerlink" title="14、php关联数组底层结构"></a>14、php关联数组底层结构</h4><pre><code>在PHP中, 数组是用一种HASH结构(HashTable)来实现的。
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/15/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" rel="prev" title="红楼梦中的诗句记录">
+      <i class="fa fa-chevron-left"></i> 红楼梦中的诗句记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/23/%E9%A2%98%E6%80%BB%E7%BB%93/" rel="next" title="PHP面试题总结">
+      PHP面试题总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB"><span class="nav-number">1.</span> <span class="nav-text">面试题汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E7%A7%92%E6%9D%80%E6%B5%81%E7%A8%8B%E7%9A%84%E6%B8%85%E6%A5%9A%EF%BC%9F"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1、秒杀流程的清楚？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81laravel-%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%9F"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2、laravel 的依赖注入？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81Laravel-%E4%B8%AD%E7%9A%84app%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%88%A9%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3、Laravel 中的app类实现单利模式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81left-join-%E6%95%88%E7%8E%87%E4%BD%8E%EF%BC%9F"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">4、left join 效率低？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E8%AE%A2%E5%8D%95%E5%9B%9E%E6%94%B6%E9%97%AE%E9%A2%98%E3%80%82"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">5、订单回收问题。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E5%9F%8B%E7%82%B9%E4%B8%8A%E6%8A%A5%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">6、埋点上报怎么处理？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8B%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E5%92%8C%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%EF%BC%9F"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">7、说一下缓存穿透和缓存雪崩？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%E3%80%81%E5%9C%A8%E5%B7%A5%E4%BD%9C%E4%B8%AD%E4%BD%BF%E7%94%A8-Git-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B%EF%BC%9F"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">8、在工作中使用 Git 的基本流程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%8B%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%EF%BC%9F"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">9、简单说下非对称加密？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E4%BD%A0%E4%BB%AC%E6%98%AF%E6%80%8E%E4%B9%88%E6%8A%8A-mysql-%E7%9A%84%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B0-es-%E4%B8%8A%E5%8E%BB%E7%9A%84%EF%BC%9F"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">10、你们是怎么把 mysql 的数据同步到 es 上去的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11%E3%80%81%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%8B%E4%BD%A0%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0mysql-%E4%B8%BB%E4%BB%8E"><span class="nav-number">1.0.0.11.</span> <span class="nav-text">11、简单说下你怎么实现mysql 主从</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12%E3%80%81%E8%AF%B4%E4%B8%8B%E4%BD%A0%E7%90%86%E8%A7%A3%E7%9A%84-php-fpm%E3%80%82"><span class="nav-number">1.0.0.12.</span> <span class="nav-text">12、说下你理解的 php-fpm。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13%E3%80%81%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B"><span class="nav-number">1.0.0.13.</span> <span class="nav-text">13、进程线程协程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14%E3%80%81php%E5%85%B3%E8%81%94%E6%95%B0%E7%BB%84%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.0.14.</span> <span class="nav-text">14、php关联数组底层结构</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aliliin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aliliin</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">22k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

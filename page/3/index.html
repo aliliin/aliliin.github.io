@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Aliliin">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/18/Go%20interface%202/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/18/Go%20interface%202/" class="post-title-link" itemprop="url">Go interface</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-18 11:39:14" itemprop="dateCreated datePublished" datetime="2019-03-18T11:39:14+08:00">2019-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:07:34" itemprop="dateModified" datetime="2021-08-27T11:07:34+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Go-interface"><a href="#Go-interface" class="headerlink" title="Go interface"></a>Go interface</h1><ul>
+<li>通过关键字type和interface，声明出接口类 <code>type TestInterface interface &#123;&#125;</code></li>
+<li>因为接口类型与其他数据类型不同，它是没法被实例化的。既不能通过调用new函数或make函数创建出一个接口类型的值</li>
+<li>我们通过 interface 来定义对象的一组行为方法，如果某个对象实现了某个接口类型的所有方法，则此对象就是这个接口的实现类型<pre><code>实现约束:
+  1. 两个方法的签名需要完全一致
+  2. 两个方法的名称要一模一样
+</code></pre>
+</li>
+</ul>
+<p>代码实现:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">type Pet interface &#123;</span><br><span class="line">    SetName(name string)</span><br><span class="line">    Name() string</span><br><span class="line">    Category() string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Dog struct &#123;</span><br><span class="line">    name string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (dog *Dog) SetName(name string) &#123;</span><br><span class="line">    dog.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (dog Dog) Name() string &#123;</span><br><span class="line">    return dog.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (dog Dog) Category() string &#123;</span><br><span class="line">    return &quot;dog&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func TestDog(t *testing.T) &#123;</span><br><span class="line">    dog := Dog&#123;&quot;little pig&quot;&#125;</span><br><span class="line">    _, ok := interface&#123;&#125;(dog).(Pet)</span><br><span class="line">    fmt.Printf(&quot;Dog implements interface Pet: %v\n&quot;, ok) // Dog implements interface Pet: false</span><br><span class="line">    _, ok = interface&#123;&#125;(&amp;dog).(Pet)</span><br><span class="line">    fmt.Printf(&quot;*Dog implements interface Pet: %v\n&quot;, ok) // *Dog implements interface Pet: true</span><br><span class="line">    var pet Pet = &amp;dog</span><br><span class="line">    fmt.Printf(&quot;This pet is a %s, the name is %q.\n&quot;,</span><br><span class="line">        pet.Category(), pet.Name()) //  This pet is a dog, the name is &quot;little pig&quot;.</span><br><span class="line">	</span><br><span class="line">    dog.SetName(&quot;monster&quot;)</span><br><span class="line">    fmt.Printf(&quot;This pet is a %s, the name is %q.\n&quot;,</span><br><span class="line">        pet.Category(), pet.Name()) // This pet is a dog, the name is &quot;monster&quot;.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="空接口"><a href="#空接口" class="headerlink" title="空接口"></a>空接口</h3><ol>
+<li>空接口可以表示任何类型</li>
+<li> 2.通过断言来将空接口转换为制定   //  v,ok := p.(int) // ok = true 时转换成功</li>
+</ol>
+<h3 id="go-接口最佳实践"><a href="#go-接口最佳实践" class="headerlink" title="go 接口最佳实践"></a>go 接口最佳实践</h3><h4 id="倾向于使用小的接口定义-很多接口只包含一个方法"><a href="#倾向于使用小的接口定义-很多接口只包含一个方法" class="headerlink" title="倾向于使用小的接口定义,很多接口只包含一个方法"></a>倾向于使用小的接口定义,很多接口只包含一个方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type Reader interface &#123;</span><br><span class="line">	Read(p []byte) (n int, err error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="较大的接口定义-可以由多个小接口定义组合而成"><a href="#较大的接口定义-可以由多个小接口定义组合而成" class="headerlink" title="较大的接口定义,可以由多个小接口定义组合而成"></a>较大的接口定义,可以由多个小接口定义组合而成</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type ReadWrite interface &#123;</span><br><span class="line">	Reader</span><br><span class="line">	Write</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="只依赖与必要的功能最小接口"><a href="#只依赖与必要的功能最小接口" class="headerlink" title="只依赖与必要的功能最小接口**"></a>只依赖与必要的功能最小接口**</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func storeData(reader Reader) error &#123;</span><br><span class="line">  …</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h4><p>使用者来定义接口，不是先写好了个接口，然后使用者来调用</p>
+<p>接口变量里面有实现者的类型和实现者的值</p>
+<p>接口变量里面自带指针，<br>接口变量同样采用值传递，几乎不需要使用接口的指针<br>指针接收者实现只能以指针方式使用，值接收者的话两者都可</p>
+<p>查看接口变量的类型<br>表示任何类型 interface{}<br>查看接口变量<br>type switch type Assertion</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/13/Go%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/13/Go%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">Go 面向对象</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-13 16:39:39" itemprop="dateCreated datePublished" datetime="2019-03-13T16:39:39+08:00">2019-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:06:00" itemprop="dateModified" datetime="2021-08-27T11:06:00+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Go-面向对象"><a href="#Go-面向对象" class="headerlink" title="Go 面向对象"></a>Go 面向对象</h1><h3 id="实例创建及初始化"><a href="#实例创建及初始化" class="headerlink" title="实例创建及初始化"></a>实例创建及初始化</h3><ul>
+<li>基本使用</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</span><br><span class="line">	Id   <span class="keyword">int</span></span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">	Age  <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">e  := Employee&#123;<span class="string">&quot;0&quot;</span>, <span class="string">&quot;Bob&quot;</span>, <span class="number">20</span>&#125;</span><br><span class="line">e1 := Employee&#123;name: <span class="string">&quot;Ali&quot;</span>, Age: <span class="number">30</span>&#125;</span><br><span class="line"><span class="comment">// 注意这里返回的引用/指针, 相当于 e:= &amp;Employee&#123;&#125;</span></span><br><span class="line">e2 := <span class="built_in">new</span>(Employee)</span><br><span class="line"><span class="comment">// 与其他的编程语言不同, 可以不用 -&gt; 的方式来访问指定的属性</span></span><br><span class="line">e2.Id = <span class="string">&quot;2&quot;</span></span><br><span class="line">e2.Age = <span class="number">23</span></span><br><span class="line">e2.Name = <span class="string">&quot;Ali&quot;</span></span><br><span class="line"><span class="comment">// 访问</span></span><br><span class="line">t.Log(e1.Id)           <span class="comment">// 0</span></span><br><span class="line">t.Logf(<span class="string">&quot;e is %T&quot;</span>, e)   <span class="comment">// e is employee_test.Employee 前面如果加上 &amp;  那么返回的也是 指针类型</span></span><br><span class="line">t.Logf(<span class="string">&quot;e2 is %T&quot;</span>, e2) <span class="comment">// e2 is *employee_test.Employee 这个是指针类型</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>非指针传递会生成一个新的结构对象，其中每个成员会复制。指针传递，只是传递指针，且该指针指向原有结构。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 这一种,定义方式在实例对应方法变调用的时候 ,实例的成员会进行值复制</span><br><span class="line">func (e Employee) String() string &#123;</span><br><span class="line">  fmt.Printf(&quot;输出自己的e的地址 %x\n&quot;, unsafe.Pointer(&amp;e.Name)) // c00000a0e8</span><br><span class="line">  return fmt.Sprintf(&quot;ID :%d-Name:%s-Age:%d&quot;, e.Id, e.Name, e.Age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 在通常情况下避免内存拷贝我们使用 这种方式</span><br><span class="line">func (e *Employee) String() string &#123;</span><br><span class="line">    fmt.Printf(&quot;输出自己的e的地址 %x\n&quot;, unsafe.Pointer(&amp;e.Name)) // c00000a0e8</span><br><span class="line">    return fmt.Sprintf(&quot;ID :%d/Name:%s/Age:%d&quot;, e.Id, e.Name, e.Age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试 String 方法</span><br><span class="line">func TestInit(t *testing.T) &#123;</span><br><span class="line">    e := Employee&#123;1, &quot;Bob&quot;, 20&#125;</span><br><span class="line">    // 第一种</span><br><span class="line">    // t.Log(e.String()) // ID :1-Name:Bob-Age:20</span><br><span class="line">    fmt.Printf(&quot;输出传进来的e的地址 %x\n&quot;, unsafe.Pointer(&amp;e.Name)) // c00000a108</span><br><span class="line"></span><br><span class="line">    // 第二种</span><br><span class="line">    t.Log(e.String()) // ID :1/Name:Bob/Age:20</span><br><span class="line">    fmt.Printf(&quot;输出传进来的e的地址 %x\n&quot;, unsafe.Pointer(&amp;e.Name))  // c00000a0e8</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/12/Go%20String%20%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/12/Go%20String%20%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">Go String 类型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-12 17:54:48" itemprop="dateCreated datePublished" datetime="2019-03-12T17:54:48+08:00">2019-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:08:25" itemprop="dateModified" datetime="2021-08-27T11:08:25+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>264</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Go-String-类型"><a href="#Go-String-类型" class="headerlink" title="Go String 类型"></a>Go String 类型</h1><ul>
+<li>零值 不是null 是 空字符串</li>
+<li>string 是数据类型,不是引用或者指针类型</li>
+<li>string 是只读的 byte slice, len 函数可以返回它所包含的 byte 数</li>
+<li>string 的 byte 数组可以存放任何数据</li>
+</ul>
+<h4 id="Unicode-UTF8"><a href="#Unicode-UTF8" class="headerlink" title="Unicode UTF8"></a>Unicode UTF8</h4><ol>
+<li>Unicode 是一种字符集 (code point 字符编码)  </li>
+<li>UTF8 是 Unicode 的存储实现 (转换为字节序列的规则)</li>
+</ol>
+<h4 id="字符串常用的函数包"><a href="#字符串常用的函数包" class="headerlink" title="字符串常用的函数包"></a>字符串常用的函数包</h4><ol>
+<li>strings 包 (<a target="_blank" rel="noopener" href="https://golang.org/pkg/strings/">https://golang.org/pkg/strings/</a>)</li>
+<li>strconv 包 (<a target="_blank" rel="noopener" href="https://golang.org/pkg/strconv/">https://golang.org/pkg/strconv/</a>)</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/08/Go%20map%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/08/Go%20map%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">Go map类型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-08 15:05:21" itemprop="dateCreated datePublished" datetime="2019-03-08T15:05:21+08:00">2019-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:07:56" itemprop="dateModified" datetime="2021-08-27T11:07:56+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Go-map类型"><a href="#Go-map类型" class="headerlink" title="Go map类型"></a>Go map类型</h1><h2 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h2><ul>
+<li>类似其它语言中的哈希表或者字典，以 key=&gt;value 形式存储数据</li>
+<li>格式为 map[keyType]valueType</li>
+<li>key 必须是支持 == 或者 != 比较运算的类型，不可以是函数，map 或者 slice </li>
+<li>map 使用 make() 创建，支持 := 这种简写的方式</li>
+<li>map 是无序的，每次打印出来的 map 都会不一样，它不能通过 index 获取，而必须通过 key 获取</li>
+<li>map 的长度是不固定的，也就是和 slice 一样，也是一种引用类型</li>
+<li>内置的len函数同样适用于 map，返回 map 拥有的 key 的数量</li>
+<li>map 的值可以很方便的修改，通过 mapType[“one”] = 11 可以很容易的把 key 为 one 的值改为11</li>
+<li>和 slice 一样,如果两个map 同时指向同一个底层数据,那么任何一个改变.另一个也会改变</li>
+</ul>
+<h2 id="代码练习"><a href="#代码练习" class="headerlink" title="代码练习"></a>代码练习</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明一个 key 是字符串，值为 int 的map </span></span><br><span class="line"><span class="keyword">var</span> numbers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span> </span><br><span class="line"><span class="comment">// 另一种声明方式 map 使用 make() 创建</span></span><br><span class="line">numbers = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 支持 := 这种简写的方式</span></span><br><span class="line">numbers := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">numbers[<span class="string">&quot;one&quot;</span>] = <span class="number">1</span>          <span class="comment">// 赋值 </span></span><br><span class="line">numbers[<span class="string">&quot;two&quot;</span>] = <span class="number">2</span>          <span class="comment">// 赋值</span></span><br><span class="line"><span class="comment">// 注意不能单独打印 numbers 而必须通过 key 获取</span></span><br><span class="line">fmt.Println(numbers[<span class="string">&quot;one&quot;</span>]) <span class="comment">//  输出 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化一个字典</span></span><br><span class="line">rating := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">float32</span>&#123;<span class="string">&quot;C&quot;</span>: <span class="number">5</span>, <span class="string">&quot;Go&quot;</span>: <span class="number">4.5</span>, <span class="string">&quot;Python&quot;</span>: <span class="number">4.5</span>, <span class="string">&quot;PHP&quot;</span>: <span class="number">2</span>&#125;</span><br><span class="line"><span class="comment">// 赋值</span></span><br><span class="line">csharpRating, ok := rating[<span class="string">&quot;C++&quot;</span>]</span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;输出ok的值&quot;</span>, csharpRating)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;没找到对应的OK的值&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"><span class="built_in">delete</span>(rating, <span class="string">&quot;C&quot;</span>)      <span class="comment">// 删除key为C的元素</span></span><br><span class="line">fmt.Println(rating[<span class="string">&quot;C&quot;</span>]) <span class="comment">// 输出 0</span></span><br><span class="line"><span class="comment">// 内置的len函数同样适用于 map，返回 map 拥有的 key 的数量</span></span><br><span class="line">fmt.Println(<span class="built_in">len</span>(rating)) <span class="comment">// 因为删除了一个key 所以现在输出 3</span></span><br><span class="line"><span class="comment">// 和 slice 一样,如果两个map 同时指向同一个底层数据,那么任何一个改变.另一个也会改变</span></span><br><span class="line">m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span><br><span class="line">m[<span class="string">&quot;Hello&quot;</span>] = <span class="string">&quot;你好&quot;</span></span><br><span class="line">m1 := m</span><br><span class="line">m1[<span class="string">&quot;Hello&quot;</span>] = <span class="string">&quot;不好&quot;</span>  <span class="comment">// 现在m[&quot;hello&quot;]的值已经是 不好 了</span></span><br><span class="line"><span class="comment">//  key 必须是支持 == 或者 != 比较运算的类型，不可以是函数，map 或者 slice </span></span><br><span class="line">mapa := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">&quot;one&quot;</span>:<span class="number">1</span>,<span class="string">&quot;two&quot;</span>:<span class="number">2</span>&#125;</span><br><span class="line">mapb := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">&quot;yi&quot;</span>: <span class="number">1</span>, <span class="string">&quot;er&quot;</span>: <span class="number">2</span>&#125;</span><br><span class="line"><span class="keyword">if</span> mapa[<span class="string">&quot;one&quot;</span>] == mapb[<span class="string">&quot;yi&quot;</span>] &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;可以比较&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">if</span> mapa[<span class="string">&quot;one&quot;</span>] != mapb[<span class="string">&quot;er&quot;</span>] &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;可以比较&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/08/Go%20%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aliliin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/08/Go%20%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">Go 函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-08 14:38:26" itemprop="dateCreated datePublished" datetime="2019-03-08T14:38:26+08:00">2019-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:05:46" itemprop="dateModified" datetime="2021-08-27T11:05:46+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>624</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Go-函数"><a href="#Go-函数" class="headerlink" title="Go 函数"></a>Go 函数</h1><h2 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h2><ul>
+<li>关键字 <code>func</code> 用来声明一个函数</li>
+<li>函数可以有一个或者多个参数，每个参数后面带有不同的类型，通过,分隔</li>
+<li>函数可以返回多个值</li>
+<li>如果只有一个返回值且不声明返回值变量，那么你可以省略 包括返回值 的括号</li>
+<li>如果没有返回值，那么就直接省略最后的返回信息</li>
+<li>如果有返回值， 那么必须在函数的外层添加return语句</li>
+<li>所有的参数都是值传递: slice, map, channel 会有传引用的错觉</li>
+<li>函数可以作为变量的值</li>
+<li>函数可以作为参数的返回值</li>
+</ul>
+<h2 id="函数基本定义"><a href="#函数基本定义" class="headerlink" title="函数基本定义"></a>函数基本定义</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数定义</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcName</span><span class="params">(inputOne <span class="keyword">type</span>, inputTwo <span class="keyword">type</span>)</span> <span class="params">(outputOne <span class="keyword">type</span>, outputTwo <span class="keyword">type</span>)</span></span> &#123;**</span><br><span class="line">			<span class="comment">// 逻辑代码...</span></span><br><span class="line">			<span class="comment">// 可以返回多个值</span></span><br><span class="line">			<span class="keyword">return</span> valueOne, valueTwo</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 返回指定类型</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Testmax</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回两个值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SumAndProduct</span><span class="params">(A, B <span class="keyword">int</span>)</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> A+B, A*B</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不确定传入的参数个数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Sum</span><span class="params">(ops ...<span class="keyword">int</span>)</span> <span class="title">int</span></span>&#123;</span><br><span class="line">		ret :=<span class="number">0</span></span><br><span class="line"> <span class="keyword">for</span> _,op:=<span class="keyword">range</span> ops&#123;</span><br><span class="line">		ret += op</span><br><span class="line"> &#125;</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aliliin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aliliin</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">22k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
