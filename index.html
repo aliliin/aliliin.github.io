@@ -163,6 +163,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2021/08/30/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="高永立">
+      <meta itemprop="description" content="Beijing, China">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/30/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">PHP实现AES-128-CBC-PKCS5Padding加密</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-30 15:31:17 / 修改时间：16:23:12" itemprop="dateCreated datePublished" datetime="2021-08-30T15:31:17+08:00">2021-08-30</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>​    </p>
+<p>​    最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 <code>AES-128-CBC-PKCS5Padding</code> 加密，然后再做 <code>Base64 </code>编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）。</p>
+<p>​    首先看到这个加密方式之后，就在PHP函数库中进行寻找，看看有没有对应的加密函数，然而找了一圈下来，发现并没有，需要自己实现，后了解到可以用 mcrypt 函数扩展实现，但是 mcrypt函数 自 PHP 7.1.0 起就废弃了，强烈建议不要使用本函数，只好再寻找其他<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/refs.crypto.php">加密函数库</a>，在手册的下方看到了 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/ref.openssl.php">OpenSSL 函数</a>，通过了解 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt(加密数据)</a> 函数发现可以实现需求,<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt</a> 具体的使用方法请自行看手册，</p>
+<p>实现函数如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加密</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encrypt</span>(<span class="params"><span class="variable">$input</span>, <span class="variable">$key</span>, <span class="variable">$iv</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> base64_encode(openssl_encrypt(<span class="variable">$input</span>, <span class="string">&#x27;AES-128-CBC&#x27;</span>, <span class="variable">$key</span>, OPENSSL_RAW_DATA,<span class="variable">$iv</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解密</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrypt</span>(<span class="params"><span class="variable">$input</span>, <span class="variable">$key</span>, <span class="variable">$iv</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> openssl_decrypt(base64_decode(<span class="variable">$input</span>), <span class="string">&#x27;AES-128-CBC&#x27;</span>, <span class="variable">$key</span>, OPENSSL_RAW_DATA, <span class="variable">$iv</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试加密 (我这里用的是json字符串)</span></span><br><span class="line"><span class="variable">$dataJson</span> = <span class="string">&#x27;[&#123;&quot;Code&quot;: &quot;123123&quot;, &quot;Name&quot;: &quot;Bob&quot;, &quot;Address&quot;: &quot;\u94f6\u5ddd\u5e02&quot;&#125;, &#123;&quot;Code&quot;: &quot;464776&quot;, &quot;Name&quot;: &quot;Hello&quot;, &quot;Address&quot;: &quot;\u5317\u4eac\u5e02&quot;&#125;]&#x27;</span>;</span><br><span class="line">print_r(encrypt(<span class="variable">$dataJson</span>, <span class="variable">$key</span>, <span class="variable">$iv</span>));</span><br><span class="line"><span class="comment">//u9Bd8oHXDGvjZcTIX9HK1r1q+aSu+/48gsfoGVrxoScZuX8yaj/xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试解密</span></span><br><span class="line"><span class="variable">$strr</span> = <span class="string">&#x27;u9Bd8oHXDGvjZcTIX9HK1r1q+aSu+/48gsfoGVrxoScZuX8yaj/xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D&#x27;</span>;</span><br><span class="line">print_r(decrypt(<span class="variable">$strr</span>, <span class="variable">$key</span>, <span class="variable">$iv</span>));</span><br><span class="line"><span class="comment">// [&#123;&quot;Code&quot;: &quot;123123&quot;, &quot;Name&quot;: &quot;Bob&quot;, &quot;Address&quot;: &quot;\u94f6\u5ddd\u5e02&quot;&#125;, &#123;&quot;Code&quot;: &quot;464776&quot;, &quot;Name&quot;: &quot;Hello&quot;, &quot;Address&quot;: &quot;\u5317\u4eac\u5e02&quot;&#125;]</span></span><br></pre></td></tr></table></figure>
+
+
+<p>​    自测通过，一脸得意地坐等联调。然后开始写其他业务去了，过了几天，结果一联调发现我加密的对方无法解密，对方加密的我无法解密，加密算法不匹配（挠头中。经过Google搜索相关问题，发现一句话，大概的意思就是说，在废弃的 <code>mcrypt</code> 加密库中，128 实际上指的是块大小而不是密钥大小，但是在 <code>openssl</code> 中的 <code>aes-128-cbc</code> 的 128 指的是密钥大小，也就是说，在使用有效的 256 位密钥时，它们都是 <code>aes-256</code> ，而如果要把 <code>mcrypt</code> 转为 <code>openssl</code> 的加密方式，<code>mcrypt</code> 的 128 需要写成 <code>openssl</code> 的 256 ，于是抱着试试看的态度，更改了一下 <code>aes-128-cbc</code> 为 <code>aes-256-cbc</code>，然后再进行调试，发现联调通过了。不过具体的技术细节原理还不是很明白，先这样子修改使用，以后有时间再研究吧。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><em>解决的方案，是把加密方式 AES-128-CBC 替换成 AES-256-CBC</em></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aliliin.com/2021/08/30/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -935,90 +1016,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="高永立">
-      <meta itemprop="description" content="Beijing, China">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">Redis 缓存策略</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-21 08:41:20" itemprop="dateCreated datePublished" datetime="2020-05-21T08:41:20+08:00">2020-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:44:29" itemprop="dateModified" datetime="2021-08-27T11:44:29+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>524</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h1><h4 id="数据脏读脏写-不一致的解决情况"><a href="#数据脏读脏写-不一致的解决情况" class="headerlink" title="数据脏读脏写 不一致的解决情况"></a>数据脏读脏写 不一致的解决情况</h4><p>其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。<br>这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：<br>从缓存中读取数据；<br>如果缓存命中，则直接返回数据；<br>如果缓存不命中，则从数据库中查询数据；<br>查询到数据后，将数据写入到缓存中，并且返回给用户。<br>写策略的步骤是：<br>更新数据库中的记录；<br>删除缓存记录。</p>
-<p>Cache Aside 存在的最大的问题是当写入比较频繁时，缓存中的数据会被频繁地清理，这样会对缓存的命中率有一些影响。如果你的业务对缓存命中率有严格的要求，那么可以考虑两种解决方案：</p>
-<ol>
-<li>一种做法是在更新数据时也更新缓存，只是在更新缓存前先加一个分布式锁，因为这样在同一时间只允许一个线程更新缓存，就不会产生并发问题了。当然这么做对于写入的性能会有一些影响；</li>
-<li>另一种做法同样也是在更新数据时更新缓存，只是给缓存加一个较短的过期时间，这样即使出现缓存不一致的情况，缓存的数据也会很快过期，对业务的影响也是可以接受。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1088,14 +1085,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1143,13 +1140,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">31k</span>
+    <span title="站点总字数">33k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">28 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

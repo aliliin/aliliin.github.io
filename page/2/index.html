@@ -163,6 +163,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="高永立">
+      <meta itemprop="description" content="Beijing, China">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">Redis 缓存策略</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-21 08:41:20" itemprop="dateCreated datePublished" datetime="2020-05-21T08:41:20+08:00">2020-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:44:29" itemprop="dateModified" datetime="2021-08-27T11:44:29+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>524</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h1><h4 id="数据脏读脏写-不一致的解决情况"><a href="#数据脏读脏写-不一致的解决情况" class="headerlink" title="数据脏读脏写 不一致的解决情况"></a>数据脏读脏写 不一致的解决情况</h4><p>其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。<br>这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：<br>从缓存中读取数据；<br>如果缓存命中，则直接返回数据；<br>如果缓存不命中，则从数据库中查询数据；<br>查询到数据后，将数据写入到缓存中，并且返回给用户。<br>写策略的步骤是：<br>更新数据库中的记录；<br>删除缓存记录。</p>
+<p>Cache Aside 存在的最大的问题是当写入比较频繁时，缓存中的数据会被频繁地清理，这样会对缓存的命中率有一些影响。如果你的业务对缓存命中率有严格的要求，那么可以考虑两种解决方案：</p>
+<ol>
+<li>一种做法是在更新数据时也更新缓存，只是在更新缓存前先加一个分布式锁，因为这样在同一时间只允许一个线程更新缓存，就不会产生并发问题了。当然这么做对于写入的性能会有一些影响；</li>
+<li>另一种做法同样也是在更新数据时更新缓存，只是给缓存加一个较短的过期时间，这样即使出现缓存不一致的情况，缓存的数据也会很快过期，对业务的影响也是可以接受。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aliliin.com/2020/03/24/RabbitMQ%20(httplocalhost15672)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1156,96 +1240,6 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/08/27/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BC%98%E5%8C%96%20Composer%20%E5%8C%85%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="高永立">
-      <meta itemprop="description" content="Beijing, China">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/27/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BC%98%E5%8C%96%20Composer%20%E5%8C%85%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">生产环境中优化Composer包管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-08-27 14:17:27" itemprop="dateCreated datePublished" datetime="2019-08-27T14:17:27+08:00">2019-08-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:25:18" itemprop="dateModified" datetime="2021-08-27T11:25:18+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>510</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="生产环境中优化-Composer-包管理"><a href="#生产环境中优化-Composer-包管理" class="headerlink" title="生产环境中优化 Composer 包管理"></a>生产环境中优化 Composer 包管理</h1><h3 id="Composer-常用命令"><a href="#Composer-常用命令" class="headerlink" title="Composer 常用命令"></a>Composer 常用命令</h3><ul>
-<li>安装包，根据 composer.json 文件<br><code>composer install</code></li>
-<li>更新包，升级 composer.json 的所有代码库（如果能能升级的话）<br><code>composer update</code></li>
-<li>搜索包，搜索composer可用的包<br><code>composer search 关键字</code></li>
-<li>引入包，会在 composer.json  新增一条包配置，并下载该代码<br><code>composer require 包名称</code></li>
-<li>删除包<br><code>composer remove 包名称</code></li>
-<li>生成当前命名空间与类库文件路径的一个映射，运行时加载会直接读取这个映射，加快文件的加载速度<br><code>composer dump-autoload</code></li>
-</ul>
-<h3 id="composer-dumpautoload-o-命令优化执行时间"><a href="#composer-dumpautoload-o-命令优化执行时间" class="headerlink" title="composer dumpautoload -o  命令优化执行时间"></a><code>composer dumpautoload -o </code> 命令优化执行时间</h3><ul>
-<li>重置索引、生产 classmap （这个命令并没有考虑当前 classmap 中找不到目标类时的情况。<br>当加载器找不到目标类时候，仍旧会根据 PSR-4/PSR-0 的规则去文件系统中查找）<h3 id="composer-dumpautoload-a-不推荐使用"><a href="#composer-dumpautoload-a-不推荐使用" class="headerlink" title="composer dumpautoload -a   不推荐使用"></a><code>composer dumpautoload -a </code>  不推荐使用</h3></li>
-<li>和 -o 的区别在于加载器在 classmap 中找不到目标类时，不会再去文件系统中查找（即隐含的认为 classmap 中所有合法的类，不会有其他的类了，除非法调用）</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1315,14 +1309,14 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1370,13 +1364,13 @@ ini_scanner_globals_ctor(&amp;ini_scanner_globals);<br>php_scanner_globals_ctor(
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">31k</span>
+    <span title="站点总字数">33k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">28 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
