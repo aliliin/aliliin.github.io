@@ -163,6 +163,133 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/08/29/IoC%E4%B8%8EDI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="高永立">
+      <meta itemprop="description" content="Beijing, China">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/29/IoC%E4%B8%8EDI/" class="post-title-link" itemprop="url">IoC与DI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-29 09:15:25" itemprop="dateCreated datePublished" datetime="2019-08-29T09:15:25+08:00">2019-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:46:51" itemprop="dateModified" datetime="2021-08-27T11:46:51+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>698</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="IoC与DI"><a href="#IoC与DI" class="headerlink" title="IoC与DI"></a>IoC与DI</h2><ul>
+<li>Ioc，即控制反转，把对象的调用权交给容器，通过容器来实现对象的装配和管理</li>
+<li>DI，即依赖注入，对象之间依赖关系由容器在运行期决定，由容器动态的将依赖关系注入到对象之中</li>
+<li>DI 是对 IoC 更完善的描述</li>
+</ul>
+<h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><ul>
+<li>谁依赖谁？对象实例化依赖容器</li>
+<li>为什么要依赖？对象实例化通过容器自动得到外部依赖</li>
+<li>谁注入谁？容器注入对象的依赖到对象中</li>
+<li>注入了什么？注入了对象的外部依赖</li>
+</ul>
+<h3 id="Hyperf-的依赖注入"><a href="#Hyperf-的依赖注入" class="headerlink" title="Hyperf 的依赖注入"></a>Hyperf 的依赖注入</h3><ul>
+<li>由 hyperf/di 组件提供功能支持</li>
+<li>更符合长生命周期的应用使用</li>
+<li>提供了 注解、注解注入、AOP</li>
+<li>基于 PSR-11 实现，可独立应用于其他框架</li>
+</ul>
+<ol>
+<li>注入方式<ul>
+<li>通过构造方法注入</li>
+<li>通过 @Inject 注解注入</li>
+</ul>
+</li>
+<li>注入类型<ul>
+<li>简单对象注入<ul>
+<li>我们假设 存在一个。UserService 类</li>
+<li>我们希望在其他地方引用该类的依赖</li>
+<li>在类成员属性上定义 @Inject注解，配合@var 的值来完成依赖的注入</li>
+</ul>
+</li>
+<li>抽象工厂注入</li>
+<li>工厂对象注入</li>
+</ul>
+</li>
+</ol>
+<h3 id="注入容器本身"><a href="#注入容器本身" class="headerlink" title="注入容器本身"></a>注入容器本身</h3><ul>
+<li>直接 Psr\Container\ContainerInterface</li>
+<li>通过 Hyperf\Utils\ApplicationContext::getContainer() 获得</li>
+</ul>
+<h3 id="对注解和-DI-的总结"><a href="#对注解和-DI-的总结" class="headerlink" title="对注解和 DI 的总结"></a>对注解和 DI 的总结</h3><ul>
+<li>PHP 语法上没有支持注解，只能基于约束好的规定去从注释上解析</li>
+<li>注解只是元数据定义，实现功能时不利用这些数据的话，没任何作用</li>
+<li>使用了注解的对象必须基于 Hyperf 的DI 容器来创建对象才能生效</li>
+<li>注解可以用在类、类方法、类成员属性上</li>
+<li>DI 容器是负责管理 对象的创建 和 对象的依赖管理的</li>
+<li>DI 容器创建出来的对象是个单例，是长生命周期对象</li>
+<li>通过 $container-&gt;make() 方法 或者 make() 函数创建短生命周期对象</li>
+<li>通过 new 来实例化的对象注解不会生效，依赖需自行管理</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/08/27/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -989,99 +1116,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="高永立">
-      <meta itemprop="description" content="Beijing, China">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/" class="post-title-link" itemprop="url">Go 错误处理 Panic 和 Recover</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-03-18 14:08:52" itemprop="dateCreated datePublished" datetime="2019-03-18T14:08:52+08:00">2019-03-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:30:18" itemprop="dateModified" datetime="2021-08-27T11:30:18+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="Go-错误处理-Panic-和-Recover"><a href="#Go-错误处理-Panic-和-Recover" class="headerlink" title="Go 错误处理 Panic 和 Recover"></a>Go 错误处理 Panic 和 Recover</h4><ol>
-<li>Go中没有错误机制</li>
-<li>error 类型实现了 error 接口<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type error interface &#123;</span><br><span class="line">	Error() string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>可以通过 errors.New 来实现快速创建错误信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">errors.New(&quot;n must be in the range [0,10]</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="Panic-的基本定义和使用"><a href="#Panic-的基本定义和使用" class="headerlink" title="Panic 的基本定义和使用"></a>Panic 的基本定义和使用</h4><ol>
-<li>panic  用于不可以恢复的错误</li>
-<li>Panic 退出前会执行 defer 指定的内容、<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func TestPanic(t *testing.T) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;最后结果依旧执行!&quot;) // 这一部分的代码依旧执行</span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;执行开始&quot;)</span><br><span class="line">	panic(errors.New(&quot;错误信息!&quot;))</span><br><span class="line">&#125;</span><br><span class="line">// 输出大致结果如下</span><br><span class="line">开始</span><br><span class="line">最后结果依旧执行!</span><br><span class="line">--- FAIL: TestPanic (0.00s)</span><br><span class="line">panic: 错误信息! [recovered]</span><br><span class="line">panic: 错误信息!</span><br></pre></td></tr></table></figure>
-<h4 id="os-Exit-的基本定义和使用"><a href="#os-Exit-的基本定义和使用" class="headerlink" title="os.Exit 的基本定义和使用"></a>os.Exit 的基本定义和使用</h4></li>
-<li>os.Exit 退出时不调用defer 指定的函数</li>
-<li>os.Exit 退出时不输出当前调用栈信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func TestExit(t *testing.T) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;这段代码不会执行!&quot;) </span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;开始执行&quot;)</span><br><span class="line">	os.Exit(-1) // 直接退出 exit status 255</span><br><span class="line">&#125;</span><br><span class="line">// 输出结果如下</span><br><span class="line">开始执行</span><br><span class="line">exit status 255</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="Recover-的使用"><a href="#Recover-的使用" class="headerlink" title="Recover 的使用"></a>Recover 的使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func TestRecover(t *testing.T) &#123;</span><br><span class="line"></span><br><span class="line">	defer func() &#123;</span><br><span class="line">		if err := recover(); err != nil &#123;</span><br><span class="line">			fmt.Println(&quot;recoverd 开始\n&quot;, err)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;开始执行&quot;)</span><br><span class="line">	panic(errors.New(&quot;错误信息!&quot;))</span><br><span class="line">&#125;</span><br><span class="line">// 输出结果如下:</span><br><span class="line">开始执行</span><br><span class="line">recoverd 开始</span><br><span class="line"> 错误信息!</span><br></pre></td></tr></table></figure>
-<h4 id="异常处理总结"><a href="#异常处理总结" class="headerlink" title="异常处理总结"></a>异常处理总结</h4><pre><code>当一个函数在执行过程中出现了异常或遇到 panic()，正常语句就会立即终止，然后执行 defer 语句，再报告异常信息，最后退出。如果在 defer 中使用了 recover() 函数,则会捕获错误信息，使该错误信息终止报告。
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1151,14 +1185,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1209,13 +1243,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">36k</span>
+    <span title="站点总字数">39k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">32 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

@@ -163,6 +163,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2021/09/14/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="高永立">
+      <meta itemprop="description" content="Beijing, China">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Go 使用 Consul 的简单操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-14 17:37:15 / 修改时间：17:38:17" itemprop="dateCreated datePublished" datetime="2021-09-14T17:37:15+08:00">2021-09-14</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><p>Consul Docker 安装命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8500:8500 -p 8300:8300 -p 8301:8301 -p 8302:8302 -p 8600:8600/udp consul consul agent -dev -client=0.0.0.0 </span><br><span class="line"></span><br><span class="line">// 开机关机 自动重启服务</span><br><span class="line">docker container update --restart=always 容器ID </span><br><span class="line"></span><br><span class="line">默认的web端口号是：8500</span><br><span class="line">默认的 dns 端口号是：8600，</span><br><span class="line">dig 命令查询</span><br><span class="line">dig @127.0.0.1 -p 8600 consul.service.consul SRV</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>Consul 服务注册</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8500/v1/agent/service/register  PUT请求</span><br><span class="line">headers 里面需要写 Content-Type  application/json</span><br><span class="line">body 选 raw json </span><br></pre></td></tr></table></figure>
+
+<p>参数如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;Name&quot;</span>:<span class="string">&quot;shop_web&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;ID&quot;</span>:<span class="string">&quot;shop_web&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;Tags&quot;</span>:[<span class="string">&quot;shop_api&quot;</span>,<span class="string">&quot;user_api&quot;</span>,<span class="string">&quot;shop&quot;</span>,<span class="string">&quot;user&quot;</span>],</span><br><span class="line">	<span class="attr">&quot;Address&quot;</span>:<span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;Port&quot;</span>:<span class="number">8088</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注册的时候添加健康检查</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">improt <span class="string">&quot;github.com/hashicorp/consul/api&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Register</span><span class="params">(address <span class="keyword">string</span>, port <span class="keyword">int</span>, name <span class="keyword">string</span>, tags []<span class="keyword">string</span>, id <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cfg := api.DefaultConfig()</span><br><span class="line">	cfg.Address = <span class="string">&quot;127.0.0.1:8500&quot;</span></span><br><span class="line">  </span><br><span class="line">	client, err := api.NewClient(cfg)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成对应的检查对象</span></span><br><span class="line">	check := &amp;api.AgentServiceCheck&#123;</span><br><span class="line">		HTTP:                           <span class="string">&quot;http://192.168.10.178:8089/health&quot;</span>,</span><br><span class="line">		Timeout:                        <span class="string">&quot;5s&quot;</span>,</span><br><span class="line">		Interval:                       <span class="string">&quot;5s&quot;</span>,</span><br><span class="line">		DeregisterCriticalServiceAfter: <span class="string">&quot;10s&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成注册对象</span></span><br><span class="line">	registration := <span class="built_in">new</span>(api.AgentServiceRegistration)</span><br><span class="line">	registration.Name = name</span><br><span class="line">	registration.ID = id</span><br><span class="line">	registration.Port = port</span><br><span class="line">	registration.Address = address</span><br><span class="line">	registration.Tags = tags</span><br><span class="line">	registration.Check = check</span><br><span class="line"></span><br><span class="line">	err = client.Agent().ServiceRegister(registration)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Register(<span class="string">&quot;192.168.10.178&quot;</span>, <span class="number">8089</span>, <span class="string">&quot;user_web&quot;</span>, []<span class="keyword">string</span>&#123;<span class="string">&quot;shop&quot;</span>, <span class="string">&quot;user&quot;</span>&#125;, <span class="string">&quot;user_web&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>查询所有已经注册过的服务</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AllServices</span><span class="params">()</span></span> &#123;</span><br><span class="line">	cfg := api.DefaultConfig()</span><br><span class="line">	cfg.Address = <span class="string">&quot;127.0.0.1:8500&quot;</span></span><br><span class="line">	client, err := api.NewClient(cfg)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	data, err := client.Agent().Services()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i, _ := <span class="keyword">range</span> data &#123;</span><br><span class="line">		fmt.Println(i)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取指定的服务</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FilterServices</span><span class="params">()</span></span> &#123;</span><br><span class="line">	cfg := api.DefaultConfig()</span><br><span class="line">	cfg.Address = <span class="string">&quot;127.0.0.1:8500&quot;</span></span><br><span class="line">	client, err := api.NewClient(cfg)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	data, err := client.Agent().ServicesWithFilter(<span class="string">`Service == &quot;user_web&quot;`</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i, _ := <span class="keyword">range</span> data &#123;</span><br><span class="line">		fmt.Println(i)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Consul 服务注销</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8500/v1/agent/service/deregister/这里是服务的ID  PUT请求</span><br></pre></td></tr></table></figure></li>
+<li><p>Grpc 下添加 Consul 服务</p>
+<p>添加指定的包</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;google.golang.org/grpc/health/grpc_health_v1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务器启动监听后添加</span></span><br><span class="line">grpc_health_v1.RegisterHealthServer(server, health.NewServer())</span><br><span class="line"><span class="comment">// 服务注册</span></span><br><span class="line">	cfg := api.DefaultConfig()</span><br><span class="line">	cfg.Address = fmt.Sprintf(<span class="string">&quot;%s:%d&quot;</span>, global.ServerConfig.ConsulInfo.Host, global.ServerConfig.ConsulInfo.Port)</span><br><span class="line">	client, err := api.NewClient(cfg)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成对应的检查对象</span></span><br><span class="line">	check := &amp;api.AgentServiceCheck&#123;</span><br><span class="line">		GRPC:                           fmt.Sprintf(<span class="string">&quot;192.168.10.178:8088&quot;</span>),</span><br><span class="line">		Timeout:                        <span class="string">&quot;5s&quot;</span>,</span><br><span class="line">		Interval:                       <span class="string">&quot;5s&quot;</span>,</span><br><span class="line">		DeregisterCriticalServiceAfter: <span class="string">&quot;15s&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成注册对象</span></span><br><span class="line">	registration := <span class="built_in">new</span>(api.AgentServiceRegistration)</span><br><span class="line">	registration.Name = global.ServerConfig.Name</span><br><span class="line">	registration.ID = global.ServerConfig.Name</span><br><span class="line">	registration.Port = *Port</span><br><span class="line">	registration.Address = <span class="string">&quot;192.168.10.178&quot;</span></span><br><span class="line">	registration.Tags = []<span class="keyword">string</span>&#123;<span class="string">&quot;shop&quot;</span>, <span class="string">&quot;shop_srv&quot;</span>&#125;</span><br><span class="line">	registration.Check = check	</span><br><span class="line"></span><br><span class="line">	err = client.Agent().ServiceRegister(registration)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>web 端需要完成服务注册和服务发现</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aliliin.com/2021/08/30/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -954,95 +1051,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2020/06/15/%E7%BA%A2%E6%A5%BC%E6%A2%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="高永立">
-      <meta itemprop="description" content="Beijing, China">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aliliin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/15/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" class="post-title-link" itemprop="url">红楼梦中的诗句记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-15 23:32:09" itemprop="dateCreated datePublished" datetime="2020-06-15T23:32:09+08:00">2020-06-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:24:25" itemprop="dateModified" datetime="2021-08-27T11:24:25+08:00">2021-08-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>640</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="红楼梦"><a href="#红楼梦" class="headerlink" title="红楼梦"></a>红楼梦</h1><p>满纸荒唐言，一把辛酸泪。<br>都云作者痴，谁解其中味！</p>
-<p>惯养娇生笑你痴，菱花空对雪澌澌。<br>好防佳节元宵后，便是烟消火灭时。</p>
-<p>未卜三生愿，频添一段愁。<br>闷来时敛额，行去几回头。<br>自顾风前影，谁堪月下俦？<br>蟾光如有意，先上玉人楼。</p>
-<p>时逢三五便团圆，满把晴光护玉栏。<br>天上一轮才捧出，人间万姓仰头看。</p>
-<p>一局输赢料不真，香销茶尽尚逡巡。<br>欲知目下兴衰兆，须问旁观冷眼人。</p>
-<p>一场幽梦同谁近，千古情人独我痴。</p>
-<p>得意浓时易接济，受恩深处胜亲朋。</p>
-<p>黄花满地，白柳横坡。<br>小桥通若耶之溪，曲径接天台之路。<br>石中清流激湍，篱落飘香；树头红叶翩翻，疏林如画。<br>西风乍紧，初罢莺啼；暖日当暄，又添蛩语。<br>遥望东南，建几处依山之榭；纵观西北，结三间临水之轩。<br>笙簧盈耳，别有幽情；罗绮穿林，倍添韵致</p>
-<p>无端弄笔是何人？作践南华庄子因。<br>不悔自己无见识，却将丑语怪他人！</p>
-<p>淑女从来多抱怨，娇妻自古便含酸。</p>
-<p>春夜即事<br>霞绡云幄任铺陈，隔巷蟆更听未真。枕上轻寒窗外雨，眼前春色梦中人。盈盈烛泪因谁泣，点点花愁为我嗔。自是小鬟娇懒惯，拥衾不耐笑言频。<br>夏夜即事<br>倦绣佳人幽梦长，金笼鹦鹉唤茶汤。窗明麝月开宫镜，室霭檀云品御香。琥珀杯倾荷露滑，玻璃槛纳柳风凉。水亭处处齐纨动，帘卷朱楼罢晚妆。<br>秋夜即事<br>绛芸轩里绝喧哗，桂魄流光浸茜纱。苔锁石纹容睡鹤，井飘桐露湿栖鸦。抱衾婢至舒金凤，倚槛人归落翠花。静夜不眠因酒渴，沉烟重拨索烹茶。<br>冬夜即事<br>梅魂竹梦已三更，锦罽衾[1]睡未成。松影一庭惟见鹤，梨花满地不闻莺。女儿翠袖诗怀冷，公子金貂酒力轻。却喜侍儿知试茗，扫将新雪及时烹。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1112,14 +1120,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1170,13 +1178,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">36k</span>
+    <span title="站点总字数">39k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">32 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

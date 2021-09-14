@@ -163,6 +163,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="高永立">
+      <meta itemprop="description" content="Beijing, China">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/" class="post-title-link" itemprop="url">Go 错误处理 Panic 和 Recover</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-18 14:08:52" itemprop="dateCreated datePublished" datetime="2019-03-18T14:08:52+08:00">2019-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:30:18" itemprop="dateModified" datetime="2021-08-27T11:30:18+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="Go-错误处理-Panic-和-Recover"><a href="#Go-错误处理-Panic-和-Recover" class="headerlink" title="Go 错误处理 Panic 和 Recover"></a>Go 错误处理 Panic 和 Recover</h4><ol>
+<li>Go中没有错误机制</li>
+<li>error 类型实现了 error 接口<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type error interface &#123;</span><br><span class="line">	Error() string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>可以通过 errors.New 来实现快速创建错误信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">errors.New(&quot;n must be in the range [0,10]</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="Panic-的基本定义和使用"><a href="#Panic-的基本定义和使用" class="headerlink" title="Panic 的基本定义和使用"></a>Panic 的基本定义和使用</h4><ol>
+<li>panic  用于不可以恢复的错误</li>
+<li>Panic 退出前会执行 defer 指定的内容、<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func TestPanic(t *testing.T) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;最后结果依旧执行!&quot;) // 这一部分的代码依旧执行</span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;执行开始&quot;)</span><br><span class="line">	panic(errors.New(&quot;错误信息!&quot;))</span><br><span class="line">&#125;</span><br><span class="line">// 输出大致结果如下</span><br><span class="line">开始</span><br><span class="line">最后结果依旧执行!</span><br><span class="line">--- FAIL: TestPanic (0.00s)</span><br><span class="line">panic: 错误信息! [recovered]</span><br><span class="line">panic: 错误信息!</span><br></pre></td></tr></table></figure>
+<h4 id="os-Exit-的基本定义和使用"><a href="#os-Exit-的基本定义和使用" class="headerlink" title="os.Exit 的基本定义和使用"></a>os.Exit 的基本定义和使用</h4></li>
+<li>os.Exit 退出时不调用defer 指定的函数</li>
+<li>os.Exit 退出时不输出当前调用栈信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func TestExit(t *testing.T) &#123;</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;这段代码不会执行!&quot;) </span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;开始执行&quot;)</span><br><span class="line">	os.Exit(-1) // 直接退出 exit status 255</span><br><span class="line">&#125;</span><br><span class="line">// 输出结果如下</span><br><span class="line">开始执行</span><br><span class="line">exit status 255</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="Recover-的使用"><a href="#Recover-的使用" class="headerlink" title="Recover 的使用"></a>Recover 的使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func TestRecover(t *testing.T) &#123;</span><br><span class="line"></span><br><span class="line">	defer func() &#123;</span><br><span class="line">		if err := recover(); err != nil &#123;</span><br><span class="line">			fmt.Println(&quot;recoverd 开始\n&quot;, err)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	fmt.Println(&quot;开始执行&quot;)</span><br><span class="line">	panic(errors.New(&quot;错误信息!&quot;))</span><br><span class="line">&#125;</span><br><span class="line">// 输出结果如下:</span><br><span class="line">开始执行</span><br><span class="line">recoverd 开始</span><br><span class="line"> 错误信息!</span><br></pre></td></tr></table></figure>
+<h4 id="异常处理总结"><a href="#异常处理总结" class="headerlink" title="异常处理总结"></a>异常处理总结</h4><pre><code>当一个函数在执行过程中出现了异常或遇到 panic()，正常语句就会立即终止，然后执行 defer 语句，再报告异常信息，最后退出。如果在 defer 中使用了 recover() 函数,则会捕获错误信息，使该错误信息终止报告。
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/03/18/Go%20interface%202/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -776,14 +869,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -834,13 +927,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">36k</span>
+    <span title="站点总字数">39k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">32 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
