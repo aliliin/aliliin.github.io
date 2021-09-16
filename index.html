@@ -527,7 +527,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-27 11:29:15" itemprop="dateModified" datetime="2021-08-27T11:29:15+08:00">2021-08-27</time>
+                <time title="修改时间：2021-09-16 17:39:10" itemprop="dateModified" datetime="2021-09-16T17:39:10+08:00">2021-09-16</time>
               </span>
 
           <br>
@@ -536,7 +536,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>199</span>
+              <span>260</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -557,13 +557,15 @@
       
           <h3 id="Docker中常用的命令"><a href="#Docker中常用的命令" class="headerlink" title="Docker中常用的命令"></a>Docker中常用的命令</h3><ul>
 <li>启动容器<br><code>docker start</code></li>
+<li>启动容器并进入 交互式模式<br><code>docker run -it 镜像name sh</code></li>
+<li>进入容器内部<br><code>docker exec -it 镜像id sh</code></li>
 <li>查看正在运行的容器<br><code>docker ps</code></li>
 <li>停止正在运行的容器<br><code> docker stop</code> </li>
 <li>删除容器<br><code>docker rmi 删除的镜像</code></li>
 <li>显示本地镜像<br><code>docker list</code></li>
 <li>删除所有容器<br><code>docker rm -f $(docker ps -aq)</code></li>
 <li>删除所有镜像<br><code>docker rmi $(docker images -q)</code></li>
-<li>查看一个容器里面的程序进程信息<br><code>docker top</code></li>
+<li>查看一个容器里面的程序进程信息<br><code>docker top 镜像id</code></li>
 <li>镜像搜索<br><code>docker search</code></li>
 </ul>
 
