@@ -163,6 +163,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="高永立">
+      <meta itemprop="description" content="Beijing, China">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aliliin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Go 内置的 JSON 解析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-24 11:18:26" itemprop="dateCreated datePublished" datetime="2019-04-24T11:18:26+08:00">2019-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 11:30:33" itemprop="dateModified" datetime="2021-08-27T11:30:33+08:00">2021-08-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>487</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Go-内置的-JSON-解析"><a href="#Go-内置的-JSON-解析" class="headerlink" title="Go 内置的 JSON 解析"></a>Go 内置的 JSON 解析</h1><ul>
+<li><p>利用反射实现，通过 FelidTag 来标识对应的 json 值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	**type BasicInfo struct &#123;**</span><br><span class="line">**Name string `json:&quot;name&quot;`**</span><br><span class="line">**Age  int    `json:&quot;age&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br><span class="line">**type JobInfo struct &#123;**</span><br><span class="line">**Skills []string `json:&quot;skills&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br><span class="line">**type Employee struct &#123;**</span><br><span class="line">**BasicInfo BasicInfo `json:&quot;basic_info&quot;`**</span><br><span class="line">**JobInfo   JobInfo   `json:&quot;job_info&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>更快的 JSON 解析<br>EasyJSON 采用代码生成而非反射</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">安装： go get -u github.com/mailru/easyjson/</span><br><span class="line"></span><br><span class="line">使用: easyjson -all &lt;文件名，一般只结构定义的文件&gt;.go</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aliliin.com/2019/03/18/Go%20Package/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -958,7 +1042,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1016,13 +1100,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">40k</span>
+    <span title="站点总字数">42k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">36 分钟</span>
+    <span title="站点阅读时长">39 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
