@@ -120,18 +120,6 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -147,6 +135,18 @@
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
               </a>
             </li>
           
@@ -216,6 +216,14 @@
 
   
   
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
 </div>
 
             
@@ -240,6 +248,12 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">PHP面试题总结</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年10月20日 中午
+                
+              </p>
             
             <div class="markdown-body">
               <h2 id="1-laravel-生命周期"><a href="#1-laravel-生命周期" class="headerlink" title="1. laravel 生命周期"></a>1. laravel 生命周期</h2><p>文件先自动加载 composer 包需要的类，包扩所有你自己的 composer 依赖包，<br>生成容器 Cantainer 并注册相关的一些核心组件和实例，是从 bootstrap/app.php 脚本获取 Laravel 应用实例，<br>处理请求一般都是 http 请求，检测 booststrap 环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务器的容器，门面，服务提供者<br>相应的配置都加载完毕了，就会转到路由，路由会先处理全局中间件，看看是否允许访问，是不是有一异常，然后再去遍历匹配你输入的路由地址，找到符合的进行访问再看你的控制器是否有中间件的一些限制，再进行返回</p>
@@ -355,6 +369,30 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
   </div>
   
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
 
   
 
@@ -412,6 +450,8 @@
   
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

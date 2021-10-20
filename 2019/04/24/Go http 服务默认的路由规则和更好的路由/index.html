@@ -120,18 +120,6 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -147,6 +135,18 @@
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
               </a>
             </li>
           
@@ -216,6 +216,14 @@
 
   
   
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
 </div>
 
             
@@ -240,6 +248,12 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Go http 服务默认的路由规则和更好的路由</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年10月20日 中午
+                
+              </p>
             
             <div class="markdown-body">
               <h1 id="Go-http-服务默认的路由规则和更好的路由"><a href="#Go-http-服务默认的路由规则和更好的路由" class="headerlink" title="Go http 服务默认的路由规则和更好的路由"></a>Go http 服务默认的路由规则和更好的路由</h1><h2 id="Go-Default-Router"><a href="#Go-Default-Router" class="headerlink" title="Go Default Router"></a>Go Default Router</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request)&#123;<br>    <span class="hljs-keyword">handler</span> := sh.srv.<span class="hljs-keyword">Handler</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">handler</span> == nil &#123;<br>        <span class="hljs-keyword">handler</span> = DefaultServeMux // 使用缺省的Router<br>    &#125;<br>    <span class="hljs-keyword">if</span> req.RequestURI == “*” &amp;&amp; req.<span class="hljs-keyword">Method</span> == “<span class="hljs-keyword">OPTIONS</span>” &#123;<br>        <span class="hljs-keyword">handler</span> = globlOptionsHandler&#123;&#125;<br>    &#125;<br>    <span class="hljs-keyword">handler</span>.ServeHTTP(rw,req)<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -359,6 +373,30 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
   </div>
   
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
 
   
 
@@ -416,6 +454,8 @@
   
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

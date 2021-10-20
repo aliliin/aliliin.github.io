@@ -121,18 +121,6 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -148,6 +136,18 @@
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
               </a>
             </li>
           
@@ -217,6 +217,14 @@
 
   
   
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
 </div>
 
             
@@ -241,6 +249,12 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">PHP 技巧总结</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月2日 上午
+                
+              </p>
             
             <div class="markdown-body">
               <h1 id="PHP-技巧总结"><a href="#PHP-技巧总结" class="headerlink" title="PHP 技巧总结"></a>PHP 技巧总结</h1><h3 id="二维数组根据某个字段进行排序"><a href="#二维数组根据某个字段进行排序" class="headerlink" title="二维数组根据某个字段进行排序"></a><strong>二维数组根据某个字段进行排序</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个字段排序</span><br><span class="line">array_multisort(array_column($data, &#x27;sort&#x27;), SORT_DESC, $data);</span><br><span class="line">多个字段排序</span><br><span class="line">array_multisort(array_column($data, &#x27;sort1&#x27;), SORT_DESC, array_column($data, &#x27;sort2&#x27;), SORT_DESC, $data);</span><br></pre></td></tr></table></figure>
@@ -352,6 +366,30 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
   </div>
   
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
 
   
 
@@ -409,6 +447,8 @@
   
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
