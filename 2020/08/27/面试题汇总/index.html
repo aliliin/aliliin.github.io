@@ -16,15 +16,15 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="blah blah blah # 面试题汇总   1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果">
+  <meta name="description" content="blah blah blah # 面试题汇总  1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP一次面试的面试题">
 <meta property="og:url" content="https://aliliin.com/2020/08/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="blah blah blah # 面试题汇总   1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果">
+<meta property="og:description" content="blah blah blah # 面试题汇总  1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-27T13:05:09.097Z">
-<meta property="article:modified_time" content="2021-08-27T03:24:07.947Z">
+<meta property="article:modified_time" content="2021-10-20T03:50:27.903Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="PHP 面试题">
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      1.7k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      5 分钟
     </span>
   
 
@@ -246,12 +246,11 @@
               <blockquote class="blockquote-center">blah blah blah</blockquote>
 # 面试题汇总
 
-
 <h4 id="1、秒杀流程的清楚？"><a href="#1、秒杀流程的清楚？" class="headerlink" title="1、秒杀流程的清楚？"></a>1、秒杀流程的清楚？</h4><pre><code>使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存。
 </code></pre>
 <h4 id="2、laravel-的依赖注入？"><a href="#2、laravel-的依赖注入？" class="headerlink" title="2、laravel 的依赖注入？"></a>2、laravel 的依赖注入？</h4><pre><code>  由容器动态的将某个依赖关系注入到组件中，他的目的是为了提升组件使用的频率，来灵活使用它。说白了就是一个对象依赖于另一个对象的技术，他可以通过构造函数直接注入，也可通过接口的方式注入
 </code></pre>
-<h4 id="3、Laravel-中的app类实现单利模式？"><a href="#3、Laravel-中的app类实现单利模式？" class="headerlink" title="3、Laravel 中的app类实现单利模式？"></a>3、Laravel 中的app类实现单利模式？</h4><h4 id="4、left-join-效率低？"><a href="#4、left-join-效率低？" class="headerlink" title="4、left join 效率低？"></a>4、left join 效率低？</h4><pre><code>它把两个表中的你要查询的数据组成一张新的表，产生临时表，所有查询
+<h4 id="3、Laravel-中的-app-类实现单利模式？"><a href="#3、Laravel-中的-app-类实现单利模式？" class="headerlink" title="3、Laravel 中的 app 类实现单利模式？"></a>3、Laravel 中的 app 类实现单利模式？</h4><h4 id="4、left-join-效率低？"><a href="#4、left-join-效率低？" class="headerlink" title="4、left join 效率低？"></a>4、left join 效率低？</h4><pre><code>它把两个表中的你要查询的数据组成一张新的表，产生临时表，所有查询
 </code></pre>
 <p>起来比较慢。如果使用 join 语句的话，需要让小表做驱动表。但条件是能使用到驱动表中的索引。</p>
 <h4 id="5、订单回收问题。"><a href="#5、订单回收问题。" class="headerlink" title="5、订单回收问题。"></a>5、订单回收问题。</h4><pre><code>如果没有使用缓存的话，就写一个定时任务，定期去回收未支付的订单。
@@ -268,11 +267,11 @@
 </code></pre>
 <h4 id="9、简单说下非对称加密？"><a href="#9、简单说下非对称加密？" class="headerlink" title="9、简单说下非对称加密？"></a>9、简单说下非对称加密？</h4><pre><code>非对称加密是有公钥和私钥，他们是成对使用的，公钥是可以给外人看的，私钥要自己保护好。用公钥进行加密而用私钥进行解密。同一队公钥和私钥。
 </code></pre>
-<h4 id="10、你们是怎么把-mysql-的数据同步到-es-上去的？"><a href="#10、你们是怎么把-mysql-的数据同步到-es-上去的？" class="headerlink" title="10、你们是怎么把 mysql 的数据同步到 es 上去的？"></a>10、你们是怎么把 mysql 的数据同步到 es 上去的？</h4><pre><code>最方便的方式可以同时更新，写入数据库的时候，同时写一个队列模块，通过队列的方式同步更新到 es 
+<h4 id="10、你们是怎么把-mysql-的数据同步到-es-上去的？"><a href="#10、你们是怎么把-mysql-的数据同步到-es-上去的？" class="headerlink" title="10、你们是怎么把 mysql 的数据同步到 es 上去的？"></a>10、你们是怎么把 mysql 的数据同步到 es 上去的？</h4><pre><code>最方便的方式可以同时更新，写入数据库的时候，同时写一个队列模块，通过队列的方式同步更新到 es
 我们就简单的使用 mysql 的binlog （ROW模式）日志进行同步的。
 或者使用mysqldump工具进行同步。或者使用第三方的工具
 </code></pre>
-<h4 id="11、简单说下你怎么实现mysql-主从"><a href="#11、简单说下你怎么实现mysql-主从" class="headerlink" title="11、简单说下你怎么实现mysql 主从"></a>11、简单说下你怎么实现mysql 主从</h4><pre><code>因为mysql binlog的强大，我们把从库和主库维持一个长链接，从你设置的一些访问主库的Ip啊端口啊，用户名密码啊binlog读取的位置啊和主库进行交互，主库验证成功了之后，会从自己本地读取binlog 然后发送给从库。
+<h4 id="11、简单说下你怎么实现-mysql-主从"><a href="#11、简单说下你怎么实现-mysql-主从" class="headerlink" title="11、简单说下你怎么实现 mysql 主从"></a>11、简单说下你怎么实现 mysql 主从</h4><pre><code>因为mysql binlog的强大，我们把从库和主库维持一个长链接，从你设置的一些访问主库的Ip啊端口啊，用户名密码啊binlog读取的位置啊和主库进行交互，主库验证成功了之后，会从自己本地读取binlog 然后发送给从库。
 当然你也可以使用第三方的工具比如 mycat 去实现。
 </code></pre>
 <h4 id="12、说下你理解的-php-fpm。"><a href="#12、说下你理解的-php-fpm。" class="headerlink" title="12、说下你理解的 php-fpm。"></a>12、说下你理解的 php-fpm。</h4><pre><code>php-FPM 是一个PHP进程管理器 ，包含master 和worker 两种进程,
@@ -283,7 +282,7 @@
 线程属于进程，但是一个线程挂了不但影响其他的线程，还会把整个进程搞挂。
 协程是属于线程的。协程实在线程里面跑的，它没有上下文的切换，它之间的调度切换是通过程序员代码实现的，所以它特别灵活，因此也叫用户态的线程。
 </code></pre>
-<h4 id="14、php关联数组底层结构"><a href="#14、php关联数组底层结构" class="headerlink" title="14、php关联数组底层结构"></a>14、php关联数组底层结构</h4><pre><code>在PHP中, 数组是用一种HASH结构(HashTable)来实现的。
+<h4 id="14、php-关联数组底层结构"><a href="#14、php-关联数组底层结构" class="headerlink" title="14、php 关联数组底层结构"></a>14、php 关联数组底层结构</h4><pre><code>在PHP中, 数组是用一种HASH结构(HashTable)来实现的。
 </code></pre>
 
             </div>

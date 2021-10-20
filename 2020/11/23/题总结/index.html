@@ -16,15 +16,15 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="1. laravel生命周期文件先自动加载 composer 包需要的类，包扩所有你自己的composer 依赖包，生成容器Cantainer并注册相关的一些核心组件和实例，是从 bootstrap&#x2F;app.php 脚本获取 Laravel 应用实例，处理请求一般都是 http 请求，检测booststrap环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务器的容器，门">
+  <meta name="description" content="1. laravel 生命周期文件先自动加载 composer 包需要的类，包扩所有你自己的 composer 依赖包，生成容器 Cantainer 并注册相关的一些核心组件和实例，是从 bootstrap&#x2F;app.php 脚本获取 Laravel 应用实例，处理请求一般都是 http 请求，检测 booststrap 环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP面试题总结">
 <meta property="og:url" content="https://aliliin.com/2020/11/23/%E9%A2%98%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="1. laravel生命周期文件先自动加载 composer 包需要的类，包扩所有你自己的composer 依赖包，生成容器Cantainer并注册相关的一些核心组件和实例，是从 bootstrap&#x2F;app.php 脚本获取 Laravel 应用实例，处理请求一般都是 http 请求，检测booststrap环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务器的容器，门">
+<meta property="og:description" content="1. laravel 生命周期文件先自动加载 composer 包需要的类，包扩所有你自己的 composer 依赖包，生成容器 Cantainer 并注册相关的一些核心组件和实例，是从 bootstrap&#x2F;app.php 脚本获取 Laravel 应用实例，处理请求一般都是 http 请求，检测 booststrap 环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-23T10:10:54.048Z">
-<meta property="article:modified_time" content="2021-08-27T03:27:15.228Z">
+<meta property="article:modified_time" content="2021-10-20T03:53:53.270Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      1k 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      3 分钟
     </span>
   
 
@@ -242,11 +242,11 @@
             <h1 style="display: none">PHP面试题总结</h1>
             
             <div class="markdown-body">
-              <h2 id="1-laravel生命周期"><a href="#1-laravel生命周期" class="headerlink" title="1. laravel生命周期"></a>1. laravel生命周期</h2><p>文件先自动加载 composer 包需要的类，包扩所有你自己的composer 依赖包，<br>生成容器Cantainer并注册相关的一些核心组件和实例，是从 bootstrap/app.php 脚本获取 Laravel 应用实例，<br>处理请求一般都是 http 请求，检测booststrap环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务器的容器，门面，服务提供者<br>相应的配置都加载完毕了，就会转到路由，路由会先处理全局中间件，看看是否允许访问，是不是有一异常，然后再去遍历匹配你输入的路由地址，找到符合的进行访问再看你的控制器是否有中间件的一些限制，再进行返回</p>
-<h2 id="2-nginx-负载均衡-方式优缺点"><a href="#2-nginx-负载均衡-方式优缺点" class="headerlink" title="2. nginx 负载均衡 方式优缺点"></a>2. nginx 负载均衡 方式优缺点</h2><p>upstream nginx对网络的稳定性比较小，配置安装起来比较简单，也提供了一些基础的负载均衡的访问方式，像是轮询、权重值轮询，ip_hash的方式每个请求访问的ip通过hash之后的结果进行分配访问<br>支持的协议比较少</p>
-<h2 id="3-mysql-innodb-Mysiam引擎-区别-优劣"><a href="#3-mysql-innodb-Mysiam引擎-区别-优劣" class="headerlink" title="3. mysql innodb Mysiam引擎 区别 优劣"></a>3. mysql innodb Mysiam引擎 区别 优劣</h2><h2 id="4-索引相关"><a href="#4-索引相关" class="headerlink" title="4. 索引相关"></a>4. 索引相关</h2><h2 id="5-swoole-用过吗了解多少，go呢？"><a href="#5-swoole-用过吗了解多少，go呢？" class="headerlink" title="5. swoole 用过吗了解多少，go呢？"></a>5. swoole 用过吗了解多少，go呢？</h2><h2 id="6-项目用多少台服务器"><a href="#6-项目用多少台服务器" class="headerlink" title="6. 项目用多少台服务器"></a>6. 项目用多少台服务器</h2><h2 id="7-大文件excel导出"><a href="#7-大文件excel导出" class="headerlink" title="7. 大文件excel导出"></a>7. 大文件excel导出</h2><p>ob_flush</p>
-<h2 id="8-主从延迟解决方案-半同步复制"><a href="#8-主从延迟解决方案-半同步复制" class="headerlink" title="8.  主从延迟解决方案 半同步复制"></a>8.  主从延迟解决方案 半同步复制</h2><p>主库需要提交事务、更新存储引擎中的数据、把 Binlog 写到磁盘上、给客户端返回响应、把 Binlog 复制到所有从库上、每个从库需要把复制过来的 Binlog 写到暂存日志中、回放这个 Binlog、更新存储引擎中的数据、给主库返回复制成功的响应。<br>异步复制时，主库提交事务之后，就会给客户端返回响应；而同步复制时，主库在提交事务的时候，会等待数据复制到所有从库之后，再给客户端返回响应。<br>在备库 B 上通过 change master 命令，设置主库 A 的 IP、端口、用户名、密码，以及要从哪个位置开始请求 binlog，这个位置包含文件名和日志偏移量。在备库 B 上执行 start slave 命令，这时候备库会启动两个线程，就是图中的 io_thread 和 sql_thread。其中 io_thread 负责与主库建立连接。主库 A 校验完用户名、密码后，开始按照备库 B 传过来的位置，从本地读取 binlog，发给 B。备库 B 拿到 binlog 后，写到本地文件，称为中转日志（relay log）。sql_thread 读取中转日志，解析出日志里的命令，并执行。</p>
-<h2 id="9-Oauth2-0协议"><a href="#9-Oauth2-0协议" class="headerlink" title="9. Oauth2.0协议"></a>9. Oauth2.0协议</h2><p>关于框架，协议，代理，反代理，设计模式，版本管理</p>
+              <h2 id="1-laravel-生命周期"><a href="#1-laravel-生命周期" class="headerlink" title="1. laravel 生命周期"></a>1. laravel 生命周期</h2><p>文件先自动加载 composer 包需要的类，包扩所有你自己的 composer 依赖包，<br>生成容器 Cantainer 并注册相关的一些核心组件和实例，是从 bootstrap/app.php 脚本获取 Laravel 应用实例，<br>处理请求一般都是 http 请求，检测 booststrap 环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务器的容器，门面，服务提供者<br>相应的配置都加载完毕了，就会转到路由，路由会先处理全局中间件，看看是否允许访问，是不是有一异常，然后再去遍历匹配你输入的路由地址，找到符合的进行访问再看你的控制器是否有中间件的一些限制，再进行返回</p>
+<h2 id="2-nginx-负载均衡-方式优缺点"><a href="#2-nginx-负载均衡-方式优缺点" class="headerlink" title="2. nginx 负载均衡 方式优缺点"></a>2. nginx 负载均衡 方式优缺点</h2><p>upstream nginx 对网络的稳定性比较小，配置安装起来比较简单，也提供了一些基础的负载均衡的访问方式，像是轮询、权重值轮询，ip_hash 的方式每个请求访问的 ip 通过 hash 之后的结果进行分配访问<br>支持的协议比较少</p>
+<h2 id="3-mysql-innodb-Mysiam-引擎-区别-优劣"><a href="#3-mysql-innodb-Mysiam-引擎-区别-优劣" class="headerlink" title="3. mysql innodb Mysiam 引擎 区别 优劣"></a>3. mysql innodb Mysiam 引擎 区别 优劣</h2><h2 id="4-索引相关"><a href="#4-索引相关" class="headerlink" title="4. 索引相关"></a>4. 索引相关</h2><h2 id="5-swoole-用过吗了解多少，go-呢？"><a href="#5-swoole-用过吗了解多少，go-呢？" class="headerlink" title="5. swoole 用过吗了解多少，go 呢？"></a>5. swoole 用过吗了解多少，go 呢？</h2><h2 id="6-项目用多少台服务器"><a href="#6-项目用多少台服务器" class="headerlink" title="6. 项目用多少台服务器"></a>6. 项目用多少台服务器</h2><h2 id="7-大文件-excel-导出"><a href="#7-大文件-excel-导出" class="headerlink" title="7. 大文件 excel 导出"></a>7. 大文件 excel 导出</h2><p>ob_flush</p>
+<h2 id="8-主从延迟解决方案-半同步复制"><a href="#8-主从延迟解决方案-半同步复制" class="headerlink" title="8. 主从延迟解决方案 半同步复制"></a>8. 主从延迟解决方案 半同步复制</h2><p>主库需要提交事务、更新存储引擎中的数据、把 Binlog 写到磁盘上、给客户端返回响应、把 Binlog 复制到所有从库上、每个从库需要把复制过来的 Binlog 写到暂存日志中、回放这个 Binlog、更新存储引擎中的数据、给主库返回复制成功的响应。<br>异步复制时，主库提交事务之后，就会给客户端返回响应；而同步复制时，主库在提交事务的时候，会等待数据复制到所有从库之后，再给客户端返回响应。<br>在备库 B 上通过 change master 命令，设置主库 A 的 IP、端口、用户名、密码，以及要从哪个位置开始请求 binlog，这个位置包含文件名和日志偏移量。在备库 B 上执行 start slave 命令，这时候备库会启动两个线程，就是图中的 io_thread 和 sql_thread。其中 io_thread 负责与主库建立连接。主库 A 校验完用户名、密码后，开始按照备库 B 传过来的位置，从本地读取 binlog，发给 B。备库 B 拿到 binlog 后，写到本地文件，称为中转日志（relay log）。sql_thread 读取中转日志，解析出日志里的命令，并执行。</p>
+<h2 id="9-Oauth2-0-协议"><a href="#9-Oauth2-0-协议" class="headerlink" title="9. Oauth2.0 协议"></a>9. Oauth2.0 协议</h2><p>关于框架，协议，代理，反代理，设计模式，版本管理</p>
 
             </div>
             <hr>
@@ -276,7 +276,7 @@
                     
                       <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">阿里云敏感词安全接口</span>
+                        <span class="hidden-mobile">阿里云敏感词安全接口PHP实现</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

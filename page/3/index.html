@@ -199,8 +199,11 @@
           
             
           
-          数据库事务#Learning
-1、务的特性：原子性、一致性、隔离性、持久性2、多事务同时执行的时候，可能会出现的问题：脏读、不可重复读、幻读3、事务隔离级别：读未提交、读提交、可重复读、串行化4、不同事务隔离级别的区别：读未提交：一个事务还未提交，它所做的变更就可以被别的事务看到读提交：一个事务提交之后，它所做的变更才可以被别的事务看到可重复读：一个事务执行过程中看到的数据是一致的。未提交的更改对
+          数据库事务
+1、务的特性：原子性、一致性、隔离性、持久性
+2、多事务同时执行的时候，可能会出现的问题：脏读、不可重复读、幻读
+3、事务隔离级别：读未提交、读提交、可重复读、串行化
+4、不同事务隔离级别的区别：读未提交：一个事务还未提交，它所做的变更就可以被别的事务看到读提交：一个事务提交之后，它所做的变更才可以被别的事务看到可重复读：一个事务执行过程中看到的数据是一致的。未提交的更改对其他事务是不
         </a>
       </p>
 
@@ -347,14 +350,11 @@ Hyperf 的依赖注
           
             
           
-          版本约束表达式和lock文件#Learning
+          版本约束表达式和 lock 文件#Learning
 
-什么是语义化版本 版本格式：主版本号、次版本号、修订号
+什么是语义化版本版本格式：主版本号、次版本号、修订号
 版本约束
-使用 ~ 波浪号 约束锁定小版本 （很实用，也比较安全）
-~ 的作用是允许表达式中最后一位变到最大值的*
-安装 &gt;=1.1 并且 &lt; 2.0 的版本，可以写成： ～1.1
-安装 &gt;= 1.1.15 并且 &lt;1.2.0 的版本，可以写成  ～1.1.15    
+使用 ~ 波浪号 约束锁定小版本 （很实用，也比较安全）~ 的作用是允许表达式中最后一位变到最大值的 1. 安装 &gt;=1.1 并且 &lt; 2.0 的版本，可以写成： ～ 1.1 2. 安装 &gt;= 1.1.15 并且 &lt;1.2.0 的版本，可以写成 ～ 1.1.
         </a>
       </p>
 
@@ -402,8 +402,8 @@ Hyperf 的依赖注
           生产环境中优化 Composer 包管理Composer 常用命令
 安装包，根据 composer.json 文件composer install
 更新包，升级 composer.json 的所有代码库（如果能能升级的话）composer update
-搜索包，搜索composer可用的包composer search 关键字
-引入包，会在 composer.json  新增一条包配置，并下载该代
+搜索包，搜索 composer 可用的包composer search 关键字
+引入包，会在 composer.json 新增一条包配置，并下载该
         </a>
       </p>
 
@@ -450,8 +450,8 @@ Hyperf 的依赖注
           
           什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题
 连接问题，IP 写错，端口写错 链接会被拒绝
-Operation now in progress  连接超时、丢包、错误IP、backlog满了&amp;阻塞&amp;tcp_abort_on_overflow=0
-min(maxcon
+Operation now in progress 连接超时、丢包、错误 IP、backlog 满了&amp;阻塞&amp;tcp_abort_on_overflow=0
+min(maxco
         </a>
       </p>
 
@@ -544,12 +544,12 @@ min(maxcon
             
           
           Git Workflow
-git remote add upstream // 必须添加一个上由主分支的地址  可以用 git remote -v 来查看 
+git remote add upstream // 必须添加一个上由主分支的地址 可以用 git remote -v 来查看
 git pull upstream master // 拿到项目的主分支代码
 git checkout -b // 创建自己飞分支
-git commit // 写完代码之后提交 
+git commit // 写完代码之后提交
 git checkout 分支名 // 切换到主分支
-git 
+git pul
         </a>
       </p>
 

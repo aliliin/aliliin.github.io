@@ -16,15 +16,15 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="Go 内置的 JSON 解析 利用反射实现，通过 FelidTag 来标识对应的 json 值 1234567891011121314	**type BasicInfo struct &amp;#123;****Name string &#96;json:&quot;name&quot;&#96;****Age  int    &#96;json:&quot;age&quot;&#96;****&amp;#125;****type JobInf">
+  <meta name="description" content="Go 内置的 JSON 解析 利用反射实现，通过 FelidTag 来标识对应的 json 值  1234567891011121314	**type BasicInfo struct &amp;#123;****Name string &#96;json:&quot;name&quot;&#96;****Age  int    &#96;json:&quot;age&quot;&#96;****&amp;#125;****type JobIn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 内置的 JSON 解析">
 <meta property="og:url" content="https://aliliin.com/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="Go 内置的 JSON 解析 利用反射实现，通过 FelidTag 来标识对应的 json 值 1234567891011121314	**type BasicInfo struct &amp;#123;****Name string &#96;json:&quot;name&quot;&#96;****Age  int    &#96;json:&quot;age&quot;&#96;****&amp;#125;****type JobInf">
+<meta property="og:description" content="Go 内置的 JSON 解析 利用反射实现，通过 FelidTag 来标识对应的 json 值  1234567891011121314	**type BasicInfo struct &amp;#123;****Name string &#96;json:&quot;name&quot;&#96;****Age  int    &#96;json:&quot;age&quot;&#96;****&amp;#125;****type JobIn">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-24T03:18:26.082Z">
-<meta property="article:modified_time" content="2021-08-27T03:30:33.786Z">
+<meta property="article:modified_time" content="2021-10-20T03:54:51.377Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      487 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      2 分钟
     </span>
   
 
@@ -243,11 +243,14 @@
             
             <div class="markdown-body">
               <h1 id="Go-内置的-JSON-解析"><a href="#Go-内置的-JSON-解析" class="headerlink" title="Go 内置的 JSON 解析"></a>Go 内置的 JSON 解析</h1><ul>
-<li><p>利用反射实现，通过 FelidTag 来标识对应的 json 值</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	**type BasicInfo struct &#123;**</span><br><span class="line">**Name string `json:&quot;name&quot;`**</span><br><span class="line">**Age  int    `json:&quot;age&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br><span class="line">**type JobInfo struct &#123;**</span><br><span class="line">**Skills []string `json:&quot;skills&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br><span class="line">**type Employee struct &#123;**</span><br><span class="line">**BasicInfo BasicInfo `json:&quot;basic_info&quot;`**</span><br><span class="line">**JobInfo   JobInfo   `json:&quot;job_info&quot;`**</span><br><span class="line">**&#125;**</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>更快的 JSON 解析<br>EasyJSON 采用代码生成而非反射</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">安装： go get -u github.com/mailru/easyjson/</span><br><span class="line"></span><br><span class="line">使用: easyjson -all &lt;文件名，一般只结构定义的文件&gt;.go</span><br></pre></td></tr></table></figure></li>
+<li>利用反射实现，通过 FelidTag 来标识对应的 json 值</li>
 </ul>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs elm">	**<span class="hljs-keyword">type</span> <span class="hljs-type">BasicInfo</span> struct &#123;**<br>**<span class="hljs-type">Name</span> string `json:&quot;name&quot;`**<br>**<span class="hljs-type">Age</span>  int    `json:&quot;age&quot;`**<br>**&#125;**<br><br>**<span class="hljs-keyword">type</span> <span class="hljs-type">JobInfo</span> struct &#123;**<br>**<span class="hljs-type">Skills</span> []string `json:&quot;skills&quot;`**<br>**&#125;**<br><br>**<span class="hljs-keyword">type</span> <span class="hljs-type">Employee</span> struct &#123;**<br>**<span class="hljs-type">BasicInfo</span> <span class="hljs-type">BasicInfo</span> `json:&quot;basic_info&quot;`**<br>**<span class="hljs-type">JobInfo</span>   <span class="hljs-type">JobInfo</span>   `json:&quot;job_info&quot;`**<br>**&#125;**<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>更快的 JSON 解析<br>EasyJSON 采用代码生成而非反射</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim">安装： <span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> -<span class="hljs-keyword">u</span> github.<span class="hljs-keyword">com</span>/mailru/easyjson/<br><br>使用: easyjson -<span class="hljs-keyword">all</span> &lt;文件名，一般只结构定义的文件&gt;.<span class="hljs-keyword">go</span><br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>

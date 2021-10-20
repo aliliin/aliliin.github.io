@@ -16,15 +16,15 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题 连接问题，IP 写错，端口写错 链接会被拒绝 Operation now in progress  连接超时、丢包、错误IP、backlog满了&amp;阻塞&amp;tcp_abort_on_overflow&#x3D;0 min(maxcon">
+  <meta name="description" content="什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题 连接问题，IP 写错，端口写错 链接会被拒绝 Operation now in progress 连接超时、丢包、错误 IP、backlog 满了&amp;阻塞&amp;tcp_abort_on_overflow&#x3D;0 min(maxco">
 <meta property="og:type" content="article">
 <meta property="og:title" content="什么是 TCP">
 <meta property="og:url" content="https://aliliin.com/2019/08/14/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题 连接问题，IP 写错，端口写错 链接会被拒绝 Operation now in progress  连接超时、丢包、错误IP、backlog满了&amp;阻塞&amp;tcp_abort_on_overflow&#x3D;0 min(maxcon">
+<meta property="og:description" content="什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题 连接问题，IP 写错，端口写错 链接会被拒绝 Operation now in progress 连接超时、丢包、错误 IP、backlog 满了&amp;阻塞&amp;tcp_abort_on_overflow&#x3D;0 min(maxco">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-14T01:31:29.472Z">
-<meta property="article:modified_time" content="2021-08-27T03:46:06.375Z">
+<meta property="article:modified_time" content="2021-10-20T03:50:29.874Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="网络协议">
 <meta property="article:tag" content="TCP">
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      649 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      2 分钟
     </span>
   
 
@@ -245,11 +245,11 @@
             <div class="markdown-body">
               <h1 id="什么是-TCP"><a href="#什么是-TCP" class="headerlink" title="什么是 TCP"></a>什么是 TCP</h1><h3 id="TCP-（transmission-Control-Protocol-传输控制协议）-是一种面向连接的、可靠的、基于字节流的传输层通信协议。"><a href="#TCP-（transmission-Control-Protocol-传输控制协议）-是一种面向连接的、可靠的、基于字节流的传输层通信协议。" class="headerlink" title="TCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。"></a>TCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。</h3><h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><ol>
 <li>连接问题，IP 写错，端口写错 链接会被拒绝</li>
-<li>Operation now in progress  连接超时、丢包、错误IP、backlog满了&amp;阻塞&amp;tcp_abort_on_overflow=0</li>
+<li>Operation now in progress 连接超时、丢包、错误 IP、backlog 满了&amp;阻塞&amp;tcp_abort_on_overflow=0</li>
 <li>min(maxconn,backlog). [ ss -it] 查询 backlog 的设置长度</li>
 </ol>
-<h3 id="SYN-Flood-问题"><a href="#SYN-Flood-问题" class="headerlink" title="SYN Flood  问题"></a>SYN Flood  问题</h3><ul>
-<li>tcp_max_syn_backlog </li>
+<h3 id="SYN-Flood-问题"><a href="#SYN-Flood-问题" class="headerlink" title="SYN Flood 问题"></a>SYN Flood 问题</h3><ul>
+<li>tcp_max_syn_backlog</li>
 <li>tcp_synack_retries</li>
 <li>tcp_syncookies</li>
 </ul>
@@ -260,24 +260,24 @@
 <li>对链接的占用约等于长链接<br>短链接优点</li>
 <li>简单</li>
 <li>理论上链接数会少</li>
-<li>无状态对负载均衡LB友好</li>
+<li>无状态对负载均衡 LB 友好</li>
 </ul>
 <h3 id="长链接常见问题"><a href="#长链接常见问题" class="headerlink" title="长链接常见问题"></a>长链接常见问题</h3><ul>
 <li>链接失效两种问题<ol>
-<li>redis：timeout(Error while reading line from the server)</li>
-<li>Mysql: wait_timeout &amp; interactive_timeout(has gone away)</li>
+<li> redis：timeout(Error while reading line from the server)</li>
+<li> Mysql: wait_timeout &amp; interactive_timeout(has gone away)</li>
 </ol>
 </li>
 <li>链接失效解决方法<ol>
-<li>用的时候多链接几次 （最简单）</li>
-<li>定时发心跳维持链接 （推荐方式）</li>
-<li>利用 swoole 底层的 hearlbeat_idle_time 和 hearlbeat_check_interval (只能针对服务器端，需要客户端配合发心跳）</li>
+<li> 用的时候多链接几次 （最简单）</li>
+<li> 定时发心跳维持链接 （推荐方式）</li>
+<li> 利用 swoole 底层的 hearlbeat_idle_time 和 hearlbeat_check_interval (只能针对服务器端，需要客户端配合发心跳）</li>
 </ol>
 </li>
 <li>如何实现应用层心跳<ol>
-<li>制定 ping/pong 协议 （mysql 等自带 ping 协议）</li>
-<li>客户端灵活的发送 ping 心跳包</li>
-<li>服务端 OnRecive 检查可用性回复 pong</li>
+<li> 制定 ping/pong 协议 （mysql 等自带 ping 协议）</li>
+<li> 客户端灵活的发送 ping 心跳包</li>
+<li> 服务端 OnRecive 检查可用性回复 pong</li>
 </ol>
 </li>
 </ul>

@@ -201,7 +201,8 @@
           
           Go 内置的 JSON 解析
 利用反射实现，通过 FelidTag 来标识对应的 json 值
-1234567891011121314	**type BasicInfo struct &#123;****Name string `json:&quot;name&quot;`****Age  int    `json:&quot;age&quot;`****&#125;****type JobInf
+
+1234567891011121314	**type BasicInfo struct &#123;****Name string `json:&quot;name&quot;`****Age  int    `json:&quot;age&quot;`****&#125;****type JobIn
         </a>
       </p>
 
@@ -297,12 +298,17 @@ init 方法
             
           
           Go 错误处理 Panic 和 Recover
-Go中没有错误机制
-error 类型实现了 error 接口123type error interface &#123;	Error() string&#125;
-可以通过 errors.New 来实现快速创建错误信息1errors.New(&quot;n must be in the range [0,10]
+Go 中没有错误机制
+error 类型实现了 error 接口
 
-Panic 的基本定义和使用
-pan
+123type error interface &#123;	Error() string&#125;
+
+
+可以通过 errors.New 来实现快速创建错误信息
+
+1errors.New(&quot;n must be in the range [0,10]
+
+Panic 的基本定义
         </a>
       </p>
 
@@ -346,9 +352,9 @@ pan
             
           
           Go interface
-通过关键字type和interface，声明出接口类 type TestInterface interface &#123;&#125;
-因为接口类型与其他数据类型不同，它是没法被实例化的。既不能通过调用new函数或make函数创建出一个接口类型的值
-我们通过 interface 来定义对象的一组行为方法，如果某个对象实现了某个接口类型的所有方法，则此对象就是这个接口的实
+通过关键字 type 和 interface，声明出接口类 type TestInterface interface &#123;&#125;
+因为接口类型与其他数据类型不同，它是没法被实例化的。既不能通过调用 new 函数或 make 函数创建出一个接口类型的值
+我们通过 interface 来定义对象的一组行为方法，如果某个对象实现了某个接口类型的所有方法，则此对象就
         </a>
       </p>
 
@@ -542,8 +548,8 @@ map 是无序的，每次打印出来的 map 都会不一样，它不能通过 i
 函数可以返回多个值
 如果只有一个返回值且不声明返回值变量，那么你可以省略 包括返回值 的括号
 如果没有返回值，那么就直接省略最后的返回信息
-如果有返回值， 那么必须在函数的外层添加return语句
-所有的参数都是值传递: slice, map, channel 会有传引用的错
+如果有返回值， 那么必须在函数的外层添加 return 语句
+所有的参数都是值传递: slice, map, channel 会有传引用
         </a>
       </p>
 
