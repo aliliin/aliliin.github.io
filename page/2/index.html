@@ -395,10 +395,10 @@
           
             
           
-          安装 RabbitMQ (http://localhost:15672)访问地址是：RabbitMQ ManagementZ帐号密码： guest
+          安装 RabbitMQ (http://localhost:15672)访问地址是：RabbitMQ ManagementZ 帐号密码： guest
 安装过程brew update
 执行安装brew install rabbitmqbrew install rabbitmq-c
-执行安装php扩展12345git clone https://github.com/pdezwart/php-amqp.
+执行安装 php 扩展12345git clone https://github.com/pdezwart/php-am
         </a>
       </p>
 
@@ -487,13 +487,13 @@
           
             
           
-          利用 Redis 有序集合实现，并用管道加速。假设 $period 秒内，一个用户只能访问 $maxCount 次。用户ID作为 key，毫秒时间戳作为 score 和 value。一个请求进入，
+          利用 Redis 有序集合实现，并用管道加速。假设 $period 秒内，一个用户只能访问 $maxCount 次。用户 ID 作为 key，毫秒时间戳作为 score 和 value。一个请求进入，
 
 加入有序集合——zadd
 移除时间窗口之前的行为记录，剩下的都是时间窗口内的——zremrangebyscore
 更新过期时间——expire
 获取窗口内的元素数量——zcard
-判断窗口内元素数量是
+判断窗口内元素数
         </a>
       </p>
 

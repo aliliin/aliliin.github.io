@@ -16,23 +16,22 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="​     ​    最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）。 ​    首先看到这个加密方式之后，就在PH">
+  <meta name="description" content="PHP 实现 AES-128-CBC-PKCS5Padding 加密 最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP实现AES-128-CBC-PKCS5Padding加密">
+<meta property="og:title" content="PHP 实现 AES-128-CBC-PKCS5Padding 加密">
 <meta property="og:url" content="https://aliliin.com/2021/08/30/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="​     ​    最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）。 ​    首先看到这个加密方式之后，就在PH">
+<meta property="og:description" content="PHP 实现 AES-128-CBC-PKCS5Padding 加密 最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aliliin.com/images/aes-128-cbc.png">
 <meta property="article:published_time" content="2021-08-30T07:31:17.384Z">
-<meta property="article:modified_time" content="2021-08-30T08:35:52.126Z">
+<meta property="article:modified_time" content="2021-10-20T04:28:57.930Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="PHP">
-<meta property="article:tag" content="AES-128-CBC">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://aliliin.com/images/aes-128-cbc.png">
   
-  <title>PHP实现AES-128-CBC-PKCS5Padding加密 - Aliliin</title>
+  <title>PHP 实现 AES-128-CBC-PKCS5Padding 加密 - Aliliin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,7 +177,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="PHP实现AES-128-CBC-PKCS5Padding加密">
+            <span class="h2" id="subtitle" title="PHP 实现 AES-128-CBC-PKCS5Padding 加密">
               
             </span>
 
@@ -204,7 +203,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      2.2k 字
     </span>
   
 
@@ -213,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      7 分钟
     </span>
   
 
@@ -250,25 +249,26 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">PHP实现AES-128-CBC-PKCS5Padding加密</h1>
+            <h1 style="display: none">PHP 实现 AES-128-CBC-PKCS5Padding 加密</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年8月30日 下午
+                  本文最后更新于：2021年10月20日 中午
                 
               </p>
             
             <div class="markdown-body">
-              <p>​    </p>
-<p>​    最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 <code>AES-128-CBC-PKCS5Padding</code> 加密，然后再做 <code>Base64 </code>编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）。</p>
-<p>​    首先看到这个加密方式之后，就在PHP函数库中进行寻找，看看有没有对应的加密函数，然而找了一圈下来，发现并没有，需要自己实现，后了解到可以用 mcrypt 函数扩展实现，但是 mcrypt函数 自 PHP 7.1.0 起就废弃了，强烈建议不要使用本函数，只好再寻找其他<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/refs.crypto.php">加密函数库</a>，在手册的下方看到了 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/ref.openssl.php">OpenSSL 函数</a>，通过了解 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt(加密数据)</a> 函数发现可以实现需求,<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt</a> 具体的使用方法请自行看手册，</p>
-<p>实现函数如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加密</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encrypt</span>(<span class="params"><span class="variable">$input</span>, <span class="variable">$key</span>, <span class="variable">$iv</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> base64_encode(openssl_encrypt(<span class="variable">$input</span>, <span class="string">&#x27;AES-128-CBC&#x27;</span>, <span class="variable">$key</span>, OPENSSL_RAW_DATA,<span class="variable">$iv</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解密</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrypt</span>(<span class="params"><span class="variable">$input</span>, <span class="variable">$key</span>, <span class="variable">$iv</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> openssl_decrypt(base64_decode(<span class="variable">$input</span>), <span class="string">&#x27;AES-128-CBC&#x27;</span>, <span class="variable">$key</span>, OPENSSL_RAW_DATA, <span class="variable">$iv</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试加密 (我这里用的是json字符串)</span></span><br><span class="line"><span class="variable">$dataJson</span> = <span class="string">&#x27;[&#123;&quot;Code&quot;: &quot;123123&quot;, &quot;Name&quot;: &quot;Bob&quot;, &quot;Address&quot;: &quot;\u94f6\u5ddd\u5e02&quot;&#125;, &#123;&quot;Code&quot;: &quot;464776&quot;, &quot;Name&quot;: &quot;Hello&quot;, &quot;Address&quot;: &quot;\u5317\u4eac\u5e02&quot;&#125;]&#x27;</span>;</span><br><span class="line">print_r(encrypt(<span class="variable">$dataJson</span>, <span class="variable">$key</span>, <span class="variable">$iv</span>));</span><br><span class="line"><span class="comment">//u9Bd8oHXDGvjZcTIX9HK1r1q+aSu+/48gsfoGVrxoScZuX8yaj/xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试解密</span></span><br><span class="line"><span class="variable">$strr</span> = <span class="string">&#x27;u9Bd8oHXDGvjZcTIX9HK1r1q+aSu+/48gsfoGVrxoScZuX8yaj/xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D&#x27;</span>;</span><br><span class="line">print_r(decrypt(<span class="variable">$strr</span>, <span class="variable">$key</span>, <span class="variable">$iv</span>));</span><br><span class="line"><span class="comment">// [&#123;&quot;Code&quot;: &quot;123123&quot;, &quot;Name&quot;: &quot;Bob&quot;, &quot;Address&quot;: &quot;\u94f6\u5ddd\u5e02&quot;&#125;, &#123;&quot;Code&quot;: &quot;464776&quot;, &quot;Name&quot;: &quot;Hello&quot;, &quot;Address&quot;: &quot;\u5317\u4eac\u5e02&quot;&#125;]</span></span><br></pre></td></tr></table></figure>
+              <h3 id="PHP-实现-AES-128-CBC-PKCS5Padding-加密"><a href="#PHP-实现-AES-128-CBC-PKCS5Padding-加密" class="headerlink" title="PHP 实现 AES-128-CBC-PKCS5Padding 加密"></a>PHP 实现 AES-128-CBC-PKCS5Padding 加密</h3><blockquote>
+<p>最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 <code>AES-128-CBC-PKCS5Padding</code> 加密，然后再做 <code>Base64 </code>编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）。</p>
+</blockquote>
+<p>​ 首先看到这个加密方式之后，就在 PHP 函数库中进行寻找，看看有没有对应的加密函数，然而找了一圈下来，发现并没有，需要自己实现，后了解到可以用 mcrypt 函数扩展实现，但是 mcrypt 函数 自 PHP 7.1.0 起就废弃了，强烈建议不要使用本函数，只好再寻找其他<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/refs.crypto.php">加密函数库</a>，在手册的下方看到了 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/ref.openssl.php">OpenSSL 函数</a>，通过了解 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt(加密数据)</a> 函数发现可以实现需求,<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt</a> 具体的使用方法请自行看手册，</p>
+<h4 id="实现函数如下："><a href="#实现函数如下：" class="headerlink" title="实现函数如下："></a>实现函数如下：</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 加密<br><span class="hljs-keyword">function</span> encrypt(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>)&#123;<br>    return base64_encode(openssl_encrypt(<span class="hljs-variable">$input</span>, <span class="hljs-string">&#x27;AES-128-CBC&#x27;</span>, <span class="hljs-variable">$key</span>, OPENSSL_RAW_DATA,<span class="hljs-variable">$iv</span>));<br>&#125;<br><br><span class="hljs-regexp">//</span> 解密<br><span class="hljs-keyword">function</span> decrypt(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>)&#123;<br>    return openssl_decrypt(base64_decode(<span class="hljs-variable">$input</span>), <span class="hljs-string">&#x27;AES-128-CBC&#x27;</span>, <span class="hljs-variable">$key</span>, OPENSSL_RAW_DATA, <span class="hljs-variable">$iv</span>);<br>&#125;<br><br><span class="hljs-regexp">//</span> 测试加密 (我这里用的是json字符串)<br><span class="hljs-variable">$dataJson</span> = <span class="hljs-string">&#x27;[&#123;&quot;Code&quot;: &quot;123123&quot;, &quot;Name&quot;: &quot;Bob&quot;, &quot;Address&quot;: &quot;\u94f6\u5ddd\u5e02&quot;&#125;, &#123;&quot;Code&quot;: &quot;464776&quot;, &quot;Name&quot;: &quot;Hello&quot;, &quot;Address&quot;: &quot;\u5317\u4eac\u5e02&quot;&#125;]&#x27;</span>;<br>print_r(encrypt(<span class="hljs-variable">$dataJson</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>));<br><span class="hljs-regexp">//u</span>9Bd8oHXDGvjZcTIX9HK1r1q+aSu+<span class="hljs-regexp">/48gsfoGVrxoScZuX8yaj/</span>xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D<br><br><span class="hljs-regexp">//</span> 测试解密<br><span class="hljs-variable">$strr</span> = <span class="hljs-string">&#x27;u9Bd8oHXDGvjZcTIX9HK1r1q+aSu+/48gsfoGVrxoScZuX8yaj/xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D&#x27;</span>;<br>print_r(decrypt(<span class="hljs-variable">$strr</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>));<br><span class="hljs-regexp">//</span> [&#123;<span class="hljs-string">&quot;Code&quot;</span>: <span class="hljs-string">&quot;123123&quot;</span>, <span class="hljs-string">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;\u94f6\u5ddd\u5e02&quot;</span>&#125;, &#123;<span class="hljs-string">&quot;Code&quot;</span>: <span class="hljs-string">&quot;464776&quot;</span>, <span class="hljs-string">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;\u5317\u4eac\u5e02&quot;</span>&#125;]<br></code></pre></td></tr></table></figure>
 
-
-<p>​    自测通过，一脸得意地坐等联调。然后开始写其他业务去了，过了几天，结果一联调发现我加密的对方无法解密，对方加密的我无法解密，加密算法不匹配（挠头中。经过Google搜索相关问题，发现一句话(如下图），大概的意思就是说，在废弃的 <code>mcrypt</code> 加密库中，128 实际上指的是块大小而不是密钥大小，但是在 <code>openssl</code> 中的 <code>aes-128-cbc</code> 的 128 指的是密钥大小，也就是说，在使用有效的 256 位密钥时，它们都是 <code>aes-256</code> ，而如果要把 <code>mcrypt</code> 转为 <code>openssl</code> 的加密方式，<code>mcrypt</code> 的 128 需要写成 <code>openssl</code> 的 256 ，于是抱着试试看的态度，更改了一下 <code>aes-128-cbc</code> 为 <code>aes-256-cbc</code>，然后再进行调试，发现联调通过了。不过具体的技术细节原理还不是很明白，先这样子修改使用，以后有时间再研究吧。</p>
+<p>自测通过，一脸得意地坐等联调。然后开始写其他业务去了，过了几天，结果一联调发现我加密的对方无法解密，对方加密的我无法解密，加密算法不匹配（挠头中。经过 Google 搜索相关问题，发现一句话(如下图），大概的意思就是说，在废弃的 <code>mcrypt</code> 加密库中，128 实际上指的是块大小而不是密钥大小，但是在 <code>openssl</code> 中的 <code>aes-128-cbc</code> 的 128 指的是密钥大小，也就是说，在使用有效的 256 位密钥时，它们都是 <code>aes-256</code> ，而如果要把 <code>mcrypt</code> 转为 <code>openssl</code> 的加密方式，<code>mcrypt</code> 的 128 需要写成 <code>openssl</code> 的 256 ，于是抱着试试看的态度，更改了一下 <code>aes-128-cbc</code> 为 <code>aes-256-cbc</code>，然后再进行调试，发现联调通过了。不过具体的技术细节原理还不是很明白，先这样子修改使用，以后有时间再研究吧。</p>
 <p><img src="/images/aes-128-cbc.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><em>解决的方案，是把加密方式 <code>AES-128-CBC</code> 替换成 <code>AES-256-CBC</code></em></p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
+<li>解决的方案，是把加密方式 <code>AES-128-CBC</code> 替换成 <code>AES-256-CBC</code></li>
+</ul>
 
             </div>
             <hr>
@@ -280,8 +280,6 @@
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
-                    
-                      <a class="hover-with-bg" href="/tags/AES-128-CBC/">AES-128-CBC</a>
                     
                   </div>
                 
