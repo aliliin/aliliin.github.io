@@ -200,17 +200,18 @@
             
           
           Go channel基本语法和需要注意的点
-语法定义1var channel chan [type]
+语法定义
 
-使用 &lt;- 传递数据
-chan &lt;- data 发送数据到通道，向通道中写数据
-data &lt;- chan 获取通道中的数据，从通道中读取数据
+1var channel chan [type]
+
+* 使用 `&lt;-` 传递数据
+* `chan &lt;- data` 发送数据到通道，向通道中写数据
+* `data &lt;- chan` 获取通道中的数据，从通道中读取数据
 
 
 注意的点
 它是用于 goroutine 之间进行传递消息的
-每个 channel 都有相关联的数据类型, nil chan不能使用
-
+每个 channel 都有相关联的数据类型,
         </a>
       </p>
 
