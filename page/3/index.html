@@ -188,6 +188,56 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" target="_blank">
+          MySQL数据库索引
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" target="_blank">
+          
+          
+            
+          
+          数据库索引
+1.索引的作用：提高数据查询效率
+2.常见索引模型：哈希表、有序数组、搜索树
+3.哈希表：键 - 值(key - value)。
+4.哈希思路：把值放在数组里，用一个哈希函数把 key 换算成一个确定的位置，然后把 value 放在数组的这个位置
+5.哈希冲突的处理办法：链表 *
+6.哈希表适用场景：只有等值查询的场景
+7.有序数组：按顺序存储。查询用二分法就可以快速查询，时间复杂度是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-20 22:10" pubdate>
+              2019-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2019/10/17/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" target="_blank">
           MySQL数据库事务
         </a>
@@ -615,49 +665,6 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
               <a href="/tags/Go/">Go</a>
             
               <a href="/tags/Go-%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">Go 技巧总结</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/04/24/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" target="_blank">
-          Go http 服务默认的路由规则和更好的路由
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/04/24/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" target="_blank">
-          
-          
-            
-          
-          Go http 服务默认的路由规则和更好的路由Go Default Router12345678910func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request)&#123;    handler := sh.srv.Handler    if handler == nil &#123;        handler = De
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-04-24 14:23" pubdate>
-              2019-04-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">Go</a>
             
           </div>
         
