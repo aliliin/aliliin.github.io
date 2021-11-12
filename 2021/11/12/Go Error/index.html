@@ -16,20 +16,38 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="Beijing, China">
-<meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://aliliin.com/archives/2020/03/index.html">
+  <meta name="description" content="panic or error 在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题 性能问题，频繁 panic recover 性能不好 容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出 不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理   什么时候使用 pan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go error">
+<meta property="og:url" content="https://aliliin.com/2021/11/12/Go%20Error/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="Beijing, China">
+<meta property="og:description" content="panic or error 在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题 性能问题，频繁 panic recover 性能不好 容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出 不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理   什么时候使用 pan">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-12T08:02:18.643Z">
+<meta property="article:modified_time" content="2021-11-12T08:02:57.313Z">
 <meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>归档 - Aliliin</title>
+  <title>Go error - Aliliin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -56,7 +74,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -155,11 +173,58 @@
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="Go error">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-12 16:02" pubdate>
+        2021年11月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      476 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      1 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -172,46 +237,111 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 41 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/03/24/RabbitMQ%20(httplocalhost15672)/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">mac 安装 RabbitMQ</span>
-      <time style="float: right;">03-24</time>
-    </a>
-  
-    
-    <a href="/2020/03/23/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL 学习记录</span>
-      <time style="float: right;">03-23</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Go error</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年11月12日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="panic-or-error"><a href="#panic-or-error" class="headerlink" title="panic or error"></a>panic or error</h3><ol>
+<li>在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题<ol>
+<li>性能问题，频繁 panic recover 性能不好</li>
+<li>容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出</li>
+<li>不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理</li>
+</ol>
+</li>
+<li>什么时候使用 panic 呢？<ol>
+<li>对于真正意外的情况，那些表示不可恢复的程序错误，例如索引越界、不可恢复的环境问题、栈溢出，我们才使用 panic</li>
+</ol>
+</li>
+<li>使用 error 处理有哪些好处？<ol>
+<li>简单。</li>
+<li>考虑失败，而不是成功(Plan for failure, not success)。</li>
+<li>没有隐藏的控制流。</li>
+<li>完全交给你来控制 error。</li>
+<li>Error are values。</li>
+</ol>
+</li>
+<li>在程序启动的时候，如果有强依赖的服务出现故障时 <code>panic</code> 退出</li>
+<li>在程序启动的时候，如果发现有配置明显不符合要求， 可以 <code>panic</code> 退出（防御编程）</li>
+<li>其他情况下只要不是不可恢复的程序错误，都不应该直接 <code>panic</code> 应该返回 <code>error</code></li>
+<li>在程序入口处，例如 <code>gin</code> 中间件需要使用 <code>recover</code> 预防 <code>panic</code> 程序退出</li>
+</ol>
 
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/12/Go%20goroutine%20%E5%B9%B6%E5%8F%91/">
+                        <span class="hidden-mobile">Go goroutine 并发编程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -318,6 +448,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 

@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Go error</title>
+    <link href="/2021/11/12/Go%20Error/"/>
+    <url>/2021/11/12/Go%20Error/</url>
+    
+    <content type="html"><![CDATA[<h3 id="panic-or-error"><a href="#panic-or-error" class="headerlink" title="panic or error"></a>panic or error</h3><ol><li>在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题<ol><li>性能问题，频繁 panic recover 性能不好</li><li>容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出</li><li>不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理</li></ol></li><li>什么时候使用 panic 呢？<ol><li>对于真正意外的情况，那些表示不可恢复的程序错误，例如索引越界、不可恢复的环境问题、栈溢出，我们才使用 panic</li></ol></li><li>使用 error 处理有哪些好处？<ol><li>简单。</li><li>考虑失败，而不是成功(Plan for failure, not success)。</li><li>没有隐藏的控制流。</li><li>完全交给你来控制 error。</li><li>Error are values。</li></ol></li><li>在程序启动的时候，如果有强依赖的服务出现故障时 <code>panic</code> 退出</li><li>在程序启动的时候，如果发现有配置明显不符合要求， 可以 <code>panic</code> 退出（防御编程）</li><li>其他情况下只要不是不可恢复的程序错误，都不应该直接 <code>panic</code> 应该返回 <code>error</code></li><li>在程序入口处，例如 <code>gin</code> 中间件需要使用 <code>recover</code> 预防 <code>panic</code> 程序退出</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Go</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Go goroutine 并发编程</title>
     <link href="/2021/11/12/Go%20goroutine%20%E5%B9%B6%E5%8F%91/"/>
     <url>/2021/11/12/Go%20goroutine%20%E5%B9%B6%E5%8F%91/</url>
