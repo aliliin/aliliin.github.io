@@ -24,7 +24,7 @@
 <meta property="og:description" content="Go 微服务可用性设计知识点隔离服务隔离动静隔离如 CND 缓存加速、mysql LRU 算法改进 业务可以拆成两张表，静态表（字段机会不会改）和动态表（字段经常改） 读写隔离 主从 CQRS  轻重隔离 核心：服务按核心与否进行分离，越核心的服务可用性要求也高 快慢 热点 小表广播: 存为到内存，定期更新 主动预热：旁路预热    物理隔离 线程：使用线程池，不同业务逻辑用不同的池子 进程：容器">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-17T05:06:54.344Z">
-<meta property="article:modified_time" content="2021-11-17T07:21:40.858Z">
+<meta property="article:modified_time" content="2021-11-17T07:31:41.721Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      1.8k 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5 分钟
+      6 分钟
     </span>
   
 
@@ -365,6 +365,8 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/golang/time/blob/master/rate/rate.go">令牌桶实现</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/uber-go/ratelimit/tree/v0.1.0">uber 漏斗桶</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/afex/hystrix-go/blob/master/hystrix/rolling/rolling.go">hystrix-go 滑动窗口</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAwNjQwNzU2NQ==&mid=402841629&idx=1&">亿级 Web 系统的容错性建设实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/okiwilldoit/article/details/81738782">分布式系统常见负载均衡算法</a></li>
 </ul>
 
             </div>
