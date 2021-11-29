@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      364 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      1 分钟
     </span>
   
 
@@ -257,7 +257,7 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="PHP-技巧总结"><a href="#PHP-技巧总结" class="headerlink" title="PHP 技巧总结"></a>PHP 技巧总结</h1><h3 id="二维数组根据某个字段进行排序"><a href="#二维数组根据某个字段进行排序" class="headerlink" title="二维数组根据某个字段进行排序"></a><strong>二维数组根据某个字段进行排序</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个字段排序</span><br><span class="line">array_multisort(array_column($data, &#x27;sort&#x27;), SORT_DESC, $data);</span><br><span class="line">多个字段排序</span><br><span class="line">array_multisort(array_column($data, &#x27;sort1&#x27;), SORT_DESC, array_column($data, &#x27;sort2&#x27;), SORT_DESC, $data);</span><br></pre></td></tr></table></figure>
+              <h1 id="PHP-技巧总结"><a href="#PHP-技巧总结" class="headerlink" title="PHP 技巧总结"></a>PHP 技巧总结</h1><h3 id="二维数组根据某个字段进行排序"><a href="#二维数组根据某个字段进行排序" class="headerlink" title="二维数组根据某个字段进行排序"></a><strong>二维数组根据某个字段进行排序</strong></h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">一个字段排序<br><span class="hljs-built_in">array</span><span class="hljs-constructor">_multisort(<span class="hljs-params">array_column</span>($<span class="hljs-params">data</span>, &#x27;<span class="hljs-params">sort</span>&#x27;)</span>, SORT_DESC, $data);<br>多个字段排序<br><span class="hljs-built_in">array</span><span class="hljs-constructor">_multisort(<span class="hljs-params">array_column</span>($<span class="hljs-params">data</span>, &#x27;<span class="hljs-params">sort1</span>&#x27;)</span>, SORT_DESC, <span class="hljs-built_in">array</span><span class="hljs-constructor">_column($<span class="hljs-params">data</span>, &#x27;<span class="hljs-params">sort2</span>&#x27;)</span>, SORT_DESC, $data);<br></code></pre></td></tr></table></figure>
 
 <h3 id="二维数据根据某个-key-当键名"><a href="#二维数据根据某个-key-当键名" class="headerlink" title="二维数据根据某个 key 当键名"></a><strong>二维数据根据某个 key 当键名</strong></h3><p><code>array_column($arr,$column_name,$key_name)</code></p>
 <h3 id="删除数组中的重复项"><a href="#删除数组中的重复项" class="headerlink" title="删除数组中的重复项"></a><strong>删除数组中的重复项</strong></h3><p><code>array_keys(array_flip($array));</code></p>

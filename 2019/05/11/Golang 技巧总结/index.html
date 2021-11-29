@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      135 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      1 分钟
     </span>
   
 
@@ -257,9 +257,9 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="Golang-技巧总结"><a href="#Golang-技巧总结" class="headerlink" title="Golang 技巧总结"></a>Golang 技巧总结</h1><h3 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a><strong>时间格式化</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time := time2.Now().Format(“2006-01-02 15:04:05”)</span><br></pre></td></tr></table></figure>
+              <h1 id="Golang-技巧总结"><a href="#Golang-技巧总结" class="headerlink" title="Golang 技巧总结"></a>Golang 技巧总结</h1><h3 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a><strong>时间格式化</strong></h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">time</span> := time<span class="hljs-number">2</span>.Now().Format(“<span class="hljs-number">2006</span>-<span class="hljs-number">01</span>-<span class="hljs-number">02</span> <span class="hljs-number">15</span>:<span class="hljs-number">04</span>:<span class="hljs-number">05</span>”)<br></code></pre></td></tr></table></figure>
 
-<h3 id="http库-request-body-只能读取一次"><a href="#http库-request-body-只能读取一次" class="headerlink" title="http库 request body 只能读取一次"></a><strong>http库 request body 只能读取一次</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">io.ReadAll(r.Body) // 第一次有数据 第二次为空，但是不代表错误</span><br><span class="line">要注意多次读取的问题</span><br></pre></td></tr></table></figure>
+<h3 id="http库-request-body-只能读取一次"><a href="#http库-request-body-只能读取一次" class="headerlink" title="http库 request body 只能读取一次"></a><strong>http库 request body 只能读取一次</strong></h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">io.<span class="hljs-constructor">ReadAll(<span class="hljs-params">r</span>.Body)</span> <span class="hljs-comment">// 第一次有数据 第二次为空，但是不代表错误</span><br>要注意多次读取的问题<br></code></pre></td></tr></table></figure>
             </div>
             <hr>
             <div>
