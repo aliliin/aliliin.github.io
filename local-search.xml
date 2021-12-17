@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>TCP 粘包</title>
+    <link href="/2021/12/17/TCP%20%E7%B2%98%E5%8C%85/"/>
+    <url>/2021/12/17/TCP%20%E7%B2%98%E5%8C%85/</url>
+    
+    <content type="html"><![CDATA[<h3 id="什么是-TCP-粘包"><a href="#什么是-TCP-粘包" class="headerlink" title="什么是 TCP 粘包"></a>什么是 TCP 粘包</h3><ul><li>粘包问题是指当发送两条消息时，比如发送了 ABC 和 DEF，但另一端接收到的却是 ABCD，像这种一次性读取了两条数据的情况就叫做粘包（正常情况应该是一条一条读取的）,正确读取 ABC 和 DEF 两条信息。</li><li>当发送的消息是 ABC 时，另一端却接收到的是 AB 和 C 两条信息，像这种情况就叫做半包。</li></ul><h4 id="为什么会有粘包和半包？"><a href="#为什么会有粘包和半包？" class="headerlink" title="为什么会有粘包和半包？"></a>为什么会有粘包和半包？</h4><ul><li><p>这是因为 TCP 是面向连接的传输协议，TCP 传输的数据是以流的形式，而流数据是没有明确的开始结尾边界，所以 TCP 也没办法判断哪一段流属于一个消息。</p></li><li><p>造成粘包的主要原因</p><ol><li>发送方每次写入数据 &lt; 套接字（Socket）缓冲区大小</li><li>接收方读取套接字（Socket）缓冲区数据不够及时。</li></ol></li><li><p>造成半包的主要原因</p><ol><li>发送方每次写入数据 &gt; 套接字（Socket）缓冲区大小</li><li>发送的数据大于协议的 MTU (Maximum Transmission Unit，最大传输单元)，因此必须拆包。</li></ol></li></ul><h3 id="怎么处理粘包"><a href="#怎么处理粘包" class="headerlink" title="怎么处理粘包 ?"></a>怎么处理粘包 ?</h3><h4 id="fix-length-处理粘包"><a href="#fix-length-处理粘包" class="headerlink" title="fix length 处理粘包"></a>fix length 处理粘包</h4><ul><li><p><a href="https://github.com/aliliin/geektime-go/tree/main/week9/fix_length">点击查看实现代码</a></p><p><em>执行程序在 client server 目录</em></p></li><li><p>每次发送固定缓冲区大小数据.客户端和服务器约定每次发送请求的大小.例如客户端发送 1024 个字节，服务器接受 1024 个字节。<br>这样虽然可以解决粘包的问题，但是如果发送的数据小于 1024 个字节，就会导致数据内存冗余和浪费;且如果发送请求大于 1024 字节，会出现半包的问题，也就是数据接收的不完整。</p></li></ul><h5 id="delimiter-based-处理粘包"><a href="#delimiter-based-处理粘包" class="headerlink" title="delimiter based 处理粘包"></a>delimiter based 处理粘包</h5><ul><li><a href="https://github.com/aliliin/geektime-go/tree/main/week9/delimiter_based">点击查看实现代码</a></li></ul><p>​ <em>执行程序在 client server 目录</em></p><ul><li>基于定界符来判断是不是一个请求（例如结尾’\n’). 客户端发送过来的数据，每次以 \n 结束，服务器每接受到一个 \n 就以此作为一个请求.然后对其拆分后的头部部分与前一个包的剩余部分进行合并，这样就得到了一个完整的包。这种方式的缺点在于如果数据量过大，查找定界符会消耗一些性能</li></ul><h5 id="length-field-based-frame-decoder-处理粘包"><a href="#length-field-based-frame-decoder-处理粘包" class="headerlink" title="length field based frame decoder 处理粘包"></a>length field based frame decoder 处理粘包</h5><ul><li><a href="https://github.com/aliliin/geektime-go/tree/main/week9/frame_decoder">点击查看实现代码</a></li></ul><p>​ <em>执行程序在 client server 目录</em></p><ul><li>在 TCP 协议头里面写入每次发送请求的长度。 客户端在协议头里面带入数据长度，服务器在接收到请求后，根据协议头里面的数据长度来决定接受多少数据,只有在读取到足够长度的消息之后才算是读到了一个完整的消息。之后会按照参数指定的包长度偏移量数据对接收到的数据进行解码，从而得到目标消息体数据。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>TCP socket</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>基于 Docker 的 pubsub 包实现的gRPC的发布与订阅</title>
     <link href="/2021/11/22/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20pubsub%20%E5%8C%85%E5%AE%9E%E7%8E%B0%E7%9A%84%20gRPC%20%E7%9A%84%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85/"/>
     <url>/2021/11/22/%E5%9F%BA%E4%BA%8E%20Docker%20%E7%9A%84%20pubsub%20%E5%8C%85%E5%AE%9E%E7%8E%B0%E7%9A%84%20gRPC%20%E7%9A%84%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85/</url>
