@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Beijing, China">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="Go 库存扣减的几种实现方法Go Mutex 实现 这里使用了 grpc、proto、gorm、zap、go-redis、go-redsync 等 package  123456789101112131415161718192021222324252627282930var m sync.Mutexfunc (*InventoryServer) LockSell(ctx context.Conte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 库存扣减的几种实现">
+<meta property="og:url" content="https://aliliin.com/2022/01/17/Go%20%E5%BA%93%E5%AD%98%E6%89%A3%E5%87%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="Go 库存扣减的几种实现方法Go Mutex 实现 这里使用了 grpc、proto、gorm、zap、go-redis、go-redsync 等 package  123456789101112131415161718192021222324252627282930var m sync.Mutexfunc (*InventoryServer) LockSell(ctx context.Conte">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-17T07:51:22.413Z">
+<meta property="article:modified_time" content="2022-01-17T08:20:12.112Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>Go 库存扣减的几种实现 - Aliliin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Go 库存扣减的几种实现">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-17 15:51" pubdate>
+        2022年1月17日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Go 库存扣减的几种实现</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年1月17日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h4 id="Go-库存扣减的几种实现方法"><a href="#Go-库存扣减的几种实现方法" class="headerlink" title="Go 库存扣减的几种实现方法"></a>Go 库存扣减的几种实现方法</h4><h5 id="Go-Mutex-实现"><a href="#Go-Mutex-实现" class="headerlink" title="Go Mutex 实现"></a>Go Mutex 实现</h5><blockquote>
+<p>这里使用了 grpc、proto、gorm、zap、go-redis、go-redsync 等 package</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> m sync.Mutex<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*InventoryServer)</span> <span class="hljs-title">LockSell</span><span class="hljs-params">(ctx context.Context, req *proto.SellInfo)</span> <span class="hljs-params">(*emptypb.Empty, error)</span></span> &#123;<br>    tx := global.DB.Begin()<br><br>    m.Lock()<br><br>    <span class="hljs-keyword">for</span> _, good := <span class="hljs-keyword">range</span> req.GoodsInfo &#123;<br>        <span class="hljs-keyword">var</span> i model.Inventory<br>        <span class="hljs-keyword">if</span> result := global.DB.Where(&amp;model.Inventory&#123;Goods: good.GoodsId&#125;).First(&amp;i);<br>        	 result.RowsAffected == <span class="hljs-number">0</span>&#123;<br><br>            tx.Rollback() <span class="hljs-comment">// 回滚</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.InvalidArgument, <span class="hljs-string">&quot;未找到此商品的库存信息。&quot;</span>)<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> i.Stocks &lt; good.Num &#123;<br>            tx.Rollback()<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.ResourceExhausted, <span class="hljs-string">&quot;此商品的库存不足&quot;</span>)<br>        &#125;<br><br>        i.Stocks -= good.Num<br>        tx.Save(&amp;i)<br>    &#125;<br><br>    tx.Commit()<br><br>    m.Unlock()<br><br>    <span class="hljs-keyword">return</span> &amp;emptypb.Empty&#123;&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="MySQL-悲观锁实现"><a href="#MySQL-悲观锁实现" class="headerlink" title="MySQL 悲观锁实现"></a>MySQL 悲观锁实现</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*InventoryServer)</span> <span class="hljs-title">ForUpdateSell</span><span class="hljs-params">(ctx context.Context, req *proto.SellInfo)</span> <span class="hljs-params">(*emptypb.Empty, error)</span></span> &#123;<br>	tx := global.DB.Begin()<br>	<span class="hljs-keyword">for</span> _, good := <span class="hljs-keyword">range</span> req.GoodsInfo &#123;<br>		<span class="hljs-keyword">var</span> i model.Inventory<br>		<span class="hljs-keyword">if</span> result := tx.Clauses(clause.Locking&#123;<br>					Strength: <span class="hljs-string">&quot;UPDATE&quot;</span>,<br>			  &#125;).Where(&amp;model.Inventory&#123;Goods: good.GoodsId&#125;).First(&amp;i);<br>    	result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>			tx.Rollback()<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.InvalidArgument, <span class="hljs-string">&quot;未找到此商品的库存信息。&quot;</span>)<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> i.Stocks &lt; good.Num &#123;<br>			tx.Rollback()<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.ResourceExhausted, <span class="hljs-string">&quot;此商品的库存不足&quot;</span>)<br>		&#125;<br><br>		i.Stocks -= good.Num<br>		tx.Save(&amp;i)<br>	&#125;<br><br>	tx.Commit()<br>	<span class="hljs-keyword">return</span> &amp;emptypb.Empty&#123;&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="MySQL-乐观锁实现"><a href="#MySQL-乐观锁实现" class="headerlink" title="MySQL 乐观锁实现"></a>MySQL 乐观锁实现</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*InventoryServer)</span> <span class="hljs-title">VersionSell</span><span class="hljs-params">(ctx context.Context, req *proto.SellInfo)</span> <span class="hljs-params">(*emptypb.Empty, error)</span></span> &#123;<br>	tx := global.DB.Begin()<br>	<span class="hljs-keyword">for</span> _, good := <span class="hljs-keyword">range</span> req.GoodsInfo &#123;<br>		<span class="hljs-keyword">var</span> i model.Inventory<br>		<span class="hljs-keyword">for</span> &#123; <span class="hljs-comment">// 并发请求相同条件比较多，防止放弃掉一些请求</span><br>			<span class="hljs-keyword">if</span> result := global.DB.Where(&amp;model.Inventory&#123;Goods: good.GoodsId&#125;).First(&amp;i);<br>      	 result.RowsAffected == <span class="hljs-number">0</span> &#123;<br><br>        tx.Rollback()<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.InvalidArgument, <span class="hljs-string">&quot;未找到此商品的库存信息.&quot;</span>)<br>			&#125;<br><br>			<span class="hljs-keyword">if</span> i.Stocks &lt; good.Num &#123;<br>				tx.Rollback() <span class="hljs-comment">// 回滚</span><br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.ResourceExhausted, <span class="hljs-string">&quot;此商品的库存不足&quot;</span>)<br>			&#125;<br><br>			i.Stocks -= good.Num<br>      version := i.Version + <span class="hljs-number">1</span><br>			<span class="hljs-keyword">if</span> result := tx.Model(&amp;model.Inventory&#123;&#125;).<br>					Select(<span class="hljs-string">&quot;Stocks&quot;</span>, <span class="hljs-string">&quot;Version&quot;</span>).<br>					Where(<span class="hljs-string">&quot;goods = ? and version= ?&quot;</span>, good.GoodsId, i.Version).<br>					Updates(model.Inventory&#123;Stocks: i.Stocks, Version: version&#125;);<br>      	result.RowsAffected == <span class="hljs-number">0</span> &#123;<br><br>				zap.S().Info(<span class="hljs-string">&quot;库存扣减失败!&quot;</span>)<br>			&#125; <span class="hljs-keyword">else</span> &#123;<br>				<span class="hljs-keyword">break</span><br>			&#125;<br>		&#125;<br>	&#125;<br>	tx.Commit() <span class="hljs-comment">// 提交</span><br>	<span class="hljs-keyword">return</span> &amp;emptypb.Empty&#123;&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Redis-分布式锁实现"><a href="#Redis-分布式锁实现" class="headerlink" title="Redis 分布式锁实现"></a>Redis 分布式锁实现</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*InventoryServer)</span> <span class="hljs-title">RedisSell</span><span class="hljs-params">(ctx context.Context, req *proto.SellInfo)</span> <span class="hljs-params">(*emptypb.Empty, error)</span></span> &#123;<br>	<span class="hljs-comment">// redis 分布式锁</span><br>	pool := goredis.NewPool(global.Redis)<br>	rs := redsync.New(pool)<br><br>	tx := global.DB.Begin()<br>	<span class="hljs-keyword">for</span> _, good := <span class="hljs-keyword">range</span> req.GoodsInfo &#123;<br>		mutex := rs.NewMutex(fmt.Sprintf(<span class="hljs-string">&quot;goods_%d&quot;</span>, good.GoodsId))<br>		<span class="hljs-keyword">if</span> err := mutex.Lock(); err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.Internal, <span class="hljs-string">&quot;redis:分布式锁获取异常&quot;</span>)<br>		&#125;<br><br>		<span class="hljs-keyword">var</span> i model.Inventory<br>		<span class="hljs-keyword">if</span> result := global.DB.Where(&amp;model.Inventory&#123;Goods: good.GoodsId&#125;).First(&amp;i); result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>			tx.Rollback()<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.InvalidArgument, <span class="hljs-string">&quot;未找到此商品的库存信息&quot;</span>)<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> i.Stocks &lt; good.Num &#123;<br>			tx.Rollback()<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.ResourceExhausted, <span class="hljs-string">&quot;此商品的库存不足&quot;</span>)<br>		&#125;<br><br>		i.Stocks -= good.Num<br>		tx.Save(&amp;i)<br><br>		<span class="hljs-keyword">if</span> ok, err := mutex.Unlock(); !ok || err != <span class="hljs-literal">nil</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.Internal, <span class="hljs-string">&quot;redis:分布式锁释放异常&quot;</span>)<br>		&#125;<br>	&#125;<br><br>	tx.Commit()<br>	<span class="hljs-keyword">return</span> &amp;emptypb.Empty&#123;&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><blockquote>
+<p>涉及到服务、数据库等环境，此测试为伪代码</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> w sync.WaitGroup<br>	w.Add(<span class="hljs-number">20</span>)<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">20</span>; i++ &#123;<br>		<span class="hljs-keyword">go</span> TestForUpdateSell(&amp;w) <span class="hljs-comment">// 模拟并发请求</span><br>	&#125;<br>	w.Wait()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestForUpdateSell</span><span class="hljs-params">(wg *sync.WaitGroup)</span></span> &#123;<br>	<span class="hljs-keyword">defer</span> wg.Done()<br>	_, err := invClient.Sell(context.Background(), &amp;proto.SellInfo&#123;<br>		GoodsInfo: []*proto.GoodsInvInfo&#123;<br>			&#123;GoodsId: <span class="hljs-number">16</span>, Num: <span class="hljs-number">1</span>&#125;,<br>			<span class="hljs-comment">//&#123;GoodsId: 16, Num: 10&#125;,</span><br>		&#125;,<br>	&#125;)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	fmt.Println(<span class="hljs-string">&quot;库存扣减成功&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/17/TCP%20%E7%B2%98%E5%8C%85/">
+                        <span class="hidden-mobile">TCP 粘包</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
