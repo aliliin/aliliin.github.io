@@ -188,18 +188,21 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/08/26/go%E5%88%87%E7%89%87%E7%9A%84%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%A0%E9%99%A4/" target="_blank">
-          Go语言的切片插入和删除
+        <a href="/2021/10/20/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/" target="_blank">
+          Go 内置的 JSON 解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/08/26/go%E5%88%87%E7%89%87%E7%9A%84%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%A0%E9%99%A4/" target="_blank">
+        <a href="/2021/10/20/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/" target="_blank">
           
           
             
           
-          golang 的切片插入和删除操作执行测试12345678910111213141516171819202122232425262728package mainimport &quot;fmt&quot;func main() &#123;	s := []int&#123;1, 2, 4, 7&#125;	// 结果应该是 5, 1, 2, 4, 7	s = Add(s, 0, 5)	fmt.Pr
+          Go 内置的 JSON 解析
+利用反射实现，通过 FelidTag 来标识对应的 json 值
+
+1234567891011121314type BasicInfo struct &#123;    Name string `json:&quot;name&quot;`    Age  int    `json:&quot;age&quot;`&#125;type JobInfo struct &
         </a>
       </p>
 
@@ -207,8 +210,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-26 19:13" pubdate>
-              2021-08-26
+            <time datetime="2021-10-20 12:31" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -231,26 +234,30 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/04/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
-          Docker中常用的命令
+        <a href="/2021/10/20/Go%20Channels%20%E9%80%9A%E9%81%93%20/" target="_blank">
+          Go Channel 通道
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/04/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+        <a href="/2021/10/20/Go%20Channels%20%E9%80%9A%E9%81%93%20/" target="_blank">
           
           
             
           
-          Docker 中常用的命令
-启动容器docker start
-启动容器并进入 交互式模式docker run -it 镜像name sh
-进入容器内部docker exec -it 镜像id sh
-查看正在运行的容器docker ps
-停止正在运行的容器 docker stop
-删除容器docker rmi 删除的镜像
-显示本地镜像docker list
-删除所有容器docker rm -f $(
+          Go channel基本语法和需要注意的点
+语法定义
+
+1var channel chan [type]
+
+* 使用 `&lt;-` 传递数据
+* `chan &lt;- data` 发送数据到通道，向通道中写数据
+* `data &lt;- chan` 获取通道中的数据，从通道中读取数据
+
+
+注意的点
+它是用于 goroutine 之间进行传递消息的
+每个 channel 都有相关联的数据类型,
         </a>
       </p>
 
@@ -258,8 +265,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-20 10:34" pubdate>
-              2021-04-20
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -268,7 +275,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Docker/">Docker</a>
+              <a href="/tags/Go/">Go</a>
             
           </div>
         
@@ -282,13 +289,253 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/04/02/Vue%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/" target="_blank">
+        <a href="/2021/10/20/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" target="_blank">
+          Go http 服务默认的路由规则和更好的路由
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" target="_blank">
+          
+          
+            
+          
+          Go http 服务默认的路由规则和更好的路由Go Default Router12345678910func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request)&#123;    handler := sh.srv.Handler    if handler == nil &#123;        handler = De
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Go%20interface%202/" target="_blank">
+          Go interface
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Go%20interface%202/" target="_blank">
+          
+          
+            
+          
+          Go interface
+通过关键字 type 和 interface，声明出接口类 type TestInterface interface &#123;&#125;
+因为接口类型与其他数据类型不同，它是没法被实例化的。既不能通过调用 new 函数或 make 函数创建出一个接口类型的值
+我们通过 interface 来定义对象的一组行为方法，如果某个对象实现了某个接口类型的所有方法，则此对象就
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Go%20map%E7%B1%BB%E5%9E%8B/" target="_blank">
+          Go map类型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Go%20map%E7%B1%BB%E5%9E%8B/" target="_blank">
+          
+          
+            
+          
+          Go map 类型基本定义
+类似其它语言中的哈希表或者字典，以 key=&gt;value 形式存储数据
+格式为 map[keyType]valueType
+key 必须是支持 == 或者 != 比较运算的类型，不可以是函数，map 或者 slice
+map 使用 make() 创建，支持 := 这种简写的方式
+map 是无序的，每次打印出来的 map 都会不一样，它不能通过 index 获取，而
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Go%20Package/" target="_blank">
+          Go Package
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Go%20Package/" target="_blank">
+          
+          
+            
+          
+          Go Package
+基本复用模块单元以首字母大写来表明可以被包外代码访问
+代码的 package 可以和所在的目录不一致
+同一目录里面的 Go 代码的 package 要保持一致
+
+init 方法
+在 main 被执行前,所以依赖的 package init 方法都会被执行
+不同包的 init 函数按照包倒入的依赖关系决定执行顺序
+每个包可以有多个 init 函数
+包的每个源文件也可以有多个 i
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Go%20String%20%E7%B1%BB%E5%9E%8B/" target="_blank">
+          Go String 类型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Go%20String%20%E7%B1%BB%E5%9E%8B/" target="_blank">
+          
+          
+            
+          
+          Go String 类型
+零值 不是 null 是 空字符串
+string 是数据类型,不是引用或者指针类型
+string 是只读的 byte slice, len 函数可以返回它所包含的 byte 数
+string 的 byte 数组可以存放任何数据
+
+Unicode UTF8
+Unicode 是一种字符集 (code point 字符编码)
+UTF8 是 Unicode 的存储实现 (转换为字
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Vue%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/" target="_blank">
           Vue 常见指令
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/04/02/Vue%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/" target="_blank">
+        <a href="/2021/10/20/Vue%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/" target="_blank">
           
           
             
@@ -301,8 +548,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-02 16:35" pubdate>
-              2021-04-02
+            <time datetime="2021-10-20 12:30" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -327,26 +574,21 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank">
-          分布式事务的解决方案
+        <a href="/2021/10/20/RabbitMQ%20(httplocalhost15672)/" target="_blank">
+          mac 安装 RabbitMQ
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank">
+        <a href="/2021/10/20/RabbitMQ%20(httplocalhost15672)/" target="_blank">
           
           
             
           
-          分布式事务的解决方案
-MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，多出来的事务为事务管理器。
-大致的流程：
-​ 第一阶段：事务管理器询问各个资源管理器是否都就绪，所有的参与者需要将自己本身事务是否执行成功的信息反馈给管理者
-​ 第二阶段： 事务管理者根据资源的反馈，看是否需要提交或者回滚，
-存在的问题：
-
-一旦事务管理器出问题了，整个系统都不可用了
-数据可能会不一致，因为在阶段
+          安装 RabbitMQ (http://localhost:15672)访问地址是：RabbitMQ ManagementZ 帐号密码： guest
+安装过程brew update
+执行安装brew install rabbitmqbrew install rabbitmq-c
+执行安装 php 扩展12345git clone https://github.com/pdezwart/php-am
         </a>
       </p>
 
@@ -354,8 +596,8 @@ MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-11 10:09" pubdate>
-              2021-01-11
+            <time datetime="2021-10-20 12:29" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -364,11 +606,7 @@ MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Redis/">Redis</a>
-            
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
-            
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E9%94%81/">分布式事务锁</a>
+              <a href="/tags/RabbitMQ/">RabbitMQ</a>
             
           </div>
         
@@ -382,18 +620,19 @@ MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
-          阿里云敏感词安全接口PHP实现
+        <a href="/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/" target="_blank">
+          PHP 实现 AES-128-CBC-PKCS5Padding 加密
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
+        <a href="/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/" target="_blank">
           
           
             
           
-          不啰嗦直接上代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100
+          PHP 实现 AES-128-CBC-PKCS5Padding 加密
+最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）
         </a>
       </p>
 
@@ -401,8 +640,8 @@ MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-12-01 13:09" pubdate>
-              2020-12-01
+            <time datetime="2021-10-20 12:28" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -412,245 +651,6 @@ MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/PHP/">PHP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/11/23/%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank">
-          PHP面试题总结
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/11/23/%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank">
-          
-          
-            
-          
-          1. laravel 生命周期文件先自动加载 composer 包需要的类，包扩所有你自己的 composer 依赖包，生成容器 Cantainer 并注册相关的一些核心组件和实例，是从 bootstrap/app.php 脚本获取 Laravel 应用实例，处理请求一般都是 http 请求，检测 booststrap 环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-11-23 18:10" pubdate>
-              2020-11-23
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">PHP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/08/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" target="_blank">
-          PHP一次面试的面试题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/08/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" target="_blank">
-          
-          
-            
-          
-          blah blah blah
-# 面试题汇总
-
-1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-08-27 21:05" pubdate>
-              2020-08-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">PHP</a>
-            
-              <a href="/tags/PHP-%E9%9D%A2%E8%AF%95%E9%A2%98/">PHP 面试题</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
-          Redis的锁来缓解并发请求
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
-          
-          
-            
-          
-          Redis 锁 缓解并发
-简单实现Redis 锁主要利用 Redis 的 setnx 命令实现
-
-加锁命令：SETNX key value，当键不存在时，对键进行设置操作并返回成功，否则返回失败。KEY 是锁的唯一标识，一般按业务来决定命名。
-
-
-解锁命令：DEL key，通过删除键值对释放锁，以便其他线程可以通过 SETNX 命令来获取锁。
-锁超时：EXPIRE key timeout, 设置 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-07-11 13:09" pubdate>
-              2020-07-11
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">PHP</a>
-            
-              <a href="/tags/Redis/">Redis</a>
-            
-              <a href="/tags/%E9%94%81/">锁</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/06/15/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
-          红楼梦中的诗句记录
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/06/15/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
-          
-          
-            
-          
-          红楼梦满纸荒唐言，一把辛酸泪。都云作者痴，谁解其中味！
-惯养娇生笑你痴，菱花空对雪澌澌。好防佳节元宵后，便是烟消火灭时。
-未卜三生愿，频添一段愁。闷来时敛额，行去几回头。自顾风前影，谁堪月下俦？蟾光如有意，先上玉人楼。
-时逢三五便团圆，满把晴光护玉栏。天上一轮才捧出，人间万姓仰头看。
-一局输赢料不真，香销茶尽尚逡巡。欲知目下兴衰兆，须问旁观冷眼人。
-一场幽梦同谁近，千古情人独我痴。
-得意浓时易接济
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-06-15 23:32" pubdate>
-              2020-06-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
-            
-              <a href="/tags/%E8%AF%BB%E4%B9%A6/">读书</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          Redis 缓存策略
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/05/21/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          
-          
-            
-          
-          缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-05-21 08:41" pubdate>
-              2020-05-21
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/redis/">redis</a>
             
           </div>
         

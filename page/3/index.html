@@ -188,21 +188,24 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/03/24/RabbitMQ%20(httplocalhost15672)/" target="_blank">
-          mac 安装 RabbitMQ
+        <a href="/2021/10/20/Git%20Workflow/" target="_blank">
+          Git Workflow
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/03/24/RabbitMQ%20(httplocalhost15672)/" target="_blank">
+        <a href="/2021/10/20/Git%20Workflow/" target="_blank">
           
           
             
           
-          安装 RabbitMQ (http://localhost:15672)访问地址是：RabbitMQ ManagementZ 帐号密码： guest
-安装过程brew update
-执行安装brew install rabbitmqbrew install rabbitmq-c
-执行安装 php 扩展12345git clone https://github.com/pdezwart/php-am
+          Git Workflow
+git remote add upstream // 必须添加一个上由主分支的地址 可以用 git remote -v 来查看
+git pull upstream master // 拿到项目的主分支代码
+git checkout -b // 创建自己飞分支
+git commit // 写完代码之后提交
+git checkout 分支名 // 切换到主分支
+git pul
         </a>
       </p>
 
@@ -210,8 +213,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-03-24 17:28" pubdate>
-              2020-03-24
+            <time datetime="2021-10-20 11:54" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -220,7 +223,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/RabbitMQ/">RabbitMQ</a>
+              <a href="/tags/git/">git</a>
             
           </div>
         
@@ -234,21 +237,26 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/03/23/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" target="_blank">
-          MySQL 学习记录
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          Docker中常用的命令
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/03/23/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" target="_blank">
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
           
           
             
           
-          MySQL 记录1.1 事务的特性（ACID）
-事务要求 ACID 的特性，即：原原子子性性、、一一致致性性、、隔隔离离性性、、持持久久性性。 
-所谓原子性，是指整个数据库的每个事务都是不可分割的单位。只有事务中的所有 SQL 语句都执行成功，才算整个事务成功，事务才会被提交。如果事务中任何一个 SQL 语句执行失败，整个事务都应该被回滚。 
-所谓一致性，是指将数据库从一种一致性状态转换为下一种一
+          Docker 中常用的命令
+启动容器docker start
+启动容器并进入 交互式模式docker run -it 镜像name sh
+进入容器内部docker exec -it 镜像id sh
+查看正在运行的容器docker ps
+停止正在运行的容器 docker stop
+删除容器docker rmi 删除的镜像
+显示本地镜像docker list
+删除所有容器docker rm -f $(
         </a>
       </p>
 
@@ -256,8 +264,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-03-23 15:12" pubdate>
-              2020-03-23
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -266,7 +274,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/MySQL/">MySQL</a>
+              <a href="/tags/Docker/">Docker</a>
             
           </div>
         
@@ -280,24 +288,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/11/redis%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E9%99%90%E6%B5%81/" target="_blank">
-          Redis 实现简单的限流
+        <a href="/2021/10/20/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" target="_blank">
+          Go 使用 Consul 的简单操作
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/11/redis%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E9%99%90%E6%B5%81/" target="_blank">
+        <a href="/2021/10/20/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" target="_blank">
           
           
             
           
-          利用 Redis 有序集合实现，并用管道加速。假设 $period 秒内，一个用户只能访问 $maxCount 次。用户 ID 作为 key，毫秒时间戳作为 score 和 value。一个请求进入，
-
-加入有序集合——zadd
-移除时间窗口之前的行为记录，剩下的都是时间窗口内的——zremrangebyscore
-更新过期时间——expire
-获取窗口内的元素数量——zcard
-判断窗口内元素数
+          
+Consul Docker 安装命令
+1234567891011docker run -d -p 8500:8500 -p 8300:8300 -p 8301:8301 -p 8302:8302 -p 8600:8600/udp consul consul agent -dev -client=0.0.0.0// 开机关机 自动重启服务docker container update --rest
         </a>
       </p>
 
@@ -305,8 +309,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-11 10:09" pubdate>
-              2020-02-11
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -315,7 +319,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Redis/">Redis</a>
+              <a href="/tags/Consul/">Consul</a>
+            
+              <a href="/tags/Go/">Go</a>
             
           </div>
         
@@ -329,211 +335,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/01/03/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_blank">
-          PHP的生命周期
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/03/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_blank">
-          
-          
-            
-          
-          PHP的生命周期1.0 先从PHP开始说起在介绍PHP的生命周期之前，我们先来看一张图，如图1所示:
-
-    图1 PHP的生命周期    首先我们先引入一个概念SAPI，SAPI是PHP的应用接入层，是整个PHP框架最外层的部分，像我们平常用的比较多的Fpm和Cli就是SAPI的具体实现，而main函数也定义在对应的SAPI中。通常来说PHP的生命周期被划分为5个阶段：模块初始化阶段、请求初始
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-03 18:28" pubdate>
-              2020-01-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">PHP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/12/13/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
-          第一周算法学习笔记
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/12/13/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
-          
-          
-            
-          
-          第一周算法学习笔记学习笔记
-数组
-
- 数组是线性的数据结构，用一组连续的内存空间存放一组相同类型的数据
- 因为数组在内存是连续存储的，所以可以根据首地址和下标，通过寻址公式就能直接计算出对应的内存地址，找出数据。
- 使用的时候需要注意数组会有越界的问题，支持随机访问。
-
-** 小技巧 **
-
- 循环遍历 双指针的用法
- 升级维度
-
-
-链表 Linked List 、跳表 Skip List（升维）
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-12-13 15:17" pubdate>
-              2019-12-13
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">算法学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" target="_blank">
-          MySQL数据库索引
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" target="_blank">
-          
-          
-            
-          
-          数据库索引
-1.索引的作用：提高数据查询效率
-2.常见索引模型：哈希表、有序数组、搜索树
-3.哈希表：键 - 值(key - value)。
-4.哈希思路：把值放在数组里，用一个哈希函数把 key 换算成一个确定的位置，然后把 value 放在数组的这个位置
-5.哈希冲突的处理办法：链表 *
-6.哈希表适用场景：只有等值查询的场景
-7.有序数组：按顺序存储。查询用二分法就可以快速查询，时间复杂度是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-10-20 22:10" pubdate>
-              2019-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/10/17/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" target="_blank">
-          MySQL数据库事务
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/10/17/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" target="_blank">
-          
-          
-            
-          
-          数据库事务
-1、务的特性：原子性、一致性、隔离性、持久性
-2、多事务同时执行的时候，可能会出现的问题：脏读、不可重复读、幻读
-3、事务隔离级别：读未提交、读提交、可重复读、串行化
-4、不同事务隔离级别的区别：读未提交：一个事务还未提交，它所做的变更就可以被别的事务看到读提交：一个事务提交之后，它所做的变更才可以被别的事务看到可重复读：一个事务执行过程中看到的数据是一致的。未提交的更改对其他事务是不
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-10-17 19:55" pubdate>
-              2019-10-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/09/16/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/" target="_blank">
+        <a href="/2021/10/20/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/" target="_blank">
           压力测试命令
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/09/16/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/" target="_blank">
+        <a href="/2021/10/20/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/" target="_blank">
           
           
             
@@ -549,8 +357,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-09-16 15:06" pubdate>
-              2019-09-16
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -575,29 +383,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/08/29/IoC%E4%B8%8EDI/" target="_blank">
-          IoC与DI
+        <a href="/2021/10/20/%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank">
+          PHP面试题总结
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/08/29/IoC%E4%B8%8EDI/" target="_blank">
+        <a href="/2021/10/20/%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank">
           
           
             
           
-          IoC与DI
-Ioc，即控制反转，把对象的调用权交给容器，通过容器来实现对象的装配和管理
-DI，即依赖注入，对象之间依赖关系由容器在运行期决定，由容器动态的将依赖关系注入到对象之中
-DI 是对 IoC 更完善的描述
-
-DI
-谁依赖谁？对象实例化依赖容器
-为什么要依赖？对象实例化通过容器自动得到外部依赖
-谁注入谁？容器注入对象的依赖到对象中
-注入了什么？注入了对象的外部依赖
-
-Hyperf 的依赖注
+          1. laravel 生命周期文件先自动加载 composer 包需要的类，包扩所有你自己的 composer 依赖包，生成容器 Cantainer 并注册相关的一些核心组件和实例，是从 bootstrap/app.php 脚本获取 Laravel 应用实例，处理请求一般都是 http 请求，检测 booststrap 环境，加载里面的一些配置，注册像是系统的环境配置，日志配置，异常处理配置，服务
         </a>
       </p>
 
@@ -605,8 +402,8 @@ Hyperf 的依赖注
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-08-29 09:15" pubdate>
-              2019-08-29
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -615,9 +412,7 @@ Hyperf 的依赖注
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Hyperf/">Hyperf</a>
-            
-              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
+              <a href="/tags/PHP/">PHP</a>
             
           </div>
         
@@ -631,22 +426,25 @@ Hyperf 的依赖注
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/08/27/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/" target="_blank">
-          版本约束表达式和lock文件
+        <a href="/2021/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" target="_blank">
+          MySQL数据库索引
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/08/27/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/" target="_blank">
+        <a href="/2021/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" target="_blank">
           
           
             
           
-          版本约束表达式和 lock 文件#Learning
-
-什么是语义化版本版本格式：主版本号、次版本号、修订号
-版本约束
-使用 ~ 波浪号 约束锁定小版本 （很实用，也比较安全）~ 的作用是允许表达式中最后一位变到最大值的 1. 安装 &gt;=1.1 并且 &lt; 2.0 的版本，可以写成： ～ 1.1 2. 安装 &gt;= 1.1.15 并且 &lt;1.2.0 的版本，可以写成 ～ 1.1.
+          数据库索引
+1.索引的作用：提高数据查询效率
+2.常见索引模型：哈希表、有序数组、搜索树
+3.哈希表：键 - 值(key - value)。
+4.哈希思路：把值放在数组里，用一个哈希函数把 key 换算成一个确定的位置，然后把 value 放在数组的这个位置
+5.哈希冲突的处理办法：链表 *
+6.哈希表适用场景：只有等值查询的场景
+7.有序数组：按顺序存储。查询用二分法就可以快速查询，时间复杂度是
         </a>
       </p>
 
@@ -654,8 +452,102 @@ Hyperf 的依赖注
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-08-27 14:42" pubdate>
-              2019-08-27
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" target="_blank">
+          MySQL数据库事务
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" target="_blank">
+          
+          
+            
+          
+          数据库事务
+1、务的特性：原子性、一致性、隔离性、持久性
+2、多事务同时执行的时候，可能会出现的问题：脏读、不可重复读、幻读
+3、事务隔离级别：读未提交、读提交、可重复读、串行化
+4、不同事务隔离级别的区别：读未提交：一个事务还未提交，它所做的变更就可以被别的事务看到读提交：一个事务提交之后，它所做的变更才可以被别的事务看到可重复读：一个事务执行过程中看到的数据是一致的。未提交的更改对其他事务是不
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:51" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BC%98%E5%8C%96%20Composer%20%E5%8C%85%E7%AE%A1%E7%90%86/" target="_blank">
+          生产环境中优化Composer包管理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BC%98%E5%8C%96%20Composer%20%E5%8C%85%E7%AE%A1%E7%90%86/" target="_blank">
+          
+          
+            
+          
+          生产环境中优化 Composer 包管理Composer 常用命令
+安装包，根据 composer.json 文件composer install
+更新包，升级 composer.json 的所有代码库（如果能能升级的话）composer update
+搜索包，搜索 composer 可用的包composer search 关键字
+引入包，会在 composer.json 新增一条包配置，并下载该
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:50" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -667,6 +559,102 @@ Hyperf 的依赖注
               <a href="/tags/PHP/">PHP</a>
             
               <a href="/tags/composer/">composer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/" target="_blank">
+          什么是 TCP
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/" target="_blank">
+          
+          
+            
+          
+          什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题
+连接问题，IP 写错，端口写错 链接会被拒绝
+Operation now in progress 连接超时、丢包、错误 IP、backlog 满了&amp;阻塞&amp;tcp_abort_on_overflow=0
+min(maxco
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:50" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
+            
+              <a href="/tags/TCP/">TCP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" target="_blank">
+          PHP一次面试的面试题
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" target="_blank">
+          
+          
+            
+          
+          blah blah blah
+# 面试题汇总
+
+1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:50" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+              <a href="/tags/PHP-%E9%9D%A2%E8%AF%95%E9%A2%98/">PHP 面试题</a>
             
           </div>
         

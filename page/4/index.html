@@ -188,22 +188,21 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/08/27/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BC%98%E5%8C%96%20Composer%20%E5%8C%85%E7%AE%A1%E7%90%86/" target="_blank">
-          生产环境中优化Composer包管理
+        <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank">
+          Mac系统安装java11之后使用Nacos
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/08/27/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BC%98%E5%8C%96%20Composer%20%E5%8C%85%E7%AE%A1%E7%90%86/" target="_blank">
+        <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank">
           
           
             
           
-          生产环境中优化 Composer 包管理Composer 常用命令
-安装包，根据 composer.json 文件composer install
-更新包，升级 composer.json 的所有代码库（如果能能升级的话）composer update
-搜索包，搜索 composer 可用的包composer search 关键字
-引入包，会在 composer.json 新增一条包配置，并下载该
+          修改启动代码
+修改启动代码之前，要配置好 PATH
+
+12345678910111213141516在 Nacos-Server 的 bin / startup.sh由 JAVA_OPT_EXT_FIX 配置引起启动报错在startup.sh文件中替换下方配置x JAVA_OPT_EXT_FIX=&quot;-Djava.ext.dirs=$&#123;JAVA_HOME&#125;/jre/li
         </a>
       </p>
 
@@ -211,8 +210,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-08-27 14:17" pubdate>
-              2019-08-27
+            <time datetime="2021-10-20 11:49" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -221,9 +220,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/PHP/">PHP</a>
-            
-              <a href="/tags/composer/">composer</a>
+              <a href="/tags/Nacos/">Nacos</a>
             
           </div>
         
@@ -237,21 +234,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/08/14/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/" target="_blank">
-          什么是 TCP
+        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
+          Redis 缓存策略
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/08/14/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/" target="_blank">
+        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
           
           
             
           
-          什么是 TCPTCP （transmission Control Protocol 传输控制协议） 是一种面向连接的、可靠的、基于字节流的传输层通信协议。常见问题
-连接问题，IP 写错，端口写错 链接会被拒绝
-Operation now in progress 连接超时、丢包、错误 IP、backlog 满了&amp;阻塞&amp;tcp_abort_on_overflow=0
-min(maxco
+          缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则
         </a>
       </p>
 
@@ -259,8 +253,8 @@ min(maxco
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-08-14 09:31" pubdate>
-              2019-08-14
+            <time datetime="2021-10-20 11:46" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -269,9 +263,7 @@ min(maxco
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
-            
-              <a href="/tags/TCP/">TCP</a>
+              <a href="/tags/redis/">redis</a>
             
           </div>
         
@@ -285,20 +277,24 @@ min(maxco
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/07/11/%E5%92%8C%E5%B0%8F%E6%9C%8B%E5%8F%8B%E6%B2%9F%E9%80%9A%E7%9B%B4%E6%8E%A5%E8%AF%B4%E6%84%9F%E8%A7%89%E6%AF%94%E8%AF%B4%E9%81%93%E7%90%86%E6%9C%89%E7%94%A8/" target="_blank">
-          和小朋友沟通直接说感觉比说道理有用
+        <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
+          红楼梦中的诗句记录
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/07/11/%E5%92%8C%E5%B0%8F%E6%9C%8B%E5%8F%8B%E6%B2%9F%E9%80%9A%E7%9B%B4%E6%8E%A5%E8%AF%B4%E6%84%9F%E8%A7%89%E6%AF%94%E8%AF%B4%E9%81%93%E7%90%86%E6%9C%89%E7%94%A8/" target="_blank">
+        <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
           
           
             
           
-          随笔我来分享一个小故事。有一次，我住在一个朋友家，他家有一个五六岁的小女孩。小女孩很喜欢我，总是往我的房间跑，而我房间的锁坏了，所以她一推门就可以进来。
-一天早上，我在房间里处理一些重要的事，非常需要安静，而小女孩多次不敲门就跑进来，我屡屡被打断，感觉很不好。我试着用各种语言对小女孩说，我需要独处一会儿，请你不要不敲门进来，一会儿我的事处理好了，我会出去找你。
-但我的这些努力都没有用，小女孩像没听
+          红楼梦满纸荒唐言，一把辛酸泪。都云作者痴，谁解其中味！
+惯养娇生笑你痴，菱花空对雪澌澌。好防佳节元宵后，便是烟消火灭时。
+未卜三生愿，频添一段愁。闷来时敛额，行去几回头。自顾风前影，谁堪月下俦？蟾光如有意，先上玉人楼。
+时逢三五便团圆，满把晴光护玉栏。天上一轮才捧出，人间万姓仰头看。
+一局输赢料不真，香销茶尽尚逡巡。欲知目下兴衰兆，须问旁观冷眼人。
+一场幽梦同谁近，千古情人独我痴。
+得意浓时易接济
         </a>
       </p>
 
@@ -306,8 +302,8 @@ min(maxco
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-07-11 08:15" pubdate>
-              2019-07-11
+            <time datetime="2021-10-20 11:46" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -332,24 +328,20 @@ min(maxco
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/05/16/Git%20Workflow/" target="_blank">
-          Git Workflow
+        <a href="/2021/10/20/%E5%92%8C%E5%B0%8F%E6%9C%8B%E5%8F%8B%E6%B2%9F%E9%80%9A%E7%9B%B4%E6%8E%A5%E8%AF%B4%E6%84%9F%E8%A7%89%E6%AF%94%E8%AF%B4%E9%81%93%E7%90%86%E6%9C%89%E7%94%A8/" target="_blank">
+          和小朋友沟通直接说感觉比说道理有用
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/05/16/Git%20Workflow/" target="_blank">
+        <a href="/2021/10/20/%E5%92%8C%E5%B0%8F%E6%9C%8B%E5%8F%8B%E6%B2%9F%E9%80%9A%E7%9B%B4%E6%8E%A5%E8%AF%B4%E6%84%9F%E8%A7%89%E6%AF%94%E8%AF%B4%E9%81%93%E7%90%86%E6%9C%89%E7%94%A8/" target="_blank">
           
           
             
           
-          Git Workflow
-git remote add upstream // 必须添加一个上由主分支的地址 可以用 git remote -v 来查看
-git pull upstream master // 拿到项目的主分支代码
-git checkout -b // 创建自己飞分支
-git commit // 写完代码之后提交
-git checkout 分支名 // 切换到主分支
-git pul
+          随笔我来分享一个小故事。有一次，我住在一个朋友家，他家有一个五六岁的小女孩。小女孩很喜欢我，总是往我的房间跑，而我房间的锁坏了，所以她一推门就可以进来。
+一天早上，我在房间里处理一些重要的事，非常需要安静，而小女孩多次不敲门就跑进来，我屡屡被打断，感觉很不好。我试着用各种语言对小女孩说，我需要独处一会儿，请你不要不敲门进来，一会儿我的事处理好了，我会出去找你。
+但我的这些努力都没有用，小女孩像没听
         </a>
       </p>
 
@@ -357,8 +349,8 @@ git pul
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-05-16 14:11" pubdate>
-              2019-05-16
+            <time datetime="2021-10-20 11:46" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -367,7 +359,9 @@ git pul
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/git/">git</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
+            
+              <a href="/tags/%E8%AF%BB%E4%B9%A6/">读书</a>
             
           </div>
         
@@ -381,20 +375,31 @@ git pul
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/05/11/Golang%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" target="_blank">
-          Go 技巧总结
+        <a href="/2021/10/20/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+          第一周算法学习笔记
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/05/11/Golang%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" target="_blank">
+        <a href="/2021/10/20/%E7%AC%AC%E4%B8%80%E5%91%A8%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
           
           
             
           
-          Golang 技巧总结时间格式化1time := time2.Now().Format(“2006-01-02 15:04:05”)
+          第一周算法学习笔记学习笔记
+数组
 
-http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数据 第二次为空，但是不代表错误要注意多次读取的问题
+ 数组是线性的数据结构，用一组连续的内存空间存放一组相同类型的数据
+ 因为数组在内存是连续存储的，所以可以根据首地址和下标，通过寻址公式就能直接计算出对应的内存地址，找出数据。
+ 使用的时候需要注意数组会有越界的问题，支持随机访问。
+
+** 小技巧 **
+
+ 循环遍历 双指针的用法
+ 升级维度
+
+
+链表 Linked List 、跳表 Skip List（升维）
         </a>
       </p>
 
@@ -402,8 +407,8 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-05-11 10:09" pubdate>
-              2019-05-11
+            <time datetime="2021-10-20 11:46" pubdate>
+              2021-10-20
             </time>
           </div>
         
@@ -412,9 +417,7 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
-            
-              <a href="/tags/Go-%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">Go 技巧总结</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">算法学习</a>
             
           </div>
         
@@ -428,18 +431,22 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/04/24/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" target="_blank">
-          Go http 服务默认的路由规则和更好的路由
+        <a href="/2021/10/20/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/" target="_blank">
+          版本约束表达式和lock文件
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/04/24/Go%20http%20%E6%9C%8D%E5%8A%A1%E9%BB%98%E8%AE%A4%E7%9A%84%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%92%8C%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%B7%AF%E7%94%B1/" target="_blank">
+        <a href="/2021/10/20/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/" target="_blank">
           
           
             
           
-          Go http 服务默认的路由规则和更好的路由Go Default Router12345678910func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request)&#123;    handler := sh.srv.Handler    if handler == nil &#123;        handler = De
+          版本约束表达式和 lock 文件#Learning
+
+什么是语义化版本版本格式：主版本号、次版本号、修订号
+版本约束
+使用 ~ 波浪号 约束锁定小版本 （很实用，也比较安全）~ 的作用是允许表达式中最后一位变到最大值的 1. 安装 &gt;=1.1 并且 &lt; 2.0 的版本，可以写成： ～ 1.1 2. 安装 &gt;= 1.1.15 并且 &lt;1.2.0 的版本，可以写成 ～ 1.1.
         </a>
       </p>
 
@@ -447,8 +454,155 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-04-24 14:23" pubdate>
-              2019-04-24
+            <time datetime="2021-10-20 11:46" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+              <a href="/tags/composer/">composer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/27/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" target="_blank">
+          MySQL 学习记录
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/27/MySQL%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" target="_blank">
+          
+          
+            
+          
+          MySQL 记录1.1 事务的特性（ACID）
+事务要求 ACID 的特性，即：原原子子性性、、一一致致性性、、隔隔离离性性、、持持久久性性。 
+所谓原子性，是指整个数据库的每个事务都是不可分割的单位。只有事务中的所有 SQL 语句都执行成功，才算整个事务成功，事务才会被提交。如果事务中任何一个 SQL 语句执行失败，整个事务都应该被回滚。 
+所谓一致性，是指将数据库从一种一致性状态转换为下一种一
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-27 11:50" pubdate>
+              2021-08-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/27/IoC%E4%B8%8EDI/" target="_blank">
+          IoC与DI
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/27/IoC%E4%B8%8EDI/" target="_blank">
+          
+          
+            
+          
+          IoC与DI
+Ioc，即控制反转，把对象的调用权交给容器，通过容器来实现对象的装配和管理
+DI，即依赖注入，对象之间依赖关系由容器在运行期决定，由容器动态的将依赖关系注入到对象之中
+DI 是对 IoC 更完善的描述
+
+DI
+谁依赖谁？对象实例化依赖容器
+为什么要依赖？对象实例化通过容器自动得到外部依赖
+谁注入谁？容器注入对象的依赖到对象中
+注入了什么？注入了对象的外部依赖
+
+Hyperf 的依赖注
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-27 11:46" pubdate>
+              2021-08-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Hyperf/">Hyperf</a>
+            
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/27/go%E5%88%87%E7%89%87%E7%9A%84%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%A0%E9%99%A4/" target="_blank">
+          Go语言的切片插入和删除
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/27/go%E5%88%87%E7%89%87%E7%9A%84%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%A0%E9%99%A4/" target="_blank">
+          
+          
+            
+          
+          golang 的切片插入和删除操作执行测试12345678910111213141516171819202122232425262728package mainimport &quot;fmt&quot;func main() &#123;	s := []int&#123;1, 2, 4, 7&#125;	// 结果应该是 5, 1, 2, 4, 7	s = Add(s, 0, 5)	fmt.Pr
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-27 11:38" pubdate>
+              2021-08-27
             </time>
           </div>
         
@@ -471,21 +625,20 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/" target="_blank">
-          Go 内置的 JSON 解析
+        <a href="/2021/08/27/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_blank">
+          PHP的生命周期
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/04/24/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/" target="_blank">
+        <a href="/2021/08/27/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_blank">
           
           
             
           
-          Go 内置的 JSON 解析
-利用反射实现，通过 FelidTag 来标识对应的 json 值
+          PHP的生命周期1.0 先从PHP开始说起在介绍PHP的生命周期之前，我们先来看一张图，如图1所示:
 
-1234567891011121314type BasicInfo struct &#123;    Name string `json:&quot;name&quot;`    Age  int    `json:&quot;age&quot;`&#125;type JobInfo struct &
+    图1 PHP的生命周期    首先我们先引入一个概念SAPI，SAPI是PHP的应用接入层，是整个PHP框架最外层的部分，像我们平常用的比较多的Fpm和Cli就是SAPI的具体实现，而main函数也定义在对应的SAPI中。通常来说PHP的生命周期被划分为5个阶段：模块初始化阶段、请求初始
         </a>
       </p>
 
@@ -493,8 +646,8 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-04-24 11:18" pubdate>
-              2019-04-24
+            <time datetime="2021-08-27 11:31" pubdate>
+              2021-08-27
             </time>
           </div>
         
@@ -503,159 +656,7 @@ http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/03/18/Go%20Package/" target="_blank">
-          Go Package
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/03/18/Go%20Package/" target="_blank">
-          
-          
-            
-          
-          Go Package
-基本复用模块单元以首字母大写来表明可以被包外代码访问
-代码的 package 可以和所在的目录不一致
-同一目录里面的 Go 代码的 package 要保持一致
-
-init 方法
-在 main 被执行前,所以依赖的 package init 方法都会被执行
-不同包的 init 函数按照包倒入的依赖关系决定执行顺序
-每个包可以有多个 init 函数
-包的每个源文件也可以有多个 i
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-18 15:41" pubdate>
-              2019-03-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/" target="_blank">
-          Go 错误处理 Panic 和 Recover
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/03/18/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/" target="_blank">
-          
-          
-            
-          
-          Go 错误处理 Panic 和 Recover
-Go 中没有错误机制
-error 类型实现了 error 接口
-
-123type error interface &#123;	Error() string&#125;
-
-
-可以通过 errors.New 来实现快速创建错误信息
-
-1errors.New(&quot;n must be in the range [0,10]
-
-Panic 的基本定义
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-18 14:08" pubdate>
-              2019-03-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/03/18/Go%20interface%202/" target="_blank">
-          Go interface
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/03/18/Go%20interface%202/" target="_blank">
-          
-          
-            
-          
-          Go interface
-通过关键字 type 和 interface，声明出接口类 type TestInterface interface &#123;&#125;
-因为接口类型与其他数据类型不同，它是没法被实例化的。既不能通过调用 new 函数或 make 函数创建出一个接口类型的值
-我们通过 interface 来定义对象的一组行为方法，如果某个对象实现了某个接口类型的所有方法，则此对象就
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-18 11:39" pubdate>
-              2019-03-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">Go</a>
+              <a href="/tags/PHP/">PHP</a>
             
           </div>
         

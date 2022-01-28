@@ -188,21 +188,26 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/13/Go%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" target="_blank">
-          Go 面向对象
+        <a href="/2021/01/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank">
+          分布式事务的解决方案
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/13/Go%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" target="_blank">
+        <a href="/2021/01/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank">
           
           
             
           
-          Go 面向对象实例创建及初始化
-基本使用
+          分布式事务的解决方案
+MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，多出来的事务为事务管理器。
+大致的流程：
+​ 第一阶段：事务管理器询问各个资源管理器是否都就绪，所有的参与者需要将自己本身事务是否执行成功的信息反馈给管理者
+​ 第二阶段： 事务管理者根据资源的反馈，看是否需要提交或者回滚，
+存在的问题：
 
-123456789101112131415161718type Employee struct &#123;	Id   int	Name string	Age  int&#125;e  := Employee&#123;&quot;0&quot;, &quot;Bob&quot;, 20&#125;e1 := Employee&#123;name: &q
+一旦事务管理器出问题了，整个系统都不可用了
+数据可能会不一致，因为在阶段
         </a>
       </p>
 
@@ -210,8 +215,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-13 16:39" pubdate>
-              2019-03-13
+            <time datetime="2021-01-11 10:09" pubdate>
+              2021-01-11
             </time>
           </div>
         
@@ -220,7 +225,11 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
+              <a href="/tags/Redis/">Redis</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E9%94%81/">分布式事务锁</a>
             
           </div>
         
@@ -234,26 +243,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/12/Go%20String%20%E7%B1%BB%E5%9E%8B/" target="_blank">
-          Go String 类型
+        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
+          阿里云敏感词安全接口PHP实现
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/12/Go%20String%20%E7%B1%BB%E5%9E%8B/" target="_blank">
+        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
           
           
             
           
-          Go String 类型
-零值 不是 null 是 空字符串
-string 是数据类型,不是引用或者指针类型
-string 是只读的 byte slice, len 函数可以返回它所包含的 byte 数
-string 的 byte 数组可以存放任何数据
-
-Unicode UTF8
-Unicode 是一种字符集 (code point 字符编码)
-UTF8 是 Unicode 的存储实现 (转换为字
+          不啰嗦直接上代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100
         </a>
       </p>
 
@@ -261,8 +262,8 @@ UTF8 是 Unicode 的存储实现 (转换为字
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-12 17:54" pubdate>
-              2019-03-12
+            <time datetime="2020-12-01 13:09" pubdate>
+              2020-12-01
             </time>
           </div>
         
@@ -271,7 +272,7 @@ UTF8 是 Unicode 的存储实现 (转换为字
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
+              <a href="/tags/PHP/">PHP</a>
             
           </div>
         
@@ -285,23 +286,25 @@ UTF8 是 Unicode 的存储实现 (转换为字
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/08/Go%20map%E7%B1%BB%E5%9E%8B/" target="_blank">
-          Go map类型
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
+          Redis的锁来缓解并发请求
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/08/Go%20map%E7%B1%BB%E5%9E%8B/" target="_blank">
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
           
           
             
           
-          Go map 类型基本定义
-类似其它语言中的哈希表或者字典，以 key=&gt;value 形式存储数据
-格式为 map[keyType]valueType
-key 必须是支持 == 或者 != 比较运算的类型，不可以是函数，map 或者 slice
-map 使用 make() 创建，支持 := 这种简写的方式
-map 是无序的，每次打印出来的 map 都会不一样，它不能通过 index 获取，而
+          Redis 锁 缓解并发
+简单实现Redis 锁主要利用 Redis 的 setnx 命令实现
+
+加锁命令：SETNX key value，当键不存在时，对键进行设置操作并返回成功，否则返回失败。KEY 是锁的唯一标识，一般按业务来决定命名。
+
+
+解锁命令：DEL key，通过删除键值对释放锁，以便其他线程可以通过 SETNX 命令来获取锁。
+锁超时：EXPIRE key timeout, 设置 
         </a>
       </p>
 
@@ -309,8 +312,8 @@ map 是无序的，每次打印出来的 map 都会不一样，它不能通过 i
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-08 15:05" pubdate>
-              2019-03-08
+            <time datetime="2020-07-11 13:09" pubdate>
+              2020-07-11
             </time>
           </div>
         
@@ -319,7 +322,11 @@ map 是无序的，每次打印出来的 map 都会不一样，它不能通过 i
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
+              <a href="/tags/PHP/">PHP</a>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+              <a href="/tags/%E9%94%81/">锁</a>
             
           </div>
         
@@ -333,25 +340,24 @@ map 是无序的，每次打印出来的 map 都会不一样，它不能通过 i
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/08/Go%20%E5%87%BD%E6%95%B0/" target="_blank">
-          Go 函数
+        <a href="/2020/02/11/redis%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E9%99%90%E6%B5%81/" target="_blank">
+          Redis 实现简单的限流
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/08/Go%20%E5%87%BD%E6%95%B0/" target="_blank">
+        <a href="/2020/02/11/redis%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E9%99%90%E6%B5%81/" target="_blank">
           
           
             
           
-          Go 函数函数声明
-关键字 func 用来声明一个函数
-函数可以有一个或者多个参数，每个参数后面带有不同的类型，通过,分隔
-函数可以返回多个值
-如果只有一个返回值且不声明返回值变量，那么你可以省略 包括返回值 的括号
-如果没有返回值，那么就直接省略最后的返回信息
-如果有返回值， 那么必须在函数的外层添加 return 语句
-所有的参数都是值传递: slice, map, channel 会有传引用
+          利用 Redis 有序集合实现，并用管道加速。假设 $period 秒内，一个用户只能访问 $maxCount 次。用户 ID 作为 key，毫秒时间戳作为 score 和 value。一个请求进入，
+
+加入有序集合——zadd
+移除时间窗口之前的行为记录，剩下的都是时间窗口内的——zremrangebyscore
+更新过期时间——expire
+获取窗口内的元素数量——zcard
+判断窗口内元素数
         </a>
       </p>
 
@@ -359,8 +365,53 @@ map 是无序的，每次打印出来的 map 都会不一样，它不能通过 i
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-08 14:38" pubdate>
-              2019-03-08
+            <time datetime="2020-02-11 10:09" pubdate>
+              2020-02-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/05/11/Golang%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" target="_blank">
+          Go 技巧总结
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/05/11/Golang%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" target="_blank">
+          
+          
+            
+          
+          Golang 技巧总结时间格式化1time := time2.Now().Format(“2006-01-02 15:04:05”)
+
+http库 request body 只能读取一次12io.ReadAll(r.Body) // 第一次有数据 第二次为空，但是不代表错误要注意多次读取的问题
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-05-11 10:09" pubdate>
+              2019-05-11
             </time>
           </div>
         
@@ -370,6 +421,8 @@ map 是无序的，每次打印出来的 map 都会不一样，它不能通过 i
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Go/">Go</a>
+            
+              <a href="/tags/Go-%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">Go 技巧总结</a>
             
           </div>
         

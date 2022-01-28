@@ -1,0 +1,561 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Beijing, China">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="blah blah blah # 面试题汇总  1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP一次面试的面试题">
+<meta property="og:url" content="https://aliliin.com/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="blah blah blah # 面试题汇总  1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-20T03:50:27.000Z">
+<meta property="article:modified_time" content="2021-10-20T03:50:27.000Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="PHP 面试题">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>PHP一次面试的面试题 - Aliliin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PHP一次面试的面试题">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-20 11:50" pubdate>
+        2021年10月20日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      5 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PHP一次面试的面试题</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年10月20日 中午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote class="blockquote-center">blah blah blah</blockquote>
+# 面试题汇总
+
+<h4 id="1、秒杀流程的清楚？"><a href="#1、秒杀流程的清楚？" class="headerlink" title="1、秒杀流程的清楚？"></a>1、秒杀流程的清楚？</h4><pre><code>使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告诉用户，用户进行支付成功之后，扣减库存。
+</code></pre>
+<h4 id="2、laravel-的依赖注入？"><a href="#2、laravel-的依赖注入？" class="headerlink" title="2、laravel 的依赖注入？"></a>2、laravel 的依赖注入？</h4><pre><code>  由容器动态的将某个依赖关系注入到组件中，他的目的是为了提升组件使用的频率，来灵活使用它。说白了就是一个对象依赖于另一个对象的技术，他可以通过构造函数直接注入，也可通过接口的方式注入
+</code></pre>
+<h4 id="3、Laravel-中的-app-类实现单利模式？"><a href="#3、Laravel-中的-app-类实现单利模式？" class="headerlink" title="3、Laravel 中的 app 类实现单利模式？"></a>3、Laravel 中的 app 类实现单利模式？</h4><h4 id="4、left-join-效率低？"><a href="#4、left-join-效率低？" class="headerlink" title="4、left join 效率低？"></a>4、left join 效率低？</h4><pre><code>它把两个表中的你要查询的数据组成一张新的表，产生临时表，所有查询
+</code></pre>
+<p>起来比较慢。如果使用 join 语句的话，需要让小表做驱动表。但条件是能使用到驱动表中的索引。</p>
+<h4 id="5、订单回收问题。"><a href="#5、订单回收问题。" class="headerlink" title="5、订单回收问题。"></a>5、订单回收问题。</h4><pre><code>如果没有使用缓存的话，就写一个定时任务，定期去回收未支付的订单。
+如果有使用缓存的话，放到队列里面，加一个过期的时间。
+    也可以使用消息队列中间件
+</code></pre>
+<h4 id="6、埋点上报怎么处理？"><a href="#6、埋点上报怎么处理？" class="headerlink" title="6、埋点上报怎么处理？"></a>6、埋点上报怎么处理？</h4><pre><code>如果前端埋点的事件较多，或者说网页内部交互频繁，可以通过本地存储的方式先缓存上报信息，然后定期上报。然后后台再进行处理，
+如果前端实时上报到后端的话，那就通过消费队列的方式定期去处理上报数据。
+</code></pre>
+<h4 id="7、说一下缓存穿透和缓存雪崩？"><a href="#7、说一下缓存穿透和缓存雪崩？" class="headerlink" title="7、说一下缓存穿透和缓存雪崩？"></a>7、说一下缓存穿透和缓存雪崩？</h4><pre><code>如果缓存失效了或者查出来的值是空的，不是立即去数据库进行查询，而是使用缓存本身成功操作的返回值进行返回，并利用redis的互斥锁(mutex key)的方式重新把数据缓存起来。
+雪崩的话，就像解决穿透一样加互斥锁，建立备份的缓存，有一份缓存不设置缓存失效时间，如果A没读到缓存就去读取B，并更新A和B的缓存。
+</code></pre>
+<h4 id="8、在工作中使用-Git-的基本流程？"><a href="#8、在工作中使用-Git-的基本流程？" class="headerlink" title="8、在工作中使用 Git 的基本流程？"></a>8、在工作中使用 Git 的基本流程？</h4><pre><code>提交 git add 、写更新内容 git commit -m 、查不同 git diff 、建立分支 git branch 、切换分支 git checkout、分支合并：git merge、显示本地仓库的所有分支：git branch、
+</code></pre>
+<h4 id="9、简单说下非对称加密？"><a href="#9、简单说下非对称加密？" class="headerlink" title="9、简单说下非对称加密？"></a>9、简单说下非对称加密？</h4><pre><code>非对称加密是有公钥和私钥，他们是成对使用的，公钥是可以给外人看的，私钥要自己保护好。用公钥进行加密而用私钥进行解密。同一队公钥和私钥。
+</code></pre>
+<h4 id="10、你们是怎么把-mysql-的数据同步到-es-上去的？"><a href="#10、你们是怎么把-mysql-的数据同步到-es-上去的？" class="headerlink" title="10、你们是怎么把 mysql 的数据同步到 es 上去的？"></a>10、你们是怎么把 mysql 的数据同步到 es 上去的？</h4><pre><code>最方便的方式可以同时更新，写入数据库的时候，同时写一个队列模块，通过队列的方式同步更新到 es
+我们就简单的使用 mysql 的binlog （ROW模式）日志进行同步的。
+或者使用mysqldump工具进行同步。或者使用第三方的工具
+</code></pre>
+<h4 id="11、简单说下你怎么实现-mysql-主从"><a href="#11、简单说下你怎么实现-mysql-主从" class="headerlink" title="11、简单说下你怎么实现 mysql 主从"></a>11、简单说下你怎么实现 mysql 主从</h4><pre><code>因为mysql binlog的强大，我们把从库和主库维持一个长链接，从你设置的一些访问主库的Ip啊端口啊，用户名密码啊binlog读取的位置啊和主库进行交互，主库验证成功了之后，会从自己本地读取binlog 然后发送给从库。
+当然你也可以使用第三方的工具比如 mycat 去实现。
+</code></pre>
+<h4 id="12、说下你理解的-php-fpm。"><a href="#12、说下你理解的-php-fpm。" class="headerlink" title="12、说下你理解的 php-fpm。"></a>12、说下你理解的 php-fpm。</h4><pre><code>php-FPM 是一个PHP进程管理器 ，包含master 和worker 两种进程,
+首先它会启动一个 master 进程有且有一个，只负责监听端口，接收来自服务器的请求，然后会有多个 worker 进程具体多少根据你的配置，当请求过来的时候，master 会传递给一个 worker，然后立即接受下一个请求，当worker不够用的时候会直接返回502的错误。worker 请求超时的话会返回504，
+当然 php-fpm 也可以配置为动态模式，这样子的话，worker 的进程数量就是按照需求去启动的了。
+</code></pre>
+<h4 id="13、进程线程协程"><a href="#13、进程线程协程" class="headerlink" title="13、进程线程协程"></a>13、进程线程协程</h4><pre><code>进程是通过CPU运行的，一个进程挂了不影响另一个，
+线程属于进程，但是一个线程挂了不但影响其他的线程，还会把整个进程搞挂。
+协程是属于线程的。协程实在线程里面跑的，它没有上下文的切换，它之间的调度切换是通过程序员代码实现的，所以它特别灵活，因此也叫用户态的线程。
+</code></pre>
+<h4 id="14、php-关联数组底层结构"><a href="#14、php-关联数组底层结构" class="headerlink" title="14、php 关联数组底层结构"></a>14、php 关联数组底层结构</h4><pre><code>在PHP中, 数组是用一种HASH结构(HashTable)来实现的。
+</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PHP-%E9%9D%A2%E8%AF%95%E9%A2%98/">PHP 面试题</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/20/%E4%BB%80%E4%B9%88%E6%98%AF%20TCP/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">什么是 TCP</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">Mac系统安装java11之后使用Nacos</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

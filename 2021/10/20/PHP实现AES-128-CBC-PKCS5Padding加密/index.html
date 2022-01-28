@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Beijing, China">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="PHP 实现 AES-128-CBC-PKCS5Padding 加密 最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 实现 AES-128-CBC-PKCS5Padding 加密">
+<meta property="og:url" content="https://aliliin.com/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="PHP 实现 AES-128-CBC-PKCS5Padding 加密 最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aliliin.com/images/aes-128-cbc.png">
+<meta property="article:published_time" content="2021-10-20T04:28:57.000Z">
+<meta property="article:modified_time" content="2021-10-20T04:28:57.000Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="PHP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aliliin.com/images/aes-128-cbc.png">
+  
+  <title>PHP 实现 AES-128-CBC-PKCS5Padding 加密 - Aliliin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PHP 实现 AES-128-CBC-PKCS5Padding 加密">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-20 12:28" pubdate>
+        2021年10月20日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      7 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PHP 实现 AES-128-CBC-PKCS5Padding 加密</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年10月20日 中午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="PHP-实现-AES-128-CBC-PKCS5Padding-加密"><a href="#PHP-实现-AES-128-CBC-PKCS5Padding-加密" class="headerlink" title="PHP 实现 AES-128-CBC-PKCS5Padding 加密"></a>PHP 实现 AES-128-CBC-PKCS5Padding 加密</h3><blockquote>
+<p>最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 <code>AES-128-CBC-PKCS5Padding</code> 加密，然后再做 <code>Base64 </code>编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）。</p>
+</blockquote>
+<p>​ 首先看到这个加密方式之后，就在 PHP 函数库中进行寻找，看看有没有对应的加密函数，然而找了一圈下来，发现并没有，需要自己实现，后了解到可以用 mcrypt 函数扩展实现，但是 mcrypt 函数 自 PHP 7.1.0 起就废弃了，强烈建议不要使用本函数，只好再寻找其他<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/refs.crypto.php">加密函数库</a>，在手册的下方看到了 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/ref.openssl.php">OpenSSL 函数</a>，通过了解 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt(加密数据)</a> 函数发现可以实现需求,<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-encrypt.php">openssl_encrypt</a> 具体的使用方法请自行看手册，</p>
+<h4 id="实现函数如下："><a href="#实现函数如下：" class="headerlink" title="实现函数如下："></a>实现函数如下：</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 加密<br><span class="hljs-keyword">function</span> encrypt(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>)&#123;<br>    return base64_encode(openssl_encrypt(<span class="hljs-variable">$input</span>, <span class="hljs-string">&#x27;AES-128-CBC&#x27;</span>, <span class="hljs-variable">$key</span>, OPENSSL_RAW_DATA,<span class="hljs-variable">$iv</span>));<br>&#125;<br><br><span class="hljs-regexp">//</span> 解密<br><span class="hljs-keyword">function</span> decrypt(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>)&#123;<br>    return openssl_decrypt(base64_decode(<span class="hljs-variable">$input</span>), <span class="hljs-string">&#x27;AES-128-CBC&#x27;</span>, <span class="hljs-variable">$key</span>, OPENSSL_RAW_DATA, <span class="hljs-variable">$iv</span>);<br>&#125;<br><br><span class="hljs-regexp">//</span> 测试加密 (我这里用的是json字符串)<br><span class="hljs-variable">$dataJson</span> = <span class="hljs-string">&#x27;[&#123;&quot;Code&quot;: &quot;123123&quot;, &quot;Name&quot;: &quot;Bob&quot;, &quot;Address&quot;: &quot;\u94f6\u5ddd\u5e02&quot;&#125;, &#123;&quot;Code&quot;: &quot;464776&quot;, &quot;Name&quot;: &quot;Hello&quot;, &quot;Address&quot;: &quot;\u5317\u4eac\u5e02&quot;&#125;]&#x27;</span>;<br>print_r(encrypt(<span class="hljs-variable">$dataJson</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>));<br><span class="hljs-regexp">//u</span>9Bd8oHXDGvjZcTIX9HK1r1q+aSu+<span class="hljs-regexp">/48gsfoGVrxoScZuX8yaj/</span>xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D<br><br><span class="hljs-regexp">//</span> 测试解密<br><span class="hljs-variable">$strr</span> = <span class="hljs-string">&#x27;u9Bd8oHXDGvjZcTIX9HK1r1q+aSu+/48gsfoGVrxoScZuX8yaj/xco8F2yHt2T987JNHil9LwjAmu9o5NJaicWQDaiKwMD5o70k1A9bGjDd71xb4hXRx3ddZwI85oTQQEUQLadR5C759SdaN8AOxlzH+yGlAWTOaEleulKoRTwaknG1NCM/qIRQ8gI5lzv+D&#x27;</span>;<br>print_r(decrypt(<span class="hljs-variable">$strr</span>, <span class="hljs-variable">$key</span>, <span class="hljs-variable">$iv</span>));<br><span class="hljs-regexp">//</span> [&#123;<span class="hljs-string">&quot;Code&quot;</span>: <span class="hljs-string">&quot;123123&quot;</span>, <span class="hljs-string">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;\u94f6\u5ddd\u5e02&quot;</span>&#125;, &#123;<span class="hljs-string">&quot;Code&quot;</span>: <span class="hljs-string">&quot;464776&quot;</span>, <span class="hljs-string">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;\u5317\u4eac\u5e02&quot;</span>&#125;]<br></code></pre></td></tr></table></figure>
+
+<p>自测通过，一脸得意地坐等联调。然后开始写其他业务去了，过了几天，结果一联调发现我加密的对方无法解密，对方加密的我无法解密，加密算法不匹配（挠头中。经过 Google 搜索相关问题，发现一句话(如下图），大概的意思就是说，在废弃的 <code>mcrypt</code> 加密库中，128 实际上指的是块大小而不是密钥大小，但是在 <code>openssl</code> 中的 <code>aes-128-cbc</code> 的 128 指的是密钥大小，也就是说，在使用有效的 256 位密钥时，它们都是 <code>aes-256</code> ，而如果要把 <code>mcrypt</code> 转为 <code>openssl</code> 的加密方式，<code>mcrypt</code> 的 128 需要写成 <code>openssl</code> 的 256 ，于是抱着试试看的态度，更改了一下 <code>aes-128-cbc</code> 为 <code>aes-256-cbc</code>，然后再进行调试，发现联调通过了。不过具体的技术细节原理还不是很明白，先这样子修改使用，以后有时间再研究吧。</p>
+<p><img src="/images/aes-128-cbc.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
+<li>解决的方案，是把加密方式 <code>AES-128-CBC</code> 替换成 <code>AES-256-CBC</code></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/20/RabbitMQ%20(httplocalhost15672)/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">mac 安装 RabbitMQ</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/20/Git%20Workflow/">
+                        <span class="hidden-mobile">Git Workflow</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
