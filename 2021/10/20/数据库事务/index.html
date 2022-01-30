@@ -70,7 +70,7 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 
 <body>
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      898 字
+      908 字
     </span>
   
 
@@ -266,8 +266,8 @@
 <li>7、回滚日志什么时候删除？系统会判断当没有事务需要用到这些回滚日志的时候，回滚日志会被删除。</li>
 <li>8、什么时候不需要了？当系统里么有比这个回滚日志更早的 read-view 的时候。</li>
 <li>9、为什么尽量不要使用长事务。长事务意味着系统里面会存在很老的事务视图，在这个事务提交之前，回滚记录都要保留，这会导致大量占用存储空间。除此之外，长事务还占用锁资源，可能会拖垮库。</li>
-<li>10、事务启动方式：一、显式启动事务语句，begin 或者 start transaction,提交 commit，回滚 rollback；二、set autocommit=0，该命令会把这个线程的自动提交关掉。这样只要执行一个 select 语句，事务就启动，并不会自动提交，直到主动执行 commit 或 rollback 或断开连接。</li>
-<li>11、建议使用方法一，如果考虑多一次交互问题，可以使用 commit work and chain 语法。在 autocommit=1 的情况下用 begin 显式启动事务，如果执行 commit 则提交事务。如果执行 commit work and chain 则提交事务并自动启动下一个事务。</li>
+<li>10、事务启动方式：一、显式启动事务语句，begin 或者 start transaction,提交 commit，回滚 rollback；二、set autocommit&#x3D;0，该命令会把这个线程的自动提交关掉。这样只要执行一个 select 语句，事务就启动，并不会自动提交，直到主动执行 commit 或 rollback 或断开连接。</li>
+<li>11、建议使用方法一，如果考虑多一次交互问题，可以使用 commit work and chain 语法。在 autocommit&#x3D;1 的情况下用 begin 显式启动事务，如果执行 commit 则提交事务。如果执行 commit work and chain 则提交事务并自动启动下一个事务。</li>
 </ul>
 <h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><ul>
 <li>在开发过程中，尽可能的减小事务范围，少用长事务，如果无法避免，保证逻辑日志空间足够用，并且支持动态日志空间增长。监控 Innodb_trx 表，发现长事务报警。</li>

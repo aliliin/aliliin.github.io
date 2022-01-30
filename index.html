@@ -52,7 +52,7 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 
 <body>
@@ -185,7 +185,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/" target="_blank">
+          <img src="/imgage/Elasticsearch.jpg" srcset="/img/loading.gif" lazyload alt="Mac 通过 Docker 安装 Elasticsearch">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/" target="_blank">
@@ -497,11 +503,11 @@ CQRS
             
           
           对自己创建的 goroutine 负责
- 请将是否异步调用的选择权交给调用者，不然很有可能大家并不知道你在这个函数里面使用了 goroutine
+请将是否异步调用的选择权交给调用者，不然很有可能大家并不知道你在这个函数里面使用了 goroutine
 如果你要启动一个 goroutine 请对它负责
- 永远不要启动一个你无法控制它退出，或者你无法知道它何时推出的 goroutine
- 启动 goroutine 时请加上 panic recovery 机制，避免服务直接不可用
- 造成 goroutine
+永远不要启动一个你无法控制它退出，或者你无法知道它何时推出的 goroutine
+启动 goroutine 时请加上 panic recovery 机制，避免服务直接不可用
+造成 goroutine 泄漏的
         </a>
       </p>
 

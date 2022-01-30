@@ -52,7 +52,7 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 
 <body>
@@ -245,14 +245,14 @@
             
           
           分布式事务的解决方案
-MySQL 自带的两阶段提交/XA顾名思义就是要分两步提交事务，多出来的事务为事务管理器。
+MySQL 自带的两阶段提交&#x2F;XA顾名思义就是要分两步提交事务，多出来的事务为事务管理器。
 大致的流程：
 ​ 第一阶段：事务管理器询问各个资源管理器是否都就绪，所有的参与者需要将自己本身事务是否执行成功的信息反馈给管理者
 ​ 第二阶段： 事务管理者根据资源的反馈，看是否需要提交或者回滚，
 存在的问题：
 
 一旦事务管理器出问题了，整个系统都不可用了
-数据可能会不一致，因为在阶段
+数据可能会不一致，
         </a>
       </p>
 

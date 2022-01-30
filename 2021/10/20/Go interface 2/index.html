@@ -70,7 +70,7 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 
 <body>
@@ -266,7 +266,7 @@
 
 <h3 id="空接口"><a href="#空接口" class="headerlink" title="空接口"></a>空接口</h3><ol>
 <li>空接口可以表示任何类型</li>
-<li>2.通过断言来将空接口转换为制定 // v,ok := p.(int) // ok = true 时转换成功</li>
+<li>2.通过断言来将空接口转换为制定 &#x2F;&#x2F; v,ok :&#x3D; p.(int) &#x2F;&#x2F; ok &#x3D; true 时转换成功</li>
 </ol>
 <h3 id="go-接口最佳实践"><a href="#go-接口最佳实践" class="headerlink" title="go 接口最佳实践"></a>go 接口最佳实践</h3><h4 id="倾向于使用小的接口定义-很多接口只包含一个方法"><a href="#倾向于使用小的接口定义-很多接口只包含一个方法" class="headerlink" title="倾向于使用小的接口定义,很多接口只包含一个方法"></a>倾向于使用小的接口定义,很多接口只包含一个方法</h4><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">type</span> Reader interface &#123;<br>	<span class="hljs-constructor">Read(<span class="hljs-params">p</span> []<span class="hljs-params">byte</span>)</span> (n <span class="hljs-built_in">int</span>, err error)<br>&#125;<br></code></pre></td></tr></table></figure>
 

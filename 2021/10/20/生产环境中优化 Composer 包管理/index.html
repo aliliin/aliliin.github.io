@@ -71,7 +71,7 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 
 <body>
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      510 字
+      515 字
     </span>
   
 
@@ -266,7 +266,7 @@
 <li>生成当前命名空间与类库文件路径的一个映射，运行时加载会直接读取这个映射，加快文件的加载速度<br><code>composer dump-autoload</code></li>
 </ul>
 <h3 id="composer-dumpautoload-o-命令优化执行时间"><a href="#composer-dumpautoload-o-命令优化执行时间" class="headerlink" title="composer dumpautoload -o  命令优化执行时间"></a><code>composer dumpautoload -o </code> 命令优化执行时间</h3><ul>
-<li>重置索引、生产 classmap （这个命令并没有考虑当前 classmap 中找不到目标类时的情况。<br>当加载器找不到目标类时候，仍旧会根据 PSR-4/PSR-0 的规则去文件系统中查找）</li>
+<li>重置索引、生产 classmap （这个命令并没有考虑当前 classmap 中找不到目标类时的情况。<br>当加载器找不到目标类时候，仍旧会根据 PSR-4&#x2F;PSR-0 的规则去文件系统中查找）</li>
 </ul>
 <h3 id="composer-dumpautoload-a-不推荐使用"><a href="#composer-dumpautoload-a-不推荐使用" class="headerlink" title="composer dumpautoload -a  不推荐使用"></a><code>composer dumpautoload -a </code> 不推荐使用</h3><ul>
 <li>和 -o 的区别在于加载器在 classmap 中找不到目标类时，不会再去文件系统中查找（即隐含的认为 classmap 中所有合法的类，不会有其他的类了，除非法调用）</li>
