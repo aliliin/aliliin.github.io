@@ -16,22 +16,21 @@
   <meta name="description" content="Beijing, China">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="Mac 安装 ES 安装好 docker 之后，新建目录  1234567891011mkdir -p ~&#x2F;docker&#x2F;elasticsearch&#x2F;cd docker&#x2F;elasticsearch&#x2F;mkdir datamkdir configmkdir pluginscd config   echo &quot;http.host: 0.0.0.0&quot; &gt;&gt; elasticse">
+  <meta name="description" content="安装好 docker 之后，在 mac 上新建目录  12345678mkdir &#x2F;Users&#x2F;gyl&#x2F;docker&#x2F;rocketmq&#x2F;datacd &#x2F;Users&#x2F;gyl&#x2F;docker&#x2F;rocketmq&#x2F;datamkdir logs   mkdir storemkdir -p broker&#x2F;conf  mkdir -p broker&#x2F;logs  mkdir -p broker&#x2F;storevim">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mac 通过 Docker 安装 Elasticsearch">
-<meta property="og:url" content="https://aliliin.com/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/index.html">
+<meta property="og:title" content="Mac 通过 Docker 安装 RocketMQ 安装">
+<meta property="og:url" content="https://aliliin.com/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20docker%20%E5%AE%89%E8%A3%85%20RocketMQ%20%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="Mac 安装 ES 安装好 docker 之后，新建目录  1234567891011mkdir -p ~&#x2F;docker&#x2F;elasticsearch&#x2F;cd docker&#x2F;elasticsearch&#x2F;mkdir datamkdir configmkdir pluginscd config   echo &quot;http.host: 0.0.0.0&quot; &gt;&gt; elasticse">
+<meta property="og:description" content="安装好 docker 之后，在 mac 上新建目录  12345678mkdir &#x2F;Users&#x2F;gyl&#x2F;docker&#x2F;rocketmq&#x2F;datacd &#x2F;Users&#x2F;gyl&#x2F;docker&#x2F;rocketmq&#x2F;datamkdir logs   mkdir storemkdir -p broker&#x2F;conf  mkdir -p broker&#x2F;logs  mkdir -p broker&#x2F;storevim">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-28T15:01:01.036Z">
-<meta property="article:modified_time" content="2022-01-29T01:38:50.497Z">
+<meta property="article:published_time" content="2022-01-28T13:22:46.648Z">
+<meta property="article:modified_time" content="2022-01-30T02:32:30.949Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Docker">
-<meta property="article:tag" content="ES">
-<meta property="article:tag" content="Elasticsearch">
+<meta property="article:tag" content="RocketMQ">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>Mac 通过 Docker 安装 Elasticsearch - Aliliin</title>
+  <title>Mac 通过 Docker 安装 RocketMQ 安装 - Aliliin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -177,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Mac 通过 Docker 安装 Elasticsearch">
+            <span class="h2" id="subtitle" title="Mac 通过 Docker 安装 RocketMQ 安装">
               
             </span>
 
@@ -192,7 +191,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-28 23:01" pubdate>
+      <time datetime="2022-01-28 21:22" pubdate>
         2022年1月28日 晚上
       </time>
     </span>
@@ -203,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      2.1k 字
     </span>
   
 
@@ -212,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3 分钟
+      6 分钟
     </span>
   
 
@@ -249,27 +248,30 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Mac 通过 Docker 安装 Elasticsearch</h1>
+            <h1 style="display: none">Mac 通过 Docker 安装 RocketMQ 安装</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2022年1月29日 上午
+                  本文最后更新于：2022年1月30日 上午
                 
               </p>
             
             <div class="markdown-body">
-              <p>Mac 安装 ES</p>
-<p>安装好 docker 之后，新建目录 </p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-built_in">mkdir</span> -<span class="hljs-keyword">p</span> ~/docker/elasticsearch/<br><span class="hljs-keyword">cd</span> docker/elasticsearch/<br><span class="hljs-built_in">mkdir</span> data<br><span class="hljs-built_in">mkdir</span> config<br><span class="hljs-built_in">mkdir</span> plugins<br><br><span class="hljs-keyword">cd</span> config   <br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;http.host: 0.0.0.0&quot;</span> &gt;&gt; elasticsearch.yml<br><br><br>chmod <span class="hljs-number">777</span> -R elasticsearch/data/<br></code></pre></td></tr></table></figure>
+              <p>安装好 docker 之后，在 mac 上新建目录 </p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-built_in">mkdir</span> /Users/gyl/docker/rocketmq/data<br><span class="hljs-keyword">cd</span> /Users/gyl/docker/rocketmq/data<br><span class="hljs-built_in">mkdir</span> logs   <br><span class="hljs-built_in">mkdir</span> store<br><span class="hljs-built_in">mkdir</span> -<span class="hljs-keyword">p</span> broker/<span class="hljs-keyword">conf</span>  <br><span class="hljs-built_in">mkdir</span> -<span class="hljs-keyword">p</span> broker/logs  <br><span class="hljs-built_in">mkdir</span> -<span class="hljs-keyword">p</span> broker/store<br><span class="hljs-keyword">vim</span>  broker/<span class="hljs-keyword">conf</span>/broker.<span class="hljs-keyword">conf</span><br></code></pre></td></tr></table></figure>
 
-<p>docker 安装 ES</p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs haml">docker run -itd -p 9200:9200 -p 9300:9300 \<br>-<span class="ruby">e <span class="hljs-string">&quot;discovery.type=single-node&quot;</span> \</span><br><span class="ruby"></span>-<span class="ruby">e ES_JAVA_OPTS=<span class="hljs-string">&quot;-Xms64m -Xmx128m&quot;</span> \</span><br><span class="ruby"></span>-<span class="ruby">v ~<span class="hljs-regexp">/docker/elasticsearch</span><span class="hljs-regexp">/config/elasticsearch</span>.<span class="hljs-symbol">yml:</span>/usr/share/elasticsearch/config/elasticsearch.yml \</span><br><span class="ruby"></span>-<span class="ruby">v ~<span class="hljs-regexp">/docker/elasticsearch</span><span class="hljs-regexp">/data:/usr</span><span class="hljs-regexp">/share/elasticsearch</span><span class="hljs-regexp">/data \</span></span><br><span class="hljs-regexp"><span class="ruby"></span></span>-<span class="ruby"><span class="hljs-regexp">v ~/docker</span><span class="hljs-regexp">/elasticsearch/plugins</span><span class="hljs-symbol">:/usr/share/elasticsearch/plugins</span> \</span><br><span class="ruby"></span>-<span class="ruby">-name es <span class="hljs-symbol">elasticsearch:</span><span class="hljs-number">7.16</span>.<span class="hljs-number">3</span></span><br></code></pre></td></tr></table></figure>
+<p>Broker 配置</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># 所属集群名称，如果节点较多可以配置多个</span><br>brokerClusterName = DefaultCluster<br><span class="hljs-comment">#broker名称，master 和 slave 使用相同的名称，表明他们的主从关系</span><br>brokerName = broker-a<br><span class="hljs-comment">#0表示 Master，大于 0 表示不同的 slave</span><br>brokerId = 0<br><span class="hljs-comment">#表示几点做消息删除动作，默认是凌晨4点</span><br>deleteWhen = 04<br><span class="hljs-comment">#在磁盘上保留消息的时长，单位是小时</span><br>fileReservedTime = 48<br><span class="hljs-comment">#有三个值：SYNC_MASTER，ASYNC_MASTER，SLAVE；同步和异步表示 Master 和 Slave 之间同步数据的机制；</span><br>brokerRole = ASYNC_MASTER<br><span class="hljs-comment">#刷盘策略，取值为：ASYNC_FLUSH，SYNC_FLUSH 表示同步刷盘和异步刷盘；SYNC_FLUSH消息写入磁盘后才返回成功</span><br>状态，ASYNC_FLUSH 不需要；<br>flushDiskType = ASYNC_FLUSH<br><span class="hljs-comment"># 设置 broker 节点所在服务器的 ip 地址、物理 ip，不能用127.0.0.1、localhost、docker内网ip</span><br>brokerIP1 = 192.168.31.172<br>listenPort=10911<br>defaultTopicQueueNums=4<br>autoCreateTopicEnable=true<br>autoCreateSubscriptionGroup=true<br>mapedFileSizeCommitLog=1073741824<br>mapedFileSizeConsumeQueue=300000<br>diskMaxUsedSpaceRatio=88<br>maxMessageSize=65536<br></code></pre></td></tr></table></figure>
 
-<p>docker 安装 Kibana</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">docker</span> run -d --name kibana --link=es  -p <span class="hljs-number">5601</span>:<span class="hljs-number">5601</span> -d kibana:<span class="hljs-number">7</span>.<span class="hljs-number">16</span>.<span class="hljs-number">3</span><br><span class="hljs-attribute">docker</span> run -d --name kibana -e ELASTICSEARCH_HOSTS=<span class="hljs-string">&quot;http://192.168.31.172:9200&quot;</span> -p <span class="hljs-number">5601</span>:<span class="hljs-number">5601</span> -d kibana:<span class="hljs-number">7</span>.<span class="hljs-number">16</span>.<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>创建 docker-compose.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.5&#x27;</span><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">rmqnamesrv:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">foxiswho/rocketmq:server</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">rmqnamesrv</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">9876</span><span class="hljs-string">:9876</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./data/logs:/opt/logs</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./data/store:/opt/store</span><br>    <span class="hljs-attr">networks:</span><br>        <span class="hljs-attr">rmq:</span><br>          <span class="hljs-attr">aliases:</span> <br>            <span class="hljs-bullet">-</span> <span class="hljs-string">rmqnamesrv</span><br>  <span class="hljs-attr">rmqbroker:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">foxiswho/rocketmq:broker</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">rmqbroker</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">10909</span><span class="hljs-string">:10909</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">10911</span><span class="hljs-string">:10911</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./data/broker/logs:/opt/logs</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./data/broker/store:/opt/store</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./data/broker/conf/broker.conf:/etc/rocketmq/broker.conf</span><br>    <span class="hljs-attr">environment:</span><br>        <span class="hljs-attr">NAMESRV_ADDR:</span> <span class="hljs-string">&quot;rmqnamesrv:9876&quot;</span><br>        <span class="hljs-attr">JAVA_OPTS:</span> <span class="hljs-string">&quot; -Duser.home=/opt&quot;</span><br>        <span class="hljs-attr">JAVA_OPT_EXT:</span> <span class="hljs-string">&quot;-server -Xms128m -Xmx128m -Xmn128m&quot;</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">mqbroker</span> <span class="hljs-string">-c</span> <span class="hljs-string">/etc/rocketmq/broker.conf</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">rmqnamesrv</span><br>    <span class="hljs-attr">networks:</span><br>      <span class="hljs-attr">rmq:</span><br>        <span class="hljs-attr">aliases:</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">rmqbroker</span><br>  <span class="hljs-attr">rmqconsole:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">styletang/rocketmq-console-ng</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">rmqconsole</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">8080</span><span class="hljs-string">:8080</span><br>    <span class="hljs-attr">environment:</span><br>        <span class="hljs-attr">JAVA_OPTS:</span> <span class="hljs-string">&quot;-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false&quot;</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">rmqnamesrv</span><br>    <span class="hljs-attr">networks:</span><br>      <span class="hljs-attr">rmq:</span><br>        <span class="hljs-attr">aliases:</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">rmqconsole</span><br><span class="hljs-attr">networks:</span><br>  <span class="hljs-attr">rmq:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">rmq</span><br>    <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span><br></code></pre></td></tr></table></figure>
 
-<p>docker 安装 ik 分词器</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/medcl/</span>elasticsearch-analysis-ik/releases<br><br>下载并解压，拷贝到 plugins 目录下 （别忘记给 <span class="hljs-number">777</span> 权限）<br>进入 docker 容器内部 <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/elasticsearch/</span>bin ，<br>执行 ./elasticsearch-plugin list<br>如果报错请删除  plugins 目录下的 .DS_Store 隐藏文件（ls -a 查询隐藏文件)<br></code></pre></td></tr></table></figure>
+<p>启动 测试</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/Users/gy</span>l<span class="hljs-regexp">/docker/</span>rocketmq<br>docker-compose up<br></code></pre></td></tr></table></figure>
+
+
+
+
 
             </div>
             <hr>
@@ -282,9 +284,7 @@
                     
                       <a class="hover-with-bg" href="/tags/Docker/">Docker</a>
                     
-                      <a class="hover-with-bg" href="/tags/ES/">ES</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Elasticsearch/">Elasticsearch</a>
+                      <a class="hover-with-bg" href="/tags/RocketMQ/">RocketMQ</a>
                     
                   </div>
                 
@@ -301,12 +301,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Mac 通过 Docker 安装 Elasticsearch</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20docker%20%E5%AE%89%E8%A3%85%20RocketMQ%20%E5%AE%89%E8%A3%85/">
-                        <span class="hidden-mobile">Mac 通过 Docker 安装 RocketMQ 安装</span>
+                      <a href="/2022/01/17/Go%20%E5%BA%93%E5%AD%98%E6%89%A3%E5%87%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0/">
+                        <span class="hidden-mobile">Go 库存扣减的几种实现</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
