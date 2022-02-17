@@ -186,6 +186,72 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/11/17/Go%20%E5%AD%A6%E4%B9%A0%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%8F%AF%E7%94%A8%E6%80%A7%E8%AE%BE%E8%AE%A1/" target="_blank">
+          <img src="/images/weifuwu.jpg" srcset="/img/loading.gif" lazyload alt="Go 微服务可用性设计">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/17/Go%20%E5%AD%A6%E4%B9%A0%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%8F%AF%E7%94%A8%E6%80%A7%E8%AE%BE%E8%AE%A1/" target="_blank">
+          Go 微服务可用性设计
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/17/Go%20%E5%AD%A6%E4%B9%A0%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%8F%AF%E7%94%A8%E6%80%A7%E8%AE%BE%E8%AE%A1/" target="_blank">
+          
+          
+            
+          
+          Go 微服务可用性设计知识点隔离服务隔离动静隔离如 CND 缓存加速、mysql LRU 算法改进
+业务可以拆成两张表，静态表（字段机会不会改）和动态表（字段经常改）
+读写隔离
+主从
+CQRS
+
+轻重隔离
+核心：服务按核心与否进行分离，越核心的服务可用性要求也高
+快慢
+热点
+小表广播: 存为到内存，定期更新
+主动预热：旁路预热
+
+
+
+物理隔离
+线程：使用线程池，不同业务逻辑用不同的池子
+进程：容器
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-17 15:31" pubdate>
+              2021-11-17
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/11/12/Go%20goroutine%20%E5%B9%B6%E5%8F%91/" target="_blank">
           <img src="/images/golang.jpg" srcset="/img/loading.gif" lazyload alt="Go goroutine 并发编程">
         </a>
@@ -607,54 +673,6 @@ Panic 的基本定义
 通过关键字 type 和 interface，声明出接口类 type TestInterface interface &#123;&#125;
 因为接口类型与其他数据类型不同，它是没法被实例化的。既不能通过调用 new 函数或 make 函数创建出一个接口类型的值
 我们通过 interface 来定义对象的一组行为方法，如果某个对象实现了某个接口类型的所有方法，则此对象就
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 12:30" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/Go%20map%E7%B1%BB%E5%9E%8B/" target="_blank">
-          Go map类型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/Go%20map%E7%B1%BB%E5%9E%8B/" target="_blank">
-          
-          
-            
-          
-          Go map 类型基本定义
-类似其它语言中的哈希表或者字典，以 key&#x3D;&gt;value 形式存储数据
-格式为 map[keyType]valueType
-key 必须是支持 &#x3D;&#x3D; 或者 !&#x3D; 比较运算的类型，不可以是函数，map 或者 slice
-map 使用 make() 创建，支持 :&#x3D; 这种简写的方式
-map 是无序的，每次打印出来的 m
         </a>
       </p>
 

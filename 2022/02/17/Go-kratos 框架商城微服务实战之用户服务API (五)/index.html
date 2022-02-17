@@ -1,0 +1,644 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Beijing, China">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="Go-kratos 框架商城微服务实战之用户服务 (五) 这篇主要编写对 web 端提供 http 接口的服务，主要还是一些准备工作。写的不清晰的地方可看源码 , 欢迎大佬指教。 注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。   shop http 服务项目的创建   new 一个新的 kr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-kratos 框架商城微服务实战之用户服务API (五)">
+<meta property="og:url" content="https://aliliin.com/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1API%20(%E4%BA%94)/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="Go-kratos 框架商城微服务实战之用户服务 (五) 这篇主要编写对 web 端提供 http 接口的服务，主要还是一些准备工作。写的不清晰的地方可看源码 , 欢迎大佬指教。 注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。   shop http 服务项目的创建   new 一个新的 kr">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-17T13:26:29.764Z">
+<meta property="article:modified_time" content="2022-02-17T13:28:46.671Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="kratos">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>Go-kratos 框架商城微服务实战之用户服务API (五) - Aliliin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Go-kratos 框架商城微服务实战之用户服务API (五)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-17 21:26" pubdate>
+        2022年2月17日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      16k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      50 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Go-kratos 框架商城微服务实战之用户服务API (五)</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年2月17日 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h4 id="Go-kratos-框架商城微服务实战之用户服务-五"><a href="#Go-kratos-框架商城微服务实战之用户服务-五" class="headerlink" title="Go-kratos 框架商城微服务实战之用户服务 (五)"></a>Go-kratos 框架商城微服务实战之用户服务 (五)</h4><blockquote>
+<p>这篇主要编写对 web 端提供 http 接口的服务，主要还是一些准备工作。写的不清晰的地方可看<a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop/tree/main/service/user">源码</a> , 欢迎大佬指教。</p>
+<p>注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
+</blockquote>
+<ol>
+<li>shop http 服务项目的创建</li>
+</ol>
+<ul>
+<li>new 一个新的 kratos 项目代码</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 在 user 服务的上一级目录中，新建一个 shop 项目</span><br><span class="hljs-comment">// 具体目录结构如下</span><br><br>|-- kratos-shop<br>    |-- service<br>        |-- user <span class="hljs-comment">// 原先的用户服务 grpc</span><br>    |-- shop <span class="hljs-comment">// 通过 kratos new shop 新增的目录代码</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>删除 <code>shop/api/helloworld/v1</code> 目录下的所有文件</li>
+<li>修改或删除 <code>shop</code> 项目中的 <code>shop/api/helloworld/v1</code> 目录为 <code>shop/api/shop/v1</code></li>
+<li>复制 <code>service/user/api/user/v1/user.proto</code> 文件到新建的 <code>shop/api/service/user/v1</code> 目录下</li>
+<li>新建 <code>shop/api/shop/v1/shop.proto</code> 文件</li>
+</ul>
+<blockquote>
+<p>这里提供对外访问的接口，会聚合从不同的服务之间获取数据，接口路由通过 Protobuf IDL 定义对应的 REST API 和 gRPC API，</p>
+<p>参数校验使用 Validate 中间件，使用 proto-gen-validate 生成</p>
+<p>在使用 validate 之前首先需要安装 <a target="_blank" rel="noopener" href="https://github.com/envoyproxy/protoc-gen-validate">proto-gen-validate</a>。</p>
+</blockquote>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><br><span class="hljs-keyword">package</span> shop.shop.v1;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;google/api/annotations.proto&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;validate/validate.proto&quot;</span>;<br><br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;shop/api/shop/v1;v1&quot;</span>;<br><br><span class="hljs-comment">// The Shop service definition.</span><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">Shop</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> Register (RegisterReq) <span class="hljs-keyword">returns</span> (RegisterReply) </span>&#123;<br>    <span class="hljs-keyword">option</span> (google.api.http) = &#123;<br>      post: <span class="hljs-string">&quot;/api/users/register&quot;</span>,<br>      body: <span class="hljs-string">&quot;*&quot;</span>,<br>    &#125;;<br>  &#125;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> Login (LoginReq) <span class="hljs-keyword">returns</span> (RegisterReply) </span>&#123;<br>    <span class="hljs-keyword">option</span> (google.api.http) = &#123;<br>      post: <span class="hljs-string">&quot;/api/users/login&quot;</span>,<br>      body: <span class="hljs-string">&quot;*&quot;</span>,<br>    &#125;;<br>  &#125;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> Detail (DetailReq) <span class="hljs-keyword">returns</span> (UserDetailResponse) </span>&#123;<br>    <span class="hljs-keyword">option</span> (google.api.http) = &#123;<br>      get: <span class="hljs-string">&quot;/api/users/detail/&#123;id&#125;&quot;</span>,<br>    &#125;;<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">// Data returned by registration and login</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">RegisterReply</span> </span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">string</span> username = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">string</span> token = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">int64</span> expiredAt = <span class="hljs-number">6</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">RegisterReq</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">1</span> [(validate.rules).<span class="hljs-built_in">string</span>.len = <span class="hljs-number">11</span>];<br>  <span class="hljs-built_in">string</span> username = <span class="hljs-number">2</span> [(validate.rules).<span class="hljs-built_in">string</span> = &#123;min_len: <span class="hljs-number">3</span>, max_len: <span class="hljs-number">15</span>&#125;];<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">3</span> [(validate.rules).<span class="hljs-built_in">string</span> = &#123;min_len: <span class="hljs-number">8</span>&#125;];<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">LoginReq</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">1</span> [(validate.rules).<span class="hljs-built_in">string</span>.len = <span class="hljs-number">11</span>];<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">3</span> [(validate.rules).<span class="hljs-built_in">string</span> = &#123;min_len: <span class="hljs-number">8</span>&#125;];<br>&#125;<br><br><span class="hljs-comment">// select user details</span><br><span class="hljs-class"><span class="hljs-keyword">message</span>  <span class="hljs-title">DetailReq</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span> [(validate.rules).<span class="hljs-built_in">int64</span> = &#123;gt: <span class="hljs-number">0</span>&#125;];<br>&#125;<br><span class="hljs-comment">// user Detail returned</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">UserDetailResponse</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">int64</span> birthday = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">string</span> gender = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">int32</span> role = <span class="hljs-number">6</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>shop 根目录执行 <code>make api</code> ,生成 <code>*pb.go</code> 文件</li>
+</ul>
+<blockquote>
+<p>如果你觉得这样子设计项目目录不合理的话，你可以自己设计目录。只要能把服务之间关联起来可以了。</p>
+</blockquote>
+<ul>
+<li>修改 <code>shop/cmd/shop/main.go</code> 文件里面的 <code>name</code> 定义 <code>name = shop.api</code></li>
+</ul>
+<blockquote>
+<p>注： 这里的 name，consul 的服务注册与发现要用到</p>
+</blockquote>
+<ul>
+<li>删除或修改 <code>shop/configs/config.yaml</code> 配置文件</li>
+</ul>
+<blockquote>
+<p>项目中引入了 consul、trace，配置文件的时候，需要把相关的配置设置好，service 的配置是 consul 用来服务发现的</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">name:</span> <span class="hljs-string">shop.api</span><br><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">http:</span><br>    <span class="hljs-attr">addr:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">:8097</span><br>    <span class="hljs-attr">timeout:</span> <span class="hljs-string">1s</span><br>  <span class="hljs-attr">grpc:</span><br>    <span class="hljs-attr">addr:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">:9001</span><br>    <span class="hljs-attr">timeout:</span> <span class="hljs-string">1s</span><br><span class="hljs-attr">data:</span><br>  <span class="hljs-attr">database:</span><br>    <span class="hljs-attr">driver:</span> <span class="hljs-string">mysql</span><br>    <span class="hljs-attr">source:</span> <span class="hljs-string">root:root@tcp(127.0.0.1:3306)/test</span><br>  <span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">addr:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:6379</span><br>    <span class="hljs-attr">read_timeout:</span> <span class="hljs-number">0.</span><span class="hljs-string">2s</span><br>    <span class="hljs-attr">write_timeout:</span> <span class="hljs-number">0.</span><span class="hljs-string">2s</span><br><span class="hljs-attr">trace:</span><br>  <span class="hljs-attr">endpoint:</span> <span class="hljs-string">http://127.0.0.1:14268/api/traces</span><br><span class="hljs-attr">auth:</span><br>  <span class="hljs-attr">jwt_key:</span> <span class="hljs-string">hqFr%3ddt32DGlSTOI5cO6@TH#fFwYnP$S</span><br><span class="hljs-attr">service:</span><br>  <span class="hljs-attr">user:</span><br>    <span class="hljs-attr">endpoint:</span> <span class="hljs-string">discovery:///shop.user.service</span><br>  <span class="hljs-attr">goods:</span><br>    <span class="hljs-attr">endpoint:</span> <span class="hljs-string">discovery:///shop.goods.service</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新增 <code>shop/configs/registry.yaml</code> 文件,并加入：</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">consul:</span><br>  <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:8500</span><br>  <span class="hljs-attr">scheme:</span> <span class="hljs-string">http</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>shop/internal/conf/conf.proto</code> 文件：</li>
+</ul>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><span class="hljs-keyword">package</span> shop.api;<br><br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;shop/internal/conf;conf&quot;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;google/protobuf/duration.proto&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Bootstrap</span> </span>&#123;<br>  Server server = <span class="hljs-number">1</span>;<br>  Data data = <span class="hljs-number">2</span>;<br>  Trace trace = <span class="hljs-number">3</span>; <span class="hljs-comment">// 链路追踪</span><br>  Auth auth = <span class="hljs-number">4</span>; <span class="hljs-comment">// 认证鉴权</span><br>  Service <span class="hljs-class"><span class="hljs-keyword">service</span> = 5; // 服务注册与发现</span><br><span class="hljs-class">&#125;</span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">message</span> Server </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">HTTP</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> network = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> addr = <span class="hljs-number">2</span>;<br>    google.protobuf.Duration timeout = <span class="hljs-number">3</span>;<br>  &#125;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">GRPC</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> network = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> addr = <span class="hljs-number">2</span>;<br>    google.protobuf.Duration timeout = <span class="hljs-number">3</span>;<br>  &#125;<br>  HTTP http = <span class="hljs-number">1</span>;<br>  GRPC grpc = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Data</span> </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Database</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> driver = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> source = <span class="hljs-number">2</span>;<br>  &#125;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Redis</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> network = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> addr = <span class="hljs-number">2</span>;<br>    google.protobuf.Duration read_timeout = <span class="hljs-number">3</span>;<br>    google.protobuf.Duration write_timeout = <span class="hljs-number">4</span>;<br>  &#125;<br>  Database database = <span class="hljs-number">1</span>;<br>  Redis redis = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Service</span> </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">User</span> </span>&#123; <span class="hljs-comment">// 用户服务</span><br>    <span class="hljs-built_in">string</span> endpoint = <span class="hljs-number">1</span>;<br>  &#125;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Goods</span> </span>&#123; <span class="hljs-comment">// 商品服务</span><br>    <span class="hljs-built_in">string</span> endpoint = <span class="hljs-number">1</span>;<br>  &#125;<br>  User user = <span class="hljs-number">1</span>;<br>  Goods goods = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Trace</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> endpoint = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Registry</span> </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Consul</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> address = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> scheme = <span class="hljs-number">2</span>;<br>  &#125;<br>  Consul consul = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Auth</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> jwt_key = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>生成新的配置文件 conf.proto</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">shop 根目录执行 <br><span class="hljs-built_in">make</span> config<br>生成 shop/internal/conf/conf.pb.<span class="hljs-keyword">go</span>  文件<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>shop 根目录执行 <code>make config</code> ,生成 <code>conf.pb.go</code> 文件</p>
+</li>
+<li><p>修改 <code>shop/internal/server/http.go</code> 文件：</p>
+<blockquote>
+<p>这里用到的一些中间件都是 kratos 官方支持的，jwt、validate、tracing，具体使用方式可参考<a target="_blank" rel="noopener" href="https://go-kratos.dev/docs/component/middleware/overview">文档</a></p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> server<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/auth/jwt&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/logging&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/recovery&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/selector&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/tracing&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/validate&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/http&quot;</span><br>    jwt2 <span class="hljs-string">&quot;github.com/golang-jwt/jwt/v4&quot;</span><br>    <span class="hljs-string">&quot;github.com/gorilla/handlers&quot;</span><br>    v1 <span class="hljs-string">&quot;shop/api/shop/v1&quot;</span><br>    <span class="hljs-string">&quot;shop/internal/conf&quot;</span><br>    <span class="hljs-string">&quot;shop/internal/service&quot;</span><br>)<br><br><span class="hljs-comment">// NewHTTPServer new an HTTP server.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewHTTPServer</span><span class="hljs-params">(c *conf.Server, ac *conf.Auth, s *service.ShopService, logger log.Logger)</span> *<span class="hljs-title">http</span>.<span class="hljs-title">Server</span></span> &#123;<br>    <span class="hljs-keyword">var</span> opts = []http.ServerOption&#123;<br>        http.Middleware(<br>            recovery.Recovery(),<br>            validate.Validator(), <span class="hljs-comment">// 接口访问的参数校验</span><br>            tracing.Server(), <span class="hljs-comment">// 链路追踪</span><br>            selector.Server( <span class="hljs-comment">// jwt 验证</span><br>                jwt.Server(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(token *jwt2.Token)</span> <span class="hljs-params">(<span class="hljs-keyword">interface</span>&#123;&#125;, error)</span></span> &#123;<br>                    <span class="hljs-keyword">return</span> []<span class="hljs-keyword">byte</span>(ac.JwtKey), <span class="hljs-literal">nil</span><br>                &#125;, jwt.WithSigningMethod(jwt2.SigningMethodHS256)),<br>            ).Match(NewWhiteListMatcher()).Build(),<br>            logging.Server(logger),<br>        ),<br>        http.Filter(handlers.CORS( <span class="hljs-comment">// 浏览器跨域</span><br>            handlers.AllowedHeaders([]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;X-Requested-With&quot;</span>, <span class="hljs-string">&quot;Content-Type&quot;</span>, <span class="hljs-string">&quot;Authorization&quot;</span>&#125;),<br>            handlers.AllowedMethods([]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;POST&quot;</span>, <span class="hljs-string">&quot;PUT&quot;</span>, <span class="hljs-string">&quot;HEAD&quot;</span>, <span class="hljs-string">&quot;OPTIONS&quot;</span>&#125;),<br>            handlers.AllowedOrigins([]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;*&quot;</span>&#125;),<br>        )),<br>    &#125;<br>    <span class="hljs-keyword">if</span> c.Http.Network != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        opts = <span class="hljs-built_in">append</span>(opts, http.Network(c.Http.Network))<br>    &#125;<br>    <span class="hljs-keyword">if</span> c.Http.Addr != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        opts = <span class="hljs-built_in">append</span>(opts, http.Address(c.Http.Addr))<br>    &#125;<br>    <span class="hljs-keyword">if</span> c.Http.Timeout != <span class="hljs-literal">nil</span> &#123;<br>        opts = <span class="hljs-built_in">append</span>(opts, http.Timeout(c.Http.Timeout.AsDuration()))<br>    &#125;<br>    srv := http.NewServer(opts...)<br>    v1.RegisterShopHTTPServer(srv, s)<br>    <span class="hljs-keyword">return</span> srv<br>&#125;<br><br><span class="hljs-comment">// NewWhiteListMatcher 白名单不需要 token 验证的接口</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewWhiteListMatcher</span><span class="hljs-params">()</span> <span class="hljs-title">selector</span>.<span class="hljs-title">MatchFunc</span></span> &#123;<br>    whiteList := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">struct</span>&#123;&#125;)<br>    whiteList[<span class="hljs-string">&quot;/shop.shop.v1.Shop/Login&quot;</span>] = <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;<br>    whiteList[<span class="hljs-string">&quot;/shop.shop.v1.Shop/Register&quot;</span>] = <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, operation <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br>        <span class="hljs-keyword">if</span> _, ok := whiteList[operation]; ok &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>shop/internal/server/server.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> server<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is server providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(NewHTTPServer)<br></code></pre></td></tr></table></figure>
+
+<p>​    由于此服务只对外提供 http 服务，所以同目录下 grpc 文件可以删除，这样子注册服务的时候，把 grpc 服务去掉。</p>
+<ul>
+<li>修改或删除 <code>shop/internal/service/greeter.go</code> 为<code>shop/internal/service/user.go</code></li>
+</ul>
+<blockquote>
+<p>这里的 ShopService 的 usecase 还没实现，编辑器可能会有错误提示，先忽略</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    v1 <span class="hljs-string">&quot;shop/api/shop/v1&quot;</span> <span class="hljs-comment">// 注意这个位置引入的 proto 生成的文件，不然会找不到对应接收和返回</span><br>)<br><br><span class="hljs-comment">// 用户注册接口</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *ShopService)</span> <span class="hljs-title">Register</span><span class="hljs-params">(ctx context.Context, req *v1.RegisterReq)</span> <span class="hljs-params">(*v1.RegisterReply, error)</span></span> &#123;<br>    <span class="hljs-keyword">return</span> s.uc.CreateUser(ctx, req) <br>&#125;<br><span class="hljs-comment">// 用户登录接口</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *ShopService)</span> <span class="hljs-title">Login</span><span class="hljs-params">(ctx context.Context, req *v1.LoginReq)</span> <span class="hljs-params">(*v1.RegisterReply, error)</span></span> &#123;<br>    <span class="hljs-keyword">return</span> s.uc.PassWordLogin(ctx, req)<br>&#125;<br><span class="hljs-comment">// 当前登录用户详情</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *ShopService)</span> <span class="hljs-title">Detail</span><span class="hljs-params">(ctx context.Context, req *v1.DetailReq)</span> <span class="hljs-params">(*v1.UserDetailResponse, error)</span></span> &#123;<br>    <span class="hljs-keyword">return</span> s.uc.UserDetailByID(ctx, req)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>shop/internal/service/service.go</code>  文件</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>    v1 <span class="hljs-string">&quot;shop/api/shop/v1&quot;</span><br>    <span class="hljs-string">&quot;shop/internal/biz&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is service providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(NewShopService)<br><br><span class="hljs-comment">// ShopService is a shop service.</span><br><span class="hljs-keyword">type</span> ShopService <span class="hljs-keyword">struct</span> &#123;<br>    v1.UnimplementedShopServer <span class="hljs-comment">// 这个位置引入的是 shop.proto 生成的服务，不要引入 user</span><br><br>    uc  *biz.UserUsecase<br>    log *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewShopService new a shop service.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewShopService</span><span class="hljs-params">(uc *biz.UserUsecase, logger log.Logger)</span> *<span class="hljs-title">ShopService</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;ShopService&#123;<br>        uc:  uc,<br>        log: log.NewHelper(log.With(logger, <span class="hljs-string">&quot;module&quot;</span>, <span class="hljs-string">&quot;service/shop&quot;</span>)),<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>shop/internal/biz/greeter.go</code> 为<code>shop/internal/biz/user.go</code></li>
+</ul>
+<blockquote>
+<p>注： 这里还没有实现 service 目录下  user.go 文件调用的方法</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br>.<br>.<br>.<br><span class="hljs-comment">// 定义返回需要用的结构体</span><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    ID        <span class="hljs-keyword">int64</span><br>    Mobile    <span class="hljs-keyword">string</span><br>    Password  <span class="hljs-keyword">string</span><br>    NickName  <span class="hljs-keyword">string</span><br>    Birthday  <span class="hljs-keyword">int64</span><br>    Gender    <span class="hljs-keyword">string</span><br>    Role      <span class="hljs-keyword">int</span><br>    CreatedAt time.Time<br>&#125;<br><br><span class="hljs-keyword">type</span> UserRepo <span class="hljs-keyword">interface</span> &#123;<br>    CreateUser(c context.Context, u *User) (*User, error)<br>    UserByMobile(ctx context.Context, mobile <span class="hljs-keyword">string</span>) (*User, error)<br>    UserById(ctx context.Context, Id <span class="hljs-keyword">int64</span>) (*User, error)<br>    CheckPassword(ctx context.Context, password, encryptedPassword <span class="hljs-keyword">string</span>) (<span class="hljs-keyword">bool</span>, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> UserUsecase <span class="hljs-keyword">struct</span> &#123;<br>    uRepo      UserRepo<br>    log        *log.Helper<br>    signingKey <span class="hljs-keyword">string</span> <span class="hljs-comment">// 这里是 jwt 生成 token 所需的 key config 传入的</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUserUsecase</span><span class="hljs-params">(repo UserRepo, logger log.Logger, conf *conf.Auth)</span> *<span class="hljs-title">UserUsecase</span></span> &#123;<br>    helper := log.NewHelper(log.With(logger, <span class="hljs-string">&quot;module&quot;</span>, <span class="hljs-string">&quot;usecase/shop&quot;</span>))<br>    <span class="hljs-keyword">return</span> &amp;UserUsecase&#123;uRepo: repo, log: helper, signingKey: conf.JwtKey&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>shop/internal/biz/biz.go</code> 文件</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br><br><span class="hljs-comment">// ProviderSet is biz providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(NewUserUsecase) <span class="hljs-comment">// 注册 usercase</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改或删除 <code>shop/internal/data/greeter.go</code> 为<code>shop/internal/data/user.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br>.<br>.<br>.<br><br><span class="hljs-keyword">type</span> userRepo <span class="hljs-keyword">struct</span> &#123;<br>    data *Data<br>    log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewUserRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUserRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">UserRepo</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;userRepo&#123;<br>        data: data,<br>        log:  log.NewHelper(log.With(logger, <span class="hljs-string">&quot;module&quot;</span>, <span class="hljs-string">&quot;repo/user&quot;</span>)),<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *userRepo)</span> <span class="hljs-title">CreateUser</span><span class="hljs-params">(c context.Context, user *biz.User)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *userRepo)</span> <span class="hljs-title">UserByMobile</span><span class="hljs-params">(c context.Context, mobile <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *userRepo)</span> <span class="hljs-title">CheckPassword</span><span class="hljs-params">(c context.Context, password, encryptedPassword <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">bool</span>, error)</span></span> &#123;<br>        <span class="hljs-keyword">return</span>  <span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *userRepo)</span> <span class="hljs-title">UserById</span><span class="hljs-params">(c context.Context, id <span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br><br>    <span class="hljs-keyword">return</span>  <span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>修改 <code>shop/internal/data/data.go</code></p>
+<blockquote>
+<p>这里比较重要，data 是不直接链接数据库的，而是链接服务</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    consul <span class="hljs-string">&quot;github.com/go-kratos/kratos/contrib/registry/consul/v2&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/recovery&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/tracing&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/registry&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/grpc&quot;</span><br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>    consulAPI <span class="hljs-string">&quot;github.com/hashicorp/consul/api&quot;</span><br>    grpcx <span class="hljs-string">&quot;google.golang.org/grpc&quot;</span><br>    userV1 <span class="hljs-string">&quot;shop/api/service/user/v1&quot;</span><br>    <span class="hljs-string">&quot;shop/internal/conf&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is data providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(NewData, NewUserRepo, NewUserServiceClient, NewRegistrar, NewDiscovery)<br><br><span class="hljs-comment">// Data .</span><br><span class="hljs-keyword">type</span> Data <span class="hljs-keyword">struct</span> &#123;<br>    log *log.Helper<br>    uc  userV1.UserClient<br>&#125;<br><br><span class="hljs-comment">// NewData .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewData</span><span class="hljs-params">(c *conf.Data, uc userV1.UserClient, logger log.Logger)</span> <span class="hljs-params">(*Data, error)</span></span> &#123;<br>    l := log.NewHelper(log.With(logger, <span class="hljs-string">&quot;module&quot;</span>, <span class="hljs-string">&quot;data&quot;</span>))<br>    <span class="hljs-keyword">return</span> &amp;Data&#123;log: l, uc: uc&#125;, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// NewUserServiceClient 链接用户服务 grpc</span><br><span class="hljs-comment">// 这里的 ac 暂时没有用到，它可以用来验证服务之间认证鉴权调用的 也就是 middleware jwt</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUserServiceClient</span><span class="hljs-params">(ac *conf.Auth, sr *conf.Service, rr registry.Discovery)</span> <span class="hljs-title">userV1</span>.<span class="hljs-title">UserClient</span></span> &#123;<br>    conn, err := grpc.DialInsecure(<br>        context.Background(),<br>        grpc.WithEndpoint(sr.User.Endpoint), <span class="hljs-comment">// 这里是服务名称</span><br>        grpc.WithDiscovery(rr),<span class="hljs-comment">// consul 的服务注册与发现</span><br>        grpc.WithMiddleware(<br>            tracing.Client(), <span class="hljs-comment">// 链路追踪，完整的请求链路</span><br>            recovery.Recovery(),<br>        ),<br>        grpc.WithTimeout(<span class="hljs-number">2</span>*time.Second),<br>        grpc.WithOptions(grpcx.WithStatsHandler(&amp;tracing.ClientHandler&#123;&#125;)),<span class="hljs-comment">// 完整的请求链路</span><br>    )<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    c := userV1.NewUserClient(conn)<br>    <span class="hljs-keyword">return</span> c<br>&#125;<br><br><span class="hljs-comment">// NewRegistrar add consul</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewRegistrar</span><span class="hljs-params">(conf *conf.Registry)</span> <span class="hljs-title">registry</span>.<span class="hljs-title">Registrar</span></span> &#123;<br>    c := consulAPI.DefaultConfig()<br>    c.Address = conf.Consul.Address<br>    c.Scheme = conf.Consul.Scheme<br>    cli, err := consulAPI.NewClient(c)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    r := consul.New(cli, consul.WithHealthCheck(<span class="hljs-literal">false</span>))<br>    <span class="hljs-keyword">return</span> r<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewDiscovery</span><span class="hljs-params">(conf *conf.Registry)</span> <span class="hljs-title">registry</span>.<span class="hljs-title">Discovery</span></span> &#123;<br>    c := consulAPI.DefaultConfig()<br>    c.Address = conf.Consul.Address<br>    c.Scheme = conf.Consul.Scheme<br>    cli, err := consulAPI.NewClient(c)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    r := consul.New(cli, consul.WithHealthCheck(<span class="hljs-literal">false</span>))<br>    <span class="hljs-keyword">return</span> r<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改入口文件 <code>main.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;flag&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/tracing&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/registry&quot;</span><br>    <span class="hljs-string">&quot;go.opentelemetry.io/otel&quot;</span><br>    <span class="hljs-string">&quot;go.opentelemetry.io/otel/attribute&quot;</span><br>    <span class="hljs-string">&quot;go.opentelemetry.io/otel/exporters/jaeger&quot;</span><br>    <span class="hljs-string">&quot;go.opentelemetry.io/otel/sdk/resource&quot;</span><br>    tracesdk <span class="hljs-string">&quot;go.opentelemetry.io/otel/sdk/trace&quot;</span><br>    semconv <span class="hljs-string">&quot;go.opentelemetry.io/otel/semconv/v1.7.0&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/config&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/config/file&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/grpc&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/http&quot;</span><br>    <span class="hljs-string">&quot;shop/internal/conf&quot;</span><br>)<br><br><span class="hljs-comment">// go build -ldflags &quot;-X main.Version=x.y.z&quot;</span><br><span class="hljs-keyword">var</span> (<br>    <span class="hljs-comment">// Name is the name of the compiled software.</span><br>    Name = <span class="hljs-string">&quot;shop.api&quot;</span><br>    <span class="hljs-comment">// Version is the version of the compiled software.</span><br>    Version <span class="hljs-keyword">string</span><br>    <span class="hljs-comment">// flagconf is the config flag.</span><br>    flagconf <span class="hljs-keyword">string</span><br><br>    id, _ = os.Hostname()<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> &#123;<br>    flag.StringVar(&amp;flagconf, <span class="hljs-string">&quot;conf&quot;</span>, <span class="hljs-string">&quot;../../configs&quot;</span>, <span class="hljs-string">&quot;config path, eg: -conf config.yaml&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">newApp</span><span class="hljs-params">(logger log.Logger, hs *http.Server, rr registry.Registrar)</span> *<span class="hljs-title">kratos</span>.<span class="hljs-title">App</span></span> &#123;<br>    <span class="hljs-keyword">return</span> kratos.New(<br>        kratos.ID(id+<span class="hljs-string">&quot;shop.api&quot;</span>), <span class="hljs-comment">// 这里注意如果你是同一台电脑，同时启动服务的话，需要修改一下 ID</span><br>        kratos.Name(Name),<br>        kratos.Version(Version),<br>        kratos.Metadata(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;&#125;),<br>        kratos.Logger(logger),<br>        kratos.Server(<br>            hs,<br>        ),<br>        kratos.Registrar(rr),<br>    )<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    flag.Parse()<br>    logger := log.With(log.NewStdLogger(os.Stdout),<br>        <span class="hljs-string">&quot;ts&quot;</span>, log.DefaultTimestamp,<br>        <span class="hljs-string">&quot;caller&quot;</span>, log.DefaultCaller,<br>        <span class="hljs-string">&quot;service.id&quot;</span>, id,<br>        <span class="hljs-string">&quot;service.name&quot;</span>, Name,<br>        <span class="hljs-string">&quot;service.version&quot;</span>, Version,<br>        <span class="hljs-string">&quot;trace_id&quot;</span>, tracing.TraceID(),<br>        <span class="hljs-string">&quot;span_id&quot;</span>, tracing.SpanID(),<br>    )<br>    c := config.New(<br>        config.WithSource(<br>            file.NewSource(flagconf),<br>        ),<br>    )<br>    <span class="hljs-keyword">defer</span> c.Close()<br><br>    <span class="hljs-keyword">if</span> err := c.Load(); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    <span class="hljs-keyword">var</span> bc conf.Bootstrap<br>    <span class="hljs-keyword">if</span> err := c.Scan(&amp;bc); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    <span class="hljs-keyword">var</span> rc conf.Registry <span class="hljs-comment">// consul 初始化</span><br>    <span class="hljs-keyword">if</span> err := c.Scan(&amp;rc); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    <span class="hljs-comment">// 链路追踪 初始化    </span><br>    err := setTracerProvider(bc.Trace.Endpoint)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    app, cleanup, err := initApp(bc.Server, bc.Data, bc.Auth, bc.Service, &amp;rc, logger)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    <span class="hljs-keyword">defer</span> cleanup()<br><br>    <span class="hljs-comment">// start and wait for stop signal</span><br>    <span class="hljs-keyword">if</span> err := app.Run(); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 链路追踪</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">setTracerProvider</span><span class="hljs-params">(url <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">error</span></span> &#123;<br>    <span class="hljs-comment">// Create the Jaeger exporter</span><br>    exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    tp := tracesdk.NewTracerProvider(<br>        <span class="hljs-comment">// Set the sampling rate based on the parent span to 100%</span><br>        tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(<span class="hljs-number">1.0</span>))),<br>        <span class="hljs-comment">// Always be sure to batch in production.</span><br>        tracesdk.WithBatcher(exp),<br>        <span class="hljs-comment">// Record information about this application in an Resource.</span><br>        tracesdk.WithResource(resource.NewSchemaless(<br>            semconv.ServiceNameKey.String(Name),<br>            attribute.String(<span class="hljs-string">&quot;env&quot;</span>, <span class="hljs-string">&quot;dev&quot;</span>),<br>        )),<br>    )<br>    otel.SetTracerProvider(tp)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>shop/cmd/shop/wire.go</code></li>
+</ul>
+<blockquote>
+<p>注意这里的注入的参数</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// initApp init shop application.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initApp</span><span class="hljs-params">(*conf.Server, *conf.Data, *conf.Auth, *conf.Service, *conf.Registry, log.Logger)</span> <span class="hljs-params">(*kratos.App, <span class="hljs-keyword">func</span>()</span>, <span class="hljs-title">error</span>)</span> &#123;<br>    <span class="hljs-built_in">panic</span>(wire.Build(server.ProviderSet, data.ProviderSet, biz.ProviderSet, service.ProviderSet, newApp))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="这一篇主要是准备工作，下一篇开始实现业务接口"><a href="#这一篇主要是准备工作，下一篇开始实现业务接口" class="headerlink" title="这一篇主要是准备工作，下一篇开始实现业务接口"></a>这一篇主要是准备工作，下一篇开始实现业务接口</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                    
+                      <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/12/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/">
+                        <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务 (四)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
