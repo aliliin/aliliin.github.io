@@ -186,7 +186,7 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1API%20(%E4%BA%94)/" target="_blank">
+        <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/" target="_blank">
           <img src="/images/k1.jpg" srcset="/img/loading.gif" lazyload alt="Go-kratos 框架商城微服务实战之用户服务API (五)">
         </a>
       </div>
@@ -194,26 +194,20 @@
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1API%20(%E4%BA%94)/" target="_blank">
+        <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/" target="_blank">
           Go-kratos 框架商城微服务实战之用户服务API (五)
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1API%20(%E4%BA%94)/" target="_blank">
+        <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/" target="_blank">
           
           
             
           
           Go-kratos 框架商城微服务实战之用户服务 (五)
-这篇主要编写对 web 端提供 http 接口的服务，主要还是一些准备工作。写的不清晰的地方可看源码 , 欢迎大佬指教。
+这篇主要给服务加入链路追踪，完善 consul,并测试 shop 的 http api 接口 文章写的不清晰的地方可通过 GitHub 源码进行查看, 也感谢您指出不足之处,欢迎大佬指教。
 注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
-
-
-shop http 服务项目的创建
-
-
-new 一个新的 kr
         </a>
       </p>
 
@@ -265,14 +259,8 @@ new 一个新的 kr
             
           
           Go-kratos 框架商城微服务实战之用户服务 (四)
-这篇主要引入测试服务。写的不清晰的地方可看源码 , 欢迎大佬指教。
-注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
-
-编写单元测试 ginkgo 的用法
-引入测试所需的包
-
-
-注：这里用到了gomock 和 ginkgo 不熟悉的可以熟
+这篇主要编写 HTTP API 端的服务，跟前几篇写的用户服务对接上，主要还是项目的初始化准备工作。写的不清晰的地方可看GitHub 源码 , 也感谢您指出不足之处。
+注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。这里所有 import
         </a>
       </p>
 
@@ -323,14 +311,12 @@ new 一个新的 kr
           
             
           
-          Go-kratos 框架商城微服务实战之用户服务 (三) - 链路追踪
-这篇主要给服务加入链路追踪Tracing 。写的不清晰的地方可看源码 , 欢迎大佬指教。
-注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
+          Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。
 
-1.  jaeger 的安装
-docker 的安装方式
+注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
 
-12docker run
+新增 RPC 接口
+注：这里的目录指的是 kratos
         </a>
       </p>
 
@@ -381,17 +367,11 @@ docker 的安装方式
           
             
           
-          kratos 框架商城微服务实战之用户服务 (二)这篇主要编写服务接口。写的不清晰的地方可看源码,欢迎大佬指教。
+          Go-kratos 框架商城微服务实战之用户服务 (二)
+这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。
+注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
 
-新增 user.proto 服务接口
-
-
-注：这里的目录有做修改，完整项目目录为 shop/service/user/api/user/v1/user.proto , 根目录还是指代 user 目录
-
-
-编辑 user/api/user/v1/user.proto 文件
-
-12345
+准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现单
         </a>
       </p>
 
@@ -479,7 +459,7 @@ docker 的安装方式
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98-%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A11/" target="_blank">
-          <img src="/images/k1.jpg" srcset="/img/loading.gif" lazyload alt="kratos 框架商城微服务实战之用户服务-1">
+          <img src="/images/k1.jpg" srcset="/img/loading.gif" lazyload alt="kratos 框架商城微服务实战之用户服务(一)">
         </a>
       </div>
     
@@ -487,7 +467,7 @@ docker 的安装方式
       <h1 class="index-header">
         
         <a href="/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98-%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A11/" target="_blank">
-          kratos 框架商城微服务实战之用户服务-1
+          kratos 框架商城微服务实战之用户服务(一)
         </a>
       </h1>
 
@@ -497,23 +477,13 @@ docker 的安装方式
           
             
           
-          kratos 微服务框架商城实战之用户服务-1
-注：这里已经安装好了kratos、proto、wire 等命令工具，推荐看一下官方文档以免执行失败
+          kratos 微服务框架商城实战之用户服务(一)
+推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具
 
-
-kratos 框架的简单介绍
-
-
-请仔细阅读官方文档
-
-
-创建商城微服务-用户服务
-
-进入本机 go path 目录，新建并进入 shop 目录
-
-进入 shop 目录后执行 kratos new user 命令
-
-进入 user 目录，执行 go
+准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录，
+新建  kratos-shop/service 目录并进入到新建的目录中，
+执行 kratos new user 命令并进入 user 目录，
+执
         </a>
       </p>
 
