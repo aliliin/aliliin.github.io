@@ -13,7 +13,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则">
@@ -111,6 +111,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -241,19 +253,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Redis 缓存策略</h1>
+            <h1 style="display: none;">Redis 缓存策略</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年10月20日 中午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：5 个月前 
+            </p>
             
             <div class="markdown-body">
               <h1 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h1><h4 id="数据脏读脏写-不一致的解决情况"><a href="#数据脏读脏写-不一致的解决情况" class="headerlink" title="数据脏读脏写 不一致的解决情况"></a>数据脏读脏写 不一致的解决情况</h4><p>其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。<br>这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：<br>从缓存中读取数据；<br>如果缓存命中，则直接返回数据；<br>如果缓存不命中，则从数据库中查询数据；<br>查询到数据后，将数据写入到缓存中，并且返回给用户。<br>写策略的步骤是：<br>更新数据库中的记录；<br>删除缓存记录。</p>
@@ -264,58 +292,52 @@
 </ol>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/redis/">redis</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/redis/"
+                    >redis</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Mac系统安装java11之后使用Nacos</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/">
+                    <span class="hidden-mobile">红楼梦中的诗句记录</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Mac系统安装java11之后使用Nacos</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/">
-                        <span class="hidden-mobile">红楼梦中的诗句记录</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -342,20 +364,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -496,7 +518,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

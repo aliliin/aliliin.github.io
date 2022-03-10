@@ -13,7 +13,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="Go 错误处理 Panic 和 Recover
+Go 中没有错误机制
+error 类型实现了 error 接口
+
+123type error interface &amp;#123;	Error() string&amp;#125;
+
+
+可以通过 errors.New 来实现快速创建错误信息
+
+1errors.New(&amp;quot;n must be in the range [0,10]
+
+Panic 的基本定义">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="Go 错误处理 Panic 和 Recover Go 中没有错误机制 error 类型实现了 error 接口  123type error interface &amp;#123;	Error() string&amp;#125;   可以通过 errors.New 来实现快速创建错误信息  1errors.New(&quot;n must be in the range [0,10]  Panic 的基本定义">
@@ -120,6 +131,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -210,7 +233,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3 分钟
+      4 分钟
     </span>
   
 
@@ -241,19 +264,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go 错误处理 Panic 和 Recover</h1>
+            <h1 style="display: none;">Go 错误处理 Panic 和 Recover</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年10月20日 下午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：5 个月前 
+            </p>
             
             <div class="markdown-body">
               <h4 id="Go-错误处理-Panic-和-Recover"><a href="#Go-错误处理-Panic-和-Recover" class="headerlink" title="Go 错误处理 Panic 和 Recover"></a>Go 错误处理 Panic 和 Recover</h4><ol>
@@ -285,58 +324,52 @@
 </code></pre>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/27/Go%20Error/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Go error</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/Go%20%E5%87%BD%E6%95%B0/">
+                    <span class="hidden-mobile">Go 函数</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/27/Go%20Error/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go error</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/Go%20%E5%87%BD%E6%95%B0/">
-                        <span class="hidden-mobile">Go 函数</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -363,20 +396,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -517,7 +550,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

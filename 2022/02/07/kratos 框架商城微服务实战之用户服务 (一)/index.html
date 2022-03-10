@@ -13,24 +13,30 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="kratos 微服务框架商城实战之用户服务(一)
+推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具
+
+准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录，
+新建  kratos-shop/service 目录并进入到新建的目录中，
+执行 kratos new user 命令并进入 user 目录，
+执">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="kratos 微服务框架商城实战之用户服务(一) 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具  准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录， 新建  kratos-shop&#x2F;service 目录并进入到新建的目录中， 执行 kratos new user 命令并进入 user 目录， 执">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kratos 框架商城微服务实战之用户服务(一)">
-<meta property="og:url" content="https://aliliin.com/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98-%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A11/index.html">
+<meta property="og:url" content="https://aliliin.com/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%80)/index.html">
 <meta property="og:site_name" content="Aliliin">
 <meta property="og:description" content="kratos 微服务框架商城实战之用户服务(一) 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具  准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录， 新建  kratos-shop&#x2F;service 目录并进入到新建的目录中， 执行 kratos new user 命令并进入 user 目录， 执">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
 <meta property="article:published_time" content="2022-02-07T13:40:14.041Z">
-<meta property="article:modified_time" content="2022-03-10T16:52:48.656Z">
+<meta property="article:modified_time" content="2022-03-10T18:04:52.619Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Go">
 <meta property="article:tag" content="kratos">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+<meta name="twitter:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
   
   <title>kratos 框架商城微服务实战之用户服务(一) - Aliliin</title>
 
@@ -114,6 +120,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -213,7 +231,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      45 分钟
+      46 分钟
     </span>
   
 
@@ -244,19 +262,143 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+    
+    
+    
+    <div class="category row">
+      <a class="category-item 
+                 
+                list-group-item category-item-action col-10 col-md-11 col-xm-11"
+        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+        aria-expanded="true"
+      >
+        Kratos 微服务商城(9) 
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+       
+      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (二)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%80)/"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务(一)</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">kratos 框架商城微服务实战之用户服务(一)</h1>
+            <h1 style="display: none;">kratos 框架商城微服务实战之用户服务(一)</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2022年3月11日 凌晨
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：10 分钟前 
+            </p>
             
             <div class="markdown-body">
               <h1 id="kratos-微服务框架商城实战之用户服务-一"><a href="#kratos-微服务框架商城实战之用户服务-一" class="headerlink" title="kratos 微服务框架商城实战之用户服务(一)"></a>kratos 微服务框架商城实战之用户服务(一)</h1><blockquote>
@@ -335,67 +477,70 @@
 <h4 id="根目录新建-user-test-user-go-文件，添加如下内容："><a href="#根目录新建-user-test-user-go-文件，添加如下内容：" class="headerlink" title="根目录新建 user/test/user.go 文件，添加如下内容："></a>根目录新建 <code>user/test/user.go</code> 文件，添加如下内容：</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs stylus">package <span class="hljs-selector-tag">main</span><br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>)<br><br><span class="hljs-selector-tag">var</span> userClient v1<span class="hljs-selector-class">.UserClient</span><br><span class="hljs-selector-tag">var</span> conn *grpc<span class="hljs-selector-class">.ClientConn</span><br><br>func <span class="hljs-selector-tag">main</span>() &#123;<br>    Init()<br><br>    TestCreateUser() <span class="hljs-comment">// 创建用户</span><br><br>    conn<span class="hljs-selector-class">.Close</span>()<br>&#125;<br><br><span class="hljs-comment">// Init 初始化 grpc 链接 注意这里链接的 端口</span><br>func Init() &#123;<br>    <span class="hljs-selector-tag">var</span> err error<br>    conn, err = grpc<span class="hljs-selector-class">.Dial</span>(<span class="hljs-string">&quot;127.0.0.1:50051&quot;</span>, grpc<span class="hljs-selector-class">.WithInsecure</span>())<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(<span class="hljs-string">&quot;grpc link err&quot;</span> + err<span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    userClient = v1<span class="hljs-selector-class">.NewUserClient</span>(conn)<br>&#125;<br><br>func TestCreateUser() &#123;<br><br>    rsp, err := userClient<span class="hljs-selector-class">.CreateUser</span>(context<span class="hljs-selector-class">.Background</span>(), &amp;v1.CreateUserInfo&#123;<br>        Mobile:   fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;1388888888%d&quot;</span>, <span class="hljs-number">1</span>),<br>        Password: <span class="hljs-string">&quot;admin123&quot;</span>,<br>        NickName: fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;YWWW%d&quot;</span>, <span class="hljs-number">1</span>),<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(<span class="hljs-string">&quot;grpc 创建用户失败&quot;</span> + err<span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    fmt<span class="hljs-selector-class">.Println</span>(rsp.Id)<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>这里别忘记启动 kratos user 服务之后，再执行 test&#x2F;user.go 文件，查询执行结果，是否有个ID输出查询自己的数据库，看看是否有插入的数据了。</p>
-<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口"><a href="#源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口" class="headerlink" title="源码已经上传到 GitHub 上了，下一篇开始逐步完善用户服务的接口,"></a>源码已经上传到 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop">GitHub</a> 上了，下一篇开始逐步完善用户服务的接口,</h4><p>感谢您的耐心阅读，动动手指点个star吧。</p>
-<p>Reference</p>
-<p>Go工程化-依赖注入 <a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire">https://go-kratos.dev/blog/go-project-wire</a></p>
-<p>Project Layout 最佳实践 <a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-layout-operation-process">https://go-kratos.dev/blog/go-layout-operation-process</a></p>
+<h4 id="源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口"><a href="#源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口" class="headerlink" title="源码已经上传到 GitHub 上了，下一篇开始逐步完善用户服务的接口,"></a>源码已经上传到 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop">GitHub</a> 上了，下一篇开始逐步完善用户服务的接口,</h4><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>Go工程化-依赖注入 <a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire">https://go-kratos.dev/blog/go-project-wire</a></p>
+<p>Project Layout 最佳实践 <a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-layout-operation-process">https://go-kratos.dev/blog/go-layout-operation-process</a><br>感谢您的耐心阅读，动动手指点个star吧。</p>
+<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                      <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
-                    
-                  </div>
+                <div class="post-meta mr-3">
+                  <i class="iconfont icon-category"></i>
+                  
+                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                    >Kratos 微服务商城</a
+                  >
+                  
+                </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                  <a class="hover-with-bg" href="/tags/kratos/"
+                    >kratos</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Mac 通过 Docker 安装 Elasticsearch</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20docker%20%E5%AE%89%E8%A3%85%20RocketMQ%20%E5%AE%89%E8%A3%85/">
+                    <span class="hidden-mobile">Mac 通过 Docker 安装 RocketMQ 安装</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Mac 通过 Docker 安装 Elasticsearch</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20docker%20%E5%AE%89%E8%A3%85%20RocketMQ%20%E5%AE%89%E8%A3%85/">
-                        <span class="hidden-mobile">Mac 通过 Docker 安装 RocketMQ 安装</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -422,20 +567,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -576,7 +721,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

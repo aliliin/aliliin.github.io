@@ -13,7 +13,10 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="安装 RabbitMQ (http://localhost:15672)访问地址是：RabbitMQ ManagementZ 帐号密码： guest
+安装过程brew update
+执行安装brew install rabbitmqbrew install rabbitmq-c
+执行安装 php 扩展12345git clone https://github.com/pdezwart/php-am">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="安装 RabbitMQ (http:&#x2F;&#x2F;localhost:15672)访问地址是：RabbitMQ ManagementZ 帐号密码： guest 安装过程brew update 执行安装brew install rabbitmqbrew install rabbitmq-c 执行安装 php 扩展12345git clone https:&#x2F;&#x2F;github.com&#x2F;pdezwart&#x2F;php-am">
@@ -111,6 +114,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -241,19 +256,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">mac 安装 RabbitMQ</h1>
+            <h1 style="display: none;">mac 安装 RabbitMQ</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年10月20日 中午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：5 个月前 
+            </p>
             
             <div class="markdown-body">
               <h2 id="安装-RabbitMQ-http-localhost-15672"><a href="#安装-RabbitMQ-http-localhost-15672" class="headerlink" title="安装 RabbitMQ (http://localhost:15672)"></a>安装 RabbitMQ (<a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672</a>)</h2><p>访问地址是：<a target="_blank" rel="noopener" href="http://localhost:15672/">RabbitMQ Management</a><br>Z 帐号密码： guest</p>
@@ -262,58 +293,52 @@
 <h3 id="执行安装-php-扩展"><a href="#执行安装-php-扩展" class="headerlink" title="执行安装 php 扩展"></a>执行安装 php 扩展</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/pdezwart/</span>php-amqp.git<br>phpize<br>.<span class="hljs-regexp">/configure —with-librabbitmq-dir=/u</span>sr<span class="hljs-regexp">/local/</span>Cellar<span class="hljs-regexp">/rabbitmq-c/</span><span class="hljs-number">0.10</span>.<span class="hljs-number">0</span><br>make &amp;&amp; make install<br><br></code></pre></td></tr></table></figure>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/RabbitMQ/">RabbitMQ</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/RabbitMQ/"
+                    >RabbitMQ</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/20/Vue%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Vue 常见指令</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/">
+                    <span class="hidden-mobile">PHP 实现 AES-128-CBC-PKCS5Padding 加密</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/20/Vue%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue 常见指令</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/">
-                        <span class="hidden-mobile">PHP 实现 AES-128-CBC-PKCS5Padding 加密</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -340,20 +365,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -494,7 +519,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

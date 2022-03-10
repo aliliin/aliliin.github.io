@@ -13,7 +13,14 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="panic or error
+在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题
+性能问题，频繁 panic recover 性能不好
+容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出
+不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理
+
+
+什么时候使用 pan">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="panic or error 在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题 性能问题，频繁 panic recover 性能不好 容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出 不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理   什么时候使用 pan">
@@ -23,11 +30,13 @@
 <meta property="og:site_name" content="Aliliin">
 <meta property="og:description" content="panic or error 在 Go 中 panic 会导致程序直接退出，是一个致命的错误，如果使用 panic recover 进行处理的话，会存在很多问题 性能问题，频繁 panic recover 性能不好 容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出 不可控，一旦 panic 就将处理逻辑移交给了外部，我们并不能预设外部包一定会进行处理   什么时候使用 pan">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aliliin.com/images/goerror.jpg">
 <meta property="article:published_time" content="2021-10-27T02:09:00.000Z">
 <meta property="article:modified_time" content="2022-01-30T03:19:11.251Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aliliin.com/images/goerror.jpg">
   
   <title>Go error - Aliliin</title>
 
@@ -111,6 +120,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -210,7 +231,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      2 分钟
     </span>
   
 
@@ -241,19 +262,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go error</h1>
+            <h1 style="display: none;">Go error</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2022年1月30日 上午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：1 个月前 
+            </p>
             
             <div class="markdown-body">
               <h3 id="panic-or-error"><a href="#panic-or-error" class="headerlink" title="panic or error"></a>panic or error</h3><ol>
@@ -282,58 +319,52 @@
 </ol>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/11/12/Go%20goroutine%20%E5%B9%B6%E5%8F%91/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Go goroutine 并发编程</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/">
+                    <span class="hidden-mobile">Go 错误处理 Panic 和 Recover</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/11/12/Go%20goroutine%20%E5%B9%B6%E5%8F%91/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go goroutine 并发编程</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/Go%20%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%20Panic%20%E5%92%8C%20Recover/">
-                        <span class="hidden-mobile">Go 错误处理 Panic 和 Recover</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -360,20 +391,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -514,7 +545,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

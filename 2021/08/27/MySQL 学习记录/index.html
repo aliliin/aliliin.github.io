@@ -13,7 +13,10 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="MySQL 记录1.1 事务的特性（ACID）
+事务要求 ACID 的特性，即：原原子子性性、、一一致致性性、、隔隔离离性性、、持持久久性性。 
+所谓原子性，是指整个数据库的每个事务都是不可分割的单位。只有事务中的所有 SQL 语句都执行成功，才算整个事务成功，事务才会被提交。如果事务中任何一个 SQL 语句执行失败，整个事务都应该被回滚。 
+所谓一致性，是指将数据库从一种一致性状态转换为下一种一">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="MySQL 记录1.1 事务的特性（ACID） 事务要求 ACID 的特性，即：原原子子性性、、一一致致性性、、隔隔离离性性、、持持久久性性。  所谓原子性，是指整个数据库的每个事务都是不可分割的单位。只有事务中的所有 SQL 语句都执行成功，才算整个事务成功，事务才会被提交。如果事务中任何一个 SQL 语句执行失败，整个事务都应该被回滚。  所谓一致性，是指将数据库从一种一致性状态转换为下一种一">
@@ -120,6 +123,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -210,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2 分钟
+      3 分钟
     </span>
   
 
@@ -241,19 +256,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">MySQL 学习记录</h1>
+            <h1 style="display: none;">MySQL 学习记录</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年8月27日 中午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：6 个月前 
+            </p>
             
             <div class="markdown-body">
               <h2 id="MySQL-记录"><a href="#MySQL-记录" class="headerlink" title="MySQL 记录"></a>MySQL 记录</h2><h3 id="1-1-事务的特性（ACID）"><a href="#1-1-事务的特性（ACID）" class="headerlink" title="1.1 事务的特性（ACID）"></a>1.1 事务的特性（ACID）</h3><ol>
@@ -282,58 +313,52 @@
 </ol>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/MySQL/">MySQL</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/MySQL/"
+                    >MySQL</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/20/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">版本约束表达式和lock文件</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/08/27/IoC%E4%B8%8EDI/">
+                    <span class="hidden-mobile">IoC与DI</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/20/%E7%89%88%E6%9C%AC%E7%BA%A6%E6%9D%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Clock%E6%96%87%E4%BB%B6/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">版本约束表达式和lock文件</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/08/27/IoC%E4%B8%8EDI/">
-                        <span class="hidden-mobile">IoC与DI</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -360,20 +385,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -514,7 +539,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

@@ -13,7 +13,10 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="修改启动代码
+修改启动代码之前，要配置好 PATH
+
+12345678910111213141516在 Nacos-Server 的 bin / startup.sh由 JAVA_OPT_EXT_FIX 配置引起启动报错在startup.sh文件中替换下方配置x JAVA_OPT_EXT_FIX=&amp;quot;-Djava.ext.dirs=$&amp;#123;JAVA_HOME&amp;#125;/jre/li">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="修改启动代码 修改启动代码之前，要配置好 PATH  12345678910111213141516在 Nacos-Server 的 bin &#x2F; startup.sh由 JAVA_OPT_EXT_FIX 配置引起启动报错在startup.sh文件中替换下方配置x JAVA_OPT_EXT_FIX&#x3D;&quot;-Djava.ext.dirs&#x3D;$&amp;#123;JAVA_HOME&amp;#125;&#x2F;jre&#x2F;li">
@@ -111,6 +114,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -241,19 +256,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Mac系统安装java11之后使用Nacos</h1>
+            <h1 style="display: none;">Mac系统安装java11之后使用Nacos</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年10月20日 中午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：5 个月前 
+            </p>
             
             <div class="markdown-body">
               <h3 id="修改启动代码"><a href="#修改启动代码" class="headerlink" title="修改启动代码"></a>修改启动代码</h3><blockquote>
@@ -262,58 +293,52 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">在 Nacos-Server 的 bin / startup.sh<br>由 JAVA_OPT_EXT_FIX 配置引起启动报错<br><br>在startup.sh文件中替换下方配置<br><br>x JAVA_OPT_EXT_FIX=<span class="hljs-string">&quot;-Djava.ext.dirs=<span class="hljs-variable">$&#123;JAVA_HOME&#125;</span>/jre/lib/ext:<span class="hljs-variable">$&#123;JAVA_HOME&#125;</span>/lib/ext&quot;</span><br>√ JAVA_OPT=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;JAVA_OPT&#125;</span> -Djava.ext.dirs=<span class="hljs-variable">$&#123;JAVA_HOME&#125;</span>/jre/lib/ext:<span class="hljs-variable">$&#123;JAVA_HOME&#125;</span>/lib/ext&quot;</span><br><br>x <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$JAVA</span> <span class="hljs-variable">$JAVA_OPT_EXT_FIX</span> <span class="hljs-variable">$&#123;JAVA_OPT&#125;</span>&quot;</span><br>√ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$JAVA</span> <span class="hljs-variable">$&#123;JAVA_OPT&#125;</span>&quot;</span><br><br>x <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$JAVA</span> <span class="hljs-variable">$JAVA_OPT_EXT_FIX</span> <span class="hljs-variable">$&#123;JAVA_OPT&#125;</span>&quot;</span> &gt; <span class="hljs-variable">$&#123;BASE_DIR&#125;</span>/logs/start.out 2&gt;&amp;1 &amp;<br>x nohup <span class="hljs-string">&quot;<span class="hljs-variable">$JAVA</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$JAVA_OPT_EXT_FIX</span>&quot;</span> <span class="hljs-variable">$&#123;JAVA_OPT&#125;</span> nacos.nacos &gt;&gt; <span class="hljs-variable">$&#123;BASE_DIR&#125;</span>/logs/start.out 2&gt;&amp;1 &amp;<br>√ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$JAVA</span> <span class="hljs-variable">$&#123;JAVA_OPT&#125;</span>&quot;</span> &gt; <span class="hljs-variable">$&#123;BASE_DIR&#125;</span>/logs/start.out 2&gt;&amp;1 &amp;<br>√ nohup <span class="hljs-variable">$JAVA</span> <span class="hljs-variable">$&#123;JAVA_OPT&#125;</span> nacos.nacos &gt;&gt; <span class="hljs-variable">$&#123;BASE_DIR&#125;</span>/logs/start.out 2&gt;&amp;1 &amp;<br><br></code></pre></td></tr></table></figure>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Nacos/">Nacos</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Nacos/"
+                    >Nacos</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">PHP一次面试的面试题</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
+                    <span class="hidden-mobile">Redis 缓存策略</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PHP一次面试的面试题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
-                        <span class="hidden-mobile">Redis 缓存策略</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -340,20 +365,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -494,7 +519,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

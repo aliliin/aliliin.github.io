@@ -13,7 +13,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="PHP 技巧总结二维数组根据某个字段进行排序1234一个字段排序array_multisort(array_column($data, &amp;#x27;sort&amp;#x27;), SORT_DESC, $data);多个字段排序array_multisort(array_column($data, &amp;#x27;sort1&amp;#x27;), SORT_DESC, array_column($data, &amp;#">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="PHP 技巧总结二维数组根据某个字段进行排序1234一个字段排序array_multisort(array_column($data, &amp;#x27;sort&amp;#x27;), SORT_DESC, $data);多个字段排序array_multisort(array_column($data, &amp;#x27;sort1&amp;#x27;), SORT_DESC, array_column($data, &amp;#">
@@ -121,6 +121,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -211,7 +223,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      2 分钟
     </span>
   
 
@@ -242,19 +254,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">PHP 技巧总结</h1>
+            <h1 style="display: none;">PHP 技巧总结</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年9月2日 上午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：6 个月前 
+            </p>
             
             <div class="markdown-body">
               <h1 id="PHP-技巧总结"><a href="#PHP-技巧总结" class="headerlink" title="PHP 技巧总结"></a>PHP 技巧总结</h1><h3 id="二维数组根据某个字段进行排序"><a href="#二维数组根据某个字段进行排序" class="headerlink" title="二维数组根据某个字段进行排序"></a><strong>二维数组根据某个字段进行排序</strong></h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">一个字段排序<br><span class="hljs-built_in">array</span><span class="hljs-constructor">_multisort(<span class="hljs-params">array_column</span>($<span class="hljs-params">data</span>, &#x27;<span class="hljs-params">sort</span>&#x27;)</span>, SORT_DESC, $data);<br>多个字段排序<br><span class="hljs-built_in">array</span><span class="hljs-constructor">_multisort(<span class="hljs-params">array_column</span>($<span class="hljs-params">data</span>, &#x27;<span class="hljs-params">sort1</span>&#x27;)</span>, SORT_DESC, <span class="hljs-built_in">array</span><span class="hljs-constructor">_column($<span class="hljs-params">data</span>, &#x27;<span class="hljs-params">sort2</span>&#x27;)</span>, SORT_DESC, $data);<br></code></pre></td></tr></table></figure>
@@ -264,54 +292,50 @@
 <h3 id="获取随机数组记录"><a href="#获取随机数组记录" class="headerlink" title="获取随机数组记录"></a><strong>获取随机数组记录</strong></h3><p><code>$array[mt_rand(0, count($array) - 1)];</code></p>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/PHP/">PHP</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PHP-%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">PHP 技巧总结</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/PHP/"
+                    >PHP</a
+                  >
+                  
+                  <a class="hover-with-bg" href="/tags/PHP-%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/"
+                    >PHP 技巧总结</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2019/05/11/Golang%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Go 技巧总结</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2019/05/11/Golang%20%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go 技巧总结</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                  </article>
-                </div>
+                </article>
+                <article class="post-next col-6">
+                   
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -338,20 +362,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -492,7 +516,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

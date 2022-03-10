@@ -13,7 +13,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="golang 的切片插入和删除操作执行测试12345678910111213141516171819202122232425262728package mainimport &amp;quot;fmt&amp;quot;func main() &amp;#123;	s := []int&amp;#123;1, 2, 4, 7&amp;#125;	// 结果应该是 5, 1, 2, 4, 7	s = Add(s, 0, 5)	fmt.Pr">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="golang 的切片插入和删除操作执行测试12345678910111213141516171819202122232425262728package mainimport &quot;fmt&quot;func main() &amp;#123;	s :&#x3D; []int&amp;#123;1, 2, 4, 7&amp;#125;	&#x2F;&#x2F; 结果应该是 5, 1, 2, 4, 7	s &#x3D; Add(s, 0, 5)	fmt.Pr">
@@ -111,6 +111,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -241,19 +253,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go语言的切片插入和删除</h1>
+            <h1 style="display: none;">Go语言的切片插入和删除</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年8月27日 中午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：6 个月前 
+            </p>
             
             <div class="markdown-body">
               <h2 id="golang-的切片插入和删除操作"><a href="#golang-的切片插入和删除操作" class="headerlink" title="golang 的切片插入和删除操作"></a>golang 的切片插入和删除操作</h2><h3 id="执行测试"><a href="#执行测试" class="headerlink" title="执行测试"></a>执行测试</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br>func main() &#123;<br>	s := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">7</span>&#125;<br><br>	<span class="hljs-comment">// 结果应该是 5, 1, 2, 4, 7</span><br>	s = Add(s, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>)<br>	fmt.<span class="hljs-keyword">Println</span>(s)<br>	<span class="hljs-comment">// 结果应该是5, 9, 1, 2, 4, 7</span><br>	s = Add(s, <span class="hljs-number">1</span>, <span class="hljs-number">9</span>)<br>	fmt.<span class="hljs-keyword">Println</span>(s)<br>	<span class="hljs-comment">// 结果应该是5, 9, 1, 2, 4, 7, 13</span><br>	s = Add(s, <span class="hljs-number">6</span>, <span class="hljs-number">13</span>)<br>	fmt.<span class="hljs-keyword">Println</span>(s)<br>	<br>	<span class="hljs-comment">// 结果应该是5, 9, 2, 4, 7, 13</span><br>	s = <span class="hljs-keyword">Delete</span>(s, <span class="hljs-number">2</span>)<br>	fmt.<span class="hljs-keyword">Println</span>(s)<br>	<span class="hljs-comment">// 结果应该是9, 2, 4, 7, 13</span><br>	s = <span class="hljs-keyword">Delete</span>(s, <span class="hljs-number">0</span>)<br>	fmt.<span class="hljs-keyword">Println</span>(s)<br>	<span class="hljs-comment">// 结果应该是9, 2, 4, 7</span><br>	s = <span class="hljs-keyword">Delete</span>(s, <span class="hljs-number">4</span>)<br>	fmt.<span class="hljs-keyword">Println</span>(s)<br><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -262,58 +290,52 @@
 
 <h3 id="删除任意位置"><a href="#删除任意位置" class="headerlink" title="删除任意位置"></a>删除任意位置</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim">func Delete(s []<span class="hljs-keyword">int</span>, <span class="hljs-built_in">index</span> <span class="hljs-keyword">int</span>) []<span class="hljs-keyword">int</span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">append</span>(s[:<span class="hljs-built_in">index</span>], s[<span class="hljs-built_in">index</span>+<span class="hljs-number">1</span>:]...)<br>&#125;<br></code></pre></td></tr></table></figure>
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/08/27/IoC%E4%B8%8EDI/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">IoC与DI</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/08/27/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+                    <span class="hidden-mobile">PHP的生命周期</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/08/27/IoC%E4%B8%8EDI/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">IoC与DI</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/08/27/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
-                        <span class="hidden-mobile">PHP的生命周期</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -340,20 +362,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -494,7 +516,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

@@ -13,7 +13,10 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="Go 面向对象实例创建及初始化
+基本使用
+
+123456789101112131415161718type Employee struct &amp;#123;	Id   int	Name string	Age  int&amp;#125;e  := Employee&amp;#123;&amp;quot;0&amp;quot;, &amp;quot;Bob&amp;quot;, 20&amp;#125;e1 := Employee&amp;#123;name: &amp;q">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="Go 面向对象实例创建及初始化 基本使用  123456789101112131415161718type Employee struct &amp;#123;	Id   int	Name string	Age  int&amp;#125;e  :&#x3D; Employee&amp;#123;&quot;0&quot;, &quot;Bob&quot;, 20&amp;#125;e1 :&#x3D; Employee&amp;#123;name: &amp;q">
@@ -120,6 +123,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -210,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      5 分钟
     </span>
   
 
@@ -241,19 +256,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go 面向对象</h1>
+            <h1 style="display: none;">Go 面向对象</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年10月20日 下午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：5 个月前 
+            </p>
             
             <div class="markdown-body">
               <h1 id="Go-面向对象"><a href="#Go-面向对象" class="headerlink" title="Go 面向对象"></a>Go 面向对象</h1><h3 id="实例创建及初始化"><a href="#实例创建及初始化" class="headerlink" title="实例创建及初始化"></a>实例创建及初始化</h3><ul>
@@ -267,58 +298,52 @@
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 这一种,定义方式在实例对应方法变调用的时候 ,实例的成员会进行值复制<br><span class="hljs-keyword">func</span> (e Employee) String() string &#123;<br>  fmt.Printf(<span class="hljs-string">&quot;输出自己的e的地址 %x\n&quot;</span>, unsafe.Pointer(&amp;e.Name)) <span class="hljs-regexp">//</span> c00000a0e8<br>  return fmt.Sprintf(<span class="hljs-string">&quot;ID :%d-Name:%s-Age:%d&quot;</span>, e.Id, e.Name, e.Age)<br>&#125;<br><br><span class="hljs-regexp">//</span> 在通常情况下避免内存拷贝我们使用 这种方式<br><span class="hljs-keyword">func</span> (e *Employee) String() string &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;输出自己的e的地址 %x\n&quot;</span>, unsafe.Pointer(&amp;e.Name)) <span class="hljs-regexp">//</span> c00000a0e8<br>    return fmt.Sprintf(<span class="hljs-string">&quot;ID :%d/Name:%s/Age:%d&quot;</span>, e.Id, e.Name, e.Age)<br>&#125;<br><br><span class="hljs-regexp">//</span> 测试 String 方法<br><span class="hljs-keyword">func</span> TestInit(t *testing.T) &#123;<br>    e := Employee&#123;<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">20</span>&#125;<br>    <span class="hljs-regexp">//</span> 第一种<br>    <span class="hljs-regexp">//</span> t.Log(e.String()) <span class="hljs-regexp">//</span> ID :<span class="hljs-number">1</span>-Name:Bob-Age:<span class="hljs-number">20</span><br>    fmt.Printf(<span class="hljs-string">&quot;输出传进来的e的地址 %x\n&quot;</span>, unsafe.Pointer(&amp;e.Name)) <span class="hljs-regexp">//</span> c00000a108<br><br>    <span class="hljs-regexp">//</span> 第二种<br>    t.Log(e.String()) <span class="hljs-regexp">//</span> ID :<span class="hljs-number">1</span><span class="hljs-regexp">/Name:Bob/</span>Age:<span class="hljs-number">20</span><br>    fmt.Printf(<span class="hljs-string">&quot;输出传进来的e的地址 %x\n&quot;</span>, unsafe.Pointer(&amp;e.Name))  <span class="hljs-regexp">//</span> c00000a0e8<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/20/Go%20%E5%87%BD%E6%95%B0/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Go 函数</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/">
+                    <span class="hidden-mobile">Go 内置的 JSON 解析</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/20/Go%20%E5%87%BD%E6%95%B0/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go 函数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/Go%20%E5%86%85%E7%BD%AE%E7%9A%84%20JSON%20%E8%A7%A3%E6%9E%90/">
-                        <span class="hidden-mobile">Go 内置的 JSON 解析</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -345,20 +370,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -499,7 +524,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

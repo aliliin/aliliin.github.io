@@ -13,24 +13,26 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="Go-kratos 框架商城微服务实战之用户服务 (四)
+这篇主要编写 HTTP API 端的服务，跟前几篇写的用户服务对接上，主要还是项目的初始化准备工作。写的不清晰的地方可看GitHub 源码 , 也感谢您指出不足之处。
+注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。这里所有 import">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="Go-kratos 框架商城微服务实战之用户服务 (四) 这篇主要编写 HTTP API 端的服务，跟前几篇写的用户服务对接上，主要还是项目的初始化准备工作。写的不清晰的地方可看GitHub 源码 , 也感谢您指出不足之处。 注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。这里所有 import">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kratos 框架商城微服务实战之用户服务 (四)">
-<meta property="og:url" content="https://aliliin.com/2022/02/12/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/index.html">
+<meta property="og:url" content="https://aliliin.com/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/index.html">
 <meta property="og:site_name" content="Aliliin">
 <meta property="og:description" content="Go-kratos 框架商城微服务实战之用户服务 (四) 这篇主要编写 HTTP API 端的服务，跟前几篇写的用户服务对接上，主要还是项目的初始化准备工作。写的不清晰的地方可看GitHub 源码 , 也感谢您指出不足之处。 注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。这里所有 import">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
 <meta property="article:published_time" content="2022-02-12T09:45:45.607Z">
-<meta property="article:modified_time" content="2022-03-10T16:53:55.889Z">
+<meta property="article:modified_time" content="2022-03-10T18:00:41.687Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Go">
 <meta property="article:tag" content="kratos">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+<meta name="twitter:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
   
   <title>kratos 框架商城微服务实战之用户服务 (四) - Aliliin</title>
 
@@ -114,6 +116,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -244,19 +258,143 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+    
+    
+    
+    <div class="category row">
+      <a class="category-item 
+                 
+                list-group-item category-item-action col-10 col-md-11 col-xm-11"
+        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+        aria-expanded="true"
+      >
+        Kratos 微服务商城(9) 
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+       
+      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (二)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%80)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务(一)</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">kratos 框架商城微服务实战之用户服务 (四)</h1>
+            <h1 style="display: none;">kratos 框架商城微服务实战之用户服务 (四)</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2022年3月11日 凌晨
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：14 分钟前 
+            </p>
             
             <div class="markdown-body">
               <h4 id="Go-kratos-框架商城微服务实战之用户服务-四"><a href="#Go-kratos-框架商城微服务实战之用户服务-四" class="headerlink" title="Go-kratos 框架商城微服务实战之用户服务 (四)"></a>Go-kratos 框架商城微服务实战之用户服务 (四)</h4><blockquote>
@@ -394,63 +532,68 @@
 
 <h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>这一篇主要是前期的准备工作，下一篇开始测试接口、测试服务注册与发现、加入链路追踪并测试。</p>
 <p>感谢您的耐心阅读，动动手指点个赞吧。</p>
-<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                      <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
-                    
-                  </div>
+                <div class="post-meta mr-3">
+                  <i class="iconfont icon-category"></i>
+                  
+                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                    >Kratos 微服务商城</a
+                  >
+                  
+                </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                  <a class="hover-with-bg" href="/tags/kratos/"
+                    >kratos</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务API (五)</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/">
+                    <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务 (三)</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/02/17/Go-kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go-kratos 框架商城微服务实战之用户服务API (五)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/">
-                        <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务 (三)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -477,20 +620,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -631,7 +774,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>

@@ -13,7 +13,12 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Beijing, China">
+  <meta name="description" content="Go map 类型基本定义
+类似其它语言中的哈希表或者字典，以 key&amp;#x3D;&amp;gt;value 形式存储数据
+格式为 map[keyType]valueType
+key 必须是支持 &amp;#x3D;&amp;#x3D; 或者 !&amp;#x3D; 比较运算的类型，不可以是函数，map 或者 slice
+map 使用 make() 创建，支持 :&amp;#x3D; 这种简写的方式
+map 是无序的，每次打印出来的 m">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
   <meta name="description" content="Go map 类型基本定义 类似其它语言中的哈希表或者字典，以 key&#x3D;&gt;value 形式存储数据 格式为 map[keyType]valueType key 必须是支持 &#x3D;&#x3D; 或者 !&#x3D; 比较运算的类型，不可以是函数，map 或者 slice map 使用 make() 创建，支持 :&#x3D; 这种简写的方式 map 是无序的，每次打印出来的 m">
@@ -120,6 +125,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 标签
@@ -210,7 +227,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5 分钟
+      6 分钟
     </span>
   
 
@@ -241,19 +258,35 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+</div>
+
+      
+    </div>
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go map类型</h1>
+            <h1 style="display: none;">Go map类型</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：2021年10月20日 下午
-                
-              </p>
+            <p class="note note-info">
+               本文最后更新于：5 个月前 
+            </p>
             
             <div class="markdown-body">
               <h1 id="Go-map-类型"><a href="#Go-map-类型" class="headerlink" title="Go map 类型"></a>Go map 类型</h1><h2 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h2><ul>
@@ -270,58 +303,52 @@
 <h2 id="代码练习"><a href="#代码练习" class="headerlink" title="代码练习"></a>代码练习</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-comment">// 声明一个 key 是字符串，值为 int 的map</span><br><span class="hljs-keyword">var</span> numbers <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span><br><span class="hljs-comment">// 另一种声明方式 map 使用 make() 创建</span><br>numbers = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span>]<br><br><span class="hljs-comment">// 支持 := 这种简写的方式</span><br>numbers := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span>)<br><br>numbers[<span class="hljs-string">&quot;one&quot;</span>] = <span class="hljs-number">1</span>          <span class="hljs-comment">// 赋值</span><br>numbers[<span class="hljs-string">&quot;two&quot;</span>] = <span class="hljs-number">2</span>          <span class="hljs-comment">// 赋值</span><br><span class="hljs-comment">// 注意不能单独打印 numbers 而必须通过 key 获取</span><br>fmt.Println(numbers[<span class="hljs-string">&quot;one&quot;</span>]) <span class="hljs-comment">//  输出 1</span><br><br><span class="hljs-comment">// 初始化一个字典</span><br>rating := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">float32</span>&#123;<span class="hljs-string">&quot;C&quot;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&quot;Go&quot;</span>: <span class="hljs-number">4.5</span>, <span class="hljs-string">&quot;Python&quot;</span>: <span class="hljs-number">4.5</span>, <span class="hljs-string">&quot;PHP&quot;</span>: <span class="hljs-number">2</span>&#125;<br><span class="hljs-comment">// 赋值</span><br>csharpRating, ok := rating[<span class="hljs-string">&quot;C++&quot;</span>]<br>	<span class="hljs-keyword">if</span> ok &#123;<br>		fmt.Println(<span class="hljs-string">&quot;输出ok的值&quot;</span>, csharpRating)<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;没找到对应的OK的值&quot;</span>)<br>	&#125;<br><span class="hljs-built_in">delete</span>(rating, <span class="hljs-string">&quot;C&quot;</span>)      <span class="hljs-comment">// 删除key为C的元素</span><br>fmt.Println(rating[<span class="hljs-string">&quot;C&quot;</span>]) <span class="hljs-comment">// 输出 0</span><br><span class="hljs-comment">// 内置的len函数同样适用于 map，返回 map 拥有的 key 的数量</span><br>fmt.Println(<span class="hljs-built_in">len</span>(rating)) <span class="hljs-comment">// 因为删除了一个key 所以现在输出 3</span><br><span class="hljs-comment">// 和 slice 一样,如果两个map 同时指向同一个底层数据,那么任何一个改变.另一个也会改变</span><br>m := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>)<br>m[<span class="hljs-string">&quot;Hello&quot;</span>] = <span class="hljs-string">&quot;你好&quot;</span><br>m1 := m<br>m1[<span class="hljs-string">&quot;Hello&quot;</span>] = <span class="hljs-string">&quot;不好&quot;</span>  <span class="hljs-comment">// 现在m[&quot;hello&quot;]的值已经是 不好 了</span><br><span class="hljs-comment">//  key 必须是支持 == 或者 != 比较运算的类型，不可以是函数，map 或者 slice</span><br>mapa := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span>&#123;<span class="hljs-string">&quot;one&quot;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&quot;two&quot;</span>:<span class="hljs-number">2</span>&#125;<br>mapb := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span>&#123;<span class="hljs-string">&quot;yi&quot;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&quot;er&quot;</span>: <span class="hljs-number">2</span>&#125;<br><span class="hljs-keyword">if</span> mapa[<span class="hljs-string">&quot;one&quot;</span>] == mapb[<span class="hljs-string">&quot;yi&quot;</span>] &#123;<br>	fmt.Println(<span class="hljs-string">&quot;可以比较&quot;</span>)<br>	&#125;<br><span class="hljs-keyword">if</span> mapa[<span class="hljs-string">&quot;one&quot;</span>] != mapb[<span class="hljs-string">&quot;er&quot;</span>] &#123;<br>	fmt.Println(<span class="hljs-string">&quot;可以比较&quot;</span>)<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
             </div>
-            <hr>
+            <hr />
             <div>
               <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
-                    
-                  </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                </div>
                 
               </div>
               
-                <p class="note note-warning">
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2021/10/20/Go%20interface%202/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">Go interface</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
                   
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2021/10/20/Go%20Package/">
+                    <span class="hidden-mobile">Go Package</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
                   
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/20/Go%20interface%202/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go interface</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/20/Go%20Package/">
-                        <span class="hidden-mobile">Go Package</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
+                </article>
+              </div>
               
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
                 
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -348,20 +375,20 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
+            </article>
             
           </article>
         </div>
       </div>
     </div>
     
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
+    </div>
     
   </div>
 </div>
@@ -502,7 +529,7 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+        typing(title);
       
     })(window, document);
   </script>
