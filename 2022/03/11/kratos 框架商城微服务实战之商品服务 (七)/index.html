@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Beijing, China">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="这篇咱们开始编写商品服务的商品类型了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。  文章写的不清晰">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kratos 框架商城微服务实战之商品服务 (七)">
+<meta property="og:url" content="https://aliliin.com/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="这篇咱们开始编写商品服务的商品类型了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。  文章写的不清晰">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-7/1646639556586-WX20220307-155228@2x.png">
+<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+<meta property="article:published_time" content="2022-03-10T16:56:24.452Z">
+<meta property="article:modified_time" content="2022-03-10T16:57:23.916Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="kratos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-7/1646639556586-WX20220307-155228@2x.png">
+  
+  <title>kratos 框架商城微服务实战之商品服务 (七) - Aliliin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="kratos 框架商城微服务实战之商品服务 (七)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-11 00:56" pubdate>
+        2022年3月11日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">kratos 框架商城微服务实战之商品服务 (七)</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年3月11日 凌晨
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>这篇咱们开始编写商品服务的商品类型了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。</p>
+<blockquote>
+<p>文章写的不清晰的地方可通过 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop" title="GitHub 源码">GitHub 源码</a>进行查看, 也感谢您指出不足之处,欢迎大佬指教。</p>
+<p>注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
+</blockquote>
+<h1 id="商品类型"><a href="#商品类型" class="headerlink" title="商品类型"></a>商品类型</h1><p>商品类型不同于商品分类，它指的是依据某一类商品的相同规格和属性归纳成的一个类型集合，例如手机类型都有机身颜色、内存大小、屏幕尺寸、铃声、网络制式等共同的规格属性；书籍类型都有出版社、作者、ISBN 号等共同的属性。</p>
+<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><ul>
+<li>设计表字段</li>
+</ul>
+<p>新增 <code>service/goods/internal/data/good_type.go</code> 文件；编写如下代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">// GoodsType 商品类型表</span><br><span class="hljs-keyword">type</span> GoodsType <span class="hljs-keyword">struct</span> &#123;<br>	ID        <span class="hljs-keyword">int64</span>          <span class="hljs-string">`gorm:&quot;primarykey;type:int&quot; json:&quot;id&quot;`</span><br>	Name      <span class="hljs-keyword">string</span>         <span class="hljs-string">`gorm:&quot;type:varchar(50);not null;comment:商品类型名称&quot; json:&quot;name&quot;`</span><br>	TypeCode  <span class="hljs-keyword">string</span>         <span class="hljs-string">`gorm:&quot;type:varchar(50);not null;comment:商品类型编码&quot; json:&quot;type_code&quot;`</span><br>	NameAlias <span class="hljs-keyword">string</span>         <span class="hljs-string">`gorm:&quot;type:varchar(50);not null;comment:商品类型别名&quot; json:&quot;name_alias&quot;`</span><br>	IsVirtual <span class="hljs-keyword">bool</span>           <span class="hljs-string">`gorm:&quot;comment:是否是虚拟商品显示;default:false&quot; json:&quot;is_virtual&quot;`</span><br>	Desc      <span class="hljs-keyword">string</span>         <span class="hljs-string">`gorm:&quot;type:varchar(50);not null;comment:商品类型描述&quot; json:&quot;desc&quot;`</span><br>	Sort      <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;comment:类型排序;default:99;not null;type:int&quot; json:&quot;sort&quot;`</span><br>	CreatedAt time.Time      <span class="hljs-string">`gorm:&quot;column:add_time&quot; json:&quot;created_at&quot;`</span><br>	UpdatedAt time.Time      <span class="hljs-string">`gorm:&quot;column:update_time&quot; json:&quot;updated_at&quot;`</span><br>	DeletedAt gorm.DeletedAt <span class="hljs-string">`json:&quot;deleted_at&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> goodsTypeRepo <span class="hljs-keyword">struct</span> &#123;<br>	data *Data<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewGoodsTypeRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGoodsTypeRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">GoodsTypeRepo</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;goodsTypeRepo&#123;<br>		data: data,<br>		log:  log.NewHelper(logger),<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注入 GoodsType 修改 <code>service/goods/internal/data/data.go</code> 文件</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(<br>	NewData,<br>	NewDB, NewRedis,<br>	NewBrandRepo,<br>	NewCategoryRepo,<br>	NewGoodsTypeRepo,<br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ ⚠️ ⚠️ 注意： 接下来新增或修改的代码， wire 注入的文件中需要修改的代码，都不会再本文中提及了。例如 biz、service 层的修改，自己编写的过程中，千万不要忘记 wire 注入，更不要忘记，执行 make wire 命令，重新生成项目的 wire 文件 ⚠️ ⚠️ ⚠️</p>
+</blockquote>
+<ul>
+<li><code>goods.proto</code> 文件中新加入创建商品类型的方法</li>
+</ul>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs protobuf"><br>...<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;validate/validate.proto&quot;</span>;<br>...<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">Goods</span> </span>&#123;<br>...<br> <span class="hljs-comment">// 商品类型基本信息创建</span><br> <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateGoodsType(GoodsTypeRequest) <span class="hljs-keyword">returns</span>(GoodsTypeResponse)</span>;<br>&#125;<br><br>...<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">GoodsTypeRequest</span> </span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> name = <span class="hljs-number">2</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len =  <span class="hljs-number">3</span>];;<br>  <span class="hljs-built_in">string</span> typeCode = <span class="hljs-number">3</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len =  <span class="hljs-number">3</span>];;<br>  <span class="hljs-built_in">string</span> nameAlias = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">bool</span> isVirtual = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">string</span> desc = <span class="hljs-number">6</span>;<br>  <span class="hljs-built_in">int32</span> sort = <span class="hljs-number">7</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">GoodsTypeResponse</span> </span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>实现 rpc 接口</li>
+</ul>
+<p>新增 <code>service/goods/internal/service/goods_type.go</code> 文件，内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	v1 <span class="hljs-string">&quot;goods/api/goods/v1&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *GoodsService)</span> <span class="hljs-title">CreateGoodsType</span><span class="hljs-params">(ctx context.Context, r *v1.GoodsTypeRequest)</span> <span class="hljs-params">(*v1.GoodsTypeResponse, error)</span></span> &#123;<br>	id, err := g.gt.GoosTypeCreate(ctx, &amp;domain.GoodsType&#123;<br>		Name:      r.Name,<br>		TypeCode:  r.TypeCode,<br>		NameAlias: r.NameAlias,<br>		IsVirtual: r.IsVirtual,<br>		Desc:      r.Desc,<br>		Sort:      r.Sort,<br>	&#125;)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> &amp;v1.GoodsTypeResponse&#123;<br>		Id: id,<br>	&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>你应该也注意到了，代码中接受不了到的值，经过 domain 进行转换了，之前都是直接通过 biz 层下面定义的参数结构体去转换。这里为什么又引入了一层 domain 呢？主要是，之前编写的服务都比较单一化，一个请求方法，只操作一张表，也没有过多的业务逻辑，但接下来商品服务会有更多的，新增商品、商品 SKU、商品属性、商品规格，一系列的业务逻辑处理，考虑到 biz 层尽量做到只编排 repo 和一些少量的业务逻辑处理，其他处理类似于参数校验呀、插入之前判断是否存在呀之类的，都放到了 domain 层去处理。</p>
+<ul>
+<li>新增 domain 层</li>
+</ul>
+<p>新建 <code>service/goods/internal/domain/goods_type.go</code> 文件，编写内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-keyword">package</span> domain<br><br><span class="hljs-keyword">type</span> GoodsType <span class="hljs-keyword">struct</span> &#123;<br>	ID        <span class="hljs-keyword">int64</span><br>	Name      <span class="hljs-keyword">string</span><br>	TypeCode  <span class="hljs-keyword">string</span><br>	NameAlias <span class="hljs-keyword">string</span><br>	IsVirtual <span class="hljs-keyword">bool</span><br>	Desc      <span class="hljs-keyword">string</span><br>	Sort      <span class="hljs-keyword">int32</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 biz 层</li>
+</ul>
+<p>新增 <code>service/goods/internal/biz/goods_type.go</code> 文件，编写内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;errors&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> GoodsTypeRepo <span class="hljs-keyword">interface</span> &#123;<br>	CreateGoodsType(context.Context, *domain.GoodsType) (<span class="hljs-keyword">int64</span>, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> GoodsTypeUsecase <span class="hljs-keyword">struct</span> &#123;<br>	repo  GoodsTypeRepo<br>	bRepo BrandRepo<br>	log   *log.Helper<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGoodsTypeUsecase</span><span class="hljs-params">(repo GoodsTypeRepo, tx Transaction, bRepo BrandRepo, logger log.Logger)</span> *<span class="hljs-title">GoodsTypeUsecase</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;GoodsTypeUsecase&#123;<br>		repo:  repo,<br>		tx:    tx,<br>		bRepo: bRepo,<br>		log:   log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><span class="hljs-comment">// GoosTypeCreate 创建商品类型</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(gt *GoodsTypeUsecase)</span> <span class="hljs-title">GoosTypeCreate</span><span class="hljs-params">(ctx context.Context, r *domain.GoodsType)</span> <span class="hljs-params">(<span class="hljs-keyword">int64</span>, error)</span></span> &#123;<br>	id, err := gt.repo.CreateGoodsType(ctx, r)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> err<br>	&#125;<br>	<span class="hljs-keyword">return</span> id, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>修改 <code>data</code> 层 <code>goods_type.go</code> , 加入 createGoodsType 方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br>...<br><br><span class="hljs-comment">// CreateGoodsType 创建基本的商品类型</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *goodsTypeRepo)</span> <span class="hljs-title">CreateGoodsType</span><span class="hljs-params">(ctx context.Context, req *domain.GoodsType)</span> <span class="hljs-params">(<span class="hljs-keyword">int64</span>, error)</span></span> &#123;<br>	goodsType := &amp;GoodsType&#123;<br>		Name:      req.Name,<br>		TypeCode:  req.TypeCode,<br>		NameAlias: req.NameAlias,<br>		IsVirtual: req.IsVirtual,<br>		Desc:      req.Desc,<br>		Sort:      req.Sort,<br>		CreatedAt: time.Time&#123;&#125;,<br>		UpdatedAt: time.Time&#123;&#125;,<br>	&#125;<br>	result := g.data.db.Save(goodsType)<br>	<span class="hljs-keyword">return</span> goodsType.ID, result.Error<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>测试提交<br>由于之前推荐的使用 goland ide 自带的工具进行 rpc 方法测试，很多同学反应各种问题，连接失败、协议缓冲区等错误，今天咱们推荐另一个免费的开源工具，<a target="_blank" rel="noopener" href="https://github.com/bloomrpc/bloomrpc" title="BloomRPC">BloomRPC</a> ,安装比较简单，这里就不演示了，自己进去他的 GitHub 主页就能看到安装步骤，使用起来也超级简单。</li>
+</ul>
+<p>打开 BloomRPC 工具，导入你的 proto 文件，它就会把你写好的 rpc 方法全部列在左侧，修改好你的 IP 和 port ，<br>它甚至把你每个请求的方法所需要的数据都构造好了，你只要稍作修改，就可以发起请求进行测试了。如下图启动服务之后，点击绿色的按钮，得到创建成功的 ID。</p>
+<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-7/1646639556586-WX20220307-155228@2x.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>本篇只提供了一个商品类型的创建方法，其他方法没有在文章中体现，单元测试方法也没有编写，重复性的工作这里就不编写了，通过前几篇的文章，相信你可以自己完善剩余的方法。</p>
+<p>这篇引入的 domain 层，并未做其他处理，只是接收参数之后通过 domain 下定义的结构体进行转换，你会想说那么跟之前一样，通过 biz 定义的结构体不也一样转换吗？事实确实是如此。这一篇只是带你先了解一下 domain 层，具体 domain 如何利用起来，期待下一篇文章吧。</p>
+<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
+<p>感谢您的耐心阅读，动动手指点个赞吧。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Go/">Go</a>
+                    
+                      <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">kratos 框架商城微服务实战之商品服务 (八)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/">
+                        <span class="hidden-mobile">kratos 框架商城微服务实战之商品服务 (六)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -188,6 +188,201 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/" target="_blank">
+          PHP 实现 AES-128-CBC-PKCS5Padding 加密
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/PHP%E5%AE%9E%E7%8E%B0AES-128-CBC-PKCS5Padding%E5%8A%A0%E5%AF%86/" target="_blank">
+          
+          
+            
+          
+          PHP 实现 AES-128-CBC-PKCS5Padding 加密
+最近在工作中负责对接 API，数据接⼝交互过程中，不可避免会有⼀些敏感数据的传输，为了使数据交互更加安全，因此对数据进行加密。对方的要求是对接口的业务数据进行 AES-128-CBC-PKCS5Padding 加密，然后再做 Base64 编码将得到的最终字符串进行提交，也给到了加密方式对应的密钥(key)和初始化向量（偏移量）
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 12:28" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Git%20Workflow/" target="_blank">
+          Git Workflow
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Git%20Workflow/" target="_blank">
+          
+          
+            
+          
+          Git Workflow
+git remote add upstream &#x2F;&#x2F; 必须添加一个上由主分支的地址 可以用 git remote -v 来查看
+git pull upstream master &#x2F;&#x2F; 拿到项目的主分支代码
+git checkout -b &#x2F;&#x2F; 创建自己飞分支
+git commit &#x2F;&#x2F; 写完代
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:54" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/git/">git</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          <img src="/images/dcoker.jpg" srcset="/img/loading.gif" lazyload alt="Docker中常用的命令">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          Docker中常用的命令
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          
+          
+            
+          
+          Docker 中常用的命令
+启动容器docker start
+启动容器并进入 交互式模式docker run -it 镜像name sh
+进入容器内部docker exec -it 镜像id sh
+查看正在运行的容器docker ps
+停止正在运行的容器 docker stop
+删除容器docker rmi 删除的镜像
+显示本地镜像docker list
+删除所有容器docker rm -f $(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" target="_blank">
+          Go 使用 Consul 的简单操作
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" target="_blank">
+          
+          
+            
+          
+          
+Consul Docker 安装命令
+1234567891011docker run -d -p 8500:8500 -p 8300:8300 -p 8301:8301 -p 8302:8302 -p 8600:8600/udp consul consul agent -dev -client=0.0.0.0// 开机关机 自动重启服务docker container update --rest
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Consul/">Consul</a>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/10/20/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4/" target="_blank">
           压力测试命令
         </a>
@@ -466,194 +661,6 @@ min(
               <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
             
               <a href="/tags/TCP/">TCP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" target="_blank">
-          PHP一次面试的面试题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" target="_blank">
-          
-          
-            
-          
-          blah blah blah
-# 面试题汇总
-
-1、秒杀流程的清楚？使用异步处理的思路来做的秒杀活动，我们先接受秒杀时间段内的所有订单请求，单我们没有实际进行秒杀成功还是失败的结果，而是放到了redis 队列里面，给了用户一个排队等待的结果的页面，当然用户也可以退出这个页面去待支付订单 页面里面去完成支付。然后我们从队列里面获取订单的请求，然后再交给生成订单的业务，进行生成订单，然后再把秒杀结果告
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 11:50" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">PHP</a>
-            
-              <a href="/tags/PHP-%E9%9D%A2%E8%AF%95%E9%A2%98/">PHP 面试题</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank">
-          Mac系统安装java11之后使用Nacos
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/%E8%A7%A3%E5%86%B3Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85java11%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8Nacos%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank">
-          
-          
-            
-          
-          修改启动代码
-修改启动代码之前，要配置好 PATH
-
-12345678910111213141516在 Nacos-Server 的 bin / startup.sh由 JAVA_OPT_EXT_FIX 配置引起启动报错在startup.sh文件中替换下方配置x JAVA_OPT_EXT_FIX=&quot;-Djava.ext.dirs=$&#123;JAVA_HOME&#125;/jre/li
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 11:49" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Nacos/">Nacos</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          Redis 缓存策略
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          
-          
-            
-          
-          缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 11:46" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/redis/">redis</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
-          红楼梦中的诗句记录
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
-          
-          
-            
-          
-          红楼梦满纸荒唐言，一把辛酸泪。都云作者痴，谁解其中味！
-惯养娇生笑你痴，菱花空对雪澌澌。好防佳节元宵后，便是烟消火灭时。
-未卜三生愿，频添一段愁。闷来时敛额，行去几回头。自顾风前影，谁堪月下俦？蟾光如有意，先上玉人楼。
-时逢三五便团圆，满把晴光护玉栏。天上一轮才捧出，人间万姓仰头看。
-一局输赢料不真，香销茶尽尚逡巡。欲知目下兴衰兆，须问旁观冷眼人。
-一场幽梦同谁近，千古情人独我痴。
-得意浓时易接济
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 11:46" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
-            
-              <a href="/tags/%E8%AF%BB%E4%B9%A6/">读书</a>
             
           </div>
         

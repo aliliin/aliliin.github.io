@@ -188,6 +188,203 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/08/27/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_blank">
+          PHP的生命周期
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/27/PHP%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_blank">
+          
+          
+            
+          
+          PHP的生命周期1.0 先从PHP开始说起在介绍PHP的生命周期之前，我们先来看一张图，如图1所示:
+
+    图1 PHP的生命周期    首先我们先引入一个概念SAPI，SAPI是PHP的应用接入层，是整个PHP框架最外层的部分，像我们平常用的比较多的Fpm和Cli就是SAPI的具体实现，而main函数也定义在对应的SAPI中。通常来说PHP的生命周期被划分为5个阶段：模块初始化阶段、请求初始
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-27 11:31" pubdate>
+              2021-08-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank">
+          分布式事务的解决方案
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/11/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank">
+          
+          
+            
+          
+          分布式事务的解决方案
+MySQL 自带的两阶段提交&#x2F;XA顾名思义就是要分两步提交事务，多出来的事务为事务管理器。
+大致的流程：
+​ 第一阶段：事务管理器询问各个资源管理器是否都就绪，所有的参与者需要将自己本身事务是否执行成功的信息反馈给管理者
+​ 第二阶段： 事务管理者根据资源的反馈，看是否需要提交或者回滚，
+存在的问题：
+
+一旦事务管理器出问题了，整个系统都不可用了
+数据可能会不一致，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-11 10:09" pubdate>
+              2021-01-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E9%94%81/">分布式事务锁</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
+          阿里云敏感词安全接口PHP实现
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
+          
+          
+            
+          
+          不啰嗦直接上代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-01 13:09" pubdate>
+              2020-12-01
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
+          Redis的锁来缓解并发请求
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
+          
+          
+            
+          
+          Redis 锁 缓解并发
+简单实现Redis 锁主要利用 Redis 的 setnx 命令实现
+
+加锁命令：SETNX key value，当键不存在时，对键进行设置操作并返回成功，否则返回失败。KEY 是锁的唯一标识，一般按业务来决定命名。
+
+
+解锁命令：DEL key，通过删除键值对释放锁，以便其他线程可以通过 SETNX 命令来获取锁。
+锁超时：EXPIRE key timeout, 设置 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-11 13:09" pubdate>
+              2020-07-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+              <a href="/tags/%E9%94%81/">锁</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2020/02/11/redis%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E9%99%90%E6%B5%81/" target="_blank">
           Redis 实现简单的限流
         </a>
