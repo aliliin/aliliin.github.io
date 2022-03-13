@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="大家好，今天咱们终于可以写商品服务中的商品模块了，前面花了 4 篇文章，都是为了创建一个完整的商品所需的数据，就这对比一些电商平台，像商品的售后信息、运费模版、商品促销活动信息等，还有很多需要补的，不过那些都不算有太大影响。咱们还是主要先把整个项目跑起来。
+众所周知，一个电商的商品设计是比较复杂的，咱们这里不过多的深究商品设计的每个表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="大家好，今天咱们终于可以写商品服务中的商品模块了，前面花了 4 篇文章，都是为了创建一个完整的商品所需的数据，就这对比一些电商平台，像商品的售后信息、运费模版、商品促销活动信息等，还有很多需要补的，不过那些都不算有太大影响。咱们还是主要先把整个项目跑起来。 众所周知，一个电商的商品设计是比较复杂的，咱们这里不过多的深究商品设计的每个表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kratos 框架商城微服务实战之商品服务 (十)">
+<meta property="og:url" content="https://aliliin.com/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="大家好，今天咱们终于可以写商品服务中的商品模块了，前面花了 4 篇文章，都是为了创建一个完整的商品所需的数据，就这对比一些电商平台，像商品的售后信息、运费模版、商品促销活动信息等，还有很多需要补的，不过那些都不算有太大影响。咱们还是主要先把整个项目跑起来。 众所周知，一个电商的商品设计是比较复杂的，咱们这里不过多的深究商品设计的每个表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
+<meta property="article:published_time" content="2022-03-13T01:16:50.983Z">
+<meta property="article:modified_time" content="2022-03-13T01:17:33.826Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="kratos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
+  
+  <title>kratos 框架商城微服务实战之商品服务 (十) - Aliliin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="kratos 框架商城微服务实战之商品服务 (十)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-13 09:16" pubdate>
+        2022年3月13日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      23k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      74 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
+
+
+
+
+
+
+<div class="category-list">
+  
+  
+  
+  
+  
+    
+    
+    
+    <div class="category row">
+      <a class="category-item 
+                 
+                list-group-item category-item-action col-10 col-md-11 col-xm-11"
+        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+        aria-expanded="true"
+      >
+        Kratos 微服务商城(10) 
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+       
+      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (二)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%80)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务(一)</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+      
+    </div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none;">kratos 框架商城微服务实战之商品服务 (十)</h1>
+            
+            <p class="note note-info">
+               本文最后更新于：1 分钟前 
+            </p>
+            
+            <div class="markdown-body">
+              <p>大家好，今天咱们终于可以写商品服务中的商品模块了，前面花了 4 篇文章，都是为了创建一个完整的商品所需的数据，就这对比一些电商平台，像商品的售后信息、运费模版、商品促销活动信息等，还有很多需要补的，不过那些都不算有太大影响。咱们还是主要先把整个项目跑起来。</p>
+<p>众所周知，一个电商的商品设计是比较复杂的，咱们这里不过多的深究商品设计的每个表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会在文章中体现了，具体的代码参看 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop" title="GitHub">GitHub</a> 上的源码。当然你觉得不合理的地方，欢迎给项目提 PR。</p>
+<blockquote>
+<p>注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
+<p>⚠️ ⚠️ ⚠️ 接下来新增或修改的代码， wire 注入的文件中需要修改的代码，都不会再本文中提及了。例如 biz、service 层的修改，自己编写的过程中，千万不要忘记 wire 注入，更不要忘记，执行 make wire 命令，重新生成项目的 wire 文件。具体使用方法可参考 <a target="_blank" rel="noopener" href="https://go-kratos.dev/docs/guide/wire" title="kratos">kratos</a> 官方文档 ⚠️ ⚠️ ⚠️</p>
+</blockquote>
+<h1 id="商品信息"><a href="#商品信息" class="headerlink" title="商品信息"></a>商品信息</h1><h2 id="设计商品表"><a href="#设计商品表" class="headerlink" title="设计商品表"></a>设计商品表</h2><ul>
+<li><code>data</code> 目录下新建数据表相关的文件</li>
+</ul>
+<p><code>base.go</code> 文件内容：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;database/sql/driver&quot;</span><br>	<span class="hljs-string">&quot;encoding/json&quot;</span><br>	<span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> GormList []<span class="hljs-keyword">string</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g GormList)</span> <span class="hljs-title">Value</span><span class="hljs-params">()</span> <span class="hljs-params">(driver.Value, error)</span></span> &#123;<br>	<span class="hljs-keyword">return</span> json.Marshal(g)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *GormList)</span> <span class="hljs-title">Scan</span><span class="hljs-params">(value <span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">error</span></span> &#123;<br>	<span class="hljs-keyword">return</span> json.Unmarshal(value.([]<span class="hljs-keyword">byte</span>), &amp;g)<br>&#125;<br><br><span class="hljs-keyword">type</span> BaseFields <span class="hljs-keyword">struct</span> &#123;<br>	ID        <span class="hljs-keyword">int64</span>          <span class="hljs-string">`gorm:&quot;primarykey;type:int&quot; json:&quot;id&quot;`</span> <span class="hljs-comment">// bigint</span><br>	CreatedAt time.Time      <span class="hljs-string">`gorm:&quot;column:add_time&quot; json:&quot;created_at&quot;`</span><br>	UpdatedAt time.Time      <span class="hljs-string">`gorm:&quot;column:update_time&quot; json:&quot;updated_at&quot;`</span><br>	DeletedAt gorm.DeletedAt <span class="hljs-string">`json:&quot;deleted_at&quot;`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>goods.go</code>文件内容</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;golang.org/x/net/context&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-comment">// Goods 商品表</span><br><span class="hljs-keyword">type</span> Goods <span class="hljs-keyword">struct</span> &#123;<br>	BaseFields<br>	CategoryID <span class="hljs-keyword">int32</span> <span class="hljs-string">`gorm:&quot;index:category_id;type:int;comment:分类ID;not null&quot;`</span><br>	BrandsID   <span class="hljs-keyword">int32</span> <span class="hljs-string">`gorm:&quot;index:brand_id;type:int;comment:品牌ID ;not null&quot;`</span><br>	TypeID     <span class="hljs-keyword">int64</span> <span class="hljs-string">`gorm:&quot;index:type_id;type:int;comment:商品类型ID ;not null&quot;`</span><br><br>	Name            <span class="hljs-keyword">string</span>   <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品名称&quot;`</span><br>	NameAlias       <span class="hljs-keyword">string</span>   <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品别名&quot;`</span><br>	GoodsSn         <span class="hljs-keyword">string</span>   <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品编号&quot;`</span><br>	GoodsTags       <span class="hljs-keyword">string</span>   <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品标签&quot;`</span><br>	MarketPrice     <span class="hljs-keyword">int64</span>    <span class="hljs-string">`gorm:&quot;type:int;default:0;not null;comment:商品展示价格&quot;`</span><br>	GoodsBrief      <span class="hljs-keyword">string</span>   <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品简介&quot;`</span><br>	GoodsFrontImage <span class="hljs-keyword">string</span>   <span class="hljs-string">`gorm:&quot;type:varchar(200);not null;comment:商品封面图&quot;`</span><br>	GoodsImages     GormList <span class="hljs-string">`gorm:&quot;type:varchar(1000);not null;comment:商品的介绍图&quot;`</span> <span class="hljs-comment">// 切片类型转为 json 到数据库，取出来是切片类型</span><br><br>	OnSale   <span class="hljs-keyword">bool</span>  <span class="hljs-string">`gorm:&quot;default:false;comment:是否上架;not null &quot;`</span><br>	ShipFree <span class="hljs-keyword">bool</span>  <span class="hljs-string">`gorm:&quot;default:false;comment:是否免运费; not null&quot;`</span><br>	ShipID   <span class="hljs-keyword">int32</span> <span class="hljs-string">`gorm:&quot;type:int;comment:运费模版ID;not null&quot;`</span><br>	IsNew    <span class="hljs-keyword">bool</span>  <span class="hljs-string">`gorm:&quot;default:false;comment:是否新品;not null&quot;`</span><br>	IsHot    <span class="hljs-keyword">bool</span>  <span class="hljs-string">`gorm:&quot;comment:是否热卖商品;default:false;not null&quot;`</span><br><br>	ClickNum <span class="hljs-keyword">int64</span> <span class="hljs-string">`gorm:&quot;default:0;type:int; comment 商品详情点击数&quot;`</span><br>	SoldNum  <span class="hljs-keyword">int64</span> <span class="hljs-string">`gorm:&quot;default:0;type:int; comment 商品销售数&quot;`</span><br>	FavNum   <span class="hljs-keyword">int64</span> <span class="hljs-string">`gorm:&quot;default:0;type:int; comment 商品收藏数&quot;`</span><br><br>	<span class="hljs-comment">// 售前服务信息、售后服务信息、商品促销活动信息</span><br>&#125;<br><br><span class="hljs-keyword">type</span> goodsRepo <span class="hljs-keyword">struct</span> &#123;<br>	data *Data<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewGoodsRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGoodsRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">GoodsRepo</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;goodsRepo&#123;<br>		data: data,<br>		log:  log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Goods)</span> <span class="hljs-title">ToDomain</span><span class="hljs-params">()</span> *<span class="hljs-title">domain</span>.<span class="hljs-title">Goods</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;domain.Goods&#123;<br>		ID:              p.ID,<br>		CategoryID:      p.CategoryID,<br>		BrandsID:        p.BrandsID,<br>		TypeID:          p.TypeID,<br>		Name:            p.Name,<br>		NameAlias:       p.NameAlias,<br>		GoodsSn:         p.GoodsSn,<br>		GoodsTags:       p.GoodsTags,<br>		MarketPrice:     p.MarketPrice,<br>		GoodsBrief:      p.GoodsBrief,<br>		GoodsFrontImage: p.GoodsFrontImage,<br>		GoodsImages:     p.GoodsImages,<br>		OnSale:          p.OnSale,<br>		ShipFree:        p.ShipFree,<br>		ShipID:          p.ShipID,<br>		IsNew:           p.IsNew,<br>		IsHot:           p.IsHot,<br>		ClickNum:        p.ClickNum,<br>		SoldNum:         p.SoldNum,<br>		FavNum:          p.FavNum,<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新建 <code>goods_sku.go</code> 文件</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;golang.org/x/net/context&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-comment">// GoodsSku 商品SKU 表</span><br><span class="hljs-keyword">type</span> GoodsSku <span class="hljs-keyword">struct</span> &#123;<br>	BaseFields<br>	GoodsID        <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;index:goods_id;type:int;comment:商品ID;not null&quot;`</span><br>	GoodsSn        <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品编号&quot;`</span><br>	GoodsName      <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);not null;comment:商品名称&quot;`</span><br>	SkuName        <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);comment:SKU名称;not null&quot;`</span><br>	SkuCode        <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);comment:SKUCode;not null&quot;`</span><br>	BarCode        <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);comment:条码;not null&quot;`</span><br>	Price          <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;type:int;comment:商品售价;not null&quot;`</span><br>	PromotionPrice <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;type:int;comment:商品促销售价;not null&quot;`</span><br>	Points         <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;type:int;comment:赠送积分;not null&quot;`</span><br>	RemarksInfo    <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);comment:备注信息;not null&quot;`</span><br>	Pic            <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(500);not null;comment:规格参数对应的图片&quot; json:&quot;pic&quot;`</span><br>	OnSale         <span class="hljs-keyword">bool</span>   <span class="hljs-string">`gorm:&quot;comment:是否上架;default:false;not null&quot;`</span><br>	AttrInfo       <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(2000);comment:商品属性信息JSON;not null&quot;`</span><br>	Inventory      <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;type:int;comment:商品SKU库存冗余字段;not null&quot;`</span><br>&#125;<br><br><span class="hljs-comment">// GoodsSpecificationSku 商品规格和商品Sku关联表</span><br><span class="hljs-keyword">type</span> GoodsSpecificationSku <span class="hljs-keyword">struct</span> &#123;<br>	BaseFields<br>	SkuID           <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;index:sku_id;type:int;comment:商品SKU_ID;not null&quot;`</span><br>	SkuCode         <span class="hljs-keyword">string</span> <span class="hljs-string">`gorm:&quot;type:varchar(100);comment:商品SKU_Code;not null&quot;`</span><br>	SpecificationId <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;index:specification_id;type:int;comment:商品规格ID;not null&quot;`</span><br>	ValueId         <span class="hljs-keyword">int64</span>  <span class="hljs-string">`gorm:&quot;index:value_id;type:int;comment:商品规格值表ID;not null&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> goodsSkuRepo <span class="hljs-keyword">struct</span> &#123;<br>	data *Data<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewGoodsSkuRepoRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGoodsSkuRepoRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">GoodsSkuRepo</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;goodsSkuRepo&#123;<br>		data: data,<br>		log:  log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *GoodsSku)</span> <span class="hljs-title">ToDomain</span><span class="hljs-params">()</span> *<span class="hljs-title">domain</span>.<span class="hljs-title">GoodsSku</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;domain.GoodsSku&#123;<br>		ID:             p.ID,<br>		GoodsID:        p.GoodsID,<br>		GoodsSn:        p.GoodsSn,<br>		GoodsName:      p.GoodsName,<br>		SkuName:        p.SkuName,<br>		SkuCode:        p.SkuCode,<br>		BarCode:        p.BarCode,<br>		Price:          p.Price,<br>		PromotionPrice: p.PromotionPrice,<br>		Points:         p.Points,<br>		RemarksInfo:    p.RemarksInfo,<br>		Pic:            p.Pic,<br>		Inventory:      p.Inventory,<br>		OnSale:         p.OnSale,<br>		AttrInfo:       p.AttrInfo,<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>新建 <code>inventory.go</code> 文件</li>
+</ul>
+<p>添加商品 sku 库存的方法比较简单这些先写了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> GoodsInventory <span class="hljs-keyword">struct</span> &#123;<br>	BaseFields<br>	SkuID     <span class="hljs-keyword">int64</span> <span class="hljs-string">`gorm:&quot;index:sku_id;type:int;comment:商品SKU_ID;not null&quot;`</span><br>	Inventory <span class="hljs-keyword">int64</span> <span class="hljs-string">`gorm:&quot;type:int;comment:商品库存;not null&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> inventoryRepo <span class="hljs-keyword">struct</span> &#123;<br>	data *Data<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewInventoryRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewInventoryRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">InventoryRepo</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;inventoryRepo&#123;<br>		data: data,<br>		log:  log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *GoodsInventory)</span> <span class="hljs-title">ToDomain</span><span class="hljs-params">()</span> *<span class="hljs-title">domain</span>.<span class="hljs-title">Inventory</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;domain.Inventory&#123;<br>		ID:        p.ID,<br>		SkuID:     p.SkuID,<br>		Inventory: p.Inventory,<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(i inventoryRepo)</span> <span class="hljs-title">Create</span><span class="hljs-params">(ctx context.Context, inventory *domain.Inventory)</span> <span class="hljs-params">(*domain.Inventory, error)</span></span> &#123;<br>	info := GoodsInventory&#123;<br>		SkuID:     inventory.SkuID,<br>		Inventory: inventory.Inventory,<br>	&#125;<br>	<span class="hljs-keyword">if</span> err := i.data.DB(ctx).Save(&amp;info).Error; err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> info.ToDomain(), <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="新建domain-层下的文件"><a href="#新建domain-层下的文件" class="headerlink" title="新建domain 层下的文件"></a>新建<code>domain</code> 层下的文件</h2><ul>
+<li><code>goods.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> domain<br><br><span class="hljs-keyword">type</span> Goods <span class="hljs-keyword">struct</span> &#123;<br>	ID              <span class="hljs-keyword">int64</span><br>	CategoryID      <span class="hljs-keyword">int32</span><br>	BrandsID        <span class="hljs-keyword">int32</span><br>	TypeID          <span class="hljs-keyword">int64</span><br>	Name            <span class="hljs-keyword">string</span><br>	NameAlias       <span class="hljs-keyword">string</span><br>	GoodsSn         <span class="hljs-keyword">string</span><br>	GoodsTags       <span class="hljs-keyword">string</span><br>	MarketPrice     <span class="hljs-keyword">int64</span><br>	GoodsBrief      <span class="hljs-keyword">string</span><br>	GoodsFrontImage <span class="hljs-keyword">string</span><br>	GoodsImages     []<span class="hljs-keyword">string</span><br>	OnSale          <span class="hljs-keyword">bool</span><br>	ShipFree        <span class="hljs-keyword">bool</span><br>	ShipID          <span class="hljs-keyword">int32</span><br>	IsNew           <span class="hljs-keyword">bool</span><br>	IsHot           <span class="hljs-keyword">bool</span><br>	ClickNum        <span class="hljs-keyword">int64</span><br>	SoldNum         <span class="hljs-keyword">int64</span><br>	FavNum          <span class="hljs-keyword">int64</span><br>	Sku             []*GoodsSku<br>&#125;<br><br><span class="hljs-keyword">type</span> GoodsInfoResponse <span class="hljs-keyword">struct</span> &#123;<br>	GoodsID <span class="hljs-keyword">int64</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>goods_sku.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> domain<br><br><span class="hljs-keyword">type</span> GoodsSku <span class="hljs-keyword">struct</span> &#123;<br>	ID             <span class="hljs-keyword">int64</span><br>	GoodsID        <span class="hljs-keyword">int64</span><br>	GoodsSn        <span class="hljs-keyword">string</span><br>	GoodsName      <span class="hljs-keyword">string</span><br>	SkuName        <span class="hljs-keyword">string</span><br>	SkuCode        <span class="hljs-keyword">string</span><br>	BarCode        <span class="hljs-keyword">string</span><br>	Price          <span class="hljs-keyword">int64</span><br>	PromotionPrice <span class="hljs-keyword">int64</span><br>	Points         <span class="hljs-keyword">int64</span><br>	RemarksInfo    <span class="hljs-keyword">string</span><br>	Pic            <span class="hljs-keyword">string</span><br>	Inventory      <span class="hljs-keyword">int64</span><br>	OnSale         <span class="hljs-keyword">bool</span><br>	AttrInfo       <span class="hljs-keyword">string</span><br>	Specification  []*SpecificationInfo<br>	GroupAttr      []*GroupAttr<br>&#125;<br><br><span class="hljs-keyword">type</span> SpecificationInfo <span class="hljs-keyword">struct</span> &#123;<br>	SpecificationID      <span class="hljs-keyword">int64</span><br>	SpecificationValueID <span class="hljs-keyword">int64</span><br>&#125;<br><br><span class="hljs-keyword">type</span> GroupAttr <span class="hljs-keyword">struct</span> &#123;<br>	GroupId   <span class="hljs-keyword">int64</span>   <span class="hljs-string">`json:&quot;group_id&quot;`</span><br>	GroupName <span class="hljs-keyword">string</span>  <span class="hljs-string">`json:&quot;group_name&quot;`</span><br>	Attr      []*Attr <span class="hljs-string">`json:&quot;attr&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Attr <span class="hljs-keyword">struct</span> &#123;<br>	AttrID        <span class="hljs-keyword">int64</span>  <span class="hljs-string">`json:&quot;attr_id&quot;`</span><br>	AttrName      <span class="hljs-keyword">string</span> <span class="hljs-string">`json:&quot;attr_name&quot;`</span><br>	AttrValueID   <span class="hljs-keyword">int64</span>  <span class="hljs-string">`json:&quot;attr_value_id&quot;`</span><br>	AttrValueName <span class="hljs-keyword">string</span> <span class="hljs-string">`json:&quot;attr_value_name&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> GoodsSpecificationSku <span class="hljs-keyword">struct</span> &#123;<br>	ID              <span class="hljs-keyword">int64</span><br>	SkuID           <span class="hljs-keyword">int64</span><br>	SkuCode         <span class="hljs-keyword">string</span><br>	SpecificationId <span class="hljs-keyword">int64</span><br>	ValueId         <span class="hljs-keyword">int64</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>inventory.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> domain<br><br><span class="hljs-keyword">type</span> Inventory <span class="hljs-keyword">struct</span> &#123;<br>	ID        <span class="hljs-keyword">int64</span><br>	SkuID     <span class="hljs-keyword">int64</span><br>	Inventory <span class="hljs-keyword">int64</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="构造商品创建方法"><a href="#构造商品创建方法" class="headerlink" title="构造商品创建方法"></a>构造商品创建方法</h2><ul>
+<li>修改 <code>goods.proto</code> 文件</li>
+</ul>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><br>...<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">Goods</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateGoods(CreateGoodsRequest) <span class="hljs-keyword">returns</span> (CreateGoodsResponse)</span>;<br>&#125;<br><br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CreateGoodsRequest</span> </span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">int32</span> categoryId = <span class="hljs-number">2</span> [(validate.rules).<span class="hljs-built_in">int32</span>.gte = <span class="hljs-number">1</span>];<br>  <span class="hljs-built_in">int32</span> brandId = <span class="hljs-number">3</span> [(validate.rules).<span class="hljs-built_in">int32</span>.gte = <span class="hljs-number">1</span>];<br>  <span class="hljs-built_in">int64</span> typeId = <span class="hljs-number">4</span> [(validate.rules).<span class="hljs-built_in">int64</span>.gte = <span class="hljs-number">1</span>];<br>  <span class="hljs-built_in">string</span> name = <span class="hljs-number">5</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>  <span class="hljs-built_in">string</span> nameAlias = <span class="hljs-number">6</span>;<br>  <span class="hljs-built_in">string</span> goodsTags = <span class="hljs-number">7</span>;<br>  <span class="hljs-built_in">string</span> goodsSn = <span class="hljs-number">8</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>  <span class="hljs-built_in">int64</span> shopPrice = <span class="hljs-number">9</span>;<br>  <span class="hljs-built_in">int64</span> marketPrice = <span class="hljs-number">10</span>;<br>  <span class="hljs-built_in">int64</span> inventory = <span class="hljs-number">11</span>;<br>  <span class="hljs-built_in">string</span> goodsBrief = <span class="hljs-number">12</span>;<br>  <span class="hljs-built_in">string</span> goodsFrontImage = <span class="hljs-number">13</span>;<br>  <span class="hljs-keyword">repeated</span> <span class="hljs-built_in">string</span> goodsImages = <span class="hljs-number">14</span>;<br>  <span class="hljs-built_in">bool</span> shipFree = <span class="hljs-number">15</span>;<br>  <span class="hljs-built_in">int32</span> shipId = <span class="hljs-number">16</span>;<br>  <span class="hljs-built_in">bool</span> isNew = <span class="hljs-number">17</span>;<br>  <span class="hljs-built_in">bool</span> isHot = <span class="hljs-number">18</span>;<br>  <span class="hljs-built_in">bool</span> onSale = <span class="hljs-number">19</span>;<br>  <span class="hljs-comment">// 根据商品类型 选择商品规格和商品属性信息 </span><br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">goodsSku</span> </span>&#123;<br>    <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">int64</span> goodsId = <span class="hljs-number">2</span>;<br>    <span class="hljs-built_in">string</span> skuName = <span class="hljs-number">3</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">string</span> code = <span class="hljs-number">4</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">string</span> barCode = <span class="hljs-number">5</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">int64</span> price = <span class="hljs-number">6</span>;<br>    <span class="hljs-built_in">int64</span> promotionPrice = <span class="hljs-number">7</span>;<br>    <span class="hljs-built_in">int64</span> points = <span class="hljs-number">8</span>;<br>    <span class="hljs-built_in">string</span> image = <span class="hljs-number">9</span>;<br>    <span class="hljs-built_in">int32</span> sort = <span class="hljs-number">10</span>;<br>    <span class="hljs-built_in">int64</span> inventory = <span class="hljs-number">11</span>;<br>    <span class="hljs-comment">// 商品规格</span><br>    <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">specification</span> </span>&#123;<br>      <span class="hljs-built_in">int64</span> sId = <span class="hljs-number">1</span> [(validate.rules).<span class="hljs-built_in">int64</span>.gte = <span class="hljs-number">1</span>];<br>      <span class="hljs-built_in">int64</span> vId = <span class="hljs-number">2</span> [(validate.rules).<span class="hljs-built_in">int64</span>.gte = <span class="hljs-number">1</span>];<br>    &#125;<br>    <span class="hljs-keyword">repeated</span> specification specificationInfo = <span class="hljs-number">12</span>;<br>    <span class="hljs-comment">// 商品属性组</span><br>    <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">groupAttr</span> </span>&#123;<br>      <span class="hljs-built_in">int64</span> groupId = <span class="hljs-number">1</span> [(validate.rules).<span class="hljs-built_in">int64</span>.gte = <span class="hljs-number">1</span>];<br>      <span class="hljs-built_in">string</span> groupName = <span class="hljs-number">2</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>      <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">attr</span> </span>&#123;<br>        <span class="hljs-built_in">int64</span> attrId = <span class="hljs-number">1</span> [(validate.rules).<span class="hljs-built_in">int64</span>.gte = <span class="hljs-number">1</span>];<br>        <span class="hljs-built_in">string</span> attrName = <span class="hljs-number">2</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>        <span class="hljs-built_in">int64</span> attrValueId = <span class="hljs-number">3</span> [(validate.rules).<span class="hljs-built_in">int64</span>.gte = <span class="hljs-number">1</span>];<br>        <span class="hljs-built_in">string</span> attrValueName = <span class="hljs-number">4</span> [(validate.rules).<span class="hljs-built_in">string</span>.min_len = <span class="hljs-number">1</span>];<br>      &#125;<br>      <span class="hljs-keyword">repeated</span> attr attrInfo = <span class="hljs-number">3</span>;<br>    &#125;<br>    <span class="hljs-keyword">repeated</span> groupAttr groupAttrInfo = <span class="hljs-number">13</span>;<br>  &#125;<br>  <span class="hljs-keyword">repeated</span> goodsSku sku = <span class="hljs-number">20</span>;<br>&#125;<br><br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CreateGoodsResponse</span> </span>&#123;<br>  <span class="hljs-built_in">int64</span> ID = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>service</code> 目录下的 <code>goods.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	v1 <span class="hljs-string">&quot;goods/api/goods/v1&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-comment">// CreateGoods 创建商品</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *GoodsService)</span> <span class="hljs-title">CreateGoods</span><span class="hljs-params">(ctx context.Context, r *v1.CreateGoodsRequest)</span> <span class="hljs-params">(*v1.CreateGoodsResponse, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> goodsSku []*domain.GoodsSku<br>	<span class="hljs-keyword">for</span> _, sku := <span class="hljs-keyword">range</span> r.Sku &#123;<br>		res := &amp;domain.GoodsSku&#123;<br>			GoodsName:      r.Name,<br>			GoodsSn:        r.GoodsSn,<br>			SkuName:        sku.SkuName,<br>			SkuCode:        sku.Code,<br>			BarCode:        sku.BarCode,<br>			Price:          sku.Price,<br>			PromotionPrice: sku.PromotionPrice,<br>			Points:         sku.Points,<br>			Pic:            sku.Image,<br>			Inventory:      sku.Inventory,<br>			OnSale:         r.OnSale,<br>		&#125;<br><br>		<span class="hljs-keyword">for</span> _, specification := <span class="hljs-keyword">range</span> sku.SpecificationInfo &#123;<br>			s := &amp;domain.SpecificationInfo&#123;<br>				SpecificationID:      specification.SId,<br>				SpecificationValueID: specification.VId,<br>			&#125;<br>			res.Specification = <span class="hljs-built_in">append</span>(res.Specification, s)<br>		&#125;<br>		<span class="hljs-keyword">for</span> _, attrGroup := <span class="hljs-keyword">range</span> sku.GroupAttrInfo &#123;<br>			group := &amp;domain.GroupAttr&#123;<br>				GroupId:   attrGroup.GroupId,<br>				GroupName: attrGroup.GroupName,<br>			&#125;<br>			<span class="hljs-keyword">for</span> _, attr := <span class="hljs-keyword">range</span> attrGroup.AttrInfo &#123;<br>				s := &amp;domain.Attr&#123;<br>					AttrID:        attr.AttrId,<br>					AttrName:      attr.AttrName,<br>					AttrValueID:   attr.AttrValueId,<br>					AttrValueName: attr.AttrValueName,<br>				&#125;<br>				group.Attr = <span class="hljs-built_in">append</span>(group.Attr, s)<br>			&#125;<br>			res.GroupAttr = <span class="hljs-built_in">append</span>(res.GroupAttr, group)<br>		&#125;<br>		goodsSku = <span class="hljs-built_in">append</span>(goodsSku, res)<br>	&#125;<br><br>	goodsInfo := &amp;domain.Goods&#123;<br>		ID:              r.Id,<br>		CategoryID:      r.CategoryId,<br>		BrandsID:        r.BrandId,<br>		TypeID:          r.TypeId,<br>		Name:            r.Name,<br>		NameAlias:       r.NameAlias,<br>		GoodsSn:         r.GoodsSn,<br>		GoodsTags:       r.GoodsTags,<br>		MarketPrice:     r.MarketPrice,<br>		GoodsBrief:      r.GoodsBrief,<br>		GoodsFrontImage: r.GoodsFrontImage,<br>		GoodsImages:     r.GoodsImages,<br>		OnSale:          r.OnSale,<br>		ShipFree:        r.ShipFree,<br>		ShipID:          r.ShipId,<br>		IsNew:           r.IsNew,<br>		IsHot:           r.IsHot,<br>		Sku:             goodsSku,<br>	&#125;<br><br>	result, err := g.g.CreateGoods(ctx, goodsInfo)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> &amp;v1.CreateGoodsResponse&#123;ID: result.GoodsID&#125;, <span class="hljs-literal">nil</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>biz</code> 目录下的 <code>goods.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;encoding/json&quot;</span><br>	<span class="hljs-string">&quot;errors&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> GoodsRepo <span class="hljs-keyword">interface</span> &#123;<br>	CreateGoods(ctx context.Context, goods *domain.Goods) (*domain.Goods, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> GoodsUsecase <span class="hljs-keyword">struct</span> &#123;<br>	repo              GoodsRepo<br>	tr                Transaction<br>	skuRepo           GoodsSkuRepo<br>	categoryRepo      CategoryRepo<br>	brandRepo         BrandRepo<br>	typeRepo          GoodsTypeRepo<br>	specificationRepo SpecificationRepo<br>	goodsAttrRepo     GoodsAttrRepo<br>	inventoryRepo     InventoryRepo<br>	log               *log.Helper<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGoodsUsecase</span><span class="hljs-params">(repo GoodsRepo, skuRepo GoodsSkuRepo, tx Transaction, gRepo GoodsTypeRepo, cRepo CategoryRepo,</span></span><br><span class="hljs-params"><span class="hljs-function">	bRepo BrandRepo, sRepo SpecificationRepo, aRepo GoodsAttrRepo, iRepo InventoryRepo, logger log.Logger)</span> *<span class="hljs-title">GoodsUsecase</span></span> &#123;<br><br>	<span class="hljs-keyword">return</span> &amp;GoodsUsecase&#123;<br>		repo:              repo,<br>		skuRepo:           skuRepo,<br>		tr:                tx,<br>		typeRepo:          gRepo,<br>		categoryRepo:      cRepo,<br>		brandRepo:         bRepo,<br>		specificationRepo: sRepo,<br>		goodsAttrRepo:     aRepo,<br>		inventoryRepo:     iRepo,<br>		log:               log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g GoodsUsecase)</span> <span class="hljs-title">CreateGoods</span><span class="hljs-params">(ctx context.Context, r *domain.Goods)</span> <span class="hljs-params">(*domain.GoodsInfoResponse, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> (<br>		err   error<br>		goods *domain.Goods<br>	)<br>	<span class="hljs-comment">// 判断品牌是否存在</span><br>	_, err = g.brandRepo.IsBrandByID(ctx, r.BrandsID)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;品牌不存在&quot;</span>)<br>	&#125;<br><br>	<span class="hljs-comment">// 判断分类是否存在</span><br>	_, err = g.categoryRepo.GetCategoryByID(ctx, r.CategoryID)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;分类不存在&quot;</span>)<br>	&#125;<br>	<span class="hljs-comment">// 判断商品类型是否存在</span><br>	_, err = g.typeRepo.IsExistsByID(ctx, r.TypeID)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品类型不存在&quot;</span>)<br>	&#125;<br>	<span class="hljs-comment">// 判断商品规格和属性是否存在</span><br>	<span class="hljs-keyword">for</span> _, sku := <span class="hljs-keyword">range</span> r.Sku &#123;<br>		<span class="hljs-keyword">var</span> sIDs []*<span class="hljs-keyword">int64</span><br>		<span class="hljs-keyword">for</span> _, info := <span class="hljs-keyword">range</span> sku.Specification &#123;<br>			sIDs = <span class="hljs-built_in">append</span>(sIDs, &amp;info.SpecificationID)<br>		&#125;<br><br>		specList, err := g.specificationRepo.ListByIds(ctx, sIDs...)<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>		&#125;<br>		<span class="hljs-keyword">for</span> _, sId := <span class="hljs-keyword">range</span> sIDs &#123;<br>			info := specList.FindById(*sId)<br>			<span class="hljs-keyword">if</span> info == <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品规格不存在&quot;</span>)<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">var</span> attrIDs []<span class="hljs-keyword">int64</span><br>		<span class="hljs-keyword">for</span> _, attr := <span class="hljs-keyword">range</span> sku.GroupAttr &#123;<br>			<span class="hljs-keyword">for</span> _, id := <span class="hljs-keyword">range</span> attr.Attr &#123;<br>				attrIDs = <span class="hljs-built_in">append</span>(attrIDs, id.AttrID)<br>			&#125;<br>		&#125;<br>		attrList, err := g.goodsAttrRepo.ListByIds(ctx, attrIDs...)<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>		&#125;<br><br>		<span class="hljs-keyword">for</span> _, attr := <span class="hljs-keyword">range</span> sku.GroupAttr &#123;<br>			<span class="hljs-keyword">for</span> _, id := <span class="hljs-keyword">range</span> attr.Attr &#123;<br>				attrIDs = <span class="hljs-built_in">append</span>(attrIDs, id.AttrID)<br>				<span class="hljs-literal">true</span> := attrList.IsNotExist(attr.GroupId, id.AttrID)<br>				<span class="hljs-keyword">if</span> <span class="hljs-literal">true</span> &#123;<br>					<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品属性不存在&quot;</span>)<br>				&#125;<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	err = g.tr.ExecTx(ctx, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context)</span> <span class="hljs-title">error</span></span> &#123;<br>		<span class="hljs-comment">// 更新商品表</span><br>		goods, err = g.repo.CreateGoods(ctx, &amp;domain.Goods&#123;<br>			CategoryID:      r.CategoryID,<br>			BrandsID:        r.BrandsID,<br>			TypeID:          r.TypeID,<br>			Name:            r.Name,<br>			NameAlias:       r.NameAlias,<br>			GoodsSn:         r.GoodsSn,<br>			GoodsTags:       r.GoodsTags,<br>			MarketPrice:     r.MarketPrice,<br>			GoodsBrief:      r.GoodsBrief,<br>			GoodsFrontImage: r.GoodsFrontImage,<br>			GoodsImages:     r.GoodsImages,<br>			OnSale:          r.OnSale,<br>			IsNew:           r.IsNew,<br>			IsHot:           r.IsHot,<br>			ShipFree:        r.ShipFree,<br>			ShipID:          r.ShipID,<br>		&#125;)<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> err<br>		&#125;<br>		<span class="hljs-comment">// 更新商品 SKU 表</span><br>		<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> r.Sku &#123;<br>			res := &amp;domain.GoodsSku&#123;<br>				GoodsID:        goods.ID,<br>				GoodsSn:        goods.GoodsSn,<br>				GoodsName:      goods.Name,<br>				SkuName:        v.SkuName,<br>				SkuCode:        v.SkuCode,<br>				BarCode:        v.BarCode,<br>				Price:          v.Price,<br>				PromotionPrice: v.PromotionPrice,<br>				Points:         v.Points,<br>				RemarksInfo:    v.RemarksInfo,<br>				Pic:            v.Pic,<br>				Inventory:      v.Inventory,<br>				OnSale:         v.OnSale,<br>			&#125;<br><br>			goodsAttr, err := json.Marshal(v.GroupAttr)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-keyword">return</span> err<br>			&#125;<br>			res.AttrInfo = <span class="hljs-keyword">string</span>(goodsAttr)<br><br>			<span class="hljs-comment">// 插入 sku 表</span><br>			skuInfo, err := g.skuRepo.Create(ctx, res)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-keyword">return</span> err<br>			&#125;<br><br>			<span class="hljs-comment">// 插入库存表</span><br>			_, err = g.inventoryRepo.Create(ctx, &amp;domain.Inventory&#123;<br>				SkuID:     skuInfo.ID,<br>				Inventory: skuInfo.Inventory,<br>			&#125;)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-keyword">return</span> err<br>			&#125;<br>			<span class="hljs-comment">// 插入 sku 规格关联关系表</span><br>			<span class="hljs-keyword">var</span> skuRelation []*domain.GoodsSpecificationSku<br>			<span class="hljs-keyword">for</span> _, spec := <span class="hljs-keyword">range</span> v.Specification &#123;<br>				skuRelation = <span class="hljs-built_in">append</span>(skuRelation, &amp;domain.GoodsSpecificationSku&#123;<br>					SkuID:           skuInfo.ID,<br>					SkuCode:         skuInfo.SkuCode,<br>					SpecificationId: spec.SpecificationID,<br>					ValueId:         spec.SpecificationValueID,<br>				&#125;)<br>			&#125;<br><br>			<span class="hljs-comment">// 插入商品规格关联关系表</span><br>			err = g.skuRepo.CreateSkuRelation(ctx, skuRelation)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-keyword">return</span> err<br>			&#125;<br><br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>	&#125;)<br><br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> &amp;domain.GoodsInfoResponse&#123;GoodsID: goods.ID&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="实现业务逻辑方法"><a href="#实现业务逻辑方法" class="headerlink" title="实现业务逻辑方法"></a>实现业务逻辑方法</h2><ul>
+<li>判断品牌</li>
+</ul>
+<p><code>biz</code> 目录下的 <code>brand.go</code> 新增方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br>...<br><br><span class="hljs-keyword">type</span> BrandRepo <span class="hljs-keyword">interface</span> &#123;<br><br>    ...<br><br>    IsBrandByID(context.Context, <span class="hljs-keyword">int32</span>) (*domain.Brand, error)<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>data</code> 录下的 <code>brand.go</code> 文件中实现 <code>IsBrandByID</code> 方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br>...<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *BrandRepo)</span> <span class="hljs-title">IsBrandByID</span><span class="hljs-params">(ctx context.Context, id <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(*domain.Brand, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> b Brand<br>	<span class="hljs-keyword">if</span> err := r.data.db.Table(<span class="hljs-string">&quot;brands&quot;</span>).Where(<span class="hljs-string">&quot;id = ?&quot;</span>, id).First(&amp;b).Error; err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> b.ToDomain(), <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断分类</li>
+</ul>
+<p><code>biz</code> 目录下的 <code>category.go</code> 新增方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br>...<br><br><span class="hljs-keyword">type</span> CategoryRepo <span class="hljs-keyword">interface</span> &#123;<br>    ...<br><br>	GetCategoryByID(ctx context.Context, id <span class="hljs-keyword">int32</span>) (*CategoryInfo, error)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>data</code> 目录下的<code>category.go</code> 文件中实现 <code>GetCategoryByID</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-keyword">package</span> data<br><br>...<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *CategoryRepo)</span> <span class="hljs-title">GetCategoryByID</span><span class="hljs-params">(ctx context.Context, id <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(*biz.CategoryInfo, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> categories Category<br>	<span class="hljs-keyword">if</span> res := r.data.db.First(&amp;categories, id); res.RowsAffected == <span class="hljs-number">0</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品分类不存在&quot;</span>)<br>	&#125;<br><br>	info := &amp;biz.CategoryInfo&#123;<br>		ID:             categories.ID,<br>		Name:           categories.Name,<br>		ParentCategory: categories.ParentCategoryID,<br>		Level:          categories.Level,<br>		IsTab:          categories.IsTab,<br>		Sort:           categories.Sort,<br>	&#125;<br>	<span class="hljs-keyword">return</span> info, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查询商品类型</li>
+</ul>
+<p><code>biz</code> 目录下的 <code>goods_type.go</code> 新增方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br>...<br><br><span class="hljs-keyword">type</span> GoodsTypeRepo <span class="hljs-keyword">interface</span> &#123;<br><br>    ...<br><br>	IsExistsByID(context.Context, <span class="hljs-keyword">int64</span>) (*domain.GoodsType, error)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>data</code> 目录下的<code>goods_type.go</code> 文件中实现 <code>IsExistsByID</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br>...<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *goodsTypeRepo)</span> <span class="hljs-title">IsExistsByID</span><span class="hljs-params">(ctx context.Context, typeID <span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(*domain.GoodsType, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> goodsType GoodsType<br>	<span class="hljs-keyword">if</span> res := g.data.db.First(&amp;goodsType, typeID); res.RowsAffected == <span class="hljs-number">0</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品类型不存在&quot;</span>)<br>	&#125;<br>	<span class="hljs-keyword">return</span> goodsType.ToDomain(), <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断商品规格和属性</li>
+</ul>
+<p><code>biz</code> 目录下的 <code>specifications.go</code> 新增方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br>...<br><br><br><span class="hljs-keyword">type</span> SpecificationRepo <span class="hljs-keyword">interface</span> &#123;<br><br>    ...<br><br>	ListByIds(ctx context.Context, id ...*<span class="hljs-keyword">int64</span>) (domain.SpecificationList, error)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>data</code> 目录下的<code>specifications.go</code> 文件中实现 <code>ListByIds</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br>...<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *specificationRepo)</span> <span class="hljs-title">ListByIds</span><span class="hljs-params">(ctx context.Context, id ...*<span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(domain.SpecificationList, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> l []*SpecificationsAttr<br>	<span class="hljs-keyword">if</span> err := g.data.DB(ctx).Where(<span class="hljs-string">&quot;id IN (?)&quot;</span>, id).Find(&amp;l).Error; err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br><br>	<span class="hljs-keyword">var</span> res domain.SpecificationList<br>	<span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> l &#123;<br>		res = <span class="hljs-built_in">append</span>(res, item.ToDomain())<br>	&#125;<br>	<span class="hljs-keyword">return</span> res, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在 <code>domain</code> 目录下的 <code>specification.go</code> 文件中编写验证方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> domain<br><br>...<br><br><span class="hljs-keyword">type</span> SpecificationList []*Specification<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p SpecificationList)</span> <span class="hljs-title">FindById</span><span class="hljs-params">(id <span class="hljs-keyword">int64</span>)</span> *<span class="hljs-title">Specification</span></span> &#123;<br>	<span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> p &#123;<br>		<span class="hljs-keyword">if</span> item.ID == id &#123;<br>			<span class="hljs-keyword">return</span> item<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>biz</code> 目录下的 <code>goods_attr.go</code> 新增方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br>...<br><br><span class="hljs-keyword">type</span> GoodsAttrRepo <span class="hljs-keyword">interface</span> &#123;<br><br>    ...<br><br>	ListByIds(ctx context.Context, id ...<span class="hljs-keyword">int64</span>) (domain.GoodsAttrList, error)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>data</code> 目录下的<code>goods_attr.go</code> 文件中实现 <code>ListByIds</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br>...<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *goodsAttrRepo)</span> <span class="hljs-title">ListByIds</span><span class="hljs-params">(ctx context.Context, ids ...<span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(domain.GoodsAttrList, error)</span></span> &#123;<br>	<span class="hljs-keyword">var</span> l []*GoodsAttr<br>	<span class="hljs-keyword">if</span> err := g.data.DB(ctx).Where(<span class="hljs-string">&quot;id IN (?)&quot;</span>, ids).Find(&amp;l).Error; err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;属性不存在&quot;</span>)<br>	&#125;<br><br>	<span class="hljs-keyword">var</span> res domain.GoodsAttrList<br>	<span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> l &#123;<br>		res = <span class="hljs-built_in">append</span>(res, item.ToDomain())<br>	&#125;<br>	<span class="hljs-keyword">return</span> res, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在 <code>domain</code> 目录下的 <code>goods_attr.go</code> 文件中编写验证方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> domian<br><br>...<br><br><span class="hljs-keyword">type</span> GoodsAttrList []*GoodsAttr<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p GoodsAttrList)</span> <span class="hljs-title">IsNotExist</span><span class="hljs-params">(groupId, attrId <span class="hljs-keyword">int64</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br>	<span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> p &#123;<br>		<span class="hljs-keyword">if</span> item.GroupID != groupId &amp;&amp; item.ID != attrId &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="编写入库的业务逻辑"><a href="#编写入库的业务逻辑" class="headerlink" title="编写入库的业务逻辑"></a>编写入库的业务逻辑</h2><ul>
+<li><code>data</code> 目录下的 <code>goods.go</code>实现 <code>CreateGoods</code> 方法</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-keyword">package</span> data<br><br>...<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g goodsRepo)</span> <span class="hljs-title">CreateGoods</span><span class="hljs-params">(c context.Context, goods *domain.Goods)</span> <span class="hljs-params">(*domain.Goods, error)</span></span> &#123;<br>	product := &amp;Goods&#123;<br>		CategoryID:      goods.CategoryID,<br>		BrandsID:        goods.BrandsID,<br>		TypeID:          goods.TypeID,<br>		Name:            goods.Name,<br>		NameAlias:       goods.NameAlias,<br>		GoodsSn:         goods.GoodsSn,<br>		GoodsTags:       goods.GoodsTags,<br>		MarketPrice:     goods.MarketPrice,<br>		GoodsBrief:      goods.GoodsBrief,<br>		GoodsFrontImage: goods.GoodsFrontImage,<br>		GoodsImages:     goods.GoodsImages,<br>		OnSale:          goods.OnSale,<br>		ShipFree:        goods.ShipFree,<br>		ShipID:          goods.ShipID,<br>		IsNew:           goods.IsNew,<br>		IsHot:           goods.IsHot,<br>	&#125;<br><br>	result := g.data.DB(c).Save(product)<br>	<span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>	&#125;<br>	<span class="hljs-keyword">return</span> product.ToDomain(), <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>biz</code>目录下新建<code>goods_sku.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Sku <span class="hljs-keyword">struct</span> &#123;<br>	ID             <span class="hljs-keyword">int64</span><br>	GoodsID        <span class="hljs-keyword">int64</span><br>	GoodsSn        <span class="hljs-keyword">string</span><br>	GoodsName      <span class="hljs-keyword">string</span><br>	SkuName        <span class="hljs-keyword">string</span><br>	SkuCode        <span class="hljs-keyword">string</span><br>	BarCode        <span class="hljs-keyword">string</span><br>	Price          <span class="hljs-keyword">int64</span><br>	PromotionPrice <span class="hljs-keyword">int64</span><br>	Points         <span class="hljs-keyword">int64</span><br>	RemarksInfo    <span class="hljs-keyword">string</span><br>	Pic            <span class="hljs-keyword">string</span><br>	Inventory      <span class="hljs-keyword">int64</span><br>	OnSale         <span class="hljs-keyword">bool</span><br>	AttrInfo       <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-keyword">type</span> GoodsSkuRepo <span class="hljs-keyword">interface</span> &#123;<br>	Create(context.Context, *domain.GoodsSku) (*domain.GoodsSku, error)<br>	CreateSkuRelation(context.Context, []*domain.GoodsSpecificationSku) error<br>&#125;<br><br><span class="hljs-keyword">type</span> GoodsSkuUsecase <span class="hljs-keyword">struct</span> &#123;<br>	repo GoodsSkuRepo<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGoodsSkuUsecase</span><span class="hljs-params">(repo GoodsSkuRepo, logger log.Logger)</span> *<span class="hljs-title">GoodsSkuUsecase</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;GoodsSkuUsecase&#123;repo: repo, log: log.NewHelper(logger)&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>data</code> 目录下的 <code>goods_sku.go</code>实现 <code>Create</code> 方法和 <code>CreateSkuRelation</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br>...<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *goodsSkuRepo)</span> <span class="hljs-title">Create</span><span class="hljs-params">(ctx context.Context, req *domain.GoodsSku)</span> <span class="hljs-params">(*domain.GoodsSku, error)</span></span> &#123;<br>	sku := &amp;GoodsSku&#123;<br>		GoodsID:        req.GoodsID,<br>		GoodsSn:        req.GoodsSn,<br>		GoodsName:      req.GoodsName,<br>		SkuName:        req.SkuName,<br>		SkuCode:        req.SkuCode,<br>		BarCode:        req.BarCode,<br>		Price:          req.Price,<br>		PromotionPrice: req.PromotionPrice,<br>		Points:         req.Points,<br>		RemarksInfo:    req.RemarksInfo,<br>		Pic:            req.Pic,<br>		OnSale:         req.OnSale,<br>		AttrInfo:       req.AttrInfo,<br>		Inventory:      req.Inventory,<br>	&#125;<br><br>	<span class="hljs-keyword">if</span> err := g.data.DB(ctx).Save(sku).Error; err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> sku.ToDomain(), <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *goodsSkuRepo)</span> <span class="hljs-title">CreateSkuRelation</span><span class="hljs-params">(ctx context.Context, req []*domain.GoodsSpecificationSku)</span> <span class="hljs-title">error</span></span> &#123;<br>	<span class="hljs-keyword">var</span> info []*GoodsSpecificationSku<br>	<span class="hljs-keyword">for</span> _, sku := <span class="hljs-keyword">range</span> req &#123;<br>		i := GoodsSpecificationSku&#123;<br>			SkuID:           sku.SkuID,<br>			SkuCode:         sku.SkuCode,<br>			SpecificationId: sku.SpecificationId,<br>			ValueId:         sku.ValueId,<br>		&#125;<br>		info = <span class="hljs-built_in">append</span>(info, &amp;i)<br>	&#125;<br>	result := g.data.DB(ctx).Table(<span class="hljs-string">&quot;goods_specification_skus&quot;</span>).Save(&amp;info)<br>	<span class="hljs-keyword">return</span> result.Error<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>biz</code>目录下新建<code>inventory.go</code>文件</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> InventoryRepo <span class="hljs-keyword">interface</span> &#123;<br>	Create(context.Context, *domain.Inventory) (*domain.Inventory, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> InventoryUsecase <span class="hljs-keyword">struct</span> &#123;<br>	repo InventoryRepo<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewInventoryUsecase</span><span class="hljs-params">(repo InventoryRepo, logger log.Logger)</span> *<span class="hljs-title">InventoryUsecase</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;InventoryUsecase&#123;repo: repo, log: log.NewHelper(logger)&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建库存的方法在上面已经写过了，商品规格和商品 sku 的关联关系创建方法上面也已经写过了。</p>
+</blockquote>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>没错还是通过 <a target="_blank" rel="noopener" href="https://github.com/bloomrpc/bloomrpc" title="BloomRPC">BloomRPC</a> 工具进行测试。</p>
+<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1647003257553-goods.png" srcset="/img/loading.gif" lazyload></p>
+<p>如图创建成功了，这里的参数太多了，如果你跟我用的是同一个工具，它会自动构建所需的参数，你只需根据自己的需要简单修改一下就可以了。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>本篇只提供了一个商品创建的方法，其他方法没有在文章中体现，单元测试方法也没有编写，重复性的工作这里就不编写了，通过前几篇的文章，相信你可以自己完善剩余的方法。</p>
+<p>经过这么多天的编写，商品服务算是告一断落了，当然商品管理的 HTTP 服务还是会编写的，以后会新建一个商城后台管理的前端的项目来管理商品，他们是通过 HTTP 服务进行的，并不是直接调用这里的 rpc 服务。后期也会加入 Elasticsearch 搜索服务进行商品检索。</p>
+<p><strong>下一篇准备开始写购物车和订单服务，敬请期待</strong></p>
+<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
+<p>感谢您的耐心阅读，动动手指点个赞吧。</p>
+
+            </div>
+            <hr />
+            <div>
+              <div class="post-metas mb-3">
+                
+                <div class="post-meta mr-3">
+                  <i class="iconfont icon-category"></i>
+                  
+                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                    >Kratos 微服务商城</a
+                  >
+                  
+                </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                  <a class="hover-with-bg" href="/tags/kratos/"
+                    >kratos</a
+                  >
+                  
+                </div>
+                
+              </div>
+              
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/">
+                    <span class="hidden-mobile">kratos 框架商城微服务实战之商品服务 (九)</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
+                  
+                </article>
+              </div>
+              
+            </div>
+
+            
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+            </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+    </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
