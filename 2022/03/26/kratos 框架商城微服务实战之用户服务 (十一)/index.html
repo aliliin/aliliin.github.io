@@ -13,23 +13,22 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="kratos 框架商城微服务实战之商品服务 (十一)
-大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 Elasticsearch 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始
+  <meta name="description" content="大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 Elasticsearch 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始
 
 注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
-⚠️ ⚠️ ⚠️ 接下来新增或修改的代码，">
+⚠️ ⚠️ ⚠️ 接下来新增或修改的代码， wire 注入的文件中需要修改的代码，都不会再本文中">
   <meta name="author" content="高永立">
   <meta name="keywords" content="">
-  <meta name="description" content="kratos 框架商城微服务实战之商品服务 (十一) 大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 Elasticsearch 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始  注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。 ⚠️ ⚠️ ⚠️ 接下来新增或修改的代码，">
+  <meta name="description" content="大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 Elasticsearch 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始  注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。 ⚠️ ⚠️ ⚠️ 接下来新增或修改的代码， wire 注入的文件中需要修改的代码，都不会再本文中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kratos 框架商城微服务实战之商品服务 (十一)">
 <meta property="og:url" content="https://aliliin.com/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/index.html">
 <meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="kratos 框架商城微服务实战之商品服务 (十一) 大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 Elasticsearch 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始  注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。 ⚠️ ⚠️ ⚠️ 接下来新增或修改的代码，">
+<meta property="og:description" content="大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 Elasticsearch 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始  注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。 ⚠️ ⚠️ ⚠️ 接下来新增或修改的代码， wire 注入的文件中需要修改的代码，都不会再本文中">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/aliliin/picture/raw/master/2022-3-11/1646931011251-logo.png">
 <meta property="article:published_time" content="2022-03-26T02:56:55.211Z">
-<meta property="article:modified_time" content="2022-03-26T02:58:04.989Z">
+<meta property="article:modified_time" content="2022-03-26T03:05:53.020Z">
 <meta property="article:author" content="高永立">
 <meta property="article:tag" content="Go">
 <meta property="article:tag" content="kratos">
@@ -410,12 +409,11 @@
             <h1 style="display: none;">kratos 框架商城微服务实战之商品服务 (十一)</h1>
             
             <p class="note note-info">
-               本文最后更新于：1 分钟前 
+               本文最后更新于：几秒前 
             </p>
             
             <div class="markdown-body">
-              <p>kratos 框架商城微服务实战之商品服务 (十一)</p>
-<p>大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/" title="`Elasticsearch`"><code>Elasticsearch</code></a> 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始</p>
+              <p>大家好，今天咱们继续写商品服务中的商品查询接口，主要是引入的 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/" title="`Elasticsearch`"><code>Elasticsearch</code></a> 搜索服务，通过输入关键词来进行商品搜索，废话少说咱们开始</p>
 <blockquote>
 <p>注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
 <p>⚠️ ⚠️ ⚠️ 接下来新增或修改的代码， wire 注入的文件中需要修改的代码，都不会再本文中提及了。例如 biz、data、service 层的修改，自己编写的过程中，千万不要忘记 wire 注入，更不要忘记，执行 make wire 命令，重新生成项目的 wire 文件。具体使用方法可参考 <a target="_blank" rel="noopener" href="https://go-kratos.dev/docs/guide/wire" title="kratos">kratos</a> 官方文档 ⚠️ ⚠️ ⚠️</p>
@@ -477,7 +475,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>    <span class="hljs-string">&quot;goods/internal/domain&quot;</span><br>    <span class="hljs-string">&quot;strconv&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/olivere/elastic/v7&quot;</span><br>)<br><br>...<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p esGoodsRepo)</span> <span class="hljs-title">InsertEsGoods</span><span class="hljs-params">(ctx context.Context, esModel domain.ESGoods)</span> <span class="hljs-title">error</span></span> &#123;<br>    <span class="hljs-comment">// 新建 mapping 和 index</span><br>    exists, err := p.data.EsClient.IndexExists(p.GetIndexName()).Do(ctx)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    <span class="hljs-keyword">if</span> !exists &#123;<br>        _, err = p.data.EsClient.CreateIndex(p.GetIndexName()).BodyString(p.GetMapping()).Do(ctx)<br>        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>            <span class="hljs-keyword">return</span> err<br>        &#125;<br>    &#125;<br><br>    _, err = p.data.EsClient.Index().Index(p.GetIndexName()).BodyJson(esModel).Id(strconv.Itoa(<span class="hljs-keyword">int</span>(esModel.ID))).Do(ctx)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="测试新增-ES-数据"><a href="#测试新增-ES-数据" class="headerlink" title="测试新增 ES 数据"></a>测试新增 ES 数据</h2><p>没错还是通过 <a target="_blank" rel="noopener" href="https://github.com/bloomrpc/bloomrpc" title="BloomRPC">BloomRPC</a> 工具进行测试。</p>
-<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-20/1647759160847-1647758935518.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.learnku.com/uploads/images/202203/22/16176/vwc6z3yeeq.jpeg!large" srcset="/img/loading.gif" lazyload></p>
 <p>可以看到成功插入。访问 es 的服务来验证是否插入成功。</p>
 <blockquote>
 <p>es 访问链接：<a target="_blank" rel="noopener" href="http://127.0.0.1:5601/app/dev_tools#/console">http://127.0.0.1:5601/app/dev_tools#/console</a></p>
@@ -485,7 +483,7 @@
 <p>执行 es 命令进行查询：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sheel">GET goods/_search<br>&#123;<br>  &quot;query&quot;: &#123;<br>    &quot;match_all&quot;: &#123;&#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>看到结果如图：<br><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-20/1647759481003-a.png" srcset="/img/loading.gif" lazyload></p>
+<p>看到结果如图：<br><img src="https://cdn.learnku.com/uploads/images/202203/22/16176/fUQExqpGNu.png!large" srcset="/img/loading.gif" lazyload></p>
 <p>成功插入，截图中的 id 跟上图的 id 不一致，是因为我不小心执行两遍一样的创建请求。😂 下面的数据图没截出来。</p>
 <h2 id="编写查询请求"><a href="#编写查询请求" class="headerlink" title="编写查询请求"></a>编写查询请求</h2><ul>
 <li><code>service/goods.go</code> 文件新增请求方法</li>
@@ -513,7 +511,7 @@
 <h2 id="测试查询"><a href="#测试查询" class="headerlink" title="测试查询"></a>测试查询</h2><blockquote>
 <p>这里使用的是 goodsBrief 里面的信息来当关键词构建的请求，其他的效果，请自己进行测试 😂</p>
 </blockquote>
-<p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-20/1647760721514-b.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.learnku.com/uploads/images/202203/22/16176/y78FuZiuRs.png!large" srcset="/img/loading.gif" lazyload></p>
 <p>可以看到结果也出来了。</p>
 <h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>本篇只提供了一个商品创建的方法，更新的方法、删除的方法并没有体现，其实原理都一样，处理好自己的逻辑之后，调用 es 不同的命令就行了。<br>比如新增调用的是 <code>index</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">_, err = p.data.EsClient.Index().Index(p.GetIndexName()).BodyJson(esModel).Id(strconv.Itoa(<span class="hljs-keyword">int</span>(esModel.ID))).Do(ctx)<br><br></code></pre></td></tr></table></figure>
@@ -522,9 +520,9 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">_, err = p.data.EsClient.Update().Index(p.GetIndexName()).<br>	Doc(esModel).Id(<span class="hljs-string">&quot;自己的ID&quot;</span>).Do(ctx)<br></code></pre></td></tr></table></figure>
 
 <p>最近这几天忙成狗，总算是肝出来了 Elasticsearch 进行商品检索，之后准备先不完善商品服务剩余的接口，而是去写订单服务。</p>
-<p><strong>这里特别感谢一下一直支持观看此系列的同学，更感谢你们的打赏、点赞、分享、在看</strong></p>
+<p><img src="https://cdn.learnku.com/uploads/images/202203/01/16176/bXOHljd6ST.jpeg!large" srcset="/img/loading.gif" lazyload></p>
+<p><strong>这里特别感谢一下一直支持观看此系列的同学，更感谢你们的点赞、分享</strong></p>
 <p>感谢您的耐心阅读，动动手指点个赞吧。</p>
-<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://gitee.com/aliliin/picture/raw/master/2022-3-1/1646120534832-%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png" srcset="/img/loading.gif" lazyload></p>
 
             </div>
             <hr />
