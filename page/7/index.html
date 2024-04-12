@@ -198,6 +198,66 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="Redis的锁来缓解并发请求">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
+          Redis的锁来缓解并发请求
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/11/Redis%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%BC%93%E8%A7%A3%E5%B9%B6%E5%8F%91/" target="_blank">
+          
+          
+            
+          
+          Redis 锁 缓解并发
+简单实现Redis 锁主要利用 Redis 的 setnx 命令实现
+
+加锁命令：SETNX key value，当键不存在时，对键进行设置操作并返回成功，否则返回失败。KEY 是锁的唯一标识，一般按业务来决定命名。
+
+
+解锁命令：DEL key，通过删除键值对释放锁，以便其他线程可以通过 SETNX 命令来获取锁。
+锁超时：EXPIRE key timeout, 设置 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-11 13:09" pubdate>
+              2020-07-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PHP/">PHP</a>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+              <a href="/tags/%E9%94%81/">锁</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/02/11/redis%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E9%99%90%E6%B5%81/" target="_blank">
           <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="Redis 实现简单的限流">
         </a>

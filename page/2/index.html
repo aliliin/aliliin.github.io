@@ -198,6 +198,66 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png" srcset="/img/loading.gif" lazyload alt="kratos 框架商城微服务实战之商品服务 (六)">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/" target="_blank">
+          kratos 框架商城微服务实战之商品服务 (六)
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/" target="_blank">
+          
+          
+            
+          
+          这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。
+
+文章写的不清晰的地方
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-11 00:54" pubdate>
+              2022-03-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/">Kratos 微服务商城</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+              <a href="/tags/kratos/">kratos</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/02/25/Kratos%20%E9%9B%86%E6%88%90%20GORM%20%E4%BA%8B%E5%8A%A1/" target="_blank">
           <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/logo.png" srcset="/img/loading.gif" lazyload alt="如何在 Go Kratos 框架中使用 GORM 事务 ?">
         </a>
@@ -727,60 +787,6 @@ data 层承载事务是否比较合适？
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/12/17/TCP%20%E7%B2%98%E5%8C%85/" target="_blank">
-          <img src="/images/tcp.jpg" srcset="/img/loading.gif" lazyload alt="TCP 粘包">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/17/TCP%20%E7%B2%98%E5%8C%85/" target="_blank">
-          TCP 粘包
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/12/17/TCP%20%E7%B2%98%E5%8C%85/" target="_blank">
-          
-          
-            
-          
-          什么是 TCP 粘包
-粘包问题是指当发送两条消息时，比如发送了 ABC 和 DEF，但另一端接收到的却是 ABCD，像这种一次性读取了两条数据的情况就叫做粘包（正常情况应该是一条一条读取的）,正确读取 ABC 和 DEF 两条信息。
-当发送的消息是 ABC 时，另一端却接收到的是 AB 和 C 两条信息，像这种情况就叫做半包。
-
-为什么会有粘包和半包？
-这是因为 TCP 是面向连接的传输协议，TC
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-17 16:39" pubdate>
-              2021-12-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/TCP-socket/">TCP socket</a>
             
           </div>
         
