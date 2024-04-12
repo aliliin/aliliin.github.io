@@ -198,6 +198,63 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          <img src="/images/dcoker.jpg" srcset="/img/loading.gif" lazyload alt="Docker中常用的命令">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          Docker中常用的命令
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/Docker%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" target="_blank">
+          
+          
+            
+          
+          Docker 中常用的命令
+启动容器docker start
+启动容器并进入 交互式模式docker run -it 镜像name sh
+进入容器内部docker exec -it 镜像id sh
+查看正在运行的容器docker ps
+停止正在运行的容器 docker stop
+删除容器docker rmi 删除的镜像
+显示本地镜像docker list
+删除所有容器docker rm -f $(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:53" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/10/20/Consul%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" target="_blank">
           <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="Go 使用 Consul 的简单操作">
         </a>
@@ -667,55 +724,6 @@ min(
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Nacos/">Nacos</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="Redis 缓存策略">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          Redis 缓存策略
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
-          
-          
-            
-          
-          缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 11:46" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/redis/">redis</a>
             
           </div>
         

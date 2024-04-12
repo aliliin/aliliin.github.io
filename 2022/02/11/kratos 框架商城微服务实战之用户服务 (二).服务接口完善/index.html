@@ -1,1111 +1,743 @@
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme="auto">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png" />
-    <link rel="icon" href="/img/favicon.png" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no"
-    />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <meta name="theme-color" content="#2f4154" />
-    <meta
-      name="description"
-      content="Go-kratos 框架商城微服务实战之用户服务 (二)
-这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Go-kratos 框架商城微服务实战之用户服务 (二)
+这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub 源码 查看, 也感谢您指出不足之处。
 注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
 
-准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现单"
-    />
-    <meta name="author" content="高永立" />
-    <meta name="keywords" content="" />
-    <meta
-      name="description"
-      content="Go-kratos 框架商城微服务实战之用户服务 (二) 这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。 注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现单"
-    />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:title"
-      content="kratos 框架商城微服务实战之用户服务 (二)"
-    />
-    <meta
-      property="og:url"
-      content="https://aliliin.com/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/index.html"
-    />
-    <meta property="og:site_name" content="Aliliin" />
-    <meta
-      property="og:description"
-      content="Go-kratos 框架商城微服务实战之用户服务 (二) 这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。 注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现单"
-    />
-    <meta property="og:locale" content="zh_CN" />
-    <meta
-      property="og:image"
-      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
-    />
-    <meta
-      property="article:published_time"
-      content="2022-02-11T04:09:00.000Z"
-    />
-    <meta property="article:modified_time" content="2022-02-11T04:09:00.000Z" />
-    <meta property="article:author" content="高永立" />
-    <meta property="article:tag" content="Go" />
-    <meta property="article:tag" content="kratos" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:image"
-      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
-    />
+准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="Go-kratos 框架商城微服务实战之用户服务 (二) 这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub 源码 查看, 也感谢您指出不足之处。 注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kratos 框架商城微服务实战之用户服务 (二)">
+<meta property="og:url" content="https://aliliin.com/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="Go-kratos 框架商城微服务实战之用户服务 (二) 这篇主要编写单元测试。文章写的不清晰的地方可通过 GitHub 源码 查看, 也感谢您指出不足之处。 注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  准备工作本文主要使用 Ginkgo 、gomock 、Gomega 工具来实现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
+<meta property="article:published_time" content="2022-02-11T04:09:00.000Z">
+<meta property="article:modified_time" content="2022-02-11T04:09:00.000Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="kratos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
+  
+  <title>kratos 框架商城微服务实战之用户服务 (二) - Aliliin</title>
 
-    <title>kratos 框架商城微服务实战之用户服务 (二) - Aliliin</title>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"
-    />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css"
-    />
-    <link rel="stylesheet" href="/lib/hint/hint.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css"
-    />
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css"
-    />
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
-    <!-- 主题依赖的图标库，不要自行修改 -->
 
-    <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css"
-    />
+<!-- 主题依赖的图标库，不要自行修改 -->
 
-    <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css"
-    />
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
-    <link rel="stylesheet" href="/css/main.css" />
 
-    <!-- 自定义样式保持在最底部 -->
 
-    <script id="fluid-configs">
-      var Fluid = window.Fluid || {};
-      var CONFIG = {
-        hostname: "aliliin.com",
-        root: "/",
-        version: "1.8.12",
-        typing: { enable: true, typeSpeed: 70, cursorChar: "_", loop: false },
-        anchorjs: {
-          enable: true,
-          element: "h1,h2,h3,h4,h5,h6",
-          placement: "right",
-          visible: "hover",
-          icon: "",
-        },
-        progressbar: {
-          enable: true,
-          height_px: 3,
-          color: "#29d",
-          options: { showSpinner: false, trickleSpeed: 100 },
-        },
-        copy_btn: true,
-        image_zoom: { enable: true, img_url_replace: ["", ""] },
-        toc: {
-          enable: true,
-          headingSelector: "h1,h2,h3,h4,h5,h6",
-          collapseDepth: 0,
-        },
-        lazyload: {
-          enable: true,
-          loading_img: "/img/loading.gif",
-          onlypost: false,
-          offset_factor: 2,
-        },
-        web_analytics: {
-          enable: false,
-          baidu: null,
-          google: null,
-          gtag: null,
-          tencent: { sid: null, cid: null },
-          woyaola: null,
-          cnzz: null,
-          leancloud: {
-            app_id: null,
-            app_key: null,
-            server_url: null,
-            path: "window.location.pathname",
-          },
-        },
-        search_path: "/local-search.xml",
-      };
-    </script>
-    <script src="/js/utils.js"></script>
-    <script src="/js/color-schema.js"></script>
-    <meta name="generator" content="Hexo 5.4.1" />
-  </head>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
-  <body>
-    <header style="height: 70vh">
-      <nav
-        id="navbar"
-        class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"
-      >
-        <div class="container">
-          <a class="navbar-brand" href="/">
-            <strong>Aliliin</strong>
-          </a>
 
-          <button
-            id="navbar-toggler-btn"
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <div class="animated-icon">
-              <span></span><span></span><span></span>
-            </div>
-          </button>
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-          <!-- Collapsible content -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto text-center">
-              <li class="nav-item">
-                <a class="nav-link" href="/">
-                  <i class="iconfont icon-home-fill"></i>
-                  首页
-                </a>
-              </li>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-              <li class="nav-item">
-                <a class="nav-link" href="/archives/">
-                  <i class="iconfont icon-archive-fill"></i>
-                  归档
-                </a>
-              </li>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="kratos 框架商城微服务实战之用户服务 (二)">
+              
+            </span>
 
-              <li class="nav-item">
-                <a class="nav-link" href="/categories/">
-                  <i class="iconfont icon-category-fill"></i>
-                  分类
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/tags/">
-                  <i class="iconfont icon-tags-fill"></i>
-                  标签
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/about/">
-                  <i class="iconfont icon-user-fill"></i>
-                  关于
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/links/">
-                  <i class="iconfont icon-link-fill"></i>
-                  友链
-                </a>
-              </li>
-
-              <li class="nav-item" id="search-btn">
-                <a
-                  class="nav-link"
-                  target="_self"
-                  href="javascript:;"
-                  data-toggle="modal"
-                  data-target="#modalSearch"
-                  aria-label="Search"
-                >
-                  &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-                </a>
-              </li>
-
-              <li class="nav-item" id="color-toggle-btn">
-                <a
-                  class="nav-link"
-                  target="_self"
-                  href="javascript:;"
-                  aria-label="Color Toggle"
-                  >&nbsp;<i
-                    class="iconfont icon-dark"
-                    id="color-toggle-icon"
-                  ></i
-                  >&nbsp;</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <div
-        class="banner"
-        id="banner"
-        parallax="true"
-        style="
-          background: url('/img/default.png') no-repeat center center;
-          background-size: cover;
-        "
-      >
-        <div class="full-bg-img">
-          <div
-            class="mask flex-center"
-            style="background-color: rgba(0, 0, 0, 0.5)"
-          >
-            <div class="page-header text-center fade-in-up">
-              <span
-                class="h2"
-                id="subtitle"
-                title="kratos 框架商城微服务实战之用户服务 (二)"
-              >
-              </span>
-
+            
               <div class="mt-3">
-                <span class="post-meta mr-2">
-                  <i class="iconfont icon-author" aria-hidden="true"></i>
-                  高永立
-                </span>
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-11 12:09" pubdate>
+        2022年2月11日 中午
+      </time>
+    </span>
+  
+</div>
 
-                <span class="post-meta">
-                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2022-02-11 12:09" pubdate>
-                    2022年2月11日 中午
-                  </time>
-                </span>
-              </div>
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.3k 字
+    </span>
+  
 
-              <div class="mt-1">
-                <span class="post-meta mr-2">
-                  <i class="iconfont icon-chart"></i>
-                  7.3k 字
-                </span>
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23 分钟
+    </span>
+  
 
-                <span class="post-meta mr-2">
-                  <i class="iconfont icon-clock-fill"></i>
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
-                  23 分钟
-                </span>
-
-                <!-- 不蒜子统计文章PV -->
-                <span id="busuanzi_container_page_pv" style="display: none">
-                  <i class="iconfont icon-eye" aria-hidden="true"></i>
-                  <span id="busuanzi_value_page_pv"></span> 次
-                </span>
-              </div>
-            </div>
+            
           </div>
+
+          
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main>
-      <div class="container-fluid nopadding-x">
-        <div class="row nomargin-x">
-          <div class="d-none d-lg-block col-lg-2 post-categories">
-            <div class="category-list">
-              <div class="category row">
-                <a
-                  class="category-item list-group-item category-item-action col-10 col-md-11 col-xm-11"
-                  id="heading-2dd3b085945c184eb06b037b76c5f696"
-                  role="tab"
-                  data-toggle="collapse"
-                  href="#collapse-2dd3b085945c184eb06b037b76c5f696"
-                  aria-expanded="true"
-                >
-                  Kratos 微服务商城(12)
-                  <i class="iconfont icon-arrowright"></i>
-                </a>
+  <main>
+    
+      
 
-                <div
-                  class="category-collapse collapse show"
-                  id="collapse-2dd3b085945c184eb06b037b76c5f696"
-                  role="tabpanel"
-                  aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696"
-                >
-                  <div class="category-post-list">
-                    <a
-                      href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之购物车服务 (十二)</span
-                      >
-                    </a>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
 
-                    <a
-                      href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (十一)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (十)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (九)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (八)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (七)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (六)</span
-                      >
-                    </a>
+<div class="category-list">
+  
+  
+  
+  
+  
+    
+    
+    
+    <div class="category row">
+      <a class="category-item 
+                 
+                list-group-item category-item-action col-10 col-md-11 col-xm-11"
+        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+        aria-expanded="true"
+      >
+        Kratos 微服务商城(12) 
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+       
+      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之购物车服务 (十二)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十一)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/" class="list-group-item list-group-item-action">
+          <span class="category-post">More...</span>
+        </a>
+        
+  </div>
 
-                    <a
-                      href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之用户服务API (五)</span
-                      >
-                    </a>
+        
+      </div>
+    </div>
+  
+</div>
 
-                    <a
-                      href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之用户服务 (四)</span
-                      >
-                    </a>
+      
+    </div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none;">kratos 框架商城微服务实战之用户服务 (二)</h1>
+            
+            <p class="note note-info">
+               本文最后更新于：2 年前 
+            </p>
+            
+            <div class="markdown-body">
+              <h1 id="Go-kratos-框架商城微服务实战之用户服务-二"><a href="#Go-kratos-框架商城微服务实战之用户服务-二" class="headerlink" title="Go-kratos 框架商城微服务实战之用户服务 (二)"></a>Go-kratos 框架商城微服务实战之用户服务 (二)</h1><blockquote>
+<p>这篇主要编写单元测试。文章写的不清晰的地方可通过 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop/tree/main/service/user" title="GitHub源码">GitHub 源码</a> 查看, 也感谢您指出不足之处。</p>
+<p>注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>本文主要使用 <a target="_blank" rel="noopener" href="https://onsi.github.io/ginkgo/" title="Ginkgo">Ginkgo</a> 、<a target="_blank" rel="noopener" href="https://github.com/golang/mock/" title="gomock">gomock</a> 、<a target="_blank" rel="noopener" href="https://onsi.github.io/gomega/" title="Gomega">Gomega</a> 工具来实现单元测试，之前不了解的同学，可以先熟悉一下相关文档。</p>
+<h3 id="Ginkgo-包的引入和简单介绍"><a href="#Ginkgo-包的引入和简单介绍" class="headerlink" title="Ginkgo 包的引入和简单介绍"></a>Ginkgo 包的引入和简单介绍</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ go get github.com<span class="hljs-regexp">/onsi/gi</span>nkgo<span class="hljs-regexp">/v2/gi</span>nkgo<br>$ go get github.com<span class="hljs-regexp">/onsi/g</span>omega<br></code></pre></td></tr></table></figure>
 
-                    <a
-                      href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之用户服务 (三)</span
-                      >
-                    </a>
+<p>第一条命令是获取 ginkgo 并且安装 ginkgo 可执行文件到 <code>$GOPATH/bin</code> –- 你需要在你电脑中把 $GOPATH 配置上，并配置上它。<br>第二条命令安装了全部 gomega 库。这样可以导入 gomega 包到你的测试代码中：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br></code></pre></td></tr></table></figure>
 
-                    <a
-                      href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post">More...</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
+<p>Ginkgo 与 Go 现有的测试基础设施挂钩，可以使用 go test 运行 Ginkgo 套件。<br>这同时意味着 Ginkgo 测试可以和传统 Go testing 测试一起使用。go test 和 ginkgo 都会运行你套件内的所有测试。</p>
+<h3 id="使用-Dockertest"><a href="#使用-Dockertest" class="headerlink" title="使用 Dockertest"></a>使用 Dockertest</h3><p>使用 Dockertest 来完成咱们服务的 Golang 链接 DB 的集成测试。Dockertest 库提供了简单易用的命令，用于启动 Docker 容器并将其用于测试。简单理解 Dockertest 工具就是 使用 docker 创建一个容器并在测试运行结束后停止并删除。具体信息请查看 <a target="_blank" rel="noopener" href="https://github.com/ory/dockertest" title="Dockertest 官方介绍">Dockertest 官方介绍</a></p>
+<p>安装 Dockertest</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> -<span class="hljs-keyword">u</span> github.<span class="hljs-keyword">com</span>/ory/dockertest/v3<br></code></pre></td></tr></table></figure>
+
+<p>编写 Dockertest  配置代码并将其用于测试，进入 <code>service/user/internal/data/</code> 目录新建 docker_mysql.go 文件，编写代码如下：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs stata">package data<br><br>import (<br>    <span class="hljs-string">&quot;database/sql&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;github.com/ory/dockertest/v3&quot;</span> <span class="hljs-comment">// 注意这个包的引入</span><br>    <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br>func DockerMysql(img, <span class="hljs-keyword">version</span> string) (string, func()) &#123;<br>    <span class="hljs-keyword">return</span> innerDockerMysql(img, <span class="hljs-keyword">version</span>)<br>&#125;<br><br><span class="hljs-comment">// 初始化 Docker mysql 容器</span><br>func innerDockerMysql(img, <span class="hljs-keyword">version</span> string) (string, func()) &#123;<br>    <span class="hljs-comment">// uses a sensible default on windows (tcp/http) and linux/osx (socket)</span><br>    pool, <span class="hljs-keyword">err</span> := dockertest.NewPool(<span class="hljs-string">&quot;&quot;</span>)<br>    pool.MaxWait = time.Minute * 2<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not connect to docker: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-comment">// pulls an image, creates a container based on it and runs it</span><br>    resource, <span class="hljs-keyword">err</span> := pool.<span class="hljs-keyword">Run</span>(img, <span class="hljs-keyword">version</span>, []string&#123;<span class="hljs-string">&quot;MYSQL_ROOT_PASSWORD=secret&quot;</span>, <span class="hljs-string">&quot;MYSQL_ROOT_HOST=%&quot;</span>&#125;)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not start resource: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">conStr</span> := fmt.Sprintf(<span class="hljs-string">&quot;root:secret@(localhost:%s)/mysql?parseTime=true&quot;</span>, resource.GetPort(<span class="hljs-string">&quot;3306/tcp&quot;</span>))<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := pool.Retry(func() <span class="hljs-keyword">error</span> &#123;<br>        <span class="hljs-keyword">var</span> <span class="hljs-keyword">err</span> <span class="hljs-keyword">error</span><br>        <span class="hljs-keyword">db</span>, <span class="hljs-keyword">err</span> := sql.<span class="hljs-keyword">Open</span>(<span class="hljs-string">&quot;mysql&quot;</span>, <span class="hljs-keyword">conStr</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">err</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">db</span>.Ping()<br>    &#125;); <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not connect to docker: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-comment">// 回调函数关闭容器</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">conStr</span>, func() &#123;<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> = pool.Purge(resource); <span class="hljs-keyword">err</span> != nil &#123;<br>            <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not purge resource: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用 Ginkgo 编写链接 Dockertest  的测试代码，还是此目录下，新建 data_suite_test.go 文件，编写代码如下：代码中有详细的注释，这里就不过多解释了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data_test<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/pkg/errors&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>    <span class="hljs-string">&quot;testing&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>    <span class="hljs-string">&quot;user/internal/data&quot;</span><br><br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>)<br><br><span class="hljs-comment">// 测试 data 方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestData</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    <span class="hljs-comment">//  Ginkgo 测试通过调用 Fail(description string) 功能来表示失败</span><br>    <span class="hljs-comment">// 使用 RegisterFailHandler 将此函数传递给 Gomega 。这是 Ginkgo 和 Gomega 之间的唯一连接点</span><br>    RegisterFailHandler(Fail)<br>    <span class="hljs-comment">// 通知 Ginkgo 启动测试套件。如果您的任何 specs 失败，Ginkgo 将自动使 testing.T 失败。</span><br>    RunSpecs(t, <span class="hljs-string">&quot;test biz data &quot;</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> cleaner <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span>      // 定义删除 <span class="hljs-title">mysql</span> 容器的回调函数</span><br><span class="hljs-keyword">var</span> Db *data.Data       <span class="hljs-comment">// 用于测试的 data</span><br><span class="hljs-keyword">var</span> ctx context.Context <span class="hljs-comment">// 上下文</span><br><br><span class="hljs-comment">// initialize  AutoMigrate gorm 自动建表的方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initialize</span><span class="hljs-params">(db *gorm.DB)</span> <span class="hljs-title">error</span></span> &#123;<br>    err := db.AutoMigrate(<br>        &amp;data.User&#123;&#125;,<br>    )<br>    <span class="hljs-keyword">return</span> errors.WithStack(err)<br>&#125;<br><br><span class="hljs-comment">// ginkgo 使用 BeforeEach 为您的 Specs 设置状态</span><br><span class="hljs-keyword">var</span> _ = BeforeSuite(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 执行测试数据库操作之前，链接之前 docker 容器创建的 mysql</span><br>    <span class="hljs-comment">//con, f := data.DockerMysql(&quot;mysql&quot;, &quot;latest&quot;)</span><br>    con, f := data.DockerMysql(<span class="hljs-string">&quot;mariadb&quot;</span>, <span class="hljs-string">&quot;latest&quot;</span>)<br>    cleaner = f <span class="hljs-comment">// 测试完成，关闭容器的回调方法</span><br>    config := &amp;conf.Data&#123;Database: &amp;conf.Data_Database&#123;Driver: <span class="hljs-string">&quot;mysql&quot;</span>, Source: con&#125;&#125;<br>    db := data.NewDB(config)<br>    mySQLDb, _, err := data.NewData(config, <span class="hljs-literal">nil</span>, db, <span class="hljs-literal">nil</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    Db = mySQLDb<br>    err = initialize(db)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    Expect(err).NotTo(HaveOccurred())<br>&#125;)<br><br><span class="hljs-comment">// 测试结束后 通过回调函数，关闭并删除 docker 创建的容器</span><br><span class="hljs-keyword">var</span> _ = AfterSuite(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    cleaner()<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>测试模拟数据库连接,还是此目录下运行 <code>go test</code> 命令，得到如下结果：<br><img src="https://gitee.com/aliliin/picture/raw/master/2022-2-19/1645239160793-data_test.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>注：这里可以看到虽然 0 个 Passed，但同时也是 0 个 Failed，这是因为咱们这里还没有进行测试，只是验证一下数据库是否连接成功，并未执行 CURD 之类的操作。<br>这里运行可能比较慢，因为它会从 docker hub 拉取 mysql 的镜像，本文使用的是 mariadb 的镜像，且我本机已经提前下载好了 mariadb:latest 镜像，如果你的电脑是苹果的 M1 处理器推荐你用 mariadb。</p>
+</blockquote>
+<h2 id="编写单元测试"><a href="#编写单元测试" class="headerlink" title="编写单元测试"></a>编写单元测试</h2><p>漫长的准备工作终于完成了，接下来来正式编写单元测试的代码吧</p>
+<h3 id="编写-data-层的测试代码"><a href="#编写-data-层的测试代码" class="headerlink" title="编写 data 层的测试代码"></a>编写 data 层的测试代码</h3><p>还是 data 目录下新建 user_test.go 文件，编写内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data_test<br><br><span class="hljs-keyword">import</span> (<br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>    <span class="hljs-string">&quot;user/internal/data&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> _ = Describe(<span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> ro biz.UserRepo<br>    <span class="hljs-keyword">var</span> uD *biz.User<br>    BeforeEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-comment">// 这里的 Db 是 data_suite_test.go 文件里面定义的</span><br>        ro = data.NewUserRepo(Db, <span class="hljs-literal">nil</span>)<br>        <span class="hljs-comment">// 这里你可以引入外部组装好的数据</span><br>        uD = &amp;biz.User&#123;<br>            ID:       <span class="hljs-number">1</span>,<br>            Mobile:   <span class="hljs-string">&quot;13803881388&quot;</span>,<br>            Password: <span class="hljs-string">&quot;admin123456&quot;</span>,<br>            NickName: <span class="hljs-string">&quot;aliliin&quot;</span>,<br>            Role:     <span class="hljs-number">1</span>,<br>            Birthday: <span class="hljs-number">693629981</span>,<br>        &#125;<br>    &#125;)<br><br>    <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>    It(<span class="hljs-string">&quot;CreateUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        u, err := ro.CreateUser(ctx, uD)<br>        Ω(err).ShouldNot(HaveOccurred())<br>        <span class="hljs-comment">// 组装的数据 mobile 为 13803881388</span><br>        Ω(u.Mobile).Should(Equal(<span class="hljs-string">&quot;13803881388&quot;</span>)) <span class="hljs-comment">// 手机号应该为创建的时候写入的手机号</span><br>    &#125;)<br><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Ω 就是 gomega 包的语法，It 是 ginkgo 包的用法。</p>
+</blockquote>
+<p>还是此目录下运行 <code>go test</code> 命令，得到如下结果：<br><img src="https://gitee.com/aliliin/picture/raw/master/2022-2-19/1645240036492-data_test1.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>此时可以看到共有 1 个 Passed 通过。<br>提示： 类似 packets.go:37 : unexpected EOF 错误，是因为 docker 模拟数据库链接导致的。</p>
+</blockquote>
+<h3 id="引入-gomock-包，mock-对象模拟依赖项"><a href="#引入-gomock-包，mock-对象模拟依赖项" class="headerlink" title="引入 gomock 包，mock 对象模拟依赖项"></a>引入 gomock 包，mock 对象模拟依赖项</h3><blockquote>
+<p>具体的使用方法可以参考这篇 <a target="_blank" rel="noopener" href="https://geektutu.com/post/quick-gomock.html" title="gomock 的使用文章">gomock 的使用文章</a></p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> gomock 主要包含两个部分：gomock 库和辅助代码生成工具 mockgen<br>go get github.com<span class="hljs-regexp">/golang/m</span>ock<br>go get github.com<span class="hljs-regexp">/golang/m</span>ock/gomock<br></code></pre></td></tr></table></figure>
+
+<h3 id="编写生成-mock-文件方法"><a href="#编写生成-mock-文件方法" class="headerlink" title="编写生成 mock 文件方法"></a>编写生成 mock 文件方法</h3><p>修改 <code>user/internal/biz/user.go</code> 文件</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-title">package</span> biz<br><br>...<br><br><br>// 注意这一行新增的 mock 数据的命令<br>//go:generate mockgen -destination=../mocks/mrepo/user.go -package=mrepo . <span class="hljs-type">UserRepo</span><br><span class="hljs-keyword">type</span> <span class="hljs-type">UserRepo</span> interface &#123;<br>  <span class="hljs-type">CreateUser</span>(context.<span class="hljs-type">Context</span>, *<span class="hljs-type">User</span>) (*<span class="hljs-type">User</span>, error)<br>&#125;<br><br>...<br></code></pre></td></tr></table></figure>
+
+<p>进入 biz 目录执行命令</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mockgen <span class="hljs-attribute">-destination</span>=../mocks/mrepo/user.go <span class="hljs-attribute">-package</span>=mrepo . UserRepo<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里是用 gomock 提供的 mockgen 工具生成要 mock 的接口的实现,在生成 mock 代码的时候，我们用到了 mockgen 工具，这个工具是 gomock 提供的用来为要 mock 的接口生成实现的。它可以根据给定的接口，来自动生成代码。</p>
+</blockquote>
+<p>执行完之后，你会看到多出来了 <code>service/user/internal/mocks/mrepo/user.go</code> 文件</p>
+<h4 id="编写-biz-层的测试方法"><a href="#编写-biz-层的测试方法" class="headerlink" title="编写 biz 层的测试方法"></a>编写 biz 层的测试方法</h4><p>biz 层目录下，新增 <code>biz_suite_test.go</code> 文件，添加内容如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz_test<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/golang/mock/gomock&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>    <span class="hljs-string">&quot;testing&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestBiz</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    RegisterFailHandler(Fail)<br>    RunSpecs(t, <span class="hljs-string">&quot;biz user test&quot;</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> ctl *gomock.Controller<br><span class="hljs-keyword">var</span> cleaner <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span><br><span class="hljs-keyword">var</span> ctx context.Context<br><br><span class="hljs-keyword">var</span> _ = BeforeEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    ctl = gomock.NewController(GinkgoT())<br>    cleaner = ctl.Finish<br>    ctx = context.Background()<br>&#125;)<br><span class="hljs-keyword">var</span> _ = AfterEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// remove any mocks</span><br>    cleaner()<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>还是 biz 层目录下，新增 <code>user_test.go</code> 文件，添加内容如下：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs lisp">package biz_test<br><br>import (<br>    <span class="hljs-string">&quot;github.com/golang/mock/gomock&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>    <span class="hljs-string">&quot;user/internal/mocks/mrepo&quot;</span><br>)<br><br>var _ = Describe(<span class="hljs-string">&quot;UserUsecase&quot;</span>, func() &#123;<br>    var userCase *biz.UserUsecase<br>    var mUserRepo *mrepo.MockUserRepo<br><br>    BeforeEach(<span class="hljs-name">func</span>() &#123;<br>        mUserRepo = mrepo.NewMockUserRepo(<span class="hljs-name">ctl</span>)<br>        userCase = biz.NewUserUsecase(<span class="hljs-name">mUserRepo</span>, <span class="hljs-literal">nil</span>)<br>    &#125;)<br><br>    It(<span class="hljs-string">&quot;Create&quot;</span>, func() &#123;<br>        info <span class="hljs-symbol">:=</span> <span class="hljs-symbol">&amp;biz</span>.User&#123;<br>            ID:       <span class="hljs-number">1</span>,<br>            Mobile:   <span class="hljs-string">&quot;13803881388&quot;</span>,<br>            Password: <span class="hljs-string">&quot;admin123456&quot;</span>,<br>            NickName: <span class="hljs-string">&quot;aliliin&quot;</span>,<br>            Role:     <span class="hljs-number">1</span>,<br>            Birthday: <span class="hljs-number">693629981</span>,<br>        &#125;<br>        mUserRepo.EXPECT().CreateUser(<span class="hljs-name">ctx</span>, gomock.Any()).Return(<span class="hljs-name">info</span>, <span class="hljs-literal">nil</span>)<br>        l, err <span class="hljs-symbol">:=</span> userCase.Create(<span class="hljs-name">ctx</span>, info)<br>        Ω(<span class="hljs-name">err</span>).ShouldNot(<span class="hljs-name">HaveOccurred</span>())<br>        Ω(<span class="hljs-name">err</span>).ToNot(<span class="hljs-name">HaveOccurred</span>())<br>        Ω(<span class="hljs-name">l</span>.ID).To(<span class="hljs-name">Equal</span>(<span class="hljs-name">int64</span>(<span class="hljs-number">1</span>)))<br>        Ω(<span class="hljs-name">l</span>.Mobile).To(<span class="hljs-name">Equal</span>(<span class="hljs-string">&quot;13803881388&quot;</span>))<br>    &#125;)<br><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="验证单元测试"><a href="#验证单元测试" class="headerlink" title="验证单元测试"></a>验证单元测试</h3><p>还是 biz 层目录下运行 <code>go test</code> 命令，得到如下结果：<br><img src="https://gitee.com/aliliin/picture/raw/master/2022-2-19/1645243239405-biz_test1.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>到这一步 data 层测试 sql 语句的方法，biz 测试基本逻辑的方法已经编写完成并通过了测试了，service 层的单元测试大同小异，这里就不写了。</p>
+<p>感谢您的耐心阅读，动动手指点个 star 吧。</p>
+<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/bXOHljd6ST.jpeg" srcset="/img/loading.gif" lazyload></p>
+
             </div>
-          </div>
-          <div class="col-lg-8 nopadding-x-md">
-            <div class="container nopadding-x-md" id="board-ctn">
-              <div class="py-5" id="board">
-                <article class="post-content mx-auto">
-                  <!-- SEO header -->
-                  <h1 style="display: none">
-                    kratos 框架商城微服务实战之用户服务 (二)
-                  </h1>
-
-                  <p class="note note-info">本文最后更新于：2 年前</p>
-
-                  <div class="markdown-body">
-                    <h1 id="Go-kratos-框架商城微服务实战之用户服务-二">
-                      <a
-                        href="#Go-kratos-框架商城微服务实战之用户服务-二"
-                        class="headerlink"
-                        title="Go-kratos 框架商城微服务实战之用户服务 (二)"
-                      ></a
-                      >Go-kratos 框架商城微服务实战之用户服务 (二)
-                    </h1>
-                    <blockquote>
-                      <p>
-                        这篇主要编写单元测试。文章写的不清晰的地方可通过
-                        <a
-                          target="_blank"
-                          rel="noopener"
-                          href="https://github.com/aliliin/kratos-shop/tree/main/service/user"
-                          title="GitHub源码"
-                          >GitHub源码</a
-                        >
-                        查看, 也感谢您指出不足之处。
-                      </p>
-                      <p>
-                        注：横排 …
-                        为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的
-                        . 来代替，如果你在复制本文代码块的时候，切记不要将 .
-                        也一同复制进去。
-                      </p>
-                    </blockquote>
-                    <h2 id="准备工作">
-                      <a
-                        href="#准备工作"
-                        class="headerlink"
-                        title="准备工作"
-                      ></a
-                      >准备工作
-                    </h2>
-                    <p>
-                      本文主要使用
-                      <a
-                        target="_blank"
-                        rel="noopener"
-                        href="https://onsi.github.io/ginkgo/"
-                        title="Ginkgo"
-                        >Ginkgo</a
-                      >
-                      、<a
-                        target="_blank"
-                        rel="noopener"
-                        href="https://github.com/golang/mock/"
-                        title="gomock"
-                        >gomock</a
-                      >
-                      、<a
-                        target="_blank"
-                        rel="noopener"
-                        href="https://onsi.github.io/gomega/"
-                        title="Gomega"
-                        >Gomega</a
-                      >
-                      工具来实现单元测试，之前不了解的同学，可以先熟悉一下相关文档。
-                    </p>
-                    <h3 id="Ginkgo-包的引入和简单介绍">
-                      <a
-                        href="#Ginkgo-包的引入和简单介绍"
-                        class="headerlink"
-                        title="Ginkgo 包的引入和简单介绍"
-                      ></a
-                      >Ginkgo 包的引入和简单介绍
-                    </h3>
-                    <figure class="highlight awk">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs awk">$ go get github.com<span class="hljs-regexp">/onsi/gi</span>nkgo<span class="hljs-regexp">/v2/gi</span>nkgo<br>$ go get github.com<span class="hljs-regexp">/onsi/g</span>omega<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>
-                      第一条命令是获取 ginkgo 并且安装 ginkgo 可执行文件到
-                      <code>$GOPATH/bin</code> –- 你需要在你电脑中把 $GOPATH
-                      配置上，并配置上它。<br />第二条命令安装了全部 gomega
-                      库。这样可以导入 gomega 包到你的测试代码中：
-                    </p>
-                    <figure class="highlight arduino">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs arduino"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>
-                      Ginkgo 与 Go 现有的测试基础设施挂钩，可以使用 go test 运行
-                      Ginkgo 套件。<br />这同时意味着 Ginkgo 测试可以和传统 Go
-                      testing 测试一起使用。go test 和 ginkgo
-                      都会运行你套件内的所有测试。
-                    </p>
-                    <h3 id="使用-Dockertest">
-                      <a
-                        href="#使用-Dockertest"
-                        class="headerlink"
-                        title="使用 Dockertest"
-                      ></a
-                      >使用 Dockertest
-                    </h3>
-                    <p>
-                      使用 Dockertest 来完成咱们服务的 Golang 链接 DB
-                      的集成测试。Dockertest 库提供了简单易用的命令，用于启动
-                      Docker 容器并将其用于测试。简单理解 Dockertest 工具就是
-                      使用 docker
-                      创建一个容器并在测试运行结束后停止并删除。具体信息请查看
-                      <a
-                        target="_blank"
-                        rel="noopener"
-                        href="https://github.com/ory/dockertest"
-                        title="Dockertest 官方介绍"
-                        >Dockertest 官方介绍</a
-                      >
-                    </p>
-                    <p>安装 Dockertest</p>
-                    <figure class="highlight vim">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs vim"><span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> -<span class="hljs-keyword">u</span> github.<span class="hljs-keyword">com</span>/ory/dockertest/v3<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>
-                      编写 Dockertest 配置代码并将其用于测试，进入
-                      <code>service/user/internal/data/</code> 目录新建
-                      docker_mysql.go 文件，编写代码如下：
-                    </p>
-                    <figure class="highlight stata">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs stata">package data<br><br>import (<br>    <span class="hljs-string">&quot;database/sql&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;github.com/ory/dockertest/v3&quot;</span> <span class="hljs-comment">// 注意这个包的引入</span><br>    <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br>func DockerMysql(img, <span class="hljs-keyword">version</span> string) (string, func()) &#123;<br>    <span class="hljs-keyword">return</span> innerDockerMysql(img, <span class="hljs-keyword">version</span>)<br>&#125;<br><br><span class="hljs-comment">// 初始化 Docker mysql 容器</span><br>func innerDockerMysql(img, <span class="hljs-keyword">version</span> string) (string, func()) &#123;<br>    <span class="hljs-comment">// uses a sensible default on windows (tcp/http) and linux/osx (socket)</span><br>    pool, <span class="hljs-keyword">err</span> := dockertest.NewPool(<span class="hljs-string">&quot;&quot;</span>)<br>    pool.MaxWait = time.Minute * 2<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not connect to docker: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-comment">// pulls an image, creates a container based on it and runs it</span><br>    resource, <span class="hljs-keyword">err</span> := pool.<span class="hljs-keyword">Run</span>(img, <span class="hljs-keyword">version</span>, []string&#123;<span class="hljs-string">&quot;MYSQL_ROOT_PASSWORD=secret&quot;</span>, <span class="hljs-string">&quot;MYSQL_ROOT_HOST=%&quot;</span>&#125;)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not start resource: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">conStr</span> := fmt.Sprintf(<span class="hljs-string">&quot;root:secret@(localhost:%s)/mysql?parseTime=true&quot;</span>, resource.GetPort(<span class="hljs-string">&quot;3306/tcp&quot;</span>))<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := pool.Retry(func() <span class="hljs-keyword">error</span> &#123;<br>        <span class="hljs-keyword">var</span> <span class="hljs-keyword">err</span> <span class="hljs-keyword">error</span><br>        <span class="hljs-keyword">db</span>, <span class="hljs-keyword">err</span> := sql.<span class="hljs-keyword">Open</span>(<span class="hljs-string">&quot;mysql&quot;</span>, <span class="hljs-keyword">conStr</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">err</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">db</span>.Ping()<br>    &#125;); <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not connect to docker: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-comment">// 回调函数关闭容器</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">conStr</span>, func() &#123;<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> = pool.Purge(resource); <span class="hljs-keyword">err</span> != nil &#123;<br>            <span class="hljs-keyword">log</span>.Fatalf(<span class="hljs-string">&quot;Could not purge resource: %s&quot;</span>, <span class="hljs-keyword">err</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>
-                      使用 Ginkgo 编写链接
-                      Dockertest 的测试代码，还是此目录下，新建
-                      data_suite_test.go
-                      文件，编写代码如下：代码中有详细的注释，这里就不过多解释了。
-                    </p>
-                    <figure class="highlight go">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> data_test<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/pkg/errors&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>    <span class="hljs-string">&quot;testing&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>    <span class="hljs-string">&quot;user/internal/data&quot;</span><br><br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>)<br><br><span class="hljs-comment">// 测试 data 方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestData</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    <span class="hljs-comment">//  Ginkgo 测试通过调用 Fail(description string) 功能来表示失败</span><br>    <span class="hljs-comment">// 使用 RegisterFailHandler 将此函数传递给 Gomega 。这是 Ginkgo 和 Gomega 之间的唯一连接点</span><br>    RegisterFailHandler(Fail)<br>    <span class="hljs-comment">// 通知 Ginkgo 启动测试套件。如果您的任何 specs 失败，Ginkgo 将自动使 testing.T 失败。</span><br>    RunSpecs(t, <span class="hljs-string">&quot;test biz data &quot;</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> cleaner <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span>      // 定义删除 <span class="hljs-title">mysql</span> 容器的回调函数</span><br><span class="hljs-keyword">var</span> Db *data.Data       <span class="hljs-comment">// 用于测试的 data</span><br><span class="hljs-keyword">var</span> ctx context.Context <span class="hljs-comment">// 上下文</span><br><br><span class="hljs-comment">// initialize  AutoMigrate gorm 自动建表的方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initialize</span><span class="hljs-params">(db *gorm.DB)</span> <span class="hljs-title">error</span></span> &#123;<br>    err := db.AutoMigrate(<br>        &amp;data.User&#123;&#125;,<br>    )<br>    <span class="hljs-keyword">return</span> errors.WithStack(err)<br>&#125;<br><br><span class="hljs-comment">// ginkgo 使用 BeforeEach 为您的 Specs 设置状态</span><br><span class="hljs-keyword">var</span> _ = BeforeSuite(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 执行测试数据库操作之前，链接之前 docker 容器创建的 mysql</span><br>    <span class="hljs-comment">//con, f := data.DockerMysql(&quot;mysql&quot;, &quot;latest&quot;)</span><br>    con, f := data.DockerMysql(<span class="hljs-string">&quot;mariadb&quot;</span>, <span class="hljs-string">&quot;latest&quot;</span>)<br>    cleaner = f <span class="hljs-comment">// 测试完成，关闭容器的回调方法</span><br>    config := &amp;conf.Data&#123;Database: &amp;conf.Data_Database&#123;Driver: <span class="hljs-string">&quot;mysql&quot;</span>, Source: con&#125;&#125;<br>    db := data.NewDB(config)<br>    mySQLDb, _, err := data.NewData(config, <span class="hljs-literal">nil</span>, db, <span class="hljs-literal">nil</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    Db = mySQLDb<br>    err = initialize(db)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    Expect(err).NotTo(HaveOccurred())<br>&#125;)<br><br><span class="hljs-comment">// 测试结束后 通过回调函数，关闭并删除 docker 创建的容器</span><br><span class="hljs-keyword">var</span> _ = AfterSuite(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    cleaner()<br>&#125;)<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>
-                      测试模拟数据库连接,还是此目录下运行
-                      <code>go test</code> 命令，得到如下结果：<br /><img
-                        src="https://gitee.com/aliliin/picture/raw/master/2022-2-19/1645239160793-data_test.png"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                    <blockquote>
-                      <p>
-                        注：这里可以看到虽然 0 个Passed，但同时也是 0 个
-                        Failed，这是因为咱们这里还没有进行测试，只是验证一下数据库是否连接成功，并未执行
-                        CURD 之类的操作。<br />这里运行可能比较慢，因为它会从docker
-                        hub 拉取 mysql 的镜像，本文使用的是 mariadb
-                        的镜像，且我本机已经提前下载好了 mariadb:latest
-                        镜像，如果你的电脑是苹果的M1处理器推荐你用 mariadb。
-                      </p>
-                    </blockquote>
-                    <h2 id="编写单元测试">
-                      <a
-                        href="#编写单元测试"
-                        class="headerlink"
-                        title="编写单元测试"
-                      ></a
-                      >编写单元测试
-                    </h2>
-                    <p>
-                      漫长的准备工作终于完成了，接下来来正式编写单元测试的代码吧
-                    </p>
-                    <h3 id="编写-data-层的测试代码">
-                      <a
-                        href="#编写-data-层的测试代码"
-                        class="headerlink"
-                        title="编写 data 层的测试代码"
-                      ></a
-                      >编写 data 层的测试代码
-                    </h3>
-                    <p>还是data目录下新建 user_test.go 文件，编写内容如下：</p>
-                    <figure class="highlight go">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> data_test<br><br><span class="hljs-keyword">import</span> (<br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>    <span class="hljs-string">&quot;user/internal/data&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> _ = Describe(<span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> ro biz.UserRepo<br>    <span class="hljs-keyword">var</span> uD *biz.User<br>    BeforeEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-comment">// 这里的 Db 是 data_suite_test.go 文件里面定义的</span><br>        ro = data.NewUserRepo(Db, <span class="hljs-literal">nil</span>)<br>        <span class="hljs-comment">// 这里你可以引入外部组装好的数据</span><br>        uD = &amp;biz.User&#123;<br>            ID:       <span class="hljs-number">1</span>,<br>            Mobile:   <span class="hljs-string">&quot;13803881388&quot;</span>,<br>            Password: <span class="hljs-string">&quot;admin123456&quot;</span>,<br>            NickName: <span class="hljs-string">&quot;aliliin&quot;</span>,<br>            Role:     <span class="hljs-number">1</span>,<br>            Birthday: <span class="hljs-number">693629981</span>,<br>        &#125;<br>    &#125;)<br><br>    <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>    It(<span class="hljs-string">&quot;CreateUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        u, err := ro.CreateUser(ctx, uD)<br>        Ω(err).ShouldNot(HaveOccurred())<br>        <span class="hljs-comment">// 组装的数据 mobile 为 13803881388</span><br>        Ω(u.Mobile).Should(Equal(<span class="hljs-string">&quot;13803881388&quot;</span>)) <span class="hljs-comment">// 手机号应该为创建的时候写入的手机号</span><br>    &#125;)<br><br>&#125;)<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <blockquote>
-                      <p>Ω 就是 gomega 包的语法，It 是 ginkgo 包的用法。</p>
-                    </blockquote>
-                    <p>
-                      还是此目录下运行
-                      <code>go test</code> 命令，得到如下结果：<br /><img
-                        src="https://gitee.com/aliliin/picture/raw/master/2022-2-19/1645240036492-data_test1.png"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                    <blockquote>
-                      <p>
-                        此时可以看到共有 1 个Passed 通过。<br />提示： 类似
-                        packets.go:37 : unexpected EOF 错误，是因为 docker
-                        模拟数据库链接导致的。
-                      </p>
-                    </blockquote>
-                    <h3 id="引入-gomock-包，mock-对象模拟依赖项">
-                      <a
-                        href="#引入-gomock-包，mock-对象模拟依赖项"
-                        class="headerlink"
-                        title="引入 gomock 包，mock 对象模拟依赖项"
-                      ></a
-                      >引入 gomock 包，mock 对象模拟依赖项
-                    </h3>
-                    <blockquote>
-                      <p>
-                        具体的使用方法可以参考这篇
-                        <a
-                          target="_blank"
-                          rel="noopener"
-                          href="https://geektutu.com/post/quick-gomock.html"
-                          title="gomock 的使用文章"
-                          >gomock 的使用文章</a
-                        >
-                      </p>
-                    </blockquote>
-                    <figure class="highlight awk">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs awk"><span class="hljs-regexp">//</span> gomock 主要包含两个部分：gomock 库和辅助代码生成工具 mockgen<br>go get github.com<span class="hljs-regexp">/golang/m</span>ock  <br>go get github.com<span class="hljs-regexp">/golang/m</span>ock/gomock<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <h3 id="编写生成-mock-文件方法">
-                      <a
-                        href="#编写生成-mock-文件方法"
-                        class="headerlink"
-                        title="编写生成 mock 文件方法"
-                      ></a
-                      >编写生成 mock 文件方法
-                    </h3>
-                    <p>修改 <code>user/internal/biz/user.go</code> 文件</p>
-                    <figure class="highlight elm">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs elm"><span class="hljs-title">package</span> biz<br><br>...<br><br><br>// 注意这一行新增的 mock 数据的命令<br>//go:generate mockgen -destination=../mocks/mrepo/user.go -package=mrepo . <span class="hljs-type">UserRepo</span><br><span class="hljs-keyword">type</span> <span class="hljs-type">UserRepo</span> interface &#123;<br>  <span class="hljs-type">CreateUser</span>(context.<span class="hljs-type">Context</span>, *<span class="hljs-type">User</span>) (*<span class="hljs-type">User</span>, error)<br>&#125;<br><br>...<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>进入 biz 目录执行命令</p>
-                    <figure class="highlight routeros">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs routeros">mockgen <span class="hljs-attribute">-destination</span>=../mocks/mrepo/user.go <span class="hljs-attribute">-package</span>=mrepo . UserRepo<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <blockquote>
-                      <p>
-                        这里是用 gomock 提供的 mockgen 工具生成要 mock
-                        的接口的实现,在生成 mock 代码的时候，我们用到了 mockgen
-                        工具，这个工具是 gomock
-                        提供的用来为要mock的接口生成实现的。它可以根据给定的接口，来自动生成代码。
-                      </p>
-                    </blockquote>
-                    <p>
-                      执行完之后，你会看到多出来了
-                      <code>service/user/internal/mocks/mrepo/user.go</code>
-                      文件
-                    </p>
-                    <h4 id="编写-biz-层的测试方法">
-                      <a
-                        href="#编写-biz-层的测试方法"
-                        class="headerlink"
-                        title="编写 biz 层的测试方法"
-                      ></a
-                      >编写 biz 层的测试方法
-                    </h4>
-                    <p>
-                      biz层目录下，新增
-                      <code>biz_suite_test.go</code> 文件，添加内容如下：
-                    </p>
-                    <figure class="highlight go">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> biz_test<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/golang/mock/gomock&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>    <span class="hljs-string">&quot;testing&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestBiz</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>    RegisterFailHandler(Fail)<br>    RunSpecs(t, <span class="hljs-string">&quot;biz user test&quot;</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> ctl *gomock.Controller<br><span class="hljs-keyword">var</span> cleaner <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span><br><span class="hljs-keyword">var</span> ctx context.Context<br><br><span class="hljs-keyword">var</span> _ = BeforeEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    ctl = gomock.NewController(GinkgoT())<br>    cleaner = ctl.Finish<br>    ctx = context.Background()<br>&#125;)<br><span class="hljs-keyword">var</span> _ = AfterEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// remove any mocks</span><br>    cleaner()<br>&#125;)<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <p>
-                      还是biz层目录下，新增
-                      <code>user_test.go</code> 文件，添加内容如下：
-                    </p>
-                    <figure class="highlight lisp">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs lisp">package biz_test<br><br>import (<br>    <span class="hljs-string">&quot;github.com/golang/mock/gomock&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>    . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>    <span class="hljs-string">&quot;user/internal/mocks/mrepo&quot;</span><br>)<br><br>var _ = Describe(<span class="hljs-string">&quot;UserUsecase&quot;</span>, func() &#123;<br>    var userCase *biz.UserUsecase<br>    var mUserRepo *mrepo.MockUserRepo<br><br>    BeforeEach(<span class="hljs-name">func</span>() &#123;<br>        mUserRepo = mrepo.NewMockUserRepo(<span class="hljs-name">ctl</span>)<br>        userCase = biz.NewUserUsecase(<span class="hljs-name">mUserRepo</span>, <span class="hljs-literal">nil</span>)<br>    &#125;)<br><br>    It(<span class="hljs-string">&quot;Create&quot;</span>, func() &#123;<br>        info <span class="hljs-symbol">:=</span> <span class="hljs-symbol">&amp;biz</span>.User&#123;<br>            ID:       <span class="hljs-number">1</span>,<br>            Mobile:   <span class="hljs-string">&quot;13803881388&quot;</span>,<br>            Password: <span class="hljs-string">&quot;admin123456&quot;</span>,<br>            NickName: <span class="hljs-string">&quot;aliliin&quot;</span>,<br>            Role:     <span class="hljs-number">1</span>,<br>            Birthday: <span class="hljs-number">693629981</span>,<br>        &#125;<br>        mUserRepo.EXPECT().CreateUser(<span class="hljs-name">ctx</span>, gomock.Any()).Return(<span class="hljs-name">info</span>, <span class="hljs-literal">nil</span>)<br>        l, err <span class="hljs-symbol">:=</span> userCase.Create(<span class="hljs-name">ctx</span>, info)<br>        Ω(<span class="hljs-name">err</span>).ShouldNot(<span class="hljs-name">HaveOccurred</span>())<br>        Ω(<span class="hljs-name">err</span>).ToNot(<span class="hljs-name">HaveOccurred</span>())<br>        Ω(<span class="hljs-name">l</span>.ID).To(<span class="hljs-name">Equal</span>(<span class="hljs-name">int64</span>(<span class="hljs-number">1</span>)))<br>        Ω(<span class="hljs-name">l</span>.Mobile).To(<span class="hljs-name">Equal</span>(<span class="hljs-string">&quot;13803881388&quot;</span>))<br>    &#125;)<br><br>&#125;)<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <h3 id="验证单元测试">
-                      <a
-                        href="#验证单元测试"
-                        class="headerlink"
-                        title="验证单元测试"
-                      ></a
-                      >验证单元测试
-                    </h3>
-                    <p>
-                      还是 biz 层目录下运行
-                      <code>go test</code> 命令，得到如下结果：<br /><img
-                        src="https://gitee.com/aliliin/picture/raw/master/2022-2-19/1645243239405-biz_test1.png"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                    <h2 id="结束语">
-                      <a href="#结束语" class="headerlink" title="结束语"></a
-                      >结束语
-                    </h2>
-                    <p>
-                      到这一步 data 层测试 sql 语句的方法，biz
-                      测试基本逻辑的方法已经编写完成并通过了测试了，service
-                      层的单元测试大同小异，这里就不写了。
-                    </p>
-                    <p>感谢您的耐心阅读，动动手指点个 star 吧。</p>
-                    <h2 id="关注我获取更新">
-                      <a
-                        href="#关注我获取更新"
-                        class="headerlink"
-                        title="关注我获取更新"
-                      ></a
-                      >关注我获取更新
-                    </h2>
-                    <p>
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/bXOHljd6ST.jpeg"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                  </div>
-                  <hr />
-                  <div>
-                    <div class="post-metas mb-3">
-                      <div class="post-meta mr-3">
-                        <i class="iconfont icon-category"></i>
-
-                        <a
-                          class="hover-with-bg"
-                          href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
-                          >Kratos 微服务商城</a
-                        >
-                      </div>
-
-                      <div class="post-meta">
-                        <i class="iconfont icon-tags"></i>
-
-                        <a class="hover-with-bg" href="/tags/Go/">Go</a>
-
-                        <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
-                      </div>
-                    </div>
-
-                    <p class="note note-warning">
-                      本博客所有文章除特别声明外，均采用
-                      <a
-                        target="_blank"
-                        href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh"
-                        rel="nofollow noopener noopener"
-                        >CC BY-SA 4.0 协议</a
-                      >
-                      ，转载请注明出处！
-                    </p>
-
-                    <div class="post-prevnext">
-                      <article class="post-prev col-6">
-                        <a
-                          href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
-                        >
-                          <i class="iconfont icon-arrowleft"></i>
-                          <span class="hidden-mobile"
-                            >kratos 框架商城微服务实战之用户服务 (三)</span
-                          >
-                          <span class="visible-mobile">上一篇</span>
-                        </a>
-                      </article>
-                      <article class="post-next col-6">
-                        <a
-                          href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/"
-                        >
-                          <span class="hidden-mobile"
-                            >Mac 通过 Docker 安装 Elasticsearch</span
-                          >
-                          <span class="visible-mobile">下一篇</span>
-                          <i class="iconfont icon-arrowright"></i>
-                        </a>
-                      </article>
-                    </div>
-                  </div>
-
-                  <!-- Comments -->
-                  <article class="comments" id="comments" lazyload>
-                    <script type="text/javascript">
-                      Fluid.utils.loadComments("#comments", function () {
-                        var light = "github-light";
-                        var dark = "github-dark";
-                        var schema = document.documentElement.getAttribute(
-                          "data-user-color-scheme"
-                        );
-                        if (schema === "dark") {
-                          schema = dark;
-                        } else {
-                          schema = light;
-                        }
-                        window.UtterancesThemeLight = light;
-                        window.UtterancesThemeDark = dark;
-                        var s = document.createElement("script");
-                        s.setAttribute("src", "https://utteranc.es/client.js");
-                        s.setAttribute("repo", "aliliin/commit-comment");
-                        s.setAttribute("issue-term", "pathname");
-
-                        s.setAttribute("theme", schema);
-                        s.setAttribute("crossorigin", "anonymous");
-                        document.getElementById("comments").appendChild(s);
-                      });
-                    </script>
-                    <noscript
-                      >Please enable JavaScript to view the comments</noscript
-                    >
-                  </article>
+            <hr />
+            <div>
+              <div class="post-metas mb-3">
+                
+                <div class="post-meta mr-3">
+                  <i class="iconfont icon-category"></i>
+                  
+                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                    >Kratos 微服务商城</a
+                  >
+                  
+                </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                  <a class="hover-with-bg" href="/tags/kratos/"
+                    >kratos</a
+                  >
+                  
+                </div>
+                
+              </div>
+              
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务 (三)</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
+                  
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/">
+                    <span class="hidden-mobile">Mac 通过 Docker 安装 Elasticsearch</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
+                  
                 </article>
               </div>
+              
             </div>
-          </div>
 
-          <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-            <div id="toc">
-              <p class="toc-header">
-                <i class="iconfont icon-list"></i>&nbsp;目录
-              </p>
-              <div class="toc-body" id="toc-body"></div>
-            </div>
-          </div>
+            
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+            </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-      <!-- Custom -->
+    </div>
+    
+  </div>
+</div>
 
+<!-- Custom -->
+
+
+    
+
+    
       <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
+    
 
-      <div
-        class="modal fade"
-        id="modalSearch"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="ModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-dialog-scrollable modal-lg"
-          role="document"
-        >
-          <div class="modal-content">
-            <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-              <button
-                type="button"
-                id="local-search-close"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body mx-3">
-              <div class="md-form mb-5">
-                <input
-                  type="text"
-                  id="local-search-input"
-                  class="form-control validate"
-                />
-                <label data-error="x" data-success="v" for="local-search-input"
-                  >关键词</label
-                >
-              </div>
-              <div class="list-group" id="local-search-result"></div>
-            </div>
-          </div>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
         </div>
+        <div class="list-group" id="local-search-result"></div>
       </div>
-    </main>
+    </div>
+  </div>
+</div>
+    
 
-    <footer class="text-center mt-5 py-3">
-      <div class="footer-content">
-        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"
-          ><span>Hexo</span></a
-        >
-        <i class="iconfont icon-love"></i>
-        <a
-          href="https://github.com/fluid-dev/hexo-theme-fluid"
-          target="_blank"
-          rel="nofollow noopener"
-          ><span>Fluid</span></a
-        >
-      </div>
+    
+  </main>
 
-      <div class="statistics">
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
         <!-- 不蒜子统计PV -->
         <span id="busuanzi_container_site_pv" style="display: none">
-          总访问量
-          <span id="busuanzi_value_site_pv"></span>
-          次
-        </span>
-
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
         <!-- 不蒜子统计UV -->
         <span id="busuanzi_container_site_uv" style="display: none">
-          总访客数
-          <span id="busuanzi_value_site_uv"></span>
-          人
-        </span>
-      </div>
-    </footer>
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
 
-    <!-- SCRIPTS -->
 
-    <script src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css"
-    />
+  
 
-    <script>
-      NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
-      NProgress.start();
-      window.addEventListener("load", function () {
-        NProgress.done();
-      });
-    </script>
+  
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js"></script>
-    <script src="/js/events.js"></script>
-    <script src="/js/plugins.js"></script>
 
-    <!-- Plugins -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
 
-    <script src="/js/local-search.js"></script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
-    <script src="/js/img-lazyload.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<!-- Plugins -->
 
-    <script src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js"></script>
 
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"
-    ></script>
+  <script  src="/js/local-search.js" ></script>
 
-    <script
-      defer
-      src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
-    ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js"></script>
-    <script>
-      (function (window, document) {
-        var typing = Fluid.plugins.typing;
-        var title = document.getElementById("subtitle").title;
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
         typing(title);
-      })(window, document);
-    </script>
+      
+    })(window, document);
+  </script>
 
-    <!-- 主题的启动项 保持在最底部 -->
-    <script src="/js/boot.js"></script>
-  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

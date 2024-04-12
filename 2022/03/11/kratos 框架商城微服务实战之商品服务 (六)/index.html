@@ -1,901 +1,718 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme="auto">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png" />
-    <link rel="icon" href="/img/favicon.png" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no"
-    />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+<html lang="zh-CN" data-default-color-scheme=auto>
 
-    <meta name="theme-color" content="#2f4154" />
-    <meta
-      name="description"
-      content="这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。
 
-文章写的不清晰的地方"
-    />
-    <meta name="author" content="高永立" />
-    <meta name="keywords" content="" />
-    <meta
-      name="description"
-      content="这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。  文章写的不清晰的地方"
-    />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:title"
-      content="kratos 框架商城微服务实战之商品服务 (六)"
-    />
-    <meta
-      property="og:url"
-      content="https://aliliin.com/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/index.html"
-    />
-    <meta property="og:site_name" content="Aliliin" />
-    <meta
-      property="og:description"
-      content="这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。  文章写的不清晰的地方"
-    />
-    <meta property="og:locale" content="zh_CN" />
-    <meta
-      property="og:image"
-      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
-    />
-    <meta
-      property="article:published_time"
-      content="2022-03-10T16:54:51.230Z"
-    />
-    <meta property="article:modified_time" content="2022-06-18T06:57:28.794Z" />
-    <meta property="article:author" content="高永立" />
-    <meta property="article:tag" content="Go" />
-    <meta property="article:tag" content="kratos" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:image"
-      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
-    />
 
-    <title>kratos 框架商城微服务实战之商品服务 (六) - Aliliin</title>
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"
-    />
+文章写的不清晰的地方">
+  <meta name="author" content="高永立">
+  <meta name="keywords" content="">
+  <meta name="description" content="这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。  文章写的不清晰的地方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kratos 框架商城微服务实战之商品服务 (六)">
+<meta property="og:url" content="https://aliliin.com/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/index.html">
+<meta property="og:site_name" content="Aliliin">
+<meta property="og:description" content="这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。  文章写的不清晰的地方">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
+<meta property="article:published_time" content="2022-03-10T16:54:51.230Z">
+<meta property="article:modified_time" content="2024-04-12T02:50:40.481Z">
+<meta property="article:author" content="高永立">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="kratos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
+  
+  <title>kratos 框架商城微服务实战之商品服务 (六) - Aliliin</title>
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css"
-    />
-    <link rel="stylesheet" href="/lib/hint/hint.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css"
-    />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css"
-    />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <!-- 主题依赖的图标库，不要自行修改 -->
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
 
-    <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css"
-    />
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
-    <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css"
-    />
 
-    <link rel="stylesheet" href="/css/main.css" />
+<!-- 主题依赖的图标库，不要自行修改 -->
 
-    <!-- 自定义样式保持在最底部 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
-    <script id="fluid-configs">
-      var Fluid = window.Fluid || {};
-      var CONFIG = {
-        hostname: "aliliin.com",
-        root: "/",
-        version: "1.8.12",
-        typing: { enable: true, typeSpeed: 70, cursorChar: "_", loop: false },
-        anchorjs: {
-          enable: true,
-          element: "h1,h2,h3,h4,h5,h6",
-          placement: "right",
-          visible: "hover",
-          icon: "",
-        },
-        progressbar: {
-          enable: true,
-          height_px: 3,
-          color: "#29d",
-          options: { showSpinner: false, trickleSpeed: 100 },
-        },
-        copy_btn: true,
-        image_zoom: { enable: true, img_url_replace: ["", ""] },
-        toc: {
-          enable: true,
-          headingSelector: "h1,h2,h3,h4,h5,h6",
-          collapseDepth: 0,
-        },
-        lazyload: {
-          enable: true,
-          loading_img: "/img/loading.gif",
-          onlypost: false,
-          offset_factor: 2,
-        },
-        web_analytics: {
-          enable: false,
-          baidu: null,
-          google: null,
-          gtag: null,
-          tencent: { sid: null, cid: null },
-          woyaola: null,
-          cnzz: null,
-          leancloud: {
-            app_id: null,
-            app_key: null,
-            server_url: null,
-            path: "window.location.pathname",
-          },
-        },
-        search_path: "/local-search.xml",
-      };
-    </script>
-    <script src="/js/utils.js"></script>
-    <script src="/js/color-schema.js"></script>
-    <meta name="generator" content="Hexo 5.4.1" />
-  </head>
 
-  <body>
-    <header style="height: 70vh">
-      <nav
-        id="navbar"
-        class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"
-      >
-        <div class="container">
-          <a class="navbar-brand" href="/">
-            <strong>Aliliin</strong>
-          </a>
 
-          <button
-            id="navbar-toggler-btn"
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aliliin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <div class="animated-icon">
-              <span></span><span></span><span></span>
-            </div>
-          </button>
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-          <!-- Collapsible content -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto text-center">
-              <li class="nav-item">
-                <a class="nav-link" href="/">
-                  <i class="iconfont icon-home-fill"></i>
-                  首页
-                </a>
-              </li>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-              <li class="nav-item">
-                <a class="nav-link" href="/archives/">
-                  <i class="iconfont icon-archive-fill"></i>
-                  归档
-                </a>
-              </li>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="kratos 框架商城微服务实战之商品服务 (六)">
+              
+            </span>
 
-              <li class="nav-item">
-                <a class="nav-link" href="/categories/">
-                  <i class="iconfont icon-category-fill"></i>
-                  分类
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/tags/">
-                  <i class="iconfont icon-tags-fill"></i>
-                  标签
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/about/">
-                  <i class="iconfont icon-user-fill"></i>
-                  关于
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/links/">
-                  <i class="iconfont icon-link-fill"></i>
-                  友链
-                </a>
-              </li>
-
-              <li class="nav-item" id="search-btn">
-                <a
-                  class="nav-link"
-                  target="_self"
-                  href="javascript:;"
-                  data-toggle="modal"
-                  data-target="#modalSearch"
-                  aria-label="Search"
-                >
-                  &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-                </a>
-              </li>
-
-              <li class="nav-item" id="color-toggle-btn">
-                <a
-                  class="nav-link"
-                  target="_self"
-                  href="javascript:;"
-                  aria-label="Color Toggle"
-                  >&nbsp;<i
-                    class="iconfont icon-dark"
-                    id="color-toggle-icon"
-                  ></i
-                  >&nbsp;</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <div
-        class="banner"
-        id="banner"
-        parallax="true"
-        style="
-          background: url('/img/default.png') no-repeat center center;
-          background-size: cover;
-        "
-      >
-        <div class="full-bg-img">
-          <div
-            class="mask flex-center"
-            style="background-color: rgba(0, 0, 0, 0.5)"
-          >
-            <div class="page-header text-center fade-in-up">
-              <span
-                class="h2"
-                id="subtitle"
-                title="kratos 框架商城微服务实战之商品服务 (六)"
-              >
-              </span>
-
+            
               <div class="mt-3">
-                <span class="post-meta mr-2">
-                  <i class="iconfont icon-author" aria-hidden="true"></i>
-                  高永立
-                </span>
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      高永立
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-11 00:54" pubdate>
+        2022年3月11日 凌晨
+      </time>
+    </span>
+  
+</div>
 
-                <span class="post-meta">
-                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2022-03-11 00:54" pubdate>
-                    2022年3月11日 凌晨
-                  </time>
-                </span>
-              </div>
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.7k 字
+    </span>
+  
 
-              <div class="mt-1">
-                <span class="post-meta mr-2">
-                  <i class="iconfont icon-chart"></i>
-                  5.7k 字
-                </span>
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18 分钟
+    </span>
+  
 
-                <span class="post-meta mr-2">
-                  <i class="iconfont icon-clock-fill"></i>
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
-                  18 分钟
-                </span>
-
-                <!-- 不蒜子统计文章PV -->
-                <span id="busuanzi_container_page_pv" style="display: none">
-                  <i class="iconfont icon-eye" aria-hidden="true"></i>
-                  <span id="busuanzi_value_page_pv"></span> 次
-                </span>
-              </div>
-            </div>
+            
           </div>
+
+          
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main>
-      <div class="container-fluid nopadding-x">
-        <div class="row nomargin-x">
-          <div class="d-none d-lg-block col-lg-2 post-categories">
-            <div class="category-list">
-              <div class="category row">
-                <a
-                  class="category-item list-group-item category-item-action col-10 col-md-11 col-xm-11"
-                  id="heading-2dd3b085945c184eb06b037b76c5f696"
-                  role="tab"
-                  data-toggle="collapse"
-                  href="#collapse-2dd3b085945c184eb06b037b76c5f696"
-                  aria-expanded="true"
-                >
-                  Kratos 微服务商城(12)
-                  <i class="iconfont icon-arrowright"></i>
-                </a>
+  <main>
+    
+      
 
-                <div
-                  class="category-collapse collapse show"
-                  id="collapse-2dd3b085945c184eb06b037b76c5f696"
-                  role="tabpanel"
-                  aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696"
-                >
-                  <div class="category-post-list">
-                    <a
-                      href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之购物车服务 (十二)</span
-                      >
-                    </a>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2 post-categories">
+      
+        
 
-                    <a
-                      href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (十一)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (十)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (九)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (八)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (七)</span
-                      >
-                    </a>
 
-                    <a
-                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
-                      class="list-group-item list-group-item-action active"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之商品服务 (六)</span
-                      >
-                    </a>
+<div class="category-list">
+  
+  
+  
+  
+  
+    
+    
+    
+    <div class="category row">
+      <a class="category-item 
+                 
+                list-group-item category-item-action col-10 col-md-11 col-xm-11"
+        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+        aria-expanded="true"
+      >
+        Kratos 微服务商城(12) 
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+       
+      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之购物车服务 (十二)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十一)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
+        </a>
+      
+    
+      
+      
+        <a href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/" class="list-group-item list-group-item-action">
+          <span class="category-post">More...</span>
+        </a>
+        
+  </div>
 
-                    <a
-                      href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之用户服务API (五)</span
-                      >
-                    </a>
+        
+      </div>
+    </div>
+  
+</div>
 
-                    <a
-                      href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之用户服务 (四)</span
-                      >
-                    </a>
+      
+    </div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none;">kratos 框架商城微服务实战之商品服务 (六)</h1>
+            
+            <p class="note note-info">
+               本文最后更新于：17 分钟前 
+            </p>
+            
+            <div class="markdown-body">
+              <p>这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白 kratos 的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的 curd 就不会再文章中体现了，具体参看 GitHub 上的源码，当然你觉得不合理的地方，也可以给项目提 PR。</p>
+<blockquote>
+<p>文章写的不清晰的地方可通过 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop" title="GitHub 源码">GitHub 源码</a>进行查看, 也感谢您指出不足之处,欢迎大佬指教。</p>
+<p>注：竖排 … 代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的 . 来代替，你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
+</blockquote>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>由于前面几篇文章（第一篇和第四篇）都已经写过了，如何初始化一个 kratos 项目，并修改部分主要的文件，来变成自己的服务并编写业务。所以此篇文章就不做重复性的工作了，这篇编写一个商品分类的创建，让商品服务先存在。废话少说开始写</p>
+<h3 id="Goods-服务目录存放的位置"><a href="#Goods-服务目录存放的位置" class="headerlink" title="Goods 服务目录存放的位置"></a>Goods 服务目录存放的位置</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 整体的项目 目录结构如下<br>|-- kratos-shop<br>    |-- service<br>        |-- user <span class="hljs-regexp">//</span> 原先的用户服务 grpc<br>        |-- goods <span class="hljs-regexp">//</span> 新增的商品服务 grpc<br>    |-- shop <span class="hljs-regexp">//</span>  interface<br></code></pre></td></tr></table></figure>
 
-                    <a
-                      href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post"
-                        >kratos 框架商城微服务实战之用户服务 (三)</span
-                      >
-                    </a>
+<h3 id="编写业务"><a href="#编写业务" class="headerlink" title="编写业务"></a>编写业务</h3><ul>
+<li>修改 <code>goods</code> 服务下的 <code>goods.proto</code></li>
+</ul>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><br><span class="hljs-keyword">package</span> goods.v1;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;google/protobuf/empty.proto&quot;</span>;<br><br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;goods/api/goods/v1;v1&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">Goods</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateCategory(CategoryInfoRequest) <span class="hljs-keyword">returns</span>(CategoryInfoResponse)</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CategoryInfoRequest</span> </span>&#123;<br>  <span class="hljs-built_in">int32</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> name = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">int32</span> parentCategory = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">int32</span> level = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">bool</span> isTab = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">int32</span> sort = <span class="hljs-number">6</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CategoryInfoResponse</span> </span>&#123;<br>  <span class="hljs-built_in">int32</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> name = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">int32</span> parentCategory = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">int32</span> level = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">bool</span> isTab = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">int32</span> sort = <span class="hljs-number">6</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-                    <a
-                      href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
-                      class="list-group-item list-group-item-action"
-                    >
-                      <span class="category-post">More...</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
+<ul>
+<li>修改 <code>service</code> 目录下的 <code>category.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// service/goods/internal/service/category.go</span><br><br><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;encoding/json&quot;</span><br>	v1 <span class="hljs-string">&quot;goods/api/goods/v1&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;google.golang.org/protobuf/types/known/emptypb&quot;</span><br>)<br><br><span class="hljs-comment">// CreateCategory 创建分类</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *GoodsService)</span> <span class="hljs-title">CreateCategory</span><span class="hljs-params">(ctx context.Context, r *v1.CategoryInfoRequest)</span> <span class="hljs-params">(*v1.CategoryInfoResponse, error)</span></span> &#123;<br>	result, err := g.cac.CreateCategory(ctx, &amp;biz.CategoryInfo&#123;<br>		Name:           r.Name,<br>		ParentCategory: r.ParentCategory,<br>		Level:          r.Level,<br>		IsTab:          r.IsTab,<br>		Sort:           r.Sort,<br>	&#125;)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> &amp;v1.CategoryInfoResponse&#123;<br>		Id:             result.ID,<br>		Name:           result.Name,<br>		ParentCategory: result.ParentCategory,<br>		Level:          result.Level,<br>		IsTab:          result.IsTab,<br>		Sort:           result.Sort,<br>	&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>biz</code> 目录下的 <code>category.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Category <span class="hljs-keyword">struct</span> &#123;<br>	ID               <span class="hljs-keyword">int32</span><br>	Name             <span class="hljs-keyword">string</span><br>	ParentCategoryID <span class="hljs-keyword">int32</span><br>	SubCategory      []*Category<br>	Level            <span class="hljs-keyword">int32</span><br>	IsTab            <span class="hljs-keyword">bool</span><br>	Sort             <span class="hljs-keyword">int32</span><br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryInfo <span class="hljs-keyword">struct</span> &#123;<br>	ID             <span class="hljs-keyword">int32</span><br>	Name           <span class="hljs-keyword">string</span><br>	ParentCategory <span class="hljs-keyword">int32</span><br>	Level          <span class="hljs-keyword">int32</span><br>	IsTab          <span class="hljs-keyword">bool</span><br>	Sort           <span class="hljs-keyword">int32</span><br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryRepo <span class="hljs-keyword">interface</span> &#123;<br>	AddCategory(context.Context, *CategoryInfo) (*CategoryInfo, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryUsecase <span class="hljs-keyword">struct</span> &#123;<br>	repo CategoryRepo<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCategoryUsecase</span><span class="hljs-params">(repo CategoryRepo, logger log.Logger)</span> *<span class="hljs-title">CategoryUsecase</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;CategoryUsecase&#123;repo: repo, log: log.NewHelper(logger)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *CategoryUsecase)</span> <span class="hljs-title">CreateCategory</span><span class="hljs-params">(ctx context.Context, r *CategoryInfo)</span> <span class="hljs-params">(*CategoryInfo, error)</span></span> &#123;<br>	cateInfo, err := c.repo.AddCategory(ctx, r)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> cateInfo, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>data</code> 目录下的 <code>category.go</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;errors&quot;</span><br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">// Category 商品分类表</span><br><span class="hljs-keyword">type</span> Category <span class="hljs-keyword">struct</span> &#123;<br>	ID               <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;primarykey;type:int&quot; json:&quot;id&quot;`</span><br>	Name             <span class="hljs-keyword">string</span>         <span class="hljs-string">`gorm:&quot;type:varchar(50);not null;comment:分类名称&quot; json:&quot;name&quot;`</span><br>	ParentCategoryID <span class="hljs-keyword">int32</span>          <span class="hljs-string">`json:&quot;parent_id&quot;`</span><br>	ParentCategory   *Category      <span class="hljs-string">`json:&quot;-&quot;`</span><br>	SubCategory      []*Category    <span class="hljs-string">`gorm:&quot;foreignKey:ParentCategoryID;references:ID&quot; json:&quot;sub_category&quot;`</span><br>	Level            <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;column:level;default:1;not null;type:int;comment:分类的级别&quot; json:&quot;level&quot;`</span><br>	IsTab            <span class="hljs-keyword">bool</span>           <span class="hljs-string">`gorm:&quot;comment:是否显示;default:false&quot; json:&quot;is_tab&quot;`</span><br>	Sort             <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;comment:分类排序;default:99;not null;type:int&quot; json:&quot;sort&quot;`</span><br>	CreatedAt        time.Time      <span class="hljs-string">`gorm:&quot;column:add_time&quot; json:&quot;created_at&quot;`</span><br>	UpdatedAt        time.Time      <span class="hljs-string">`gorm:&quot;column:update_time&quot; json:&quot;updated_at&quot;`</span><br>	DeletedAt        gorm.DeletedAt <span class="hljs-string">`json:&quot;deleted_at&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryRepo <span class="hljs-keyword">struct</span> &#123;<br>	data *Data<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewCategoryRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCategoryRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">CategoryRepo</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;CategoryRepo&#123;<br>		data: data,<br>		log:  log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *CategoryRepo)</span> <span class="hljs-title">AddCategory</span><span class="hljs-params">(ctx context.Context, req *biz.CategoryInfo)</span> <span class="hljs-params">(*biz.CategoryInfo, error)</span></span> &#123;<br>	cMap := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;&#123;&#125;<br>	cMap[<span class="hljs-string">&quot;name&quot;</span>] = req.Name<br>	cMap[<span class="hljs-string">&quot;level&quot;</span>] = req.Level<br>	cMap[<span class="hljs-string">&quot;is_tab&quot;</span>] = req.IsTab<br>	cMap[<span class="hljs-string">&quot;sort&quot;</span>] = req.Sort<br>	cMap[<span class="hljs-string">&quot;add_time&quot;</span>] = time.Now()<br>	cMap[<span class="hljs-string">&quot;update_time&quot;</span>] = time.Now()<br><br>	<span class="hljs-comment">// 去查询父类目是否存在</span><br>	<span class="hljs-keyword">if</span> req.Level != <span class="hljs-number">1</span> &#123;<br>		<span class="hljs-keyword">var</span> categories Category<br>		<span class="hljs-keyword">if</span> res := r.data.db.First(&amp;categories, req.ParentCategory); res.RowsAffected == <span class="hljs-number">0</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品分类不存在&quot;</span>)<br>		&#125;<br>		cMap[<span class="hljs-string">&quot;parent_category_id&quot;</span>] = req.ParentCategory<br>	&#125;<br><br>	result := r.data.db.Model(&amp;Category&#123;&#125;).Create(&amp;cMap)<br>	<span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>	&#125;<br>	<span class="hljs-keyword">var</span> value <span class="hljs-keyword">int32</span><br>	value, ok := cMap[<span class="hljs-string">&quot;parent_category_id&quot;</span>].(<span class="hljs-keyword">int32</span>)<br>	<span class="hljs-keyword">if</span> !ok &#123;<br>		value = <span class="hljs-number">0</span><br>	&#125;<br>	res := &amp;biz.CategoryInfo&#123;<br>		Name:           cMap[<span class="hljs-string">&quot;name&quot;</span>].(<span class="hljs-keyword">string</span>),<br>		ParentCategory: value,<br>		Level:          cMap[<span class="hljs-string">&quot;level&quot;</span>].(<span class="hljs-keyword">int32</span>),<br>		IsTab:          cMap[<span class="hljs-string">&quot;is_tab&quot;</span>].(<span class="hljs-keyword">bool</span>),<br>		Sort:           cMap[<span class="hljs-string">&quot;sort&quot;</span>].(<span class="hljs-keyword">int32</span>),<br>	&#125;<br>	<span class="hljs-keyword">return</span> res, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="测试创建分类"><a href="#测试创建分类" class="headerlink" title="测试创建分类"></a>测试创建分类</h1><blockquote>
+<p>注：这里有个很重要的点，修改 config 配置的时候，需要指定数据库，这里商品服务是独立，故不能跟用户服务用同一个库，此处用的是一个全新的 shop_goods 库。consul 和 trace 的配置保持一致，但主入口 main 文件中的服务名称要修改一下。</p>
+</blockquote>
+<p>如果你用的是 goland 编辑器这里提供一个测试 rpc 接口的方法，就不用再编写指定的测试文件了。</p>
+<p>编辑器打开 goods.proto 文件，看到如图：<br><img src="https://gitee.com/aliliin/picture/raw/master/2022-2-28/1646021340047-1646021315634.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>点击这按钮你会跳到一个全新的文件，如图：<br><img src="https://gitee.com/aliliin/picture/raw/master/2022-2-28/1646021495702-1646021478454.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>注意记得把请求的 IP 和 Port 修改成自己的,然后点击绿色的按钮，测试一下吧。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>OK 此篇文章就写到这里了，虽然有很多点都没写，但我相信，你肯定会把没写的流程补上，比如如何把 biz 层的 Usecase 注入到 Goods 服务中，如何编写 data 层的数据库连接之类的。</p>
+<p>感谢您的耐心阅读，动动手指点个赞吧。</p>
+<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/bXOHljd6ST.jpeg" srcset="/img/loading.gif" lazyload></p>
+
             </div>
-          </div>
-          <div class="col-lg-8 nopadding-x-md">
-            <div class="container nopadding-x-md" id="board-ctn">
-              <div class="py-5" id="board">
-                <article class="post-content mx-auto">
-                  <!-- SEO header -->
-                  <h1 style="display: none">
-                    kratos 框架商城微服务实战之商品服务 (六)
-                  </h1>
-
-                  <p class="note note-info">本文最后更新于：2 年前</p>
-
-                  <div class="markdown-body">
-                    <p>
-                      这篇开始咱们就要编写商品服务了。一个电商的商品设计是比较复杂的，咱们这里不过多的深究表是否合理，是否漏写之类的问题，主要是为了搞明白
-                      kratos
-                      的使用和微服务相关的调用关系。当然我真正的编写时也会尽可能的让此项目的商品设计合理一些。但大量的表设计呀，重复性的
-                      curd 就不会再文章中体现了，具体参看 GitHub
-                      上的源码，当然你觉得不合理的地方，也可以给项目提 PR。
-                    </p>
-                    <blockquote>
-                      <p>
-                        文章写的不清晰的地方可通过
-                        <a
-                          target="_blank"
-                          rel="noopener"
-                          href="https://github.com/aliliin/kratos-shop"
-                          title="GitHub 源码"
-                          >GitHub 源码</a
-                        >进行查看, 也感谢您指出不足之处,欢迎大佬指教。
-                      </p>
-                      <p>
-                        注：竖排 …
-                        代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用竖排的
-                        . 来代替，你在复制本文代码块的时候，切记不要将 .
-                        也一同复制进去。
-                      </p>
-                    </blockquote>
-                    <h1 id="准备工作">
-                      <a
-                        href="#准备工作"
-                        class="headerlink"
-                        title="准备工作"
-                      ></a
-                      >准备工作
-                    </h1>
-                    <p>
-                      由于前面几篇文章（第一篇和第四篇）都已经写过了，如何初始化一个
-                      kratos
-                      项目，并修改部分主要的文件，来变成自己的服务并编写业务。所以此篇文章就不做重复性的工作了，这篇编写一个商品分类的创建，让商品服务先存在。废话少说开始写
-                    </p>
-                    <h3 id="Goods-服务目录存放的位置">
-                      <a
-                        href="#Goods-服务目录存放的位置"
-                        class="headerlink"
-                        title="Goods 服务目录存放的位置"
-                      ></a
-                      >Goods 服务目录存放的位置
-                    </h3>
-                    <figure class="highlight awk">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs awk"><span class="hljs-regexp">//</span> 整体的项目 目录结构如下<br>|-- kratos-shop<br>    |-- service<br>        |-- user <span class="hljs-regexp">//</span> 原先的用户服务 grpc<br>        |-- goods <span class="hljs-regexp">//</span> 新增的商品服务 grpc<br>    |-- shop <span class="hljs-regexp">//</span>  interface<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <h3 id="编写业务">
-                      <a
-                        href="#编写业务"
-                        class="headerlink"
-                        title="编写业务"
-                      ></a
-                      >编写业务
-                    </h3>
-                    <ul>
-                      <li>
-                        修改 <code>goods</code> 服务下的
-                        <code>goods.proto</code>
-                      </li>
-                    </ul>
-                    <figure class="highlight protobuf">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><br><span class="hljs-keyword">package</span> goods.v1;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;google/protobuf/empty.proto&quot;</span>;<br><br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;goods/api/goods/v1;v1&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">Goods</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateCategory(CategoryInfoRequest) <span class="hljs-keyword">returns</span>(CategoryInfoResponse)</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CategoryInfoRequest</span> </span>&#123;<br>  <span class="hljs-built_in">int32</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> name = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">int32</span> parentCategory = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">int32</span> level = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">bool</span> isTab = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">int32</span> sort = <span class="hljs-number">6</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CategoryInfoResponse</span> </span>&#123;<br>  <span class="hljs-built_in">int32</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> name = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">int32</span> parentCategory = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">int32</span> level = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">bool</span> isTab = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">int32</span> sort = <span class="hljs-number">6</span>;<br>&#125;<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <ul>
-                      <li>
-                        修改 <code>service</code> 目录下的
-                        <code>category.go</code>
-                      </li>
-                    </ul>
-                    <figure class="highlight go">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs go"><span class="hljs-comment">// service/goods/internal/service/category.go</span><br><br><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;encoding/json&quot;</span><br>	v1 <span class="hljs-string">&quot;goods/api/goods/v1&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;google.golang.org/protobuf/types/known/emptypb&quot;</span><br>)<br><br><span class="hljs-comment">// CreateCategory 创建分类</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *GoodsService)</span> <span class="hljs-title">CreateCategory</span><span class="hljs-params">(ctx context.Context, r *v1.CategoryInfoRequest)</span> <span class="hljs-params">(*v1.CategoryInfoResponse, error)</span></span> &#123;<br>	result, err := g.cac.CreateCategory(ctx, &amp;biz.CategoryInfo&#123;<br>		Name:           r.Name,<br>		ParentCategory: r.ParentCategory,<br>		Level:          r.Level,<br>		IsTab:          r.IsTab,<br>		Sort:           r.Sort,<br>	&#125;)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> &amp;v1.CategoryInfoResponse&#123;<br>		Id:             result.ID,<br>		Name:           result.Name,<br>		ParentCategory: result.ParentCategory,<br>		Level:          result.Level,<br>		IsTab:          result.IsTab,<br>		Sort:           result.Sort,<br>	&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <ul>
-                      <li>
-                        修改 <code>biz</code> 目录下的 <code>category.go</code>
-                      </li>
-                    </ul>
-                    <figure class="highlight go">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Category <span class="hljs-keyword">struct</span> &#123;<br>	ID               <span class="hljs-keyword">int32</span><br>	Name             <span class="hljs-keyword">string</span><br>	ParentCategoryID <span class="hljs-keyword">int32</span><br>	SubCategory      []*Category<br>	Level            <span class="hljs-keyword">int32</span><br>	IsTab            <span class="hljs-keyword">bool</span><br>	Sort             <span class="hljs-keyword">int32</span><br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryInfo <span class="hljs-keyword">struct</span> &#123;<br>	ID             <span class="hljs-keyword">int32</span><br>	Name           <span class="hljs-keyword">string</span><br>	ParentCategory <span class="hljs-keyword">int32</span><br>	Level          <span class="hljs-keyword">int32</span><br>	IsTab          <span class="hljs-keyword">bool</span><br>	Sort           <span class="hljs-keyword">int32</span><br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryRepo <span class="hljs-keyword">interface</span> &#123;<br>	AddCategory(context.Context, *CategoryInfo) (*CategoryInfo, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryUsecase <span class="hljs-keyword">struct</span> &#123;<br>	repo CategoryRepo<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCategoryUsecase</span><span class="hljs-params">(repo CategoryRepo, logger log.Logger)</span> *<span class="hljs-title">CategoryUsecase</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;CategoryUsecase&#123;repo: repo, log: log.NewHelper(logger)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *CategoryUsecase)</span> <span class="hljs-title">CreateCategory</span><span class="hljs-params">(ctx context.Context, r *CategoryInfo)</span> <span class="hljs-params">(*CategoryInfo, error)</span></span> &#123;<br>	cateInfo, err := c.repo.AddCategory(ctx, r)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> cateInfo, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <ul>
-                      <li>
-                        修改 <code>data</code> 目录下的 <code>category.go</code>
-                      </li>
-                    </ul>
-                    <figure class="highlight go">
-                      <table>
-                        <tr>
-                          <td class="gutter">
-                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre>
-                          </td>
-                          <td class="code">
-                            <pre><code class="hljs go"><br><span class="hljs-keyword">package</span> data<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;context&quot;</span><br>	<span class="hljs-string">&quot;errors&quot;</span><br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>	<span class="hljs-string">&quot;goods/internal/biz&quot;</span><br>	<span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">// Category 商品分类表</span><br><span class="hljs-keyword">type</span> Category <span class="hljs-keyword">struct</span> &#123;<br>	ID               <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;primarykey;type:int&quot; json:&quot;id&quot;`</span><br>	Name             <span class="hljs-keyword">string</span>         <span class="hljs-string">`gorm:&quot;type:varchar(50);not null;comment:分类名称&quot; json:&quot;name&quot;`</span><br>	ParentCategoryID <span class="hljs-keyword">int32</span>          <span class="hljs-string">`json:&quot;parent_id&quot;`</span><br>	ParentCategory   *Category      <span class="hljs-string">`json:&quot;-&quot;`</span><br>	SubCategory      []*Category    <span class="hljs-string">`gorm:&quot;foreignKey:ParentCategoryID;references:ID&quot; json:&quot;sub_category&quot;`</span><br>	Level            <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;column:level;default:1;not null;type:int;comment:分类的级别&quot; json:&quot;level&quot;`</span><br>	IsTab            <span class="hljs-keyword">bool</span>           <span class="hljs-string">`gorm:&quot;comment:是否显示;default:false&quot; json:&quot;is_tab&quot;`</span><br>	Sort             <span class="hljs-keyword">int32</span>          <span class="hljs-string">`gorm:&quot;comment:分类排序;default:99;not null;type:int&quot; json:&quot;sort&quot;`</span><br>	CreatedAt        time.Time      <span class="hljs-string">`gorm:&quot;column:add_time&quot; json:&quot;created_at&quot;`</span><br>	UpdatedAt        time.Time      <span class="hljs-string">`gorm:&quot;column:update_time&quot; json:&quot;updated_at&quot;`</span><br>	DeletedAt        gorm.DeletedAt <span class="hljs-string">`json:&quot;deleted_at&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> CategoryRepo <span class="hljs-keyword">struct</span> &#123;<br>	data *Data<br>	log  *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewCategoryRepo .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCategoryRepo</span><span class="hljs-params">(data *Data, logger log.Logger)</span> <span class="hljs-title">biz</span>.<span class="hljs-title">CategoryRepo</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;CategoryRepo&#123;<br>		data: data,<br>		log:  log.NewHelper(logger),<br>	&#125;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *CategoryRepo)</span> <span class="hljs-title">AddCategory</span><span class="hljs-params">(ctx context.Context, req *biz.CategoryInfo)</span> <span class="hljs-params">(*biz.CategoryInfo, error)</span></span> &#123;<br>	cMap := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;&#123;&#125;<br>	cMap[<span class="hljs-string">&quot;name&quot;</span>] = req.Name<br>	cMap[<span class="hljs-string">&quot;level&quot;</span>] = req.Level<br>	cMap[<span class="hljs-string">&quot;is_tab&quot;</span>] = req.IsTab<br>	cMap[<span class="hljs-string">&quot;sort&quot;</span>] = req.Sort<br>	cMap[<span class="hljs-string">&quot;add_time&quot;</span>] = time.Now()<br>	cMap[<span class="hljs-string">&quot;update_time&quot;</span>] = time.Now()<br><br>	<span class="hljs-comment">// 去查询父类目是否存在</span><br>	<span class="hljs-keyword">if</span> req.Level != <span class="hljs-number">1</span> &#123;<br>		<span class="hljs-keyword">var</span> categories Category<br>		<span class="hljs-keyword">if</span> res := r.data.db.First(&amp;categories, req.ParentCategory); res.RowsAffected == <span class="hljs-number">0</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, errors.New(<span class="hljs-string">&quot;商品分类不存在&quot;</span>)<br>		&#125;<br>		cMap[<span class="hljs-string">&quot;parent_category_id&quot;</span>] = req.ParentCategory<br>	&#125;<br><br>	result := r.data.db.Model(&amp;Category&#123;&#125;).Create(&amp;cMap)<br>	<span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>	&#125;<br>	<span class="hljs-keyword">var</span> value <span class="hljs-keyword">int32</span><br>	value, ok := cMap[<span class="hljs-string">&quot;parent_category_id&quot;</span>].(<span class="hljs-keyword">int32</span>)<br>	<span class="hljs-keyword">if</span> !ok &#123;<br>		value = <span class="hljs-number">0</span><br>	&#125;<br>	res := &amp;biz.CategoryInfo&#123;<br>		Name:           cMap[<span class="hljs-string">&quot;name&quot;</span>].(<span class="hljs-keyword">string</span>),<br>		ParentCategory: value,<br>		Level:          cMap[<span class="hljs-string">&quot;level&quot;</span>].(<span class="hljs-keyword">int32</span>),<br>		IsTab:          cMap[<span class="hljs-string">&quot;is_tab&quot;</span>].(<span class="hljs-keyword">bool</span>),<br>		Sort:           cMap[<span class="hljs-string">&quot;sort&quot;</span>].(<span class="hljs-keyword">int32</span>),<br>	&#125;<br>	<span class="hljs-keyword">return</span> res, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre>
-                          </td>
-                        </tr>
-                      </table>
-                    </figure>
-
-                    <h1 id="测试创建分类">
-                      <a
-                        href="#测试创建分类"
-                        class="headerlink"
-                        title="测试创建分类"
-                      ></a
-                      >测试创建分类
-                    </h1>
-                    <blockquote>
-                      <p>
-                        注：这里有个很重要的点，修改 config
-                        配置的时候，需要指定数据库，这里商品服务是独立，故不能跟用户服务用同一个库，此处用的是一个全新的
-                        shop_goods 库。consul 和 trace 的配置保持一致，但主入口
-                        main 文件中的服务名称要修改一下。
-                      </p>
-                    </blockquote>
-                    <p>
-                      如果你用的是 goland 编辑器这里提供一个测试 rpc
-                      接口的方法，就不用再编写指定的测试文件了。
-                    </p>
-                    <p>
-                      编辑器打开 goods.proto 文件，看到如图：<br /><img
-                        src="https://gitee.com/aliliin/picture/raw/master/2022-2-28/1646021340047-1646021315634.jpg"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                    <p>
-                      点击这按钮你会跳到一个全新的文件，如图：<br /><img
-                        src="https://gitee.com/aliliin/picture/raw/master/2022-2-28/1646021495702-1646021478454.jpg"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                    <p>
-                      注意记得把请求的 IP 和 Port
-                      修改成自己的,然后点击绿色的按钮，测试一下吧。
-                    </p>
-                    <h1 id="结束语">
-                      <a href="#结束语" class="headerlink" title="结束语"></a
-                      >结束语
-                    </h1>
-                    <p>
-                      OK
-                      此篇文章就写到这里了，虽然有很多点都没写，但我相信，你肯定会把没写的流程补上，比如如何把
-                      biz 层的 Usecase 注入到 Goods 服务中，如何编写 data
-                      层的数据库连接之类的。
-                    </p>
-                    <p>感谢您的耐心阅读，动动手指点个赞吧。</p>
-                    <h2 id="关注我获取更新">
-                      <a
-                        href="#关注我获取更新"
-                        class="headerlink"
-                        title="关注我获取更新"
-                      ></a
-                      >关注我获取更新
-                    </h2>
-                    <p>
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/bXOHljd6ST.jpeg"
-                        srcset="/img/loading.gif"
-                        lazyload
-                      />
-                    </p>
-                  </div>
-                  <hr />
-                  <div>
-                    <div class="post-metas mb-3">
-                      <div class="post-meta mr-3">
-                        <i class="iconfont icon-category"></i>
-
-                        <a
-                          class="hover-with-bg"
-                          href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
-                          >Kratos 微服务商城</a
-                        >
-                      </div>
-
-                      <div class="post-meta">
-                        <i class="iconfont icon-tags"></i>
-
-                        <a class="hover-with-bg" href="/tags/Go/">Go</a>
-
-                        <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
-                      </div>
-                    </div>
-
-                    <p class="note note-warning">
-                      本博客所有文章除特别声明外，均采用
-                      <a
-                        target="_blank"
-                        href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh"
-                        rel="nofollow noopener noopener"
-                        >CC BY-SA 4.0 协议</a
-                      >
-                      ，转载请注明出处！
-                    </p>
-
-                    <div class="post-prevnext">
-                      <article class="post-prev col-6">
-                        <a
-                          href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
-                        >
-                          <i class="iconfont icon-arrowleft"></i>
-                          <span class="hidden-mobile"
-                            >kratos 框架商城微服务实战之商品服务 (七)</span
-                          >
-                          <span class="visible-mobile">上一篇</span>
-                        </a>
-                      </article>
-                      <article class="post-next col-6">
-                        <a
-                          href="/2022/02/25/Kratos%20%E9%9B%86%E6%88%90%20GORM%20%E4%BA%8B%E5%8A%A1/"
-                        >
-                          <span class="hidden-mobile"
-                            >如何在 Go Kratos 框架中使用 GORM 事务 ?</span
-                          >
-                          <span class="visible-mobile">下一篇</span>
-                          <i class="iconfont icon-arrowright"></i>
-                        </a>
-                      </article>
-                    </div>
-                  </div>
-
-                  <!-- Comments -->
-                  <article class="comments" id="comments" lazyload>
-                    <script type="text/javascript">
-                      Fluid.utils.loadComments("#comments", function () {
-                        var light = "github-light";
-                        var dark = "github-dark";
-                        var schema = document.documentElement.getAttribute(
-                          "data-user-color-scheme"
-                        );
-                        if (schema === "dark") {
-                          schema = dark;
-                        } else {
-                          schema = light;
-                        }
-                        window.UtterancesThemeLight = light;
-                        window.UtterancesThemeDark = dark;
-                        var s = document.createElement("script");
-                        s.setAttribute("src", "https://utteranc.es/client.js");
-                        s.setAttribute("repo", "aliliin/commit-comment");
-                        s.setAttribute("issue-term", "pathname");
-
-                        s.setAttribute("theme", schema);
-                        s.setAttribute("crossorigin", "anonymous");
-                        document.getElementById("comments").appendChild(s);
-                      });
-                    </script>
-                    <noscript
-                      >Please enable JavaScript to view the comments</noscript
-                    >
-                  </article>
+            <hr />
+            <div>
+              <div class="post-metas mb-3">
+                
+                <div class="post-meta mr-3">
+                  <i class="iconfont icon-category"></i>
+                  
+                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                    >Kratos 微服务商城</a
+                  >
+                  
+                </div>
+                 
+                <div class="post-meta">
+                  <i class="iconfont icon-tags"></i>
+                  
+                  <a class="hover-with-bg" href="/tags/Go/"
+                    >Go</a
+                  >
+                  
+                  <a class="hover-with-bg" href="/tags/kratos/"
+                    >kratos</a
+                  >
+                  
+                </div>
+                
+              </div>
+              
+              <p class="note note-warning">
+                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+              </p>
+               
+              <div class="post-prevnext">
+                <article class="post-prev col-6">
+                   
+                  <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/">
+                    <i class="iconfont icon-arrowleft"></i>
+                    <span class="hidden-mobile">kratos 框架商城微服务实战之商品服务 (七)</span>
+                    <span class="visible-mobile">上一篇</span>
+                  </a>
+                  
+                </article>
+                <article class="post-next col-6">
+                   
+                  <a href="/2022/02/25/Kratos%20%E9%9B%86%E6%88%90%20GORM%20%E4%BA%8B%E5%8A%A1/">
+                    <span class="hidden-mobile">如何在 Go Kratos 框架中使用 GORM 事务 ?</span>
+                    <span class="visible-mobile">下一篇</span>
+                    <i class="iconfont icon-arrowright"></i>
+                  </a>
+                  
                 </article>
               </div>
+              
             </div>
-          </div>
 
-          <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-            <div id="toc">
-              <p class="toc-header">
-                <i class="iconfont icon-list"></i>&nbsp;目录
-              </p>
-              <div class="toc-body" id="toc-body"></div>
-            </div>
-          </div>
+            
+            <!-- Comments -->
+            <article class="comments" id="comments" lazyload>
+              
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'aliliin/commit-comment');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+            </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+      <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-      <!-- Custom -->
+    </div>
+    
+  </div>
+</div>
 
+<!-- Custom -->
+
+
+    
+
+    
       <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
+    
 
-      <div
-        class="modal fade"
-        id="modalSearch"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="ModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-dialog-scrollable modal-lg"
-          role="document"
-        >
-          <div class="modal-content">
-            <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-              <button
-                type="button"
-                id="local-search-close"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body mx-3">
-              <div class="md-form mb-5">
-                <input
-                  type="text"
-                  id="local-search-input"
-                  class="form-control validate"
-                />
-                <label data-error="x" data-success="v" for="local-search-input"
-                  >关键词</label
-                >
-              </div>
-              <div class="list-group" id="local-search-result"></div>
-            </div>
-          </div>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
         </div>
+        <div class="list-group" id="local-search-result"></div>
       </div>
-    </main>
+    </div>
+  </div>
+</div>
+    
 
-    <footer class="text-center mt-5 py-3">
-      <div class="footer-content">
-        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"
-          ><span>Hexo</span></a
-        >
-        <i class="iconfont icon-love"></i>
-        <a
-          href="https://github.com/fluid-dev/hexo-theme-fluid"
-          target="_blank"
-          rel="nofollow noopener"
-          ><span>Fluid</span></a
-        >
-      </div>
+    
+  </main>
 
-      <div class="statistics">
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
         <!-- 不蒜子统计PV -->
         <span id="busuanzi_container_site_pv" style="display: none">
-          总访问量
-          <span id="busuanzi_value_site_pv"></span>
-          次
-        </span>
-
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
         <!-- 不蒜子统计UV -->
         <span id="busuanzi_container_site_uv" style="display: none">
-          总访客数
-          <span id="busuanzi_value_site_uv"></span>
-          人
-        </span>
-      </div>
-    </footer>
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
 
-    <!-- SCRIPTS -->
 
-    <script src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css"
-    />
+  
 
-    <script>
-      NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
-      NProgress.start();
-      window.addEventListener("load", function () {
-        NProgress.done();
-      });
-    </script>
+  
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js"></script>
-    <script src="/js/events.js"></script>
-    <script src="/js/plugins.js"></script>
 
-    <!-- Plugins -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
 
-    <script src="/js/local-search.js"></script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
-    <script src="/js/img-lazyload.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<!-- Plugins -->
 
-    <script src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js"></script>
 
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"
-    ></script>
+  <script  src="/js/local-search.js" ></script>
 
-    <script
-      defer
-      src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
-    ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js"></script>
-    <script>
-      (function (window, document) {
-        var typing = Fluid.plugins.typing;
-        var title = document.getElementById("subtitle").title;
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
         typing(title);
-      })(window, document);
-    </script>
+      
+    })(window, document);
+  </script>
 
-    <!-- 主题的启动项 保持在最底部 -->
-    <script src="/js/boot.js"></script>
-  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

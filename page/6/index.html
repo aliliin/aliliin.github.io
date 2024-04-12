@@ -198,6 +198,55 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="Redis 缓存策略">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
+          Redis 缓存策略
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/20/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/" target="_blank">
+          
+          
+            
+          
+          缓存策略数据脏读脏写 不一致的解决情况其实，我们可以在更新数据时不更新缓存，而是删除缓存中的数据，在读取数据时，发现缓存中没了数据之后，再从数据库中读取数据，更新到缓存中。这个策略就是我们使用缓存最常见的策略，Cache Aside 策略（也叫旁路缓存策略），这个策略数据以数据库中的数据为准，缓存中的数据是按需加载的。它可以分为读策略和写策略，其中读策略的步骤是：从缓存中读取数据；如果缓存命中，则
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-20 11:46" pubdate>
+              2021-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/redis/">redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/10/20/%E7%BA%A2%E6%A5%BC%E6%A2%A6/" target="_blank">
           <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="红楼梦中的诗句记录">
         </a>
@@ -691,55 +740,6 @@ MySQL 自带的两阶段提交&#x2F;XA顾名思义就是要分两步提交事务
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
             
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E9%94%81/">分布式事务锁</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/Logo.jpeg" srcset="/img/loading.gif" lazyload alt="阿里云敏感词安全接口PHP实现">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
-          阿里云敏感词安全接口PHP实现
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%8E%A5%E5%8F%A3%E6%95%8F%E6%84%9F%E8%AF%8D/" target="_blank">
-          
-          
-            
-          
-          不啰嗦直接上代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-12-01 13:09" pubdate>
-              2020-12-01
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PHP/">PHP</a>
             
           </div>
         
