@@ -1,720 +1,970 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme="auto">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png" />
+    <link rel="icon" href="/img/favicon.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。
+    <meta name="theme-color" content="#2f4154" />
+    <meta
+      name="description"
+      content="Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。
 
 注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。
 
 新增 RPC 接口
-注：这里的目录指的是 kratos">
-  <meta name="author" content="高永立">
-  <meta name="keywords" content="">
-  <meta name="description" content="Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。  注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  新增 RPC 接口 注：这里的目录指的是 kratos">
-<meta property="og:type" content="article">
-<meta property="og:title" content="kratos 框架商城微服务实战之用户服务 (三)">
-<meta property="og:url" content="https://aliliin.com/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/index.html">
-<meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。  注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  新增 RPC 接口 注：这里的目录指的是 kratos">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
-<meta property="article:published_time" content="2022-02-11T06:09:00.000Z">
-<meta property="article:modified_time" content="2022-02-11T06:09:00.000Z">
-<meta property="article:author" content="高永立">
-<meta property="article:tag" content="Go">
-<meta property="article:tag" content="kratos">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
-  
-  <title>kratos 框架商城微服务实战之用户服务 (三) - Aliliin</title>
+注：这里的目录指的是 kratos"
+    />
+    <meta name="author" content="高永立" />
+    <meta name="keywords" content="" />
+    <meta
+      name="description"
+      content="Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。  注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  新增 RPC 接口 注：这里的目录指的是 kratos"
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="kratos 框架商城微服务实战之用户服务 (三)"
+    />
+    <meta
+      property="og:url"
+      content="https://aliliin.com/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/index.html"
+    />
+    <meta property="og:site_name" content="Aliliin" />
+    <meta
+      property="og:description"
+      content="Go-kratos 框架微服务商城实战之用户服务 (三)这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 GitHub源码 查看, 也感谢您指出不足之处。  注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。  新增 RPC 接口 注：这里的目录指的是 kratos"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta
+      property="og:image"
+      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
+    />
+    <meta
+      property="article:published_time"
+      content="2022-02-11T06:09:00.000Z"
+    />
+    <meta property="article:modified_time" content="2022-02-11T06:09:00.000Z" />
+    <meta property="article:author" content="高永立" />
+    <meta property="article:tag" content="Go" />
+    <meta property="article:tag" content="kratos" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
+    />
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+    <title>kratos 框架商城微服务实战之用户服务 (三) - Aliliin</title>
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"
+    />
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css"
+    />
+    <link rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
-    
-  
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css"
+    />
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css"
+    />
 
+    <!-- 主题依赖的图标库，不要自行修改 -->
 
-<!-- 主题依赖的图标库，不要自行修改 -->
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css"
+    />
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css"
+    />
 
+    <link rel="stylesheet" href="/css/main.css" />
 
+    <!-- 自定义样式保持在最底部 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+    <script id="fluid-configs">
+      var Fluid = window.Fluid || {};
+      var CONFIG = {
+        hostname: "aliliin.com",
+        root: "/",
+        version: "1.8.12",
+        typing: { enable: true, typeSpeed: 70, cursorChar: "_", loop: false },
+        anchorjs: {
+          enable: true,
+          element: "h1,h2,h3,h4,h5,h6",
+          placement: "right",
+          visible: "hover",
+          icon: "",
+        },
+        progressbar: {
+          enable: true,
+          height_px: 3,
+          color: "#29d",
+          options: { showSpinner: false, trickleSpeed: 100 },
+        },
+        copy_btn: true,
+        image_zoom: { enable: true, img_url_replace: ["", ""] },
+        toc: {
+          enable: true,
+          headingSelector: "h1,h2,h3,h4,h5,h6",
+          collapseDepth: 0,
+        },
+        lazyload: {
+          enable: true,
+          loading_img: "/img/loading.gif",
+          onlypost: false,
+          offset_factor: 2,
+        },
+        web_analytics: {
+          enable: false,
+          baidu: null,
+          google: null,
+          gtag: null,
+          tencent: { sid: null, cid: null },
+          woyaola: null,
+          cnzz: null,
+          leancloud: {
+            app_id: null,
+            app_key: null,
+            server_url: null,
+            path: "window.location.pathname",
+          },
+        },
+        search_path: "/local-search.xml",
+      };
+    </script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/color-schema.js"></script>
+    <meta name="generator" content="Hexo 5.4.1" />
+  </head>
 
+  <body>
+    <header style="height: 70vh">
+      <nav
+        id="navbar"
+        class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"
+      >
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <strong>Aliliin</strong>
+          </a>
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.1"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Aliliin</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+          <button
+            id="navbar-toggler-btn"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
             data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <div class="animated-icon">
+              <span></span><span></span><span></span>
+            </div>
+          </button>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+          <!-- Collapsible content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto text-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/">
+                  <i class="iconfont icon-home-fill"></i>
+                  首页
+                </a>
+              </li>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="kratos 框架商城微服务实战之用户服务 (三)">
-              
-            </span>
+              <li class="nav-item">
+                <a class="nav-link" href="/archives/">
+                  <i class="iconfont icon-archive-fill"></i>
+                  归档
+                </a>
+              </li>
 
-            
+              <li class="nav-item">
+                <a class="nav-link" href="/categories/">
+                  <i class="iconfont icon-category-fill"></i>
+                  分类
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/tags/">
+                  <i class="iconfont icon-tags-fill"></i>
+                  标签
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/about/">
+                  <i class="iconfont icon-user-fill"></i>
+                  关于
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/links/">
+                  <i class="iconfont icon-link-fill"></i>
+                  友链
+                </a>
+              </li>
+
+              <li class="nav-item" id="search-btn">
+                <a
+                  class="nav-link"
+                  target="_self"
+                  href="javascript:;"
+                  data-toggle="modal"
+                  data-target="#modalSearch"
+                  aria-label="Search"
+                >
+                  &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+                </a>
+              </li>
+
+              <li class="nav-item" id="color-toggle-btn">
+                <a
+                  class="nav-link"
+                  target="_self"
+                  href="javascript:;"
+                  aria-label="Color Toggle"
+                  >&nbsp;<i
+                    class="iconfont icon-dark"
+                    id="color-toggle-icon"
+                  ></i
+                  >&nbsp;</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div
+        class="banner"
+        id="banner"
+        parallax="true"
+        style="
+          background: url('/img/default.png') no-repeat center center;
+          background-size: cover;
+        "
+      >
+        <div class="full-bg-img">
+          <div
+            class="mask flex-center"
+            style="background-color: rgba(0, 0, 0, 0.5)"
+          >
+            <div class="page-header text-center fade-in-up">
+              <span
+                class="h2"
+                id="subtitle"
+                title="kratos 框架商城微服务实战之用户服务 (三)"
+              >
+              </span>
+
               <div class="mt-3">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-author" aria-hidden="true"></i>
-      高永立
-    </span>
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-11 14:09" pubdate>
-        2022年2月11日 下午
-      </time>
-    </span>
-  
-</div>
+                <span class="post-meta mr-2">
+                  <i class="iconfont icon-author" aria-hidden="true"></i>
+                  高永立
+                </span>
 
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      9.7k 字
-    </span>
-  
+                <span class="post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2022-02-11 14:09" pubdate>
+                    2022年2月11日 下午
+                  </time>
+                </span>
+              </div>
 
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      31 分钟
-    </span>
-  
+              <div class="mt-1">
+                <span class="post-meta mr-2">
+                  <i class="iconfont icon-chart"></i>
+                  9.7k 字
+                </span>
 
-  
-  
-    
-      <!-- 不蒜子统计文章PV -->
-      <span id="busuanzi_container_page_pv" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="busuanzi_value_page_pv"></span> 次
-      </span>
-    
-  
-</div>
+                <span class="post-meta mr-2">
+                  <i class="iconfont icon-clock-fill"></i>
 
-            
+                  31 分钟
+                </span>
+
+                <!-- 不蒜子统计文章PV -->
+                <span id="busuanzi_container_page_pv" style="display: none">
+                  <i class="iconfont icon-eye" aria-hidden="true"></i>
+                  <span id="busuanzi_value_page_pv"></span> 次
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container-fluid nopadding-x">
+        <div class="row nomargin-x">
+          <div class="d-none d-lg-block col-lg-2 post-categories">
+            <div class="category-list">
+              <div class="category row">
+                <a
+                  class="category-item list-group-item category-item-action col-10 col-md-11 col-xm-11"
+                  id="heading-2dd3b085945c184eb06b037b76c5f696"
+                  role="tab"
+                  data-toggle="collapse"
+                  href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+                  aria-expanded="true"
+                >
+                  Kratos 微服务商城(12)
+                  <i class="iconfont icon-arrowright"></i>
+                </a>
+
+                <div
+                  class="category-collapse collapse show"
+                  id="collapse-2dd3b085945c184eb06b037b76c5f696"
+                  role="tabpanel"
+                  aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696"
+                >
+                  <div class="category-post-list">
+                    <a
+                      href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之购物车服务 (十二)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (十一)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (十)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (九)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (八)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (七)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (六)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之用户服务API (五)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之用户服务 (四)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+                      class="list-group-item list-group-item-action active"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之用户服务 (三)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post">More...</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 nopadding-x-md">
+            <div class="container nopadding-x-md" id="board-ctn">
+              <div class="py-5" id="board">
+                <article class="post-content mx-auto">
+                  <!-- SEO header -->
+                  <h1 style="display: none">
+                    kratos 框架商城微服务实战之用户服务 (三)
+                  </h1>
+
+                  <p class="note note-info">本文最后更新于：2 年前</p>
+
+                  <div class="markdown-body">
+                    <h1 id="Go-kratos-框架微服务商城实战之用户服务-三">
+                      <a
+                        href="#Go-kratos-框架微服务商城实战之用户服务-三"
+                        class="headerlink"
+                        title="Go-kratos 框架微服务商城实战之用户服务 (三)"
+                      ></a
+                      >Go-kratos 框架微服务商城实战之用户服务 (三)
+                    </h1>
+                    <p>
+                      这篇主要编写第一篇写的用户服务的 rpc
+                      接口。文章写的不清晰的地方可通过
+                      <a
+                        target="_blank"
+                        rel="noopener"
+                        href="https://github.com/aliliin/kratos-shop/tree/main/service/user"
+                        title="GitHub源码"
+                        >GitHub源码</a
+                      >
+                      查看, 也感谢您指出不足之处。
+                    </p>
+                    <blockquote>
+                      <p>
+                        注：横排 …
+                        为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的
+                        . 来代替，如果你在复制本文代码块的时候，切记不要将 .
+                        也一同复制进去。
+                      </p>
+                    </blockquote>
+                    <h2 id="新增-RPC-接口">
+                      <a
+                        href="#新增-RPC-接口"
+                        class="headerlink"
+                        title="新增 RPC 接口"
+                      ></a
+                      >新增 RPC 接口
+                    </h2>
+                    <blockquote>
+                      <p>
+                        注：这里的目录指的是
+                        <code>kratos-shop/service/user/api/user/v1/</code> ,
+                        根目录指代的是 <code>user</code> 目录
+                      </p>
+                    </blockquote>
+                    <h3 id="编辑-user-proto-文件">
+                      <a
+                        href="#编辑-user-proto-文件"
+                        class="headerlink"
+                        title="编辑 user.proto 文件"
+                      ></a
+                      >编辑 <code>user.proto</code> 文件
+                    </h3>
+                    <figure class="highlight protobuf">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs protobuf">...<br><br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">User</span></span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateUser(CreateUserInfo) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>&#123;&#125;; <span class="hljs-comment">// 创建用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUserList(PageInfo) <span class="hljs-keyword">returns</span> (UserListResponse)</span>&#123;&#125;; <span class="hljs-comment">// 用户列表</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUserByMobile(MobileRequest) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>&#123;&#125;; <span class="hljs-comment">// 通过 mobile 查询用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUserById(IdRequest) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>&#123;&#125;; <span class="hljs-comment">// 通过 Id 查询用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> UpdateUser(UpdateUserInfo) <span class="hljs-keyword">returns</span> (google.protobuf.Empty)</span>&#123;&#125;; <span class="hljs-comment">// 更新用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CheckPassword(PasswordCheckInfo) <span class="hljs-keyword">returns</span> (CheckResponse)</span>&#123;&#125;; <span class="hljs-comment">// 验证用户密码</span><br>&#125;<br><br>...<br><br><span class="hljs-comment">// 用户列表</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">UserListResponse</span></span>&#123;<br>  <span class="hljs-built_in">int32</span> total = <span class="hljs-number">1</span>;<br>  <span class="hljs-keyword">repeated</span> UserInfoResponse data = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-comment">// 分页</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">PageInfo</span></span>&#123;<br>  <span class="hljs-built_in">uint32</span> pn = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">uint32</span> pSize = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">MobileRequest</span></span>&#123;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">IdRequest</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span>  <span class="hljs-title">UpdateUserInfo</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> gender = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">uint64</span> birthday = <span class="hljs-number">4</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">PasswordCheckInfo</span></span>&#123;<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> encryptedPassword = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CheckResponse</span></span>&#123;<br>  <span class="hljs-built_in">bool</span> success = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h3 id="重新生成-proto-，根目录执行-make-api-命令">
+                      <a
+                        href="#重新生成-proto-，根目录执行-make-api-命令"
+                        class="headerlink"
+                        title="重新生成 proto ，根目录执行 make api 命令"
+                      ></a
+                      >重新生成 proto ，根目录执行 <code>make api</code> 命令
+                    </h3>
+                    <h1 id="实现接口">
+                      <a
+                        href="#实现接口"
+                        class="headerlink"
+                        title="实现接口"
+                      ></a
+                      >实现接口
+                    </h1>
+                    <blockquote>
+                      <p>
+                        注：这里是一次性把 proto 定义的 rpc
+                        方法全部实现了，并没有分开编写
+                      </p>
+                    </blockquote>
+                    <h2 id="实现-RPC-service-接口">
+                      <a
+                        href="#实现-RPC-service-接口"
+                        class="headerlink"
+                        title="实现 RPC service 接口"
+                      ></a
+                      >实现 RPC service 接口
+                    </h2>
+                    <blockquote>
+                      <p>
+                        注：这里的目录指的是
+                        <code>kratos-shop/service/user/internal/service</code>
+                      </p>
+                    </blockquote>
+                    <h3 id="修改-user-go-文件">
+                      <a
+                        href="#修改-user-go-文件"
+                        class="headerlink"
+                        title="修改 user.go 文件"
+                      ></a
+                      >修改 <code>user.go</code> 文件
+                    </h3>
+                    <figure class="highlight go">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br>...<br><br><span class="hljs-comment">// GetUserList .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">GetUserList</span><span class="hljs-params">(ctx context.Context, req *v1.PageInfo)</span> <span class="hljs-params">(*v1.UserListResponse, error)</span></span> &#123;<br>    list, total, err := u.uc.List(ctx, <span class="hljs-keyword">int</span>(req.Pn), <span class="hljs-keyword">int</span>(req.PSize))<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    rsp := &amp;v1.UserListResponse&#123;&#125;<br>    rsp.Total = <span class="hljs-keyword">int32</span>(total)<br><br>    <span class="hljs-keyword">for</span> _, user := <span class="hljs-keyword">range</span> list &#123;<br>        userInfoRsp := UserResponse(user)<br>        rsp.Data = <span class="hljs-built_in">append</span>(rsp.Data, &amp;userInfoRsp)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> rsp, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">UserResponse</span><span class="hljs-params">(user *biz.User)</span> <span class="hljs-title">v1</span>.<span class="hljs-title">UserInfoResponse</span></span> &#123;<br>    userInfoRsp := v1.UserInfoResponse&#123;<br>        Id:       user.ID,<br>        Mobile:   user.Mobile,<br>        Password: user.Password,<br>        NickName: user.NickName,<br>        Gender:   user.Gender,<br>        Role:     <span class="hljs-keyword">int32</span>(user.Role),<br>    &#125;<br>    <span class="hljs-keyword">if</span> user.Birthday != <span class="hljs-literal">nil</span> &#123;<br>        userInfoRsp.Birthday = <span class="hljs-keyword">uint64</span>(user.Birthday.Unix())<br>    &#125;<br>    <span class="hljs-keyword">return</span> userInfoRsp<br>&#125;<br><br><span class="hljs-comment">// GetUserByMobile .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">GetUserByMobile</span><span class="hljs-params">(ctx context.Context, req *v1.MobileRequest)</span> <span class="hljs-params">(*v1.UserInfoResponse, error)</span></span> &#123;<br>    user, err := u.uc.UserByMobile(ctx, req.Mobile)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    rsp := UserResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;rsp, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// UpdateUser .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">UpdateUser</span><span class="hljs-params">(ctx context.Context, req *v1.UpdateUserInfo)</span> <span class="hljs-params">(*emptypb.Empty, error)</span></span> &#123;<br>    birthDay := time.Unix(<span class="hljs-keyword">int64</span>(req.Birthday), <span class="hljs-number">0</span>)<br>    user, err := u.uc.UpdateUser(ctx, &amp;biz.User&#123;<br>        ID:       req.Id,<br>        Gender:   req.Gender,<br>        Birthday: &amp;birthDay,<br>        NickName: req.NickName,<br>    &#125;)<br><br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> user == <span class="hljs-literal">false</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> &amp;empty.Empty&#123;&#125;, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// CheckPassword .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">CheckPassword</span><span class="hljs-params">(ctx context.Context, req *v1.PasswordCheckInfo)</span> <span class="hljs-params">(*v1.CheckResponse, error)</span></span> &#123;<br>    check, err := u.uc.CheckPassword(ctx, req.Password, req.EncryptedPassword)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    <span class="hljs-keyword">return</span> &amp;v1.CheckResponse&#123;Success: check&#125;, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// GetUserById .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">GetUserById</span><span class="hljs-params">(ctx context.Context, req *v1.IdRequest)</span> <span class="hljs-params">(*v1.UserInfoResponse, error)</span></span> &#123;<br>    user, err := u.uc.UserById(ctx, req.Id)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    rsp := UserResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;rsp, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h2 id="实现-biz-层方法">
+                      <a
+                        href="#实现-biz-层方法"
+                        class="headerlink"
+                        title="实现 biz 层方法"
+                      ></a
+                      >实现 biz 层方法
+                    </h2>
+                    <blockquote>
+                      <p>
+                        注：这里的目录指的是
+                        <code>kratos-shop/service/user/internal/biz</code> ,实现
+                        service 调用的方法并声明好 repo 接口方法,repo
+                        声明的方法需要在 data 层去实现
+                      </p>
+                    </blockquote>
+                    <h3 id="修改-user-go-文件-1">
+                      <a
+                        href="#修改-user-go-文件-1"
+                        class="headerlink"
+                        title="修改 user.go 文件"
+                      ></a
+                      >修改 <code>user.go</code> 文件
+                    </h3>
+                    <figure class="highlight reasonml">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs reasonml">package biz<br><br>....<br><span class="hljs-comment">//go:generate mockgen -destination=../mocks/mrepo/user.go -package=mrepo . UserRepo</span><br><span class="hljs-keyword">type</span> UserRepo interface &#123;<br>    <span class="hljs-constructor">CreateUser(<span class="hljs-params">context</span>.Context, <span class="hljs-operator">*</span>User)</span> (*User, error)<br>    <span class="hljs-constructor">ListUser(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">pageNum</span>, <span class="hljs-params">pageSize</span> <span class="hljs-params">int</span>)</span> (<span class="hljs-literal">[]</span>*User, <span class="hljs-built_in">int</span>, error)<br>    <span class="hljs-constructor">UserByMobile(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">mobile</span> <span class="hljs-params">string</span>)</span> (*User, error)<br>    <span class="hljs-constructor">GetUserById(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">id</span> <span class="hljs-params">int64</span>)</span> (*User, error)<br>    <span class="hljs-constructor">UpdateUser(<span class="hljs-params">context</span>.Context, <span class="hljs-operator">*</span>User)</span> (<span class="hljs-built_in">bool</span>, error)<br>    <span class="hljs-constructor">CheckPassword(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">password</span>, <span class="hljs-params">encryptedPassword</span> <span class="hljs-params">string</span>)</span> (<span class="hljs-built_in">bool</span>, error)<br>&#125;<span class="hljs-operator"></span><br><span class="hljs-operator"></span><br><span class="hljs-operator">...</span><br><span class="hljs-operator"></span><br><span class="hljs-operator"></span><br><span class="hljs-operator"></span>func (uc *UserUsecase) <span class="hljs-constructor">List(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">pageNum</span>, <span class="hljs-params">pageSize</span> <span class="hljs-params">int</span>)</span> (<span class="hljs-literal">[]</span>*User, <span class="hljs-built_in">int</span>, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">ListUser(<span class="hljs-params">ctx</span>, <span class="hljs-params">pageNum</span>, <span class="hljs-params">pageSize</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">UserByMobile(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">mobile</span> <span class="hljs-params">string</span>)</span> (*User, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">UserByMobile(<span class="hljs-params">ctx</span>, <span class="hljs-params">mobile</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">UpdateUser(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">user</span> <span class="hljs-operator">*</span>User)</span> (<span class="hljs-built_in">bool</span>, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">UpdateUser(<span class="hljs-params">ctx</span>, <span class="hljs-params">user</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">CheckPassword(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">password</span>, <span class="hljs-params">encryptedPassword</span> <span class="hljs-params">string</span>)</span> (<span class="hljs-built_in">bool</span>, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">CheckPassword(<span class="hljs-params">ctx</span>, <span class="hljs-params">password</span>, <span class="hljs-params">encryptedPassword</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">UserById(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">id</span> <span class="hljs-params">int64</span>)</span> (*User, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">GetUserById(<span class="hljs-params">ctx</span>, <span class="hljs-params">id</span>)</span><br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h2 id="实现-data-层方法">
+                      <a
+                        href="#实现-data-层方法"
+                        class="headerlink"
+                        title="实现 data 层方法"
+                      ></a
+                      >实现 data 层方法
+                    </h2>
+                    <blockquote>
+                      <p>
+                        注：这里的目录指的是
+                        <code>kratos-shop/service/user/internal/data</code>
+                        ,实现biz 层定义 repo interface
+                        接口方法，具体去操作数据库
+                      </p>
+                    </blockquote>
+                    <h3 id="修改-user-go-文件-2">
+                      <a
+                        href="#修改-user-go-文件-2"
+                        class="headerlink"
+                        title="修改 user.go 文件"
+                      ></a
+                      >修改 <code>user.go</code> 文件
+                    </h3>
+                    <figure class="highlight go">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs go"><span class="hljs-comment">// ListUser .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">ListUser</span><span class="hljs-params">(ctx context.Context, pageNum, pageSize <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">([]*biz.User, <span class="hljs-keyword">int</span>, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> users []User<br>    result := r.data.db.Find(&amp;users)<br>    <span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-number">0</span>, result.Error<br>    &#125;<br>    total := <span class="hljs-keyword">int</span>(result.RowsAffected)<br>    r.data.db.Scopes(paginate(pageNum, pageSize)).Find(&amp;users)<br>    rv := <span class="hljs-built_in">make</span>([]*biz.User, <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">for</span> _, u := <span class="hljs-keyword">range</span> users &#123;<br>        rv = <span class="hljs-built_in">append</span>(rv, &amp;biz.User&#123;<br>            ID:       u.ID,<br>            Mobile:   u.Mobile,<br>            Password: u.Password,<br>            NickName: u.NickName,<br>            Gender:   u.Gender,<br>            Role:     u.Role,<br>            Birthday: u.Birthday,<br>        &#125;)<br>    &#125;<br>    <span class="hljs-keyword">return</span> rv, total, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// paginate 分页</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">paginate</span><span class="hljs-params">(page, pageSize <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">func</span><span class="hljs-params">(db *gorm.DB)</span> *<span class="hljs-title">gorm</span>.<span class="hljs-title">DB</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(db *gorm.DB)</span> *<span class="hljs-title">gorm</span>.<span class="hljs-title">DB</span></span> &#123;<br>        <span class="hljs-keyword">if</span> page == <span class="hljs-number">0</span> &#123;<br>            page = <span class="hljs-number">1</span><br>        &#125;<br><br>        <span class="hljs-keyword">switch</span> &#123;<br>        <span class="hljs-keyword">case</span> pageSize &gt; <span class="hljs-number">100</span>:<br>            pageSize = <span class="hljs-number">100</span><br>        <span class="hljs-keyword">case</span> pageSize &lt;= <span class="hljs-number">0</span>:<br>            pageSize = <span class="hljs-number">10</span><br>        &#125;<br><br>        offset := (page - <span class="hljs-number">1</span>) * pageSize<br>        <span class="hljs-keyword">return</span> db.Offset(offset).Limit(pageSize)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// UserByMobile .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">UserByMobile</span><span class="hljs-params">(ctx context.Context, mobile <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> user User<br>    result := r.data.db.Where(&amp;User&#123;Mobile: mobile&#125;).First(&amp;user)<br>    <span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.NotFound, <span class="hljs-string">&quot;用户不存在&quot;</span>)<br>    &#125;<br>    re := modelToResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;re, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// UpdateUser .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">UpdateUser</span><span class="hljs-params">(ctx context.Context, user *biz.User)</span> <span class="hljs-params">(<span class="hljs-keyword">bool</span>, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> userInfo User<br>    result := r.data.db.Where(&amp;User&#123;ID: user.ID&#125;).First(&amp;userInfo)<br>    <span class="hljs-keyword">if</span> result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>, status.Errorf(codes.NotFound, <span class="hljs-string">&quot;用户不存在&quot;</span>)<br>    &#125;<br><br>    userInfo.NickName = user.NickName<br>    userInfo.Birthday = user.Birthday<br>    userInfo.Gender = user.Gender<br><br>    res := r.data.db.Save(&amp;userInfo)<br>    <span class="hljs-keyword">if</span> res.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>, status.Errorf(codes.Internal, res.Error.Error())<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// CheckPassword .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">CheckPassword</span><span class="hljs-params">(ctx context.Context, psd, encryptedPassword <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">bool</span>, error)</span></span> &#123;<br>    options := &amp;password.Options&#123;SaltLen: <span class="hljs-number">16</span>, Iterations: <span class="hljs-number">10000</span>, KeyLen: <span class="hljs-number">32</span>, HashFunction: sha512.New&#125;<br>    passwordInfo := strings.Split(encryptedPassword, <span class="hljs-string">&quot;$&quot;</span>)<br>    check := password.Verify(psd, passwordInfo[<span class="hljs-number">2</span>], passwordInfo[<span class="hljs-number">3</span>], options)<br>    <span class="hljs-keyword">return</span> check, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// GetUserById .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">GetUserById</span><span class="hljs-params">(ctx context.Context, Id <span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> user User<br>    result := r.data.db.Where(&amp;User&#123;ID: Id&#125;).First(&amp;user)<br>    <span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.NotFound, <span class="hljs-string">&quot;用户不存在&quot;</span>)<br>    &#125;<br>    re := modelToResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;re, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h1 id="编写测试代码">
+                      <a
+                        href="#编写测试代码"
+                        class="headerlink"
+                        title="编写测试代码"
+                      ></a
+                      >编写测试代码
+                    </h1>
+                    <h2 id="编写-data-层的测试代码">
+                      <a
+                        href="#编写-data-层的测试代码"
+                        class="headerlink"
+                        title="编写 data 层的测试代码"
+                      ></a
+                      >编写 data 层的测试代码
+                    </h2>
+                    <blockquote>
+                      <p><code>service/user/internal/data</code> 目录</p>
+                    </blockquote>
+                    <p><code>user_test.go</code> 文件新增内容：</p>
+                    <figure class="highlight go">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> data_test<br><br><span class="hljs-keyword">import</span> (<br>   . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>   . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>   <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>   <span class="hljs-string">&quot;user/internal/data&quot;</span><br>   <span class="hljs-string">&quot;user/internal/testdata&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> _ = Describe(<span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">var</span> ro biz.UserRepo<br>   <span class="hljs-keyword">var</span> uD *biz.User<br>   BeforeEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       ro = data.NewUserRepo(Db, <span class="hljs-literal">nil</span>)<br>       <span class="hljs-comment">// 这里你可以不引入外部组装好的数据，可以在这里直接写</span><br>       uD = testdata.User()<br>   &#125;)<br>   <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>   It(<span class="hljs-string">&quot;CreateUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       u, err := ro.CreateUser(ctx, uD)<br>       Ω(err).ShouldNot(HaveOccurred())<br>       <span class="hljs-comment">// 组装的数据 mobile 为 13509876789</span><br>       Ω(u.Mobile).Should(Equal(<span class="hljs-string">&quot;13509876789&quot;</span>)) <span class="hljs-comment">// 手机号应该为创建的时候写入的手机号</span><br>   &#125;)<br>   <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>   It(<span class="hljs-string">&quot;ListUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       user, total, err := ro.ListUser(ctx, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>)<br>       Ω(err).ShouldNot(HaveOccurred()) <span class="hljs-comment">// 获取列表不应该出现错误</span><br>       Ω(user).ShouldNot(BeEmpty())     <span class="hljs-comment">// 结果不应该为空</span><br>       Ω(total).Should(Equal(<span class="hljs-number">1</span>))        <span class="hljs-comment">// 总数应该为 1，因为上面只创建了一条</span><br>       Ω(<span class="hljs-built_in">len</span>(user)).Should(Equal(<span class="hljs-number">1</span>))<br>       Ω(user[<span class="hljs-number">0</span>].Mobile).Should(Equal(<span class="hljs-string">&quot;13509876789&quot;</span>))<br>   &#125;)<br><br>   <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>   It(<span class="hljs-string">&quot;UpdateUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       birthDay := time.Unix(<span class="hljs-keyword">int64</span>(<span class="hljs-number">693646426</span>), <span class="hljs-number">0</span>)<br>       uD.NickName = <span class="hljs-string">&quot;gyl&quot;</span><br>       uD.Birthday = &amp;birthDay<br>       uD.Gender = <span class="hljs-string">&quot;female&quot;</span><br>       user, err := ro.UpdateUser(ctx, uD)<br>       Ω(err).ShouldNot(HaveOccurred()) <span class="hljs-comment">// 更新不应该出现错误</span><br>       Ω(user).Should(BeTrue())         <span class="hljs-comment">// 结果应该为 true</span><br>   &#125;)<br><br>   It(<span class="hljs-string">&quot;CheckPassword&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       p1 := <span class="hljs-string">&quot;admin&quot;</span><br>       encryptedPassword := <span class="hljs-string">&quot;$pbkdf2-sha512$5p7doUNIS9I5mvhA$b18171ff58b04c02ed70ea4f39bda036029c107294bce83301a02fb53a1bcae0&quot;</span><br>       password, err := ro.CheckPassword(ctx, p1, encryptedPassword)<br>       Ω(err).ShouldNot(HaveOccurred()) <span class="hljs-comment">// 密码验证通过</span><br>       Ω(password).Should(BeTrue())     <span class="hljs-comment">// 结果应该为true</span><br><br>       encryptedPassword1 := <span class="hljs-string">&quot;$pbkdf2-sha512$5p7doUNIS9I5mvhA$b18171ff58b04c02ed70ea4f39&quot;</span><br>       password1, err := ro.CheckPassword(ctx, p1, encryptedPassword1)<br>       <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>           <span class="hljs-keyword">return</span><br>       &#125;<br>       Ω(err).ShouldNot(HaveOccurred())<br>       Ω(password1).Should(BeFalse()) <span class="hljs-comment">// 密码验证不通过</span><br>   &#125;)<br>&#125;)<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h3 id="执行-go-test-命令，测试-user-test-go">
+                      <a
+                        href="#执行-go-test-命令，测试-user-test-go"
+                        class="headerlink"
+                        title="执行 go test 命令，测试 user_test.go"
+                      ></a
+                      >执行 go test 命令，测试 user_test.go
+                    </h3>
+                    <p>
+                      可以看到测试全部通过。这一篇并么有写 biz
+                      的测试，可以自己完善一下 biz
+                      的测试方法。具体执行测试的方法，可看上一篇。
+                    </p>
+                    <h1 id="结束语">
+                      <a href="#结束语" class="headerlink" title="结束语"></a
+                      >结束语
+                    </h1>
+                    <p>
+                      至此 user
+                      服务的一些接口基本全部写完了，再有关于用户表信息的需求，可以按照此篇进行增加。下一篇先不完善用户地址之类的需求接口了，先去写
+                      HTTP API 端去来调用这个 user
+                      服务，到时候就把整个服务的基本雏形完成了。
+                    </p>
+                    <p>
+                      <strong
+                        >感谢您的耐心阅读，动动手指点个 star 吧。笔芯</strong
+                      >
+                    </p>
+                    <h2 id="关注我获取更新">
+                      <a
+                        href="#关注我获取更新"
+                        class="headerlink"
+                        title="关注我获取更新"
+                      ></a
+                      >关注我获取更新
+                    </h2>
+                    <p>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/bXOHljd6ST.jpeg"
+                        srcset="/img/loading.gif"
+                        lazyload
+                      />
+                    </p>
+                  </div>
+                  <hr />
+                  <div>
+                    <div class="post-metas mb-3">
+                      <div class="post-meta mr-3">
+                        <i class="iconfont icon-category"></i>
+
+                        <a
+                          class="hover-with-bg"
+                          href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                          >Kratos 微服务商城</a
+                        >
+                      </div>
+
+                      <div class="post-meta">
+                        <i class="iconfont icon-tags"></i>
+
+                        <a class="hover-with-bg" href="/tags/Go/">Go</a>
+
+                        <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
+                      </div>
+                    </div>
+
+                    <p class="note note-warning">
+                      本博客所有文章除特别声明外，均采用
+                      <a
+                        target="_blank"
+                        href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh"
+                        rel="nofollow noopener noopener"
+                        >CC BY-SA 4.0 协议</a
+                      >
+                      ，转载请注明出处！
+                    </p>
+
+                    <div class="post-prevnext">
+                      <article class="post-prev col-6">
+                        <a
+                          href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+                        >
+                          <i class="iconfont icon-arrowleft"></i>
+                          <span class="hidden-mobile"
+                            >kratos 框架商城微服务实战之用户服务 (四)</span
+                          >
+                          <span class="visible-mobile">上一篇</span>
+                        </a>
+                      </article>
+                      <article class="post-next col-6">
+                        <a
+                          href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/"
+                        >
+                          <span class="hidden-mobile"
+                            >kratos 框架商城微服务实战之用户服务 (二)</span
+                          >
+                          <span class="visible-mobile">下一篇</span>
+                          <i class="iconfont icon-arrowright"></i>
+                        </a>
+                      </article>
+                    </div>
+                  </div>
+
+                  <!-- Comments -->
+                  <article class="comments" id="comments" lazyload>
+                    <script type="text/javascript">
+                      Fluid.utils.loadComments("#comments", function () {
+                        var light = "github-light";
+                        var dark = "github-dark";
+                        var schema = document.documentElement.getAttribute(
+                          "data-user-color-scheme"
+                        );
+                        if (schema === "dark") {
+                          schema = dark;
+                        } else {
+                          schema = light;
+                        }
+                        window.UtterancesThemeLight = light;
+                        window.UtterancesThemeDark = dark;
+                        var s = document.createElement("script");
+                        s.setAttribute("src", "https://utteranc.es/client.js");
+                        s.setAttribute("repo", "aliliin/commit-comment");
+                        s.setAttribute("issue-term", "pathname");
+
+                        s.setAttribute("theme", schema);
+                        s.setAttribute("crossorigin", "anonymous");
+                        document.getElementById("comments").appendChild(s);
+                      });
+                    </script>
+                    <noscript
+                      >Please enable JavaScript to view the comments</noscript
+                    >
+                  </article>
+                </article>
+              </div>
+            </div>
           </div>
 
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2 post-categories">
-      
-        
-
-
-
-
-
-
-<div class="category-list">
-  
-  
-  
-  
-  
-    
-    
-    
-    <div class="category row">
-      <a class="category-item 
-                 
-                list-group-item category-item-action col-10 col-md-11 col-xm-11"
-        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
-        aria-expanded="true"
-      >
-        Kratos 微服务商城(12) 
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-       
-      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之购物车服务 (十二)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十一)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
-           class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/" class="list-group-item list-group-item-action">
-          <span class="category-post">More...</span>
-        </a>
-        
-  </div>
-
-        
-      </div>
-    </div>
-  
-</div>
-
-      
-    </div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none;">kratos 框架商城微服务实战之用户服务 (三)</h1>
-            
-            <p class="note note-info">
-               本文最后更新于：2 年前 
-            </p>
-            
-            <div class="markdown-body">
-              <h1 id="Go-kratos-框架微服务商城实战之用户服务-三"><a href="#Go-kratos-框架微服务商城实战之用户服务-三" class="headerlink" title="Go-kratos 框架微服务商城实战之用户服务 (三)"></a>Go-kratos 框架微服务商城实战之用户服务 (三)</h1><p>这篇主要编写第一篇写的用户服务的 rpc 接口。文章写的不清晰的地方可通过 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop/tree/main/service/user" title="GitHub源码">GitHub源码</a> 查看, 也感谢您指出不足之处。</p>
-<blockquote>
-<p>注：横排 … 为代码省略，为了保持文章的篇幅简洁，我会将一些不必要的代码使用横排的 . 来代替，如果你在复制本文代码块的时候，切记不要将 . 也一同复制进去。</p>
-</blockquote>
-<h2 id="新增-RPC-接口"><a href="#新增-RPC-接口" class="headerlink" title="新增 RPC 接口"></a>新增 RPC 接口</h2><blockquote>
-<p>注：这里的目录指的是 <code>kratos-shop/service/user/api/user/v1/</code> , 根目录指代的是 <code>user</code> 目录</p>
-</blockquote>
-<h3 id="编辑-user-proto-文件"><a href="#编辑-user-proto-文件" class="headerlink" title="编辑 user.proto 文件"></a>编辑 <code>user.proto</code> 文件</h3><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">...<br><br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">User</span></span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateUser(CreateUserInfo) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>&#123;&#125;; <span class="hljs-comment">// 创建用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUserList(PageInfo) <span class="hljs-keyword">returns</span> (UserListResponse)</span>&#123;&#125;; <span class="hljs-comment">// 用户列表</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUserByMobile(MobileRequest) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>&#123;&#125;; <span class="hljs-comment">// 通过 mobile 查询用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUserById(IdRequest) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>&#123;&#125;; <span class="hljs-comment">// 通过 Id 查询用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> UpdateUser(UpdateUserInfo) <span class="hljs-keyword">returns</span> (google.protobuf.Empty)</span>&#123;&#125;; <span class="hljs-comment">// 更新用户</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CheckPassword(PasswordCheckInfo) <span class="hljs-keyword">returns</span> (CheckResponse)</span>&#123;&#125;; <span class="hljs-comment">// 验证用户密码</span><br>&#125;<br><br>...<br><br><span class="hljs-comment">// 用户列表</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">UserListResponse</span></span>&#123;<br>  <span class="hljs-built_in">int32</span> total = <span class="hljs-number">1</span>;<br>  <span class="hljs-keyword">repeated</span> UserInfoResponse data = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-comment">// 分页</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">PageInfo</span></span>&#123;<br>  <span class="hljs-built_in">uint32</span> pn = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">uint32</span> pSize = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">MobileRequest</span></span>&#123;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">IdRequest</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span>  <span class="hljs-title">UpdateUserInfo</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> gender = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">uint64</span> birthday = <span class="hljs-number">4</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">PasswordCheckInfo</span></span>&#123;<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> encryptedPassword = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">CheckResponse</span></span>&#123;<br>  <span class="hljs-built_in">bool</span> success = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="重新生成-proto-，根目录执行-make-api-命令"><a href="#重新生成-proto-，根目录执行-make-api-命令" class="headerlink" title="重新生成 proto ，根目录执行 make api 命令"></a>重新生成 proto ，根目录执行 <code>make api</code> 命令</h3><h1 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h1><blockquote>
-<p>注：这里是一次性把 proto 定义的 rpc 方法全部实现了，并没有分开编写</p>
-</blockquote>
-<h2 id="实现-RPC-service-接口"><a href="#实现-RPC-service-接口" class="headerlink" title="实现 RPC service 接口"></a>实现 RPC service 接口</h2><blockquote>
-<p>注：这里的目录指的是 <code>kratos-shop/service/user/internal/service</code></p>
-</blockquote>
-<h3 id="修改-user-go-文件"><a href="#修改-user-go-文件" class="headerlink" title="修改 user.go 文件"></a>修改 <code>user.go</code> 文件</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br>...<br><br><span class="hljs-comment">// GetUserList .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">GetUserList</span><span class="hljs-params">(ctx context.Context, req *v1.PageInfo)</span> <span class="hljs-params">(*v1.UserListResponse, error)</span></span> &#123;<br>    list, total, err := u.uc.List(ctx, <span class="hljs-keyword">int</span>(req.Pn), <span class="hljs-keyword">int</span>(req.PSize))<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    rsp := &amp;v1.UserListResponse&#123;&#125;<br>    rsp.Total = <span class="hljs-keyword">int32</span>(total)<br><br>    <span class="hljs-keyword">for</span> _, user := <span class="hljs-keyword">range</span> list &#123;<br>        userInfoRsp := UserResponse(user)<br>        rsp.Data = <span class="hljs-built_in">append</span>(rsp.Data, &amp;userInfoRsp)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> rsp, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">UserResponse</span><span class="hljs-params">(user *biz.User)</span> <span class="hljs-title">v1</span>.<span class="hljs-title">UserInfoResponse</span></span> &#123;<br>    userInfoRsp := v1.UserInfoResponse&#123;<br>        Id:       user.ID,<br>        Mobile:   user.Mobile,<br>        Password: user.Password,<br>        NickName: user.NickName,<br>        Gender:   user.Gender,<br>        Role:     <span class="hljs-keyword">int32</span>(user.Role),<br>    &#125;<br>    <span class="hljs-keyword">if</span> user.Birthday != <span class="hljs-literal">nil</span> &#123;<br>        userInfoRsp.Birthday = <span class="hljs-keyword">uint64</span>(user.Birthday.Unix())<br>    &#125;<br>    <span class="hljs-keyword">return</span> userInfoRsp<br>&#125;<br><br><span class="hljs-comment">// GetUserByMobile .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">GetUserByMobile</span><span class="hljs-params">(ctx context.Context, req *v1.MobileRequest)</span> <span class="hljs-params">(*v1.UserInfoResponse, error)</span></span> &#123;<br>    user, err := u.uc.UserByMobile(ctx, req.Mobile)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    rsp := UserResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;rsp, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// UpdateUser .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">UpdateUser</span><span class="hljs-params">(ctx context.Context, req *v1.UpdateUserInfo)</span> <span class="hljs-params">(*emptypb.Empty, error)</span></span> &#123;<br>    birthDay := time.Unix(<span class="hljs-keyword">int64</span>(req.Birthday), <span class="hljs-number">0</span>)<br>    user, err := u.uc.UpdateUser(ctx, &amp;biz.User&#123;<br>        ID:       req.Id,<br>        Gender:   req.Gender,<br>        Birthday: &amp;birthDay,<br>        NickName: req.NickName,<br>    &#125;)<br><br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> user == <span class="hljs-literal">false</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> &amp;empty.Empty&#123;&#125;, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// CheckPassword .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">CheckPassword</span><span class="hljs-params">(ctx context.Context, req *v1.PasswordCheckInfo)</span> <span class="hljs-params">(*v1.CheckResponse, error)</span></span> &#123;<br>    check, err := u.uc.CheckPassword(ctx, req.Password, req.EncryptedPassword)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    <span class="hljs-keyword">return</span> &amp;v1.CheckResponse&#123;Success: check&#125;, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// GetUserById .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">GetUserById</span><span class="hljs-params">(ctx context.Context, req *v1.IdRequest)</span> <span class="hljs-params">(*v1.UserInfoResponse, error)</span></span> &#123;<br>    user, err := u.uc.UserById(ctx, req.Id)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    rsp := UserResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;rsp, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="实现-biz-层方法"><a href="#实现-biz-层方法" class="headerlink" title="实现 biz 层方法"></a>实现 biz 层方法</h2><blockquote>
-<p>注：这里的目录指的是 <code>kratos-shop/service/user/internal/biz</code> ,实现 service 调用的方法并声明好 repo 接口方法,repo 声明的方法需要在 data 层去实现</p>
-</blockquote>
-<h3 id="修改-user-go-文件-1"><a href="#修改-user-go-文件-1" class="headerlink" title="修改 user.go 文件"></a>修改 <code>user.go</code> 文件</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">package biz<br><br>....<br><span class="hljs-comment">//go:generate mockgen -destination=../mocks/mrepo/user.go -package=mrepo . UserRepo</span><br><span class="hljs-keyword">type</span> UserRepo interface &#123;<br>    <span class="hljs-constructor">CreateUser(<span class="hljs-params">context</span>.Context, <span class="hljs-operator">*</span>User)</span> (*User, error)<br>    <span class="hljs-constructor">ListUser(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">pageNum</span>, <span class="hljs-params">pageSize</span> <span class="hljs-params">int</span>)</span> (<span class="hljs-literal">[]</span>*User, <span class="hljs-built_in">int</span>, error)<br>    <span class="hljs-constructor">UserByMobile(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">mobile</span> <span class="hljs-params">string</span>)</span> (*User, error)<br>    <span class="hljs-constructor">GetUserById(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">id</span> <span class="hljs-params">int64</span>)</span> (*User, error)<br>    <span class="hljs-constructor">UpdateUser(<span class="hljs-params">context</span>.Context, <span class="hljs-operator">*</span>User)</span> (<span class="hljs-built_in">bool</span>, error)<br>    <span class="hljs-constructor">CheckPassword(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">password</span>, <span class="hljs-params">encryptedPassword</span> <span class="hljs-params">string</span>)</span> (<span class="hljs-built_in">bool</span>, error)<br>&#125;<span class="hljs-operator"></span><br><span class="hljs-operator"></span><br><span class="hljs-operator">...</span><br><span class="hljs-operator"></span><br><span class="hljs-operator"></span><br><span class="hljs-operator"></span>func (uc *UserUsecase) <span class="hljs-constructor">List(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">pageNum</span>, <span class="hljs-params">pageSize</span> <span class="hljs-params">int</span>)</span> (<span class="hljs-literal">[]</span>*User, <span class="hljs-built_in">int</span>, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">ListUser(<span class="hljs-params">ctx</span>, <span class="hljs-params">pageNum</span>, <span class="hljs-params">pageSize</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">UserByMobile(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">mobile</span> <span class="hljs-params">string</span>)</span> (*User, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">UserByMobile(<span class="hljs-params">ctx</span>, <span class="hljs-params">mobile</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">UpdateUser(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">user</span> <span class="hljs-operator">*</span>User)</span> (<span class="hljs-built_in">bool</span>, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">UpdateUser(<span class="hljs-params">ctx</span>, <span class="hljs-params">user</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">CheckPassword(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">password</span>, <span class="hljs-params">encryptedPassword</span> <span class="hljs-params">string</span>)</span> (<span class="hljs-built_in">bool</span>, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">CheckPassword(<span class="hljs-params">ctx</span>, <span class="hljs-params">password</span>, <span class="hljs-params">encryptedPassword</span>)</span><br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">UserById(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">id</span> <span class="hljs-params">int64</span>)</span> (*User, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">GetUserById(<span class="hljs-params">ctx</span>, <span class="hljs-params">id</span>)</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="实现-data-层方法"><a href="#实现-data-层方法" class="headerlink" title="实现 data 层方法"></a>实现 data 层方法</h2><blockquote>
-<p>注：这里的目录指的是 <code>kratos-shop/service/user/internal/data</code> ,实现biz 层定义 repo interface 接口方法，具体去操作数据库</p>
-</blockquote>
-<h3 id="修改-user-go-文件-2"><a href="#修改-user-go-文件-2" class="headerlink" title="修改 user.go 文件"></a>修改 <code>user.go</code> 文件</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// ListUser .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">ListUser</span><span class="hljs-params">(ctx context.Context, pageNum, pageSize <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">([]*biz.User, <span class="hljs-keyword">int</span>, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> users []User<br>    result := r.data.db.Find(&amp;users)<br>    <span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-number">0</span>, result.Error<br>    &#125;<br>    total := <span class="hljs-keyword">int</span>(result.RowsAffected)<br>    r.data.db.Scopes(paginate(pageNum, pageSize)).Find(&amp;users)<br>    rv := <span class="hljs-built_in">make</span>([]*biz.User, <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">for</span> _, u := <span class="hljs-keyword">range</span> users &#123;<br>        rv = <span class="hljs-built_in">append</span>(rv, &amp;biz.User&#123;<br>            ID:       u.ID,<br>            Mobile:   u.Mobile,<br>            Password: u.Password,<br>            NickName: u.NickName,<br>            Gender:   u.Gender,<br>            Role:     u.Role,<br>            Birthday: u.Birthday,<br>        &#125;)<br>    &#125;<br>    <span class="hljs-keyword">return</span> rv, total, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// paginate 分页</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">paginate</span><span class="hljs-params">(page, pageSize <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">func</span><span class="hljs-params">(db *gorm.DB)</span> *<span class="hljs-title">gorm</span>.<span class="hljs-title">DB</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(db *gorm.DB)</span> *<span class="hljs-title">gorm</span>.<span class="hljs-title">DB</span></span> &#123;<br>        <span class="hljs-keyword">if</span> page == <span class="hljs-number">0</span> &#123;<br>            page = <span class="hljs-number">1</span><br>        &#125;<br><br>        <span class="hljs-keyword">switch</span> &#123;<br>        <span class="hljs-keyword">case</span> pageSize &gt; <span class="hljs-number">100</span>:<br>            pageSize = <span class="hljs-number">100</span><br>        <span class="hljs-keyword">case</span> pageSize &lt;= <span class="hljs-number">0</span>:<br>            pageSize = <span class="hljs-number">10</span><br>        &#125;<br><br>        offset := (page - <span class="hljs-number">1</span>) * pageSize<br>        <span class="hljs-keyword">return</span> db.Offset(offset).Limit(pageSize)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// UserByMobile .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">UserByMobile</span><span class="hljs-params">(ctx context.Context, mobile <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> user User<br>    result := r.data.db.Where(&amp;User&#123;Mobile: mobile&#125;).First(&amp;user)<br>    <span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.NotFound, <span class="hljs-string">&quot;用户不存在&quot;</span>)<br>    &#125;<br>    re := modelToResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;re, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// UpdateUser .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">UpdateUser</span><span class="hljs-params">(ctx context.Context, user *biz.User)</span> <span class="hljs-params">(<span class="hljs-keyword">bool</span>, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> userInfo User<br>    result := r.data.db.Where(&amp;User&#123;ID: user.ID&#125;).First(&amp;userInfo)<br>    <span class="hljs-keyword">if</span> result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>, status.Errorf(codes.NotFound, <span class="hljs-string">&quot;用户不存在&quot;</span>)<br>    &#125;<br><br>    userInfo.NickName = user.NickName<br>    userInfo.Birthday = user.Birthday<br>    userInfo.Gender = user.Gender<br><br>    res := r.data.db.Save(&amp;userInfo)<br>    <span class="hljs-keyword">if</span> res.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>, status.Errorf(codes.Internal, res.Error.Error())<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// CheckPassword .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">CheckPassword</span><span class="hljs-params">(ctx context.Context, psd, encryptedPassword <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">bool</span>, error)</span></span> &#123;<br>    options := &amp;password.Options&#123;SaltLen: <span class="hljs-number">16</span>, Iterations: <span class="hljs-number">10000</span>, KeyLen: <span class="hljs-number">32</span>, HashFunction: sha512.New&#125;<br>    passwordInfo := strings.Split(encryptedPassword, <span class="hljs-string">&quot;$&quot;</span>)<br>    check := password.Verify(psd, passwordInfo[<span class="hljs-number">2</span>], passwordInfo[<span class="hljs-number">3</span>], options)<br>    <span class="hljs-keyword">return</span> check, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// GetUserById .</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *userRepo)</span> <span class="hljs-title">GetUserById</span><span class="hljs-params">(ctx context.Context, Id <span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(*biz.User, error)</span></span> &#123;<br>    <span class="hljs-keyword">var</span> user User<br>    result := r.data.db.Where(&amp;User&#123;ID: Id&#125;).First(&amp;user)<br>    <span class="hljs-keyword">if</span> result.Error != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, result.Error<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> result.RowsAffected == <span class="hljs-number">0</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.NotFound, <span class="hljs-string">&quot;用户不存在&quot;</span>)<br>    &#125;<br>    re := modelToResponse(user)<br>    <span class="hljs-keyword">return</span> &amp;re, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="编写测试代码"><a href="#编写测试代码" class="headerlink" title="编写测试代码"></a>编写测试代码</h1><h2 id="编写-data-层的测试代码"><a href="#编写-data-层的测试代码" class="headerlink" title="编写 data 层的测试代码"></a>编写 data 层的测试代码</h2><blockquote>
-<p><code>service/user/internal/data</code> 目录</p>
-</blockquote>
-<p><code>user_test.go</code> 文件新增内容：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> data_test<br><br><span class="hljs-keyword">import</span> (<br>   . <span class="hljs-string">&quot;github.com/onsi/ginkgo&quot;</span><br>   . <span class="hljs-string">&quot;github.com/onsi/gomega&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>   <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>   <span class="hljs-string">&quot;user/internal/data&quot;</span><br>   <span class="hljs-string">&quot;user/internal/testdata&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> _ = Describe(<span class="hljs-string">&quot;User&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">var</span> ro biz.UserRepo<br>   <span class="hljs-keyword">var</span> uD *biz.User<br>   BeforeEach(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       ro = data.NewUserRepo(Db, <span class="hljs-literal">nil</span>)<br>       <span class="hljs-comment">// 这里你可以不引入外部组装好的数据，可以在这里直接写</span><br>       uD = testdata.User()<br>   &#125;)<br>   <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>   It(<span class="hljs-string">&quot;CreateUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       u, err := ro.CreateUser(ctx, uD)<br>       Ω(err).ShouldNot(HaveOccurred())<br>       <span class="hljs-comment">// 组装的数据 mobile 为 13509876789</span><br>       Ω(u.Mobile).Should(Equal(<span class="hljs-string">&quot;13509876789&quot;</span>)) <span class="hljs-comment">// 手机号应该为创建的时候写入的手机号</span><br>   &#125;)<br>   <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>   It(<span class="hljs-string">&quot;ListUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       user, total, err := ro.ListUser(ctx, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>)<br>       Ω(err).ShouldNot(HaveOccurred()) <span class="hljs-comment">// 获取列表不应该出现错误</span><br>       Ω(user).ShouldNot(BeEmpty())     <span class="hljs-comment">// 结果不应该为空</span><br>       Ω(total).Should(Equal(<span class="hljs-number">1</span>))        <span class="hljs-comment">// 总数应该为 1，因为上面只创建了一条</span><br>       Ω(<span class="hljs-built_in">len</span>(user)).Should(Equal(<span class="hljs-number">1</span>))<br>       Ω(user[<span class="hljs-number">0</span>].Mobile).Should(Equal(<span class="hljs-string">&quot;13509876789&quot;</span>))<br>   &#125;)<br><br>   <span class="hljs-comment">// 设置 It 块来添加单个规格</span><br>   It(<span class="hljs-string">&quot;UpdateUser&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       birthDay := time.Unix(<span class="hljs-keyword">int64</span>(<span class="hljs-number">693646426</span>), <span class="hljs-number">0</span>)<br>       uD.NickName = <span class="hljs-string">&quot;gyl&quot;</span><br>       uD.Birthday = &amp;birthDay<br>       uD.Gender = <span class="hljs-string">&quot;female&quot;</span><br>       user, err := ro.UpdateUser(ctx, uD)<br>       Ω(err).ShouldNot(HaveOccurred()) <span class="hljs-comment">// 更新不应该出现错误</span><br>       Ω(user).Should(BeTrue())         <span class="hljs-comment">// 结果应该为 true</span><br>   &#125;)<br><br>   It(<span class="hljs-string">&quot;CheckPassword&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>       p1 := <span class="hljs-string">&quot;admin&quot;</span><br>       encryptedPassword := <span class="hljs-string">&quot;$pbkdf2-sha512$5p7doUNIS9I5mvhA$b18171ff58b04c02ed70ea4f39bda036029c107294bce83301a02fb53a1bcae0&quot;</span><br>       password, err := ro.CheckPassword(ctx, p1, encryptedPassword)<br>       Ω(err).ShouldNot(HaveOccurred()) <span class="hljs-comment">// 密码验证通过</span><br>       Ω(password).Should(BeTrue())     <span class="hljs-comment">// 结果应该为true</span><br><br>       encryptedPassword1 := <span class="hljs-string">&quot;$pbkdf2-sha512$5p7doUNIS9I5mvhA$b18171ff58b04c02ed70ea4f39&quot;</span><br>       password1, err := ro.CheckPassword(ctx, p1, encryptedPassword1)<br>       <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>           <span class="hljs-keyword">return</span><br>       &#125;<br>       Ω(err).ShouldNot(HaveOccurred())<br>       Ω(password1).Should(BeFalse()) <span class="hljs-comment">// 密码验证不通过</span><br>   &#125;)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<h3 id="执行-go-test-命令，测试-user-test-go"><a href="#执行-go-test-命令，测试-user-test-go" class="headerlink" title="执行 go test 命令，测试 user_test.go"></a>执行 go test 命令，测试 user_test.go</h3><p>可以看到测试全部通过。这一篇并么有写 biz 的测试，可以自己完善一下 biz 的测试方法。具体执行测试的方法，可看上一篇。</p>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p> 至此 user 服务的一些接口基本全部写完了，再有关于用户表信息的需求，可以按照此篇进行增加。下一篇先不完善用户地址之类的需求接口了，先去写 HTTP API 端去来调用这个 user 服务，到时候就把整个服务的基本雏形完成了。</p>
-<p><strong>感谢您的耐心阅读，动动手指点个 star 吧。笔芯</strong></p>
-<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://cdn.learnku.com/uploads/images/202204/27/16176/7fCV6CEU7V.png!large" srcset="/img/loading.gif" lazyload></p>
-
-            </div>
-            <hr />
-            <div>
-              <div class="post-metas mb-3">
-                
-                <div class="post-meta mr-3">
-                  <i class="iconfont icon-category"></i>
-                  
-                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
-                    >Kratos 微服务商城</a
-                  >
-                  
-                </div>
-                 
-                <div class="post-meta">
-                  <i class="iconfont icon-tags"></i>
-                  
-                  <a class="hover-with-bg" href="/tags/Go/"
-                    >Go</a
-                  >
-                  
-                  <a class="hover-with-bg" href="/tags/kratos/"
-                    >kratos</a
-                  >
-                  
-                </div>
-                
-              </div>
-              
-              <p class="note note-warning">
-                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+          <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+            <div id="toc">
+              <p class="toc-header">
+                <i class="iconfont icon-list"></i>&nbsp;目录
               </p>
-               
-              <div class="post-prevnext">
-                <article class="post-prev col-6">
-                   
-                  <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/">
-                    <i class="iconfont icon-arrowleft"></i>
-                    <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务 (四)</span>
-                    <span class="visible-mobile">上一篇</span>
-                  </a>
-                  
-                </article>
-                <article class="post-next col-6">
-                   
-                  <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%8C).%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E5%AE%8C%E5%96%84/">
-                    <span class="hidden-mobile">kratos 框架商城微服务实战之用户服务 (二)</span>
-                    <span class="visible-mobile">下一篇</span>
-                    <i class="iconfont icon-arrowright"></i>
-                  </a>
-                  
-                </article>
-              </div>
-              
+              <div class="toc-body" id="toc-body"></div>
             </div>
-
-            
-            <!-- Comments -->
-            <article class="comments" id="comments" lazyload>
-              
-                
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#comments', function() {
-      var light = 'github-light';
-      var dark = 'github-dark';
-      var schema = document.documentElement.getAttribute('data-user-color-scheme');
-      if (schema === 'dark') {
-        schema = dark;
-      } else {
-        schema = light;
-      }
-      window.UtterancesThemeLight = light;
-      window.UtterancesThemeDark = dark;
-      var s = document.createElement('script');
-      s.setAttribute('src', 'https://utteranc.es/client.js');
-      s.setAttribute('repo', 'aliliin/commit-comment');
-      s.setAttribute('issue-term', 'pathname');
-      
-      s.setAttribute('theme', schema);
-      s.setAttribute('crossorigin', 'anonymous');
-      document.getElementById('comments').appendChild(s);
-    })
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-            </article>
-            
-          </article>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-      <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
 
-    </div>
-    
-  </div>
-</div>
+      <!-- Custom -->
 
-<!-- Custom -->
-
-
-    
-
-    
       <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
-    
 
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+      <div
+        class="modal fade"
+        id="modalSearch"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="ModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-scrollable modal-lg"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+              <button
+                type="button"
+                id="local-search-close"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+              <div class="md-form mb-5">
+                <input
+                  type="text"
+                  id="local-search-input"
+                  class="form-control validate"
+                />
+                <label data-error="x" data-success="v" for="local-search-input"
+                  >关键词</label
+                >
+              </div>
+              <div class="list-group" id="local-search-result"></div>
+            </div>
+          </div>
         </div>
-        <div class="list-group" id="local-search-result"></div>
       </div>
-    </div>
-  </div>
-</div>
-    
+    </main>
 
-    
-  </main>
+    <footer class="text-center mt-5 py-3">
+      <div class="footer-content">
+        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"
+          ><span>Hexo</span></a
+        >
+        <i class="iconfont icon-love"></i>
+        <a
+          href="https://github.com/fluid-dev/hexo-theme-fluid"
+          target="_blank"
+          rel="nofollow noopener"
+          ><span>Fluid</span></a
+        >
+      </div>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
+      <div class="statistics">
         <!-- 不蒜子统计PV -->
         <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
+          总访问量
+          <span id="busuanzi_value_site_pv"></span>
+          次
+        </span>
+
         <!-- 不蒜子统计UV -->
         <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
+          总访客数
+          <span id="busuanzi_value_site_uv"></span>
+          人
+        </span>
+      </div>
+    </footer>
 
+    <!-- SCRIPTS -->
 
-  
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css"
+    />
 
-  
-</footer>
+    <script>
+      NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
+      NProgress.start();
+      window.addEventListener("load", function () {
+        NProgress.done();
+      });
+    </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js"></script>
+    <script src="/js/events.js"></script>
+    <script src="/js/plugins.js"></script>
 
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+    <!-- Plugins -->
 
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
+    <script src="/js/local-search.js"></script>
 
+    <script src="/js/img-lazyload.js"></script>
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js"></script>
 
-<!-- Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js"></script>
 
-  <script  src="/js/local-search.js" ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"
+    ></script>
 
+    <script
+      defer
+      src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+    ></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js"></script>
+    <script>
+      (function (window, document) {
+        var typing = Fluid.plugins.typing;
+        var title = document.getElementById("subtitle").title;
 
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
         typing(title);
-      
-    })(window, document);
-  </script>
+      })(window, document);
+    </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
+    <!-- 主题的启动项 保持在最底部 -->
+    <script src="/js/boot.js"></script>
+  </body>
 </html>

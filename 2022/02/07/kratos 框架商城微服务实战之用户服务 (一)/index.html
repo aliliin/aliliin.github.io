@@ -1,763 +1,1376 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme="auto">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png" />
+    <link rel="icon" href="/img/favicon.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="kratos 微服务框架商城实战之用户服务(一)
+    <meta name="theme-color" content="#2f4154" />
+    <meta
+      name="description"
+      content="kratos 微服务框架商城实战之用户服务(一)
 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具
 
 准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录，
 新建  kratos-shop/service 目录并进入到新建的目录中，
 执行 kratos new user 命令并进入 user 目录，
-执">
-  <meta name="author" content="高永立">
-  <meta name="keywords" content="">
-  <meta name="description" content="kratos 微服务框架商城实战之用户服务(一) 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具  准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录， 新建  kratos-shop&#x2F;service 目录并进入到新建的目录中， 执行 kratos new user 命令并进入 user 目录， 执">
-<meta property="og:type" content="article">
-<meta property="og:title" content="kratos 框架商城微服务实战之用户服务(一)">
-<meta property="og:url" content="https://aliliin.com/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%80)/index.html">
-<meta property="og:site_name" content="Aliliin">
-<meta property="og:description" content="kratos 微服务框架商城实战之用户服务(一) 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具  准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录， 新建  kratos-shop&#x2F;service 目录并进入到新建的目录中， 执行 kratos new user 命令并进入 user 目录， 执">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
-<meta property="article:published_time" content="2022-02-07T13:40:14.041Z">
-<meta property="article:modified_time" content="2022-06-18T06:56:19.629Z">
-<meta property="article:author" content="高永立">
-<meta property="article:tag" content="Go">
-<meta property="article:tag" content="kratos">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png">
-  
-  <title>kratos 框架商城微服务实战之用户服务(一) - Aliliin</title>
+执"
+    />
+    <meta name="author" content="高永立" />
+    <meta name="keywords" content="" />
+    <meta
+      name="description"
+      content="kratos 微服务框架商城实战之用户服务(一) 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具  准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录， 新建  kratos-shop&#x2F;service 目录并进入到新建的目录中， 执行 kratos new user 命令并进入 user 目录， 执"
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="kratos 框架商城微服务实战之用户服务(一)"
+    />
+    <meta
+      property="og:url"
+      content="https://aliliin.com/2022/02/07/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%80)/index.html"
+    />
+    <meta property="og:site_name" content="Aliliin" />
+    <meta
+      property="og:description"
+      content="kratos 微服务框架商城实战之用户服务(一) 推荐看一下Kratos 官方文档 更加流畅观看此文章，本机器这里已经安装好了kratos、proto、wire、make 等所需的命令工具  准备工作初始化项目目录进入自己电脑中存放 Go 项目的目录， 新建  kratos-shop&#x2F;service 目录并进入到新建的目录中， 执行 kratos new user 命令并进入 user 目录， 执"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta
+      property="og:image"
+      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
+    />
+    <meta
+      property="article:published_time"
+      content="2022-02-07T13:40:14.041Z"
+    />
+    <meta property="article:modified_time" content="2022-06-18T06:56:19.629Z" />
+    <meta property="article:author" content="高永立" />
+    <meta property="article:tag" content="Go" />
+    <meta property="article:tag" content="kratos" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/1646973515103-logo.png"
+    />
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+    <title>kratos 框架商城微服务实战之用户服务(一) - Aliliin</title>
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"
+    />
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css"
+    />
+    <link rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
-    
-  
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css"
+    />
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css"
+    />
 
+    <!-- 主题依赖的图标库，不要自行修改 -->
 
-<!-- 主题依赖的图标库，不要自行修改 -->
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css"
+    />
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css"
+    />
 
+    <link rel="stylesheet" href="/css/main.css" />
 
+    <!-- 自定义样式保持在最底部 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+    <script id="fluid-configs">
+      var Fluid = window.Fluid || {};
+      var CONFIG = {
+        hostname: "aliliin.com",
+        root: "/",
+        version: "1.8.12",
+        typing: { enable: true, typeSpeed: 70, cursorChar: "_", loop: false },
+        anchorjs: {
+          enable: true,
+          element: "h1,h2,h3,h4,h5,h6",
+          placement: "right",
+          visible: "hover",
+          icon: "",
+        },
+        progressbar: {
+          enable: true,
+          height_px: 3,
+          color: "#29d",
+          options: { showSpinner: false, trickleSpeed: 100 },
+        },
+        copy_btn: true,
+        image_zoom: { enable: true, img_url_replace: ["", ""] },
+        toc: {
+          enable: true,
+          headingSelector: "h1,h2,h3,h4,h5,h6",
+          collapseDepth: 0,
+        },
+        lazyload: {
+          enable: true,
+          loading_img: "/img/loading.gif",
+          onlypost: false,
+          offset_factor: 2,
+        },
+        web_analytics: {
+          enable: false,
+          baidu: null,
+          google: null,
+          gtag: null,
+          tencent: { sid: null, cid: null },
+          woyaola: null,
+          cnzz: null,
+          leancloud: {
+            app_id: null,
+            app_key: null,
+            server_url: null,
+            path: "window.location.pathname",
+          },
+        },
+        search_path: "/local-search.xml",
+      };
+    </script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/color-schema.js"></script>
+    <meta name="generator" content="Hexo 5.4.1" />
+  </head>
 
+  <body>
+    <header style="height: 70vh">
+      <nav
+        id="navbar"
+        class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"
+      >
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <strong>Aliliin</strong>
+          </a>
 
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"aliliin.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.1"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>Aliliin</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+          <button
+            id="navbar-toggler-btn"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
             data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <div class="animated-icon">
+              <span></span><span></span><span></span>
+            </div>
+          </button>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+          <!-- Collapsible content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto text-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/">
+                  <i class="iconfont icon-home-fill"></i>
+                  首页
+                </a>
+              </li>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="kratos 框架商城微服务实战之用户服务(一)">
-              
-            </span>
+              <li class="nav-item">
+                <a class="nav-link" href="/archives/">
+                  <i class="iconfont icon-archive-fill"></i>
+                  归档
+                </a>
+              </li>
 
-            
+              <li class="nav-item">
+                <a class="nav-link" href="/categories/">
+                  <i class="iconfont icon-category-fill"></i>
+                  分类
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/tags/">
+                  <i class="iconfont icon-tags-fill"></i>
+                  标签
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/about/">
+                  <i class="iconfont icon-user-fill"></i>
+                  关于
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/links/">
+                  <i class="iconfont icon-link-fill"></i>
+                  友链
+                </a>
+              </li>
+
+              <li class="nav-item" id="search-btn">
+                <a
+                  class="nav-link"
+                  target="_self"
+                  href="javascript:;"
+                  data-toggle="modal"
+                  data-target="#modalSearch"
+                  aria-label="Search"
+                >
+                  &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+                </a>
+              </li>
+
+              <li class="nav-item" id="color-toggle-btn">
+                <a
+                  class="nav-link"
+                  target="_self"
+                  href="javascript:;"
+                  aria-label="Color Toggle"
+                  >&nbsp;<i
+                    class="iconfont icon-dark"
+                    id="color-toggle-icon"
+                  ></i
+                  >&nbsp;</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div
+        class="banner"
+        id="banner"
+        parallax="true"
+        style="
+          background: url('/img/default.png') no-repeat center center;
+          background-size: cover;
+        "
+      >
+        <div class="full-bg-img">
+          <div
+            class="mask flex-center"
+            style="background-color: rgba(0, 0, 0, 0.5)"
+          >
+            <div class="page-header text-center fade-in-up">
+              <span
+                class="h2"
+                id="subtitle"
+                title="kratos 框架商城微服务实战之用户服务(一)"
+              >
+              </span>
+
               <div class="mt-3">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-author" aria-hidden="true"></i>
-      高永立
-    </span>
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-07 21:40" pubdate>
-        2022年2月7日 晚上
-      </time>
-    </span>
-  
-</div>
+                <span class="post-meta mr-2">
+                  <i class="iconfont icon-author" aria-hidden="true"></i>
+                  高永立
+                </span>
 
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      15k 字
-    </span>
-  
+                <span class="post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2022-02-07 21:40" pubdate>
+                    2022年2月7日 晚上
+                  </time>
+                </span>
+              </div>
 
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      46 分钟
-    </span>
-  
+              <div class="mt-1">
+                <span class="post-meta mr-2">
+                  <i class="iconfont icon-chart"></i>
+                  15k 字
+                </span>
 
-  
-  
-    
-      <!-- 不蒜子统计文章PV -->
-      <span id="busuanzi_container_page_pv" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="busuanzi_value_page_pv"></span> 次
-      </span>
-    
-  
-</div>
+                <span class="post-meta mr-2">
+                  <i class="iconfont icon-clock-fill"></i>
 
-            
+                  46 分钟
+                </span>
+
+                <!-- 不蒜子统计文章PV -->
+                <span id="busuanzi_container_page_pv" style="display: none">
+                  <i class="iconfont icon-eye" aria-hidden="true"></i>
+                  <span id="busuanzi_value_page_pv"></span> 次
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container-fluid nopadding-x">
+        <div class="row nomargin-x">
+          <div class="d-none d-lg-block col-lg-2 post-categories">
+            <div class="category-list">
+              <div class="category row">
+                <a
+                  class="category-item list-group-item category-item-action col-10 col-md-11 col-xm-11"
+                  id="heading-2dd3b085945c184eb06b037b76c5f696"
+                  role="tab"
+                  data-toggle="collapse"
+                  href="#collapse-2dd3b085945c184eb06b037b76c5f696"
+                  aria-expanded="true"
+                >
+                  Kratos 微服务商城(12)
+                  <i class="iconfont icon-arrowright"></i>
+                </a>
+
+                <div
+                  class="category-collapse collapse show"
+                  id="collapse-2dd3b085945c184eb06b037b76c5f696"
+                  role="tabpanel"
+                  aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696"
+                >
+                  <div class="category-post-list">
+                    <a
+                      href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之购物车服务 (十二)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (十一)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (十)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (九)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (八)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (七)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之商品服务 (六)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之用户服务API (五)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之用户服务 (四)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post"
+                        >kratos 框架商城微服务实战之用户服务 (三)</span
+                      >
+                    </a>
+
+                    <a
+                      href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                      class="list-group-item list-group-item-action"
+                    >
+                      <span class="category-post">More...</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 nopadding-x-md">
+            <div class="container nopadding-x-md" id="board-ctn">
+              <div class="py-5" id="board">
+                <article class="post-content mx-auto">
+                  <!-- SEO header -->
+                  <h1 style="display: none">
+                    kratos 框架商城微服务实战之用户服务(一)
+                  </h1>
+
+                  <p class="note note-info">本文最后更新于：2 年前</p>
+
+                  <div class="markdown-body">
+                    <h1 id="kratos-微服务框架商城实战之用户服务-一">
+                      <a
+                        href="#kratos-微服务框架商城实战之用户服务-一"
+                        class="headerlink"
+                        title="kratos 微服务框架商城实战之用户服务(一)"
+                      ></a
+                      >kratos 微服务框架商城实战之用户服务(一)
+                    </h1>
+                    <blockquote>
+                      <p>
+                        推荐看一下<a
+                          target="_blank"
+                          rel="noopener"
+                          href="https://go-kratos.dev/docs/getting-started/start"
+                          >Kratos 官方文档</a
+                        >
+                        更加流畅观看此文章，本机器这里已经安装好了<code
+                          >kratos、proto、wire、make</code
+                        >
+                        等所需的命令工具
+                      </p>
+                    </blockquote>
+                    <h1 id="准备工作">
+                      <a
+                        href="#准备工作"
+                        class="headerlink"
+                        title="准备工作"
+                      ></a
+                      >准备工作
+                    </h1>
+                    <h3 id="初始化项目目录">
+                      <a
+                        href="#初始化项目目录"
+                        class="headerlink"
+                        title="初始化项目目录"
+                      ></a
+                      >初始化项目目录
+                    </h3>
+                    <p>进入自己电脑中存放 Go 项目的目录，</p>
+                    <p>
+                      新建
+                      <code> kratos-shop/service</code>
+                      目录并进入到新建的目录中，
+                    </p>
+                    <p>
+                      执行 <code>kratos new user</code> 命令并进入
+                      <code>user</code> 目录，
+                    </p>
+                    <p>
+                      执行命令
+                      <code>kratos proto add api/user/v1/user.proto</code> ，
+                    </p>
+                    <p>
+                      这时你在
+                      <code>kratos-shop/service/user/api/user/v1</code>
+                      目录下会看到新的
+                      <code>user.proto</code> 文件已经创建好了，<br />接下来执行
+                      <code
+                        >kratos proto server api/user/v1/user.proto -t
+                        internal/service</code
+                      >
+                      命令生成对应的 <code>service</code> 文件。
+                    </p>
+                    <p>
+                      删除不需要的 proto 文件
+                      <code>rm -rf api/helloworld/</code>，
+                    </p>
+                    <p>
+                      删除不需要的 service 文件
+                      <code>rm internal/service/greeter.go</code>
+                    </p>
+                    <h4 id="完整的命令代码如下">
+                      <a
+                        href="#完整的命令代码如下"
+                        class="headerlink"
+                        title="完整的命令代码如下"
+                      ></a
+                      >完整的命令代码如下
+                    </h4>
+                    <figure class="highlight gradle">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs gradle">mkdir  -p kratos-shop/service<br>cd kratos-shop/service<br><br>kratos <span class="hljs-keyword">new</span> user<br>cd user<br><br>kratos proto add api<span class="hljs-regexp">/user/</span>v1/user.proto<br><br>kratos proto server api<span class="hljs-regexp">/user/</span>v1<span class="hljs-regexp">/user.proto -t internal/</span>service<br><br>rm -rf api<span class="hljs-regexp">/helloworld/</span><br><br>rm internal<span class="hljs-regexp">/service/g</span>reeter.go<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="修改-user-proto-文件，内容如下：">
+                      <a
+                        href="#修改-user-proto-文件，内容如下："
+                        class="headerlink"
+                        title="修改 user.proto 文件，内容如下："
+                      ></a
+                      >修改 <code>user.proto</code> 文件，内容如下：
+                    </h4>
+                    <blockquote>
+                      <p>
+                        proto
+                        基本的语法请自行学习，目前这里的只先提供了一个创建用户的
+                        rpc 接口，后续会逐步添加其他 rpc 接口
+                      </p>
+                    </blockquote>
+                    <figure class="highlight protobuf">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><span class="hljs-keyword">package</span> user.v1;<br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;user/api/user/v1;v1&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">User</span></span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateUser(CreateUserInfo) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>; <span class="hljs-comment">// 创建用户</span><br>&#125;<br><br><span class="hljs-comment">// 创建用户所需字段</span><br><span class="hljs-class"><span class="hljs-keyword">message</span>  <span class="hljs-title">CreateUserInfo</span></span>&#123;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">3</span>;<br>&#125;<br><br><span class="hljs-comment">// 返回用户信息</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">UserInfoResponse</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">int64</span> birthday = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">string</span> gender = <span class="hljs-number">6</span>;<br>  <span class="hljs-built_in">int32</span> role = <span class="hljs-number">7</span>;<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="生成-user-proto-定义的接口信息">
+                      <a
+                        href="#生成-user-proto-定义的接口信息"
+                        class="headerlink"
+                        title="生成 user.proto 定义的接口信息"
+                      ></a
+                      >生成 <code>user.proto</code> 定义的接口信息
+                    </h4>
+                    <p>
+                      进入到 <code>service/user</code> 目录下,执行
+                      <code>make api</code> 命令，这时可以看到
+                      <code>user/api/user/v1/</code> 目录下多出了 proto
+                      创建的文件
+                    </p>
+                    <figure class="highlight crmsh">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs crmsh">cd <span class="hljs-keyword">user</span><br><br><span class="hljs-title">make</span> api <br><br><span class="hljs-comment"># 目录结构如下：</span><br>├── api<br>│   └── <span class="hljs-keyword">user</span><br><span class="hljs-title">│       └── v1</span><br>│           ├── user.pb.go<br>│           ├── user.proto<br>│           └── user_grpc.pb.go<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h3 id="修改配置文件">
+                      <a
+                        href="#修改配置文件"
+                        class="headerlink"
+                        title="修改配置文件"
+                      ></a
+                      >修改配置文件
+                    </h3>
+                    <h4 id="修改-user-configs-config-yaml-文件，代码如下：">
+                      <a
+                        href="#修改-user-configs-config-yaml-文件，代码如下："
+                        class="headerlink"
+                        title="修改 user/configs/config.yaml 文件，代码如下："
+                      ></a
+                      >修改
+                      <code>user/configs/config.yaml</code> 文件，代码如下：
+                    </h4>
+                    <blockquote>
+                      <p>
+                        具体链接 mysql、redis
+                        的参数填写自己本机的，本项目用到的是 gorm 。trace
+                        是以后要用到的链路追踪的参数，先定义了。
+                      </p>
+                    </blockquote>
+                    <figure class="highlight dts">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs dts"><span class="hljs-symbol">server:</span><br><span class="hljs-symbol">  http:</span><br><span class="hljs-symbol">    addr:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">8000</span><br><span class="hljs-symbol">    timeout:</span> <span class="hljs-number">1</span>s<br><span class="hljs-symbol">  grpc:</span><br><span class="hljs-symbol">    addr:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">50051</span><br><span class="hljs-symbol">    timeout:</span> <span class="hljs-number">1</span>s<br><span class="hljs-symbol">data:</span><br><span class="hljs-symbol">  database:</span><br><span class="hljs-symbol">    driver:</span> mysql<br><span class="hljs-symbol">    source:</span> root:root@tcp(<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">3306</span>)/shop_user?charset=utf8mb4<span class="hljs-variable">&amp;</span>parseTime=True<span class="hljs-variable">&amp;loc</span>=Local<br><span class="hljs-symbol">  redis:</span><br><span class="hljs-symbol">    addr:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">6379</span><br><span class="hljs-symbol">    dial_timeout:</span> <span class="hljs-number">1</span>s<br><span class="hljs-symbol">    read_timeout:</span> <span class="hljs-number">0.2</span>s<br><span class="hljs-symbol">    write_timeout:</span> <span class="hljs-number">0.2</span>s<br><span class="hljs-symbol">trace:</span><br><span class="hljs-symbol">  endpoint:</span> http:<span class="hljs-comment">//127.0.0.1:14268/api/traces</span><br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4
+                      id="新建-user-configs-registry-yaml-文件，引入consul-服务，代码如下："
+                    >
+                      <a
+                        href="#新建-user-configs-registry-yaml-文件，引入consul-服务，代码如下："
+                        class="headerlink"
+                        title="新建 user/configs/registry.yaml 文件，引入consul 服务，代码如下："
+                      ></a
+                      >新建 <code>user/configs/registry.yaml</code> 文件，引入<a
+                        target="_blank"
+                        rel="noopener"
+                        href="https://www.consul.io/"
+                        >consul</a
+                      >
+                      服务，代码如下：
+                    </h4>
+                    <figure class="highlight dts">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs dts"><span class="hljs-meta"># 这里引入了 consul 的服务注册与发现，先把配置加入进去</span><br><span class="hljs-symbol">consul:</span><br><span class="hljs-symbol">    address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">8500</span><br><span class="hljs-symbol">    scheme:</span> http<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="修改-user-internal-conf-conf-proto-配置文件">
+                      <a
+                        href="#修改-user-internal-conf-conf-proto-配置文件"
+                        class="headerlink"
+                        title="修改 user/internal/conf/conf.proto 配置文件"
+                      ></a
+                      >修改 <code>user/internal/conf/conf.proto</code> 配置文件
+                    </h4>
+                    <figure class="highlight protobuf">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs protobuf"># 文件底部新增 consul 和 trace 的配置信息<br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Trace</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> endpoint = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Registry</span> </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Consul</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> address = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> scheme = <span class="hljs-number">2</span>;<br>  &#125;<br>  Consul consul = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="新生成-conf-pb-go-文件，执行-make-config">
+                      <a
+                        href="#新生成-conf-pb-go-文件，执行-make-config"
+                        class="headerlink"
+                        title="新生成 conf.pb.go 文件，执行 make config"
+                      ></a
+                      >新生成 <code>conf.pb.go</code> 文件，执行
+                      <code>make config</code>
+                    </h4>
+                    <figure class="highlight autohotkey">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs autohotkey"># `service/user` 目录下,执行命令<br>make config<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="安装-consul-服务工具">
+                      <a
+                        href="#安装-consul-服务工具"
+                        class="headerlink"
+                        title="安装 consul 服务工具"
+                      ></a
+                      >安装 consul 服务工具
+                    </h4>
+                    <figure class="highlight apache">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs apache"><span class="hljs-comment"># 这里使用的是 docker 工具进行创建的</span><br><span class="hljs-attribute">docker</span> run -d -p <span class="hljs-number">8500</span>:<span class="hljs-number">8500</span> -p <span class="hljs-number">8300</span>:<span class="hljs-number">8300</span> -p <span class="hljs-number">8301</span>:<span class="hljs-number">8301</span> -p <span class="hljs-number">8302</span>:<span class="hljs-number">8302</span> -p <span class="hljs-number">8600</span>:<span class="hljs-number">8600</span>/udp consul consul agent -dev -client=<span class="hljs-number">0.0.0.0</span><br><br><span class="hljs-comment"># 浏览器访问 http://127.0.0.1:8500/ui/dc1/services 测试是否安装成功</span><br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h3 id="修改服务代码">
+                      <a
+                        href="#修改服务代码"
+                        class="headerlink"
+                        title="修改服务代码"
+                      ></a
+                      >修改服务代码
+                    </h3>
+                    <h4 id="修改-user-internal-data-目录下的文件">
+                      <a
+                        href="#修改-user-internal-data-目录下的文件"
+                        class="headerlink"
+                        title="修改 user/internal/data/ 目录下的文件"
+                      ></a
+                      >修改 <code>user/internal/data/</code> 目录下的文件
+                    </h4>
+                    <p>
+                      修改 <code>user/internal/data/greeter.go</code> 为
+                      <code>user.go </code>添加如下内容：
+                    </p>
+                    <figure class="highlight stata">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs stata">package data<br><br>import (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-redis/redis/extra/redisotel&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-redis/redis/v8&quot;</span><br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/driver/mysql&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm/logger&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm/schema&quot;</span><br>    slog <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is data providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(NewData, NewDB, NewRedis, NewUserRepo)<br><br><span class="hljs-keyword">type</span> Data struct &#123;<br>    <span class="hljs-keyword">db</span>  *gorm.<span class="hljs-keyword">DB</span><br>    rdb *redis.Client<br>&#125;<br><br><span class="hljs-comment">// NewData .</span><br>func NewData(c *<span class="hljs-keyword">conf</span>.Data, logger <span class="hljs-keyword">log</span>.Logger, <span class="hljs-keyword">db</span> *gorm.<span class="hljs-keyword">DB</span>, rdb *redis.Client) (*Data, func(), <span class="hljs-keyword">error</span>) &#123;<br>    cleanup := func() &#123;<br>        <span class="hljs-keyword">log</span>.NewHelper(logger).Info(<span class="hljs-string">&quot;closing the data resources&quot;</span>)<br>    &#125;<br>    <span class="hljs-keyword">return</span> &amp;Data&#123;<span class="hljs-keyword">db</span>: <span class="hljs-keyword">db</span>, rdb: rdb&#125;, cleanup, nil<br>&#125;<br><br><span class="hljs-comment">// NewDB .</span><br>func NewDB(c *<span class="hljs-keyword">conf</span>.Data) *gorm.<span class="hljs-keyword">DB</span> &#123;<br>    <span class="hljs-comment">// 终端打印输入 sql 执行记录</span><br>    newLogger := logger.New(<br>        slog.New(os.Stdout, <span class="hljs-string">&quot;\r\n&quot;</span>, slog.LstdFlags), <span class="hljs-comment">// io writer</span><br>        logger.Config&#123;<br>            SlowThreshold: time.Second, <span class="hljs-comment">// 慢查询 SQL 阈值</span><br>            Colorful:      true,        <span class="hljs-comment">// 禁用彩色打印</span><br>            <span class="hljs-comment">//IgnoreRecordNotFoundError: false,</span><br>            LogLevel: logger.Info, <span class="hljs-comment">// Log lever</span><br>        &#125;,<br>    )<br><br>    <span class="hljs-keyword">db</span>, <span class="hljs-keyword">err</span> := gorm.<span class="hljs-keyword">Open</span>(mysql.<span class="hljs-keyword">Open</span>(c.Database.Source), &amp;gorm.Config&#123;<br>        Logger:                                   newLogger,<br>        DisableForeignKeyConstraintWhenMigrating: true,<br>        NamingStrategy:                           schema.NamingStrategy&#123;<br>            <span class="hljs-comment">//SingularTable: true, // 表名是否加 s</span><br>        &#125;,<br>    &#125;)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Errorf(<span class="hljs-string">&quot;failed opening connection to sqlite: %v&quot;</span>, <span class="hljs-keyword">err</span>)<br>        panic(<span class="hljs-string">&quot;failed to connect database&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">db</span><br>&#125;<br><br>func NewRedis(c *<span class="hljs-keyword">conf</span>.Data) *redis.Client &#123;<br>    rdb := redis.NewClient(&amp;redis.Options&#123;<br>        Addr:         c.Redis.Addr,<br>        Password:     c.Redis.Password,<br>        <span class="hljs-keyword">DB</span>:           int(c.Redis.<span class="hljs-keyword">Db</span>),<br>        DialTimeout:  c.Redis.DialTimeout.AsDuration(),<br>        WriteTimeout: c.Redis.WriteTimeout.AsDuration(),<br>        ReadTimeout:  c.Redis.ReadTimeout.AsDuration(),<br>    &#125;)<br>    rdb.AddHook(redisotel.TracingHook&#123;&#125;)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := rdb.<span class="hljs-keyword">Close</span>(); <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.<span class="hljs-keyword">Error</span>(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    <span class="hljs-keyword">return</span> rdb<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      这里的 wire 概念如果不熟悉的话，请参看<a
+                        target="_blank"
+                        rel="noopener"
+                        href="https://go-kratos.dev/docs/guide/wire"
+                        >Wire 依赖注入</a
+                      >
+                    </p>
+                    <h4 id="修改-user-internal-service-目录下的文件">
+                      <a
+                        href="#修改-user-internal-service-目录下的文件"
+                        class="headerlink"
+                        title="修改 user/internal/service/ 目录下的文件"
+                      ></a
+                      >修改 <code>user/internal/service/</code> 目录下的文件
+                    </h4>
+                    <p>
+                      修改或者删除
+                      <code>user/internal/service/greeter.go</code> 为
+                      <code>user.go</code>, 添加代码如下：
+                    </p>
+                    <figure class="highlight go">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> UserService <span class="hljs-keyword">struct</span> &#123;<br>    v1.UnimplementedUserServer<br><br>    uc  *biz.UserUsecase<br>    log *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewUserService new a greeter service.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUserService</span><span class="hljs-params">(uc *biz.UserUsecase, logger log.Logger)</span> *<span class="hljs-title">UserService</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;UserService&#123;uc: uc, log: log.NewHelper(logger)&#125;<br>&#125;<br><br><span class="hljs-comment">// CreateUser create a user</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">CreateUser</span><span class="hljs-params">(ctx context.Context, req *v1.CreateUserInfo)</span> <span class="hljs-params">(*v1.UserInfoResponse, error)</span></span> &#123;<br>    user, err := u.uc.Create(ctx, &amp;biz.User&#123;<br>        Mobile:   req.Mobile,<br>        Password: req.Password,<br>        NickName: req.NickName,<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br><br>    userInfoRsp := v1.UserInfoResponse&#123;<br>        Id:       user.ID,<br>        Mobile:   user.Mobile,<br>        Password: user.Password,<br>        NickName: user.NickName,<br>        Gender:   user.Gender,<br>        Role:     <span class="hljs-keyword">int32</span>(user.Role),<br>        Birthday: user.Birthday,<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> &amp;userInfoRsp, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      修改 <code>ser/internal/service/service.go</code> 文件，
+                      代码如下：
+                    </p>
+                    <figure class="highlight verilog">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs verilog"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br><br><span class="hljs-comment">// ProviderSet is service providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = <span class="hljs-keyword">wire</span><span class="hljs-variable">.NewSet</span>(NewUserService)<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      修改或删除 <code>user/internal/biz/greeter.go</code> 为
+                      <code>user.go </code>添加如下内容：
+                    </p>
+                    <figure class="highlight reasonml">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs reasonml">package biz<br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>)<br><br><span class="hljs-comment">// 定义返回数据结构体</span><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    ID       <span class="hljs-built_in">int64</span><br>    Mobile   <span class="hljs-built_in">string</span><br>    Password <span class="hljs-built_in">string</span><br>    NickName <span class="hljs-built_in">string</span><br>    Birthday <span class="hljs-built_in">int64</span><br>    Gender   <span class="hljs-built_in">string</span><br>    Role     <span class="hljs-built_in">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> UserRepo interface &#123;<br>    <span class="hljs-constructor">CreateUser(<span class="hljs-params">context</span>.Context, <span class="hljs-operator">*</span>User)</span> (*User, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> UserUsecase <span class="hljs-keyword">struct</span> &#123;<br>    repo UserRepo<br>    log  *log.Helper<br>&#125;<br><br>func <span class="hljs-constructor">NewUserUsecase(<span class="hljs-params">repo</span> UserRepo, <span class="hljs-params">logger</span> <span class="hljs-params">log</span>.Logger)</span> *UserUsecase &#123;<br>    return &amp;UserUsecase&#123;repo: repo, log: log.<span class="hljs-constructor">NewHelper(<span class="hljs-params">logger</span>)</span>&#125;<br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">Create(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">u</span> <span class="hljs-operator">*</span>User)</span> (*User, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">CreateUser(<span class="hljs-params">ctx</span>, <span class="hljs-params">u</span>)</span><br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      修改
+                      <code>user/internal/biz/biz.go</code> 文件，内容如下：
+                    </p>
+                    <figure class="highlight verilog">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs verilog"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br><br><span class="hljs-comment">// ProviderSet is biz providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = <span class="hljs-keyword">wire</span><span class="hljs-variable">.NewSet</span>(NewUserUsecase)<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      修改或删除 <code>user/internal/data/greeter.go</code> 为
+                      <code>user.go </code>添加如下内容：
+                    </p>
+                    <figure class="highlight stylus">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs stylus">package data<br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;crypto/sha512&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;github.com/anaskhan96/go-password-encoder&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc/codes&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc/status&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>)<br><span class="hljs-comment">// 定义数据表结构体</span><br>type User struct &#123;<br>    ID          int64      `gorm:<span class="hljs-string">&quot;primarykey&quot;</span>`<br>    Mobile      string     `gorm:<span class="hljs-string">&quot;index:idx_mobile;unique;type:varchar(11) comment &#x27;手机号码，用户唯一标识&#x27;;not null&quot;</span>`<br>    Password    string     `gorm:<span class="hljs-string">&quot;type:varchar(100);not null &quot;</span>` <span class="hljs-comment">// 用户密码的保存需要注意是否加密</span><br>    NickName    string     `gorm:<span class="hljs-string">&quot;type:varchar(25) comment &#x27;用户昵称&#x27;&quot;</span>`<br>    Birthday    *<span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Time</span> `gorm:<span class="hljs-string">&quot;type:datetime comment &#x27;出生日日期&#x27;&quot;</span>`<br>    Gender      string     `gorm:<span class="hljs-string">&quot;column:gender;default:male;type:varchar(16) comment &#x27;female:女,male:男&#x27;&quot;</span>`<br>    Role        int        `gorm:<span class="hljs-string">&quot;column:role;default:1;type:int comment &#x27;1:普通用户，2:管理员&#x27;&quot;</span>`<br>    CreatedAt   <span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Time</span>  `gorm:<span class="hljs-string">&quot;column:add_time&quot;</span>`<br>    UpdatedAt   <span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Time</span>  `gorm:<span class="hljs-string">&quot;column:update_time&quot;</span>`<br>    DeletedAt   gorm<span class="hljs-selector-class">.DeletedAt</span><br>    IsDeletedAt bool<br>&#125;<br>type userRepo struct &#123;<br>    data *Data<br>    log  *log<span class="hljs-selector-class">.Helper</span><br>&#125;<br><br><span class="hljs-comment">// NewUserRepo . 这里需要注意，上面 data 文件 wire 注入的是此方法，方法名不要写错了</span><br>func NewUserRepo(data *Data, logger log.Logger) biz<span class="hljs-selector-class">.UserRepo</span> &#123;<br>    return &amp;userRepo&#123;<br>        data: data,<br>        log:  log<span class="hljs-selector-class">.NewHelper</span>(logger),<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// CreateUser .</span><br>func (r *userRepo) CreateUser(ctx context<span class="hljs-selector-class">.Context</span>, u *biz.User) (*biz<span class="hljs-selector-class">.User</span>, error) &#123;<br>    <span class="hljs-selector-tag">var</span> user User<br>    <span class="hljs-comment">// 验证是否已经创建</span><br>    result := r<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.db</span><span class="hljs-selector-class">.Where</span>(&amp;biz.User&#123;Mobile: u.Mobile&#125;)<span class="hljs-selector-class">.First</span>(&amp;user)<br>    <span class="hljs-keyword">if</span> result<span class="hljs-selector-class">.RowsAffected</span> == <span class="hljs-number">1</span> &#123;<br>        return nil, status<span class="hljs-selector-class">.Errorf</span>(codes<span class="hljs-selector-class">.AlreadyExists</span>, <span class="hljs-string">&quot;用户已存在&quot;</span>)<br>    &#125;<br><br>    user<span class="hljs-selector-class">.Mobile</span> = u<span class="hljs-selector-class">.Mobile</span><br>    user<span class="hljs-selector-class">.NickName</span> = u<span class="hljs-selector-class">.NickName</span><br>    user<span class="hljs-selector-class">.Password</span> = encrypt(u.Password) <span class="hljs-comment">// 密码加密</span><br>    res := r<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.db</span><span class="hljs-selector-class">.Create</span>(&amp;user)<br>    <span class="hljs-keyword">if</span> res<span class="hljs-selector-class">.Error</span> != nil &#123;<br>        return nil, status<span class="hljs-selector-class">.Errorf</span>(codes<span class="hljs-selector-class">.Internal</span>, res<span class="hljs-selector-class">.Error</span><span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    return &amp;biz.User&#123;<br>        ID:       user<span class="hljs-selector-class">.ID</span>,<br>        Mobile:   user<span class="hljs-selector-class">.Mobile</span>,<br>        Password: user<span class="hljs-selector-class">.Password</span>,<br>        NickName: user<span class="hljs-selector-class">.NickName</span>,<br>        Gender:   user<span class="hljs-selector-class">.Gender</span>,<br>        Role:     user<span class="hljs-selector-class">.Role</span>,<br>    &#125;, nil<br>&#125;<br><br><span class="hljs-comment">// Password encryption</span><br>func encrypt(psd string) string &#123;<br>    options := &amp;password.Options&#123;SaltLen: <span class="hljs-number">16</span>, Iterations: <span class="hljs-number">10000</span>, KeyLen: <span class="hljs-number">32</span>, HashFunction: sha512.New&#125;<br>    salt, encodedPwd := password<span class="hljs-selector-class">.Encode</span>(psd, options)<br>    return fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;$pbkdf2-sha512$%s$%s&quot;</span>, salt, encodedPwd)<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="修改-user-internal-server-目录下的文件">
+                      <a
+                        href="#修改-user-internal-server-目录下的文件"
+                        class="headerlink"
+                        title="修改 user/internal/server/ 目录下的文件"
+                      ></a
+                      >修改 <code>user/internal/server/</code> 目录下的文件
+                    </h4>
+                    <p>
+                      这里用不到 http 服务删除 <code>http.go</code> 文件，修改
+                      <code>grpc.go</code> 文件内容如下：
+                    </p>
+                    <figure class="highlight stylus">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs stylus"> package server<br><br>import (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/logging&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/recovery&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/grpc&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>    <span class="hljs-string">&quot;user/internal/service&quot;</span><br>)<br><br><span class="hljs-comment">// NewGRPCServer new a gRPC server.</span><br>func NewGRPCServer(c *conf<span class="hljs-selector-class">.Server</span>, greeter *service<span class="hljs-selector-class">.UserService</span>, logger log.Logger) *grpc<span class="hljs-selector-class">.Server</span> &#123;<br>    <span class="hljs-selector-tag">var</span> opts = <span class="hljs-selector-attr">[]</span>grpc.ServerOption&#123;<br>        grpc<span class="hljs-selector-class">.Middleware</span>(<br>            recovery<span class="hljs-selector-class">.Recovery</span>(),<br>            logging<span class="hljs-selector-class">.Server</span>(logger),<br>        ),<br>    &#125;<br>    <span class="hljs-keyword">if</span> c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Network</span> != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        opts = append(opts, grpc<span class="hljs-selector-class">.Network</span>(c<span class="hljs-selector-class">.Grpc</span>.Network))<br>    &#125;<br>    <span class="hljs-keyword">if</span> c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Addr</span> != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        opts = append(opts, grpc<span class="hljs-selector-class">.Address</span>(c<span class="hljs-selector-class">.Grpc</span>.Addr))<br>    &#125;<br>    <span class="hljs-keyword">if</span> c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Timeout</span> != nil &#123;<br>        opts = append(opts, grpc<span class="hljs-selector-class">.Timeout</span>(c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Timeout</span><span class="hljs-selector-class">.AsDuration</span>()))<br>    &#125;<br>    srv := grpc<span class="hljs-selector-class">.NewServer</span>(opts...)<br>    v1<span class="hljs-selector-class">.RegisterUserServer</span>(srv, greeter)<br>    return srv<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      修改 <code>server.go</code> 文件,这里加入了 consul
+                      的服务，内容如下：
+                    </p>
+                    <figure class="highlight stylus">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs stylus">package server<br><br>import (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/registry&quot;</span><br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br><br>    consul <span class="hljs-string">&quot;github.com/go-kratos/kratos/contrib/registry/consul/v2&quot;</span><br>    consulAPI <span class="hljs-string">&quot;github.com/hashicorp/consul/api&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is server providers.</span><br><span class="hljs-selector-tag">var</span> ProviderSet = wire<span class="hljs-selector-class">.NewSet</span>(NewGRPCServer, NewRegistrar)<br><br><span class="hljs-comment">// NewRegistrar 引入 consul</span><br>func NewRegistrar(conf *conf.Registry) registry<span class="hljs-selector-class">.Registrar</span> &#123;<br>    c := consulAPI<span class="hljs-selector-class">.DefaultConfig</span>()<br>    c<span class="hljs-selector-class">.Address</span> = conf<span class="hljs-selector-class">.Consul</span><span class="hljs-selector-class">.Address</span><br>    c<span class="hljs-selector-class">.Scheme</span> = conf<span class="hljs-selector-class">.Consul</span><span class="hljs-selector-class">.Scheme</span><br><br>    cli, err := consulAPI<span class="hljs-selector-class">.NewClient</span>(c)<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(err)<br>    &#125;<br>    r := consul<span class="hljs-selector-class">.New</span>(cli, consul<span class="hljs-selector-class">.WithHealthCheck</span>(false))<br>    return r<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h3 id="修改启动程序">
+                      <a
+                        href="#修改启动程序"
+                        class="headerlink"
+                        title="修改启动程序"
+                      ></a
+                      >修改启动程序
+                    </h3>
+                    <h4 id="修改-user-cmd-wire-go文件">
+                      <a
+                        href="#修改-user-cmd-wire-go文件"
+                        class="headerlink"
+                        title="修改 user/cmd/wire.go文件"
+                      ></a
+                      >修改 <code>user/cmd/wire.go</code>文件
+                    </h4>
+                    <p>这里注入了consul需要的配置，需要添加进来</p>
+                    <figure class="highlight reasonml">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs reasonml">func init<span class="hljs-constructor">App(<span class="hljs-operator">*</span><span class="hljs-params">conf</span>.Server, <span class="hljs-operator">*</span><span class="hljs-params">conf</span>.Data, <span class="hljs-operator">*</span><span class="hljs-params">conf</span>.Registry, <span class="hljs-params">log</span>.Logger)</span> (*kratos.App, func<span class="hljs-literal">()</span>, error) &#123;<br>    panic(wire.<span class="hljs-constructor">Build(<span class="hljs-params">server</span>.ProviderSet, <span class="hljs-params">data</span>.ProviderSet, <span class="hljs-params">biz</span>.ProviderSet, <span class="hljs-params">service</span>.ProviderSet, <span class="hljs-params">newApp</span>)</span>)<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="修改-user-cmd-user-main-go-文件">
+                      <a
+                        href="#修改-user-cmd-user-main-go-文件"
+                        class="headerlink"
+                        title="修改 user/cmd/user/main.go 文件"
+                      ></a
+                      >修改 <code>user/cmd/user/main.go</code> 文件
+                    </h4>
+                    <figure class="highlight stata">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs stata">package main<br><br>import (<br>    <span class="hljs-string">&quot;flag&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/config&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/config/file&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/tracing&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/registry&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/grpc&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>)<br><br><span class="hljs-comment">// go build -ldflags &quot;-X main.Version=x.y.z&quot;</span><br><span class="hljs-keyword">var</span> (<br>    <span class="hljs-comment">// Name is the name of the compiled software.</span><br>    Name = <span class="hljs-string">&quot;shop.users.service&quot;</span><br>    <span class="hljs-comment">// Version is the version of the compiled software.</span><br>    <span class="hljs-keyword">Version</span> = <span class="hljs-string">&quot;v1&quot;</span><br>    <span class="hljs-comment">// flagconf is the config flag.</span><br>    flagconf string<br><br>    id, _ = os.Hostname()<br>)<br><br>func init() &#123;<br>    flag.StringVar(&amp;flagconf, <span class="hljs-string">&quot;conf&quot;</span>, <span class="hljs-string">&quot;../../configs&quot;</span>, <span class="hljs-string">&quot;config path, eg: -conf config.yaml&quot;</span>)<br>&#125;<br><br>func newApp(logger <span class="hljs-keyword">log</span>.Logger, gs *grpc.Server, rr registry.Registrar) *kratos.<span class="hljs-keyword">App</span> &#123;<br>    <span class="hljs-keyword">return</span> kratos.New(<br>        kratos.ID(id+<span class="hljs-string">&quot;shop.user.service&quot;</span>),<br>        kratos.Name(Name),<br>        kratos.<span class="hljs-keyword">Version</span>(<span class="hljs-keyword">Version</span>),<br>        kratos.Metadata(map[string]string&#123;&#125;),<br>        kratos.Logger(logger),<br>        kratos.Server(<br>            gs,<br>        ),<br>        kratos.Registrar(rr), <span class="hljs-comment">// consul 的引入</span><br>    )<br>&#125;<br><br>func main() &#123;<br>    flag.<span class="hljs-keyword">Parse</span>()<br>    logger := <span class="hljs-keyword">log</span>.With(<span class="hljs-keyword">log</span>.NewStdLogger(os.Stdout),<br>        <span class="hljs-string">&quot;ts&quot;</span>, <span class="hljs-keyword">log</span>.DefaultTimestamp,<br>        <span class="hljs-string">&quot;caller&quot;</span>, <span class="hljs-keyword">log</span>.DefaultCaller,<br>        <span class="hljs-string">&quot;service.id&quot;</span>, id,<br>        <span class="hljs-string">&quot;service.name&quot;</span>, Name,<br>        <span class="hljs-string">&quot;service.version&quot;</span>, <span class="hljs-keyword">Version</span>,<br>        <span class="hljs-string">&quot;trace_id&quot;</span>, tracing.TraceID(),<br>        <span class="hljs-string">&quot;span_id&quot;</span>, tracing.SpanID(),<br>    )<br>    c := config.New(<br>        config.WithSource(<br>            <span class="hljs-keyword">file</span>.NewSource(flagconf),<br>        ),<br>    )<br>    defer c.<span class="hljs-keyword">Close</span>()<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := c.Load(); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">var</span> bc <span class="hljs-keyword">conf</span>.<span class="hljs-keyword">Bootstrap</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := c.Scan(&amp;bc); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    <span class="hljs-comment">// consul 的引入</span><br>    <span class="hljs-keyword">var</span> rc <span class="hljs-keyword">conf</span>.Registry <br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := c.Scan(&amp;rc); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    <span class="hljs-keyword">app</span>, cleanup, <span class="hljs-keyword">err</span> := initApp(bc.Server, bc.Data, &amp;rc, logger)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    defer cleanup()<br><br>    <span class="hljs-comment">// start and wait for stop signal</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := <span class="hljs-keyword">app</span>.<span class="hljs-keyword">Run</span>(); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="修改根目录-user-makefile-文件">
+                      <a
+                        href="#修改根目录-user-makefile-文件"
+                        class="headerlink"
+                        title="修改根目录 user/makefile 文件"
+                      ></a
+                      >修改根目录 <code>user/makefile</code> 文件
+                    </h4>
+                    <figure class="highlight verilog">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs verilog">在 go <span class="hljs-keyword">generate</span> ./... 下面添加代码<br><br><span class="hljs-keyword">wire</span>:<br>    cd cmd/user/ &amp;&amp; <span class="hljs-keyword">wire</span><br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="根目录执行-make-wire-命令">
+                      <a
+                        href="#根目录执行-make-wire-命令"
+                        class="headerlink"
+                        title="根目录执行 make wire 命令"
+                      ></a
+                      >根目录执行 <code>make wire</code> 命令
+                    </h4>
+                    <figure class="highlight gauss">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs gauss"><span class="hljs-meta"># service/user</span><br><span class="hljs-built_in">make</span> wire<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h3 id="启动程序">
+                      <a
+                        href="#启动程序"
+                        class="headerlink"
+                        title="启动程序"
+                      ></a
+                      >启动程序
+                    </h3>
+                    <blockquote>
+                      <p>
+                        别忘记根据 data 里面的 user struct
+                        创建对应的数据库表,这里也可以写一个 gorm
+                        创建表的文件进行创建。
+                      </p>
+                    </blockquote>
+                    <h4 id="启动程序-kratos-run">
+                      <a
+                        href="#启动程序-kratos-run"
+                        class="headerlink"
+                        title="启动程序 kratos run"
+                      ></a
+                      >启动程序 kratos run
+                    </h4>
+                    <figure class="highlight crmsh">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs crmsh">根目录 service/<span class="hljs-keyword">user</span> <span class="hljs-title">执行命令</span><br><span class="hljs-title">    kratos</span> run<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <h4 id="简单测试">
+                      <a
+                        href="#简单测试"
+                        class="headerlink"
+                        title="简单测试"
+                      ></a
+                      >简单测试
+                    </h4>
+                    <p>
+                      由于没写对外访问的 http
+                      服务，这里还没有加入单元测试，所以先创建个文件链接启动过的
+                      grpc 服务简单测试一下。
+                    </p>
+                    <h4 id="根目录新建-user-test-user-go-文件，添加如下内容：">
+                      <a
+                        href="#根目录新建-user-test-user-go-文件，添加如下内容："
+                        class="headerlink"
+                        title="根目录新建 user/test/user.go 文件，添加如下内容："
+                      ></a
+                      >根目录新建
+                      <code>user/test/user.go</code> 文件，添加如下内容：
+                    </h4>
+                    <figure class="highlight stylus">
+                      <table>
+                        <tr>
+                          <td class="gutter">
+                            <pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre>
+                          </td>
+                          <td class="code">
+                            <pre><code class="hljs stylus">package <span class="hljs-selector-tag">main</span><br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>)<br><br><span class="hljs-selector-tag">var</span> userClient v1<span class="hljs-selector-class">.UserClient</span><br><span class="hljs-selector-tag">var</span> conn *grpc<span class="hljs-selector-class">.ClientConn</span><br><br>func <span class="hljs-selector-tag">main</span>() &#123;<br>    Init()<br><br>    TestCreateUser() <span class="hljs-comment">// 创建用户</span><br><br>    conn<span class="hljs-selector-class">.Close</span>()<br>&#125;<br><br><span class="hljs-comment">// Init 初始化 grpc 链接 注意这里链接的 端口</span><br>func Init() &#123;<br>    <span class="hljs-selector-tag">var</span> err error<br>    conn, err = grpc<span class="hljs-selector-class">.Dial</span>(<span class="hljs-string">&quot;127.0.0.1:50051&quot;</span>, grpc<span class="hljs-selector-class">.WithInsecure</span>())<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(<span class="hljs-string">&quot;grpc link err&quot;</span> + err<span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    userClient = v1<span class="hljs-selector-class">.NewUserClient</span>(conn)<br>&#125;<br><br>func TestCreateUser() &#123;<br><br>    rsp, err := userClient<span class="hljs-selector-class">.CreateUser</span>(context<span class="hljs-selector-class">.Background</span>(), &amp;v1.CreateUserInfo&#123;<br>        Mobile:   fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;1388888888%d&quot;</span>, <span class="hljs-number">1</span>),<br>        Password: <span class="hljs-string">&quot;admin123&quot;</span>,<br>        NickName: fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;YWWW%d&quot;</span>, <span class="hljs-number">1</span>),<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(<span class="hljs-string">&quot;grpc 创建用户失败&quot;</span> + err<span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    fmt<span class="hljs-selector-class">.Println</span>(rsp.Id)<br>&#125;<br></code></pre>
+                          </td>
+                        </tr>
+                      </table>
+                    </figure>
+
+                    <p>
+                      这里别忘记启动 kratos user 服务之后，再执行
+                      test&#x2F;user.go
+                      文件，查询执行结果，是否有个ID输出查询自己的数据库，看看是否有插入的数据了。
+                    </p>
+                    <h4
+                      id="源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口"
+                    >
+                      <a
+                        href="#源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口"
+                        class="headerlink"
+                        title="源码已经上传到 GitHub 上了，下一篇开始逐步完善用户服务的接口,"
+                      ></a
+                      >源码已经上传到
+                      <a
+                        target="_blank"
+                        rel="noopener"
+                        href="https://github.com/aliliin/kratos-shop"
+                        >GitHub</a
+                      >
+                      上了，下一篇开始逐步完善用户服务的接口,
+                    </h4>
+                    <h2 id="参考">
+                      <a href="#参考" class="headerlink" title="参考"></a>参考
+                    </h2>
+                    <p>
+                      Go工程化-依赖注入
+                      <a
+                        target="_blank"
+                        rel="noopener"
+                        href="https://go-kratos.dev/blog/go-project-wire"
+                        >https://go-kratos.dev/blog/go-project-wire</a
+                      >
+                    </p>
+                    <p>
+                      Project Layout 最佳实践
+                      <a
+                        target="_blank"
+                        rel="noopener"
+                        href="https://go-kratos.dev/blog/go-layout-operation-process"
+                        >https://go-kratos.dev/blog/go-layout-operation-process</a
+                      ><br />感谢您的耐心阅读，动动手指点个star吧。
+                    </p>
+                    <h2 id="关注我获取更新">
+                      <a
+                        href="#关注我获取更新"
+                        class="headerlink"
+                        title="关注我获取更新"
+                      ></a
+                      >关注我获取更新
+                    </h2>
+                    <p>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/aliliin/blog-image@main/uPic/bXOHljd6ST.jpeg"
+                        srcset="/img/loading.gif"
+                        lazyload
+                      />
+                    </p>
+                  </div>
+                  <hr />
+                  <div>
+                    <div class="post-metas mb-3">
+                      <div class="post-meta mr-3">
+                        <i class="iconfont icon-category"></i>
+
+                        <a
+                          class="hover-with-bg"
+                          href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
+                          >Kratos 微服务商城</a
+                        >
+                      </div>
+
+                      <div class="post-meta">
+                        <i class="iconfont icon-tags"></i>
+
+                        <a class="hover-with-bg" href="/tags/Go/">Go</a>
+
+                        <a class="hover-with-bg" href="/tags/kratos/">kratos</a>
+                      </div>
+                    </div>
+
+                    <p class="note note-warning">
+                      本博客所有文章除特别声明外，均采用
+                      <a
+                        target="_blank"
+                        href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh"
+                        rel="nofollow noopener noopener"
+                        >CC BY-SA 4.0 协议</a
+                      >
+                      ，转载请注明出处！
+                    </p>
+
+                    <div class="post-prevnext">
+                      <article class="post-prev col-6">
+                        <a
+                          href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/"
+                        >
+                          <i class="iconfont icon-arrowleft"></i>
+                          <span class="hidden-mobile"
+                            >Mac 通过 Docker 安装 Elasticsearch</span
+                          >
+                          <span class="visible-mobile">上一篇</span>
+                        </a>
+                      </article>
+                      <article class="post-next col-6">
+                        <a
+                          href="/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20docker%20%E5%AE%89%E8%A3%85%20RocketMQ%20%E5%AE%89%E8%A3%85/"
+                        >
+                          <span class="hidden-mobile"
+                            >Mac 通过 Docker 安装 RocketMQ 安装</span
+                          >
+                          <span class="visible-mobile">下一篇</span>
+                          <i class="iconfont icon-arrowright"></i>
+                        </a>
+                      </article>
+                    </div>
+                  </div>
+
+                  <!-- Comments -->
+                  <article class="comments" id="comments" lazyload>
+                    <script type="text/javascript">
+                      Fluid.utils.loadComments("#comments", function () {
+                        var light = "github-light";
+                        var dark = "github-dark";
+                        var schema = document.documentElement.getAttribute(
+                          "data-user-color-scheme"
+                        );
+                        if (schema === "dark") {
+                          schema = dark;
+                        } else {
+                          schema = light;
+                        }
+                        window.UtterancesThemeLight = light;
+                        window.UtterancesThemeDark = dark;
+                        var s = document.createElement("script");
+                        s.setAttribute("src", "https://utteranc.es/client.js");
+                        s.setAttribute("repo", "aliliin/commit-comment");
+                        s.setAttribute("issue-term", "pathname");
+
+                        s.setAttribute("theme", schema);
+                        s.setAttribute("crossorigin", "anonymous");
+                        document.getElementById("comments").appendChild(s);
+                      });
+                    </script>
+                    <noscript
+                      >Please enable JavaScript to view the comments</noscript
+                    >
+                  </article>
+                </article>
+              </div>
+            </div>
           </div>
 
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2 post-categories">
-      
-        
-
-
-
-
-
-
-<div class="category-list">
-  
-  
-  
-  
-  
-    
-    
-    
-    <div class="category row">
-      <a class="category-item 
-                 
-                list-group-item category-item-action col-10 col-md-11 col-xm-11"
-        id="heading-2dd3b085945c184eb06b037b76c5f696" role="tab" data-toggle="collapse" href="#collapse-2dd3b085945c184eb06b037b76c5f696"
-        aria-expanded="true"
-      >
-        Kratos 微服务商城(12) 
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-       
-      <div class="category-collapse collapse show" id="collapse-2dd3b085945c184eb06b037b76c5f696" role="tabpanel" aria-labelledby="heading-2dd3b085945c184eb06b037b76c5f696">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/06/18/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%BA%8C)%20/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之购物车服务 (十二)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/26/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%8D%81%E4%B8%80)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十一)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/13/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%8D%81)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (十)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B9%9D)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (九)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AB)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (八)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E4%B8%83)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (七)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/03/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1%20(%E5%85%AD)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之商品服务 (六)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/02/17/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%BA%94)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之用户服务API (五)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/02/12/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E5%9B%9B)/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之用户服务 (四)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/02/11/kratos%20%E6%A1%86%E6%9E%B6%E5%95%86%E5%9F%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E4%B9%8B%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%20(%E4%B8%89).%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">kratos 框架商城微服务实战之用户服务 (三)</span>
-        </a>
-      
-    
-      
-      
-        <a href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/" class="list-group-item list-group-item-action">
-          <span class="category-post">More...</span>
-        </a>
-        
-  </div>
-
-        
-      </div>
-    </div>
-  
-</div>
-
-      
-    </div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none;">kratos 框架商城微服务实战之用户服务(一)</h1>
-            
-            <p class="note note-info">
-               本文最后更新于：2 年前 
-            </p>
-            
-            <div class="markdown-body">
-              <h1 id="kratos-微服务框架商城实战之用户服务-一"><a href="#kratos-微服务框架商城实战之用户服务-一" class="headerlink" title="kratos 微服务框架商城实战之用户服务(一)"></a>kratos 微服务框架商城实战之用户服务(一)</h1><blockquote>
-<p>推荐看一下<a target="_blank" rel="noopener" href="https://go-kratos.dev/docs/getting-started/start">Kratos 官方文档</a> 更加流畅观看此文章，本机器这里已经安装好了<code>kratos、proto、wire、make</code> 等所需的命令工具</p>
-</blockquote>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h3 id="初始化项目目录"><a href="#初始化项目目录" class="headerlink" title="初始化项目目录"></a>初始化项目目录</h3><p>进入自己电脑中存放 Go 项目的目录，</p>
-<p>新建 <code> kratos-shop/service</code> 目录并进入到新建的目录中，</p>
-<p>执行 <code>kratos new user</code> 命令并进入 <code>user</code> 目录，</p>
-<p>执行命令 <code>kratos proto add api/user/v1/user.proto</code> ，</p>
-<p>这时你在 <code>kratos-shop/service/user/api/user/v1</code> 目录下会看到新的 <code>user.proto</code> 文件已经创建好了，<br>接下来执行 <code>kratos proto server api/user/v1/user.proto -t internal/service</code> 命令生成对应的 <code>service</code> 文件。</p>
-<p>删除不需要的 proto 文件 <code>rm -rf api/helloworld/</code>，</p>
-<p>删除不需要的 service 文件 <code>rm internal/service/greeter.go</code></p>
-<h4 id="完整的命令代码如下"><a href="#完整的命令代码如下" class="headerlink" title="完整的命令代码如下"></a>完整的命令代码如下</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs gradle">mkdir  -p kratos-shop/service<br>cd kratos-shop/service<br><br>kratos <span class="hljs-keyword">new</span> user<br>cd user<br><br>kratos proto add api<span class="hljs-regexp">/user/</span>v1/user.proto<br><br>kratos proto server api<span class="hljs-regexp">/user/</span>v1<span class="hljs-regexp">/user.proto -t internal/</span>service<br><br>rm -rf api<span class="hljs-regexp">/helloworld/</span><br><br>rm internal<span class="hljs-regexp">/service/g</span>reeter.go<br></code></pre></td></tr></table></figure>
-
-<h4 id="修改-user-proto-文件，内容如下："><a href="#修改-user-proto-文件，内容如下：" class="headerlink" title="修改 user.proto 文件，内容如下："></a>修改 <code>user.proto</code> 文件，内容如下：</h4><blockquote>
-<p>proto 基本的语法请自行学习，目前这里的只先提供了一个创建用户的 rpc 接口，后续会逐步添加其他 rpc 接口</p>
-</blockquote>
-<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><span class="hljs-keyword">package</span> user.v1;<br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;user/api/user/v1;v1&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">User</span></span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateUser(CreateUserInfo) <span class="hljs-keyword">returns</span> (UserInfoResponse)</span>; <span class="hljs-comment">// 创建用户</span><br>&#125;<br><br><span class="hljs-comment">// 创建用户所需字段</span><br><span class="hljs-class"><span class="hljs-keyword">message</span>  <span class="hljs-title">CreateUserInfo</span></span>&#123;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">3</span>;<br>&#125;<br><br><span class="hljs-comment">// 返回用户信息</span><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">UserInfoResponse</span></span>&#123;<br>  <span class="hljs-built_in">int64</span> id = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> password = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> mobile = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">string</span> nickName = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">int64</span> birthday = <span class="hljs-number">5</span>;<br>  <span class="hljs-built_in">string</span> gender = <span class="hljs-number">6</span>;<br>  <span class="hljs-built_in">int32</span> role = <span class="hljs-number">7</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="生成-user-proto-定义的接口信息"><a href="#生成-user-proto-定义的接口信息" class="headerlink" title="生成 user.proto 定义的接口信息"></a>生成 <code>user.proto</code> 定义的接口信息</h4><p>进入到 <code>service/user</code> 目录下,执行 <code>make api</code> 命令，这时可以看到 <code>user/api/user/v1/</code> 目录下多出了 proto 创建的文件</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">cd <span class="hljs-keyword">user</span><br><br><span class="hljs-title">make</span> api <br><br><span class="hljs-comment"># 目录结构如下：</span><br>├── api<br>│   └── <span class="hljs-keyword">user</span><br><span class="hljs-title">│       └── v1</span><br>│           ├── user.pb.go<br>│           ├── user.proto<br>│           └── user_grpc.pb.go<br></code></pre></td></tr></table></figure>
-
-<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><h4 id="修改-user-configs-config-yaml-文件，代码如下："><a href="#修改-user-configs-config-yaml-文件，代码如下：" class="headerlink" title="修改 user/configs/config.yaml 文件，代码如下："></a>修改 <code>user/configs/config.yaml</code> 文件，代码如下：</h4><blockquote>
-<p>具体链接 mysql、redis 的参数填写自己本机的，本项目用到的是 gorm 。trace 是以后要用到的链路追踪的参数，先定义了。</p>
-</blockquote>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">server:</span><br><span class="hljs-symbol">  http:</span><br><span class="hljs-symbol">    addr:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">8000</span><br><span class="hljs-symbol">    timeout:</span> <span class="hljs-number">1</span>s<br><span class="hljs-symbol">  grpc:</span><br><span class="hljs-symbol">    addr:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">50051</span><br><span class="hljs-symbol">    timeout:</span> <span class="hljs-number">1</span>s<br><span class="hljs-symbol">data:</span><br><span class="hljs-symbol">  database:</span><br><span class="hljs-symbol">    driver:</span> mysql<br><span class="hljs-symbol">    source:</span> root:root@tcp(<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">3306</span>)/shop_user?charset=utf8mb4<span class="hljs-variable">&amp;</span>parseTime=True<span class="hljs-variable">&amp;loc</span>=Local<br><span class="hljs-symbol">  redis:</span><br><span class="hljs-symbol">    addr:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">6379</span><br><span class="hljs-symbol">    dial_timeout:</span> <span class="hljs-number">1</span>s<br><span class="hljs-symbol">    read_timeout:</span> <span class="hljs-number">0.2</span>s<br><span class="hljs-symbol">    write_timeout:</span> <span class="hljs-number">0.2</span>s<br><span class="hljs-symbol">trace:</span><br><span class="hljs-symbol">  endpoint:</span> http:<span class="hljs-comment">//127.0.0.1:14268/api/traces</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="新建-user-configs-registry-yaml-文件，引入consul-服务，代码如下："><a href="#新建-user-configs-registry-yaml-文件，引入consul-服务，代码如下：" class="headerlink" title="新建 user/configs/registry.yaml 文件，引入consul 服务，代码如下："></a>新建 <code>user/configs/registry.yaml</code> 文件，引入<a target="_blank" rel="noopener" href="https://www.consul.io/">consul</a> 服务，代码如下：</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-meta"># 这里引入了 consul 的服务注册与发现，先把配置加入进去</span><br><span class="hljs-symbol">consul:</span><br><span class="hljs-symbol">    address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">8500</span><br><span class="hljs-symbol">    scheme:</span> http<br></code></pre></td></tr></table></figure>
-
-<h4 id="修改-user-internal-conf-conf-proto-配置文件"><a href="#修改-user-internal-conf-conf-proto-配置文件" class="headerlink" title="修改 user/internal/conf/conf.proto 配置文件"></a>修改 <code>user/internal/conf/conf.proto</code> 配置文件</h4><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs protobuf"># 文件底部新增 consul 和 trace 的配置信息<br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Trace</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> endpoint = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Registry</span> </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Consul</span> </span>&#123;<br>    <span class="hljs-built_in">string</span> address = <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">string</span> scheme = <span class="hljs-number">2</span>;<br>  &#125;<br>  Consul consul = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="新生成-conf-pb-go-文件，执行-make-config"><a href="#新生成-conf-pb-go-文件，执行-make-config" class="headerlink" title="新生成 conf.pb.go 文件，执行 make config"></a>新生成 <code>conf.pb.go</code> 文件，执行 <code>make config</code></h4><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"># `service/user` 目录下,执行命令<br>make config<br></code></pre></td></tr></table></figure>
-
-<h4 id="安装-consul-服务工具"><a href="#安装-consul-服务工具" class="headerlink" title="安装 consul 服务工具"></a>安装 consul 服务工具</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># 这里使用的是 docker 工具进行创建的</span><br><span class="hljs-attribute">docker</span> run -d -p <span class="hljs-number">8500</span>:<span class="hljs-number">8500</span> -p <span class="hljs-number">8300</span>:<span class="hljs-number">8300</span> -p <span class="hljs-number">8301</span>:<span class="hljs-number">8301</span> -p <span class="hljs-number">8302</span>:<span class="hljs-number">8302</span> -p <span class="hljs-number">8600</span>:<span class="hljs-number">8600</span>/udp consul consul agent -dev -client=<span class="hljs-number">0.0.0.0</span><br><br><span class="hljs-comment"># 浏览器访问 http://127.0.0.1:8500/ui/dc1/services 测试是否安装成功</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="修改服务代码"><a href="#修改服务代码" class="headerlink" title="修改服务代码"></a>修改服务代码</h3><h4 id="修改-user-internal-data-目录下的文件"><a href="#修改-user-internal-data-目录下的文件" class="headerlink" title="修改 user/internal/data/ 目录下的文件"></a>修改 <code>user/internal/data/</code> 目录下的文件</h4><p>修改 <code>user/internal/data/greeter.go</code> 为 <code>user.go </code>添加如下内容：</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs stata">package data<br><br>import (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-redis/redis/extra/redisotel&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-redis/redis/v8&quot;</span><br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/driver/mysql&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm/logger&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm/schema&quot;</span><br>    slog <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is data providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = wire.NewSet(NewData, NewDB, NewRedis, NewUserRepo)<br><br><span class="hljs-keyword">type</span> Data struct &#123;<br>    <span class="hljs-keyword">db</span>  *gorm.<span class="hljs-keyword">DB</span><br>    rdb *redis.Client<br>&#125;<br><br><span class="hljs-comment">// NewData .</span><br>func NewData(c *<span class="hljs-keyword">conf</span>.Data, logger <span class="hljs-keyword">log</span>.Logger, <span class="hljs-keyword">db</span> *gorm.<span class="hljs-keyword">DB</span>, rdb *redis.Client) (*Data, func(), <span class="hljs-keyword">error</span>) &#123;<br>    cleanup := func() &#123;<br>        <span class="hljs-keyword">log</span>.NewHelper(logger).Info(<span class="hljs-string">&quot;closing the data resources&quot;</span>)<br>    &#125;<br>    <span class="hljs-keyword">return</span> &amp;Data&#123;<span class="hljs-keyword">db</span>: <span class="hljs-keyword">db</span>, rdb: rdb&#125;, cleanup, nil<br>&#125;<br><br><span class="hljs-comment">// NewDB .</span><br>func NewDB(c *<span class="hljs-keyword">conf</span>.Data) *gorm.<span class="hljs-keyword">DB</span> &#123;<br>    <span class="hljs-comment">// 终端打印输入 sql 执行记录</span><br>    newLogger := logger.New(<br>        slog.New(os.Stdout, <span class="hljs-string">&quot;\r\n&quot;</span>, slog.LstdFlags), <span class="hljs-comment">// io writer</span><br>        logger.Config&#123;<br>            SlowThreshold: time.Second, <span class="hljs-comment">// 慢查询 SQL 阈值</span><br>            Colorful:      true,        <span class="hljs-comment">// 禁用彩色打印</span><br>            <span class="hljs-comment">//IgnoreRecordNotFoundError: false,</span><br>            LogLevel: logger.Info, <span class="hljs-comment">// Log lever</span><br>        &#125;,<br>    )<br><br>    <span class="hljs-keyword">db</span>, <span class="hljs-keyword">err</span> := gorm.<span class="hljs-keyword">Open</span>(mysql.<span class="hljs-keyword">Open</span>(c.Database.Source), &amp;gorm.Config&#123;<br>        Logger:                                   newLogger,<br>        DisableForeignKeyConstraintWhenMigrating: true,<br>        NamingStrategy:                           schema.NamingStrategy&#123;<br>            <span class="hljs-comment">//SingularTable: true, // 表名是否加 s</span><br>        &#125;,<br>    &#125;)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.Errorf(<span class="hljs-string">&quot;failed opening connection to sqlite: %v&quot;</span>, <span class="hljs-keyword">err</span>)<br>        panic(<span class="hljs-string">&quot;failed to connect database&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">db</span><br>&#125;<br><br>func NewRedis(c *<span class="hljs-keyword">conf</span>.Data) *redis.Client &#123;<br>    rdb := redis.NewClient(&amp;redis.Options&#123;<br>        Addr:         c.Redis.Addr,<br>        Password:     c.Redis.Password,<br>        <span class="hljs-keyword">DB</span>:           int(c.Redis.<span class="hljs-keyword">Db</span>),<br>        DialTimeout:  c.Redis.DialTimeout.AsDuration(),<br>        WriteTimeout: c.Redis.WriteTimeout.AsDuration(),<br>        ReadTimeout:  c.Redis.ReadTimeout.AsDuration(),<br>    &#125;)<br>    rdb.AddHook(redisotel.TracingHook&#123;&#125;)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := rdb.<span class="hljs-keyword">Close</span>(); <span class="hljs-keyword">err</span> != nil &#123;<br>        <span class="hljs-keyword">log</span>.<span class="hljs-keyword">Error</span>(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    <span class="hljs-keyword">return</span> rdb<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这里的 wire 概念如果不熟悉的话，请参看<a target="_blank" rel="noopener" href="https://go-kratos.dev/docs/guide/wire">Wire 依赖注入</a></p>
-<h4 id="修改-user-internal-service-目录下的文件"><a href="#修改-user-internal-service-目录下的文件" class="headerlink" title="修改 user/internal/service/ 目录下的文件"></a>修改 <code>user/internal/service/</code> 目录下的文件</h4><p>修改或者删除 <code>user/internal/service/greeter.go</code> 为 <code>user.go</code>, 添加代码如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> UserService <span class="hljs-keyword">struct</span> &#123;<br>    v1.UnimplementedUserServer<br><br>    uc  *biz.UserUsecase<br>    log *log.Helper<br>&#125;<br><br><span class="hljs-comment">// NewUserService new a greeter service.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUserService</span><span class="hljs-params">(uc *biz.UserUsecase, logger log.Logger)</span> *<span class="hljs-title">UserService</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;UserService&#123;uc: uc, log: log.NewHelper(logger)&#125;<br>&#125;<br><br><span class="hljs-comment">// CreateUser create a user</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserService)</span> <span class="hljs-title">CreateUser</span><span class="hljs-params">(ctx context.Context, req *v1.CreateUserInfo)</span> <span class="hljs-params">(*v1.UserInfoResponse, error)</span></span> &#123;<br>    user, err := u.uc.Create(ctx, &amp;biz.User&#123;<br>        Mobile:   req.Mobile,<br>        Password: req.Password,<br>        NickName: req.NickName,<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br><br>    userInfoRsp := v1.UserInfoResponse&#123;<br>        Id:       user.ID,<br>        Mobile:   user.Mobile,<br>        Password: user.Password,<br>        NickName: user.NickName,<br>        Gender:   user.Gender,<br>        Role:     <span class="hljs-keyword">int32</span>(user.Role),<br>        Birthday: user.Birthday,<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> &amp;userInfoRsp, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>修改 <code>ser/internal/service/service.go</code> 文件， 代码如下：</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">package</span> service<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br><br><span class="hljs-comment">// ProviderSet is service providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = <span class="hljs-keyword">wire</span><span class="hljs-variable">.NewSet</span>(NewUserService)<br></code></pre></td></tr></table></figure>
-
-<p>修改或删除 <code>user/internal/biz/greeter.go</code> 为 <code>user.go </code>添加如下内容：</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">package biz<br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>)<br><br><span class="hljs-comment">// 定义返回数据结构体</span><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    ID       <span class="hljs-built_in">int64</span><br>    Mobile   <span class="hljs-built_in">string</span><br>    Password <span class="hljs-built_in">string</span><br>    NickName <span class="hljs-built_in">string</span><br>    Birthday <span class="hljs-built_in">int64</span><br>    Gender   <span class="hljs-built_in">string</span><br>    Role     <span class="hljs-built_in">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> UserRepo interface &#123;<br>    <span class="hljs-constructor">CreateUser(<span class="hljs-params">context</span>.Context, <span class="hljs-operator">*</span>User)</span> (*User, error)<br>&#125;<br><br><span class="hljs-keyword">type</span> UserUsecase <span class="hljs-keyword">struct</span> &#123;<br>    repo UserRepo<br>    log  *log.Helper<br>&#125;<br><br>func <span class="hljs-constructor">NewUserUsecase(<span class="hljs-params">repo</span> UserRepo, <span class="hljs-params">logger</span> <span class="hljs-params">log</span>.Logger)</span> *UserUsecase &#123;<br>    return &amp;UserUsecase&#123;repo: repo, log: log.<span class="hljs-constructor">NewHelper(<span class="hljs-params">logger</span>)</span>&#125;<br>&#125;<br><br>func (uc *UserUsecase) <span class="hljs-constructor">Create(<span class="hljs-params">ctx</span> <span class="hljs-params">context</span>.Context, <span class="hljs-params">u</span> <span class="hljs-operator">*</span>User)</span> (*User, error) &#123;<br>    return uc.repo.<span class="hljs-constructor">CreateUser(<span class="hljs-params">ctx</span>, <span class="hljs-params">u</span>)</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>修改 <code>user/internal/biz/biz.go</code> 文件，内容如下：</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">package</span> biz<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br><br><span class="hljs-comment">// ProviderSet is biz providers.</span><br><span class="hljs-keyword">var</span> ProviderSet = <span class="hljs-keyword">wire</span><span class="hljs-variable">.NewSet</span>(NewUserUsecase)<br></code></pre></td></tr></table></figure>
-
-<p>修改或删除 <code>user/internal/data/greeter.go</code> 为 <code>user.go </code>添加如下内容：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs stylus">package data<br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;crypto/sha512&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;github.com/anaskhan96/go-password-encoder&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc/codes&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc/status&quot;</span><br>    <span class="hljs-string">&quot;gorm.io/gorm&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>    <span class="hljs-string">&quot;user/internal/biz&quot;</span><br>)<br><span class="hljs-comment">// 定义数据表结构体</span><br>type User struct &#123;<br>    ID          int64      `gorm:<span class="hljs-string">&quot;primarykey&quot;</span>`<br>    Mobile      string     `gorm:<span class="hljs-string">&quot;index:idx_mobile;unique;type:varchar(11) comment &#x27;手机号码，用户唯一标识&#x27;;not null&quot;</span>`<br>    Password    string     `gorm:<span class="hljs-string">&quot;type:varchar(100);not null &quot;</span>` <span class="hljs-comment">// 用户密码的保存需要注意是否加密</span><br>    NickName    string     `gorm:<span class="hljs-string">&quot;type:varchar(25) comment &#x27;用户昵称&#x27;&quot;</span>`<br>    Birthday    *<span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Time</span> `gorm:<span class="hljs-string">&quot;type:datetime comment &#x27;出生日日期&#x27;&quot;</span>`<br>    Gender      string     `gorm:<span class="hljs-string">&quot;column:gender;default:male;type:varchar(16) comment &#x27;female:女,male:男&#x27;&quot;</span>`<br>    Role        int        `gorm:<span class="hljs-string">&quot;column:role;default:1;type:int comment &#x27;1:普通用户，2:管理员&#x27;&quot;</span>`<br>    CreatedAt   <span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Time</span>  `gorm:<span class="hljs-string">&quot;column:add_time&quot;</span>`<br>    UpdatedAt   <span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Time</span>  `gorm:<span class="hljs-string">&quot;column:update_time&quot;</span>`<br>    DeletedAt   gorm<span class="hljs-selector-class">.DeletedAt</span><br>    IsDeletedAt bool<br>&#125;<br>type userRepo struct &#123;<br>    data *Data<br>    log  *log<span class="hljs-selector-class">.Helper</span><br>&#125;<br><br><span class="hljs-comment">// NewUserRepo . 这里需要注意，上面 data 文件 wire 注入的是此方法，方法名不要写错了</span><br>func NewUserRepo(data *Data, logger log.Logger) biz<span class="hljs-selector-class">.UserRepo</span> &#123;<br>    return &amp;userRepo&#123;<br>        data: data,<br>        log:  log<span class="hljs-selector-class">.NewHelper</span>(logger),<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// CreateUser .</span><br>func (r *userRepo) CreateUser(ctx context<span class="hljs-selector-class">.Context</span>, u *biz.User) (*biz<span class="hljs-selector-class">.User</span>, error) &#123;<br>    <span class="hljs-selector-tag">var</span> user User<br>    <span class="hljs-comment">// 验证是否已经创建</span><br>    result := r<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.db</span><span class="hljs-selector-class">.Where</span>(&amp;biz.User&#123;Mobile: u.Mobile&#125;)<span class="hljs-selector-class">.First</span>(&amp;user)<br>    <span class="hljs-keyword">if</span> result<span class="hljs-selector-class">.RowsAffected</span> == <span class="hljs-number">1</span> &#123;<br>        return nil, status<span class="hljs-selector-class">.Errorf</span>(codes<span class="hljs-selector-class">.AlreadyExists</span>, <span class="hljs-string">&quot;用户已存在&quot;</span>)<br>    &#125;<br><br>    user<span class="hljs-selector-class">.Mobile</span> = u<span class="hljs-selector-class">.Mobile</span><br>    user<span class="hljs-selector-class">.NickName</span> = u<span class="hljs-selector-class">.NickName</span><br>    user<span class="hljs-selector-class">.Password</span> = encrypt(u.Password) <span class="hljs-comment">// 密码加密</span><br>    res := r<span class="hljs-selector-class">.data</span><span class="hljs-selector-class">.db</span><span class="hljs-selector-class">.Create</span>(&amp;user)<br>    <span class="hljs-keyword">if</span> res<span class="hljs-selector-class">.Error</span> != nil &#123;<br>        return nil, status<span class="hljs-selector-class">.Errorf</span>(codes<span class="hljs-selector-class">.Internal</span>, res<span class="hljs-selector-class">.Error</span><span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    return &amp;biz.User&#123;<br>        ID:       user<span class="hljs-selector-class">.ID</span>,<br>        Mobile:   user<span class="hljs-selector-class">.Mobile</span>,<br>        Password: user<span class="hljs-selector-class">.Password</span>,<br>        NickName: user<span class="hljs-selector-class">.NickName</span>,<br>        Gender:   user<span class="hljs-selector-class">.Gender</span>,<br>        Role:     user<span class="hljs-selector-class">.Role</span>,<br>    &#125;, nil<br>&#125;<br><br><span class="hljs-comment">// Password encryption</span><br>func encrypt(psd string) string &#123;<br>    options := &amp;password.Options&#123;SaltLen: <span class="hljs-number">16</span>, Iterations: <span class="hljs-number">10000</span>, KeyLen: <span class="hljs-number">32</span>, HashFunction: sha512.New&#125;<br>    salt, encodedPwd := password<span class="hljs-selector-class">.Encode</span>(psd, options)<br>    return fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;$pbkdf2-sha512$%s$%s&quot;</span>, salt, encodedPwd)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="修改-user-internal-server-目录下的文件"><a href="#修改-user-internal-server-目录下的文件" class="headerlink" title="修改 user/internal/server/ 目录下的文件"></a>修改 <code>user/internal/server/</code> 目录下的文件</h4><p>这里用不到 http 服务删除 <code>http.go</code> 文件，修改 <code>grpc.go</code> 文件内容如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs stylus"> package server<br><br>import (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/logging&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/recovery&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/grpc&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>    <span class="hljs-string">&quot;user/internal/service&quot;</span><br>)<br><br><span class="hljs-comment">// NewGRPCServer new a gRPC server.</span><br>func NewGRPCServer(c *conf<span class="hljs-selector-class">.Server</span>, greeter *service<span class="hljs-selector-class">.UserService</span>, logger log.Logger) *grpc<span class="hljs-selector-class">.Server</span> &#123;<br>    <span class="hljs-selector-tag">var</span> opts = <span class="hljs-selector-attr">[]</span>grpc.ServerOption&#123;<br>        grpc<span class="hljs-selector-class">.Middleware</span>(<br>            recovery<span class="hljs-selector-class">.Recovery</span>(),<br>            logging<span class="hljs-selector-class">.Server</span>(logger),<br>        ),<br>    &#125;<br>    <span class="hljs-keyword">if</span> c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Network</span> != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        opts = append(opts, grpc<span class="hljs-selector-class">.Network</span>(c<span class="hljs-selector-class">.Grpc</span>.Network))<br>    &#125;<br>    <span class="hljs-keyword">if</span> c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Addr</span> != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        opts = append(opts, grpc<span class="hljs-selector-class">.Address</span>(c<span class="hljs-selector-class">.Grpc</span>.Addr))<br>    &#125;<br>    <span class="hljs-keyword">if</span> c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Timeout</span> != nil &#123;<br>        opts = append(opts, grpc<span class="hljs-selector-class">.Timeout</span>(c<span class="hljs-selector-class">.Grpc</span><span class="hljs-selector-class">.Timeout</span><span class="hljs-selector-class">.AsDuration</span>()))<br>    &#125;<br>    srv := grpc<span class="hljs-selector-class">.NewServer</span>(opts...)<br>    v1<span class="hljs-selector-class">.RegisterUserServer</span>(srv, greeter)<br>    return srv<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>修改 <code>server.go</code> 文件,这里加入了 consul 的服务，内容如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs stylus">package server<br><br>import (<br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/registry&quot;</span><br>    <span class="hljs-string">&quot;github.com/google/wire&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br><br>    consul <span class="hljs-string">&quot;github.com/go-kratos/kratos/contrib/registry/consul/v2&quot;</span><br>    consulAPI <span class="hljs-string">&quot;github.com/hashicorp/consul/api&quot;</span><br>)<br><br><span class="hljs-comment">// ProviderSet is server providers.</span><br><span class="hljs-selector-tag">var</span> ProviderSet = wire<span class="hljs-selector-class">.NewSet</span>(NewGRPCServer, NewRegistrar)<br><br><span class="hljs-comment">// NewRegistrar 引入 consul</span><br>func NewRegistrar(conf *conf.Registry) registry<span class="hljs-selector-class">.Registrar</span> &#123;<br>    c := consulAPI<span class="hljs-selector-class">.DefaultConfig</span>()<br>    c<span class="hljs-selector-class">.Address</span> = conf<span class="hljs-selector-class">.Consul</span><span class="hljs-selector-class">.Address</span><br>    c<span class="hljs-selector-class">.Scheme</span> = conf<span class="hljs-selector-class">.Consul</span><span class="hljs-selector-class">.Scheme</span><br><br>    cli, err := consulAPI<span class="hljs-selector-class">.NewClient</span>(c)<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(err)<br>    &#125;<br>    r := consul<span class="hljs-selector-class">.New</span>(cli, consul<span class="hljs-selector-class">.WithHealthCheck</span>(false))<br>    return r<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="修改启动程序"><a href="#修改启动程序" class="headerlink" title="修改启动程序"></a>修改启动程序</h3><h4 id="修改-user-cmd-wire-go文件"><a href="#修改-user-cmd-wire-go文件" class="headerlink" title="修改 user/cmd/wire.go文件"></a>修改 <code>user/cmd/wire.go</code>文件</h4><p>这里注入了consul需要的配置，需要添加进来</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">func init<span class="hljs-constructor">App(<span class="hljs-operator">*</span><span class="hljs-params">conf</span>.Server, <span class="hljs-operator">*</span><span class="hljs-params">conf</span>.Data, <span class="hljs-operator">*</span><span class="hljs-params">conf</span>.Registry, <span class="hljs-params">log</span>.Logger)</span> (*kratos.App, func<span class="hljs-literal">()</span>, error) &#123;<br>    panic(wire.<span class="hljs-constructor">Build(<span class="hljs-params">server</span>.ProviderSet, <span class="hljs-params">data</span>.ProviderSet, <span class="hljs-params">biz</span>.ProviderSet, <span class="hljs-params">service</span>.ProviderSet, <span class="hljs-params">newApp</span>)</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="修改-user-cmd-user-main-go-文件"><a href="#修改-user-cmd-user-main-go-文件" class="headerlink" title="修改 user/cmd/user/main.go 文件"></a>修改 <code>user/cmd/user/main.go</code> 文件</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs stata">package main<br><br>import (<br>    <span class="hljs-string">&quot;flag&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/config&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/config/file&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/log&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/middleware/tracing&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/registry&quot;</span><br>    <span class="hljs-string">&quot;github.com/go-kratos/kratos/v2/transport/grpc&quot;</span><br>    <span class="hljs-string">&quot;user/internal/conf&quot;</span><br>)<br><br><span class="hljs-comment">// go build -ldflags &quot;-X main.Version=x.y.z&quot;</span><br><span class="hljs-keyword">var</span> (<br>    <span class="hljs-comment">// Name is the name of the compiled software.</span><br>    Name = <span class="hljs-string">&quot;shop.users.service&quot;</span><br>    <span class="hljs-comment">// Version is the version of the compiled software.</span><br>    <span class="hljs-keyword">Version</span> = <span class="hljs-string">&quot;v1&quot;</span><br>    <span class="hljs-comment">// flagconf is the config flag.</span><br>    flagconf string<br><br>    id, _ = os.Hostname()<br>)<br><br>func init() &#123;<br>    flag.StringVar(&amp;flagconf, <span class="hljs-string">&quot;conf&quot;</span>, <span class="hljs-string">&quot;../../configs&quot;</span>, <span class="hljs-string">&quot;config path, eg: -conf config.yaml&quot;</span>)<br>&#125;<br><br>func newApp(logger <span class="hljs-keyword">log</span>.Logger, gs *grpc.Server, rr registry.Registrar) *kratos.<span class="hljs-keyword">App</span> &#123;<br>    <span class="hljs-keyword">return</span> kratos.New(<br>        kratos.ID(id+<span class="hljs-string">&quot;shop.user.service&quot;</span>),<br>        kratos.Name(Name),<br>        kratos.<span class="hljs-keyword">Version</span>(<span class="hljs-keyword">Version</span>),<br>        kratos.Metadata(map[string]string&#123;&#125;),<br>        kratos.Logger(logger),<br>        kratos.Server(<br>            gs,<br>        ),<br>        kratos.Registrar(rr), <span class="hljs-comment">// consul 的引入</span><br>    )<br>&#125;<br><br>func main() &#123;<br>    flag.<span class="hljs-keyword">Parse</span>()<br>    logger := <span class="hljs-keyword">log</span>.With(<span class="hljs-keyword">log</span>.NewStdLogger(os.Stdout),<br>        <span class="hljs-string">&quot;ts&quot;</span>, <span class="hljs-keyword">log</span>.DefaultTimestamp,<br>        <span class="hljs-string">&quot;caller&quot;</span>, <span class="hljs-keyword">log</span>.DefaultCaller,<br>        <span class="hljs-string">&quot;service.id&quot;</span>, id,<br>        <span class="hljs-string">&quot;service.name&quot;</span>, Name,<br>        <span class="hljs-string">&quot;service.version&quot;</span>, <span class="hljs-keyword">Version</span>,<br>        <span class="hljs-string">&quot;trace_id&quot;</span>, tracing.TraceID(),<br>        <span class="hljs-string">&quot;span_id&quot;</span>, tracing.SpanID(),<br>    )<br>    c := config.New(<br>        config.WithSource(<br>            <span class="hljs-keyword">file</span>.NewSource(flagconf),<br>        ),<br>    )<br>    defer c.<span class="hljs-keyword">Close</span>()<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := c.Load(); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">var</span> bc <span class="hljs-keyword">conf</span>.<span class="hljs-keyword">Bootstrap</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := c.Scan(&amp;bc); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    <span class="hljs-comment">// consul 的引入</span><br>    <span class="hljs-keyword">var</span> rc <span class="hljs-keyword">conf</span>.Registry <br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := c.Scan(&amp;rc); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    <span class="hljs-keyword">app</span>, cleanup, <span class="hljs-keyword">err</span> := initApp(bc.Server, bc.Data, &amp;rc, logger)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>    defer cleanup()<br><br>    <span class="hljs-comment">// start and wait for stop signal</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">err</span> := <span class="hljs-keyword">app</span>.<span class="hljs-keyword">Run</span>(); <span class="hljs-keyword">err</span> != nil &#123;<br>        panic(<span class="hljs-keyword">err</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="修改根目录-user-makefile-文件"><a href="#修改根目录-user-makefile-文件" class="headerlink" title="修改根目录 user/makefile 文件"></a>修改根目录 <code>user/makefile</code> 文件</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs verilog">在 go <span class="hljs-keyword">generate</span> ./... 下面添加代码<br><br><span class="hljs-keyword">wire</span>:<br>    cd cmd/user/ &amp;&amp; <span class="hljs-keyword">wire</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="根目录执行-make-wire-命令"><a href="#根目录执行-make-wire-命令" class="headerlink" title="根目录执行 make wire 命令"></a>根目录执行 <code>make wire</code> 命令</h4><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-meta"># service/user</span><br><span class="hljs-built_in">make</span> wire<br></code></pre></td></tr></table></figure>
-
-<h3 id="启动程序"><a href="#启动程序" class="headerlink" title="启动程序"></a>启动程序</h3><blockquote>
-<p>别忘记根据 data 里面的 user struct 创建对应的数据库表,这里也可以写一个 gorm 创建表的文件进行创建。</p>
-</blockquote>
-<h4 id="启动程序-kratos-run"><a href="#启动程序-kratos-run" class="headerlink" title="启动程序 kratos run"></a>启动程序 kratos run</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">根目录 service/<span class="hljs-keyword">user</span> <span class="hljs-title">执行命令</span><br><span class="hljs-title">    kratos</span> run<br></code></pre></td></tr></table></figure>
-
-<h4 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h4><p>由于没写对外访问的 http 服务，这里还没有加入单元测试，所以先创建个文件链接启动过的 grpc 服务简单测试一下。</p>
-<h4 id="根目录新建-user-test-user-go-文件，添加如下内容："><a href="#根目录新建-user-test-user-go-文件，添加如下内容：" class="headerlink" title="根目录新建 user/test/user.go 文件，添加如下内容："></a>根目录新建 <code>user/test/user.go</code> 文件，添加如下内容：</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs stylus">package <span class="hljs-selector-tag">main</span><br><br>import (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;google.golang.org/grpc&quot;</span><br>    v1 <span class="hljs-string">&quot;user/api/user/v1&quot;</span><br>)<br><br><span class="hljs-selector-tag">var</span> userClient v1<span class="hljs-selector-class">.UserClient</span><br><span class="hljs-selector-tag">var</span> conn *grpc<span class="hljs-selector-class">.ClientConn</span><br><br>func <span class="hljs-selector-tag">main</span>() &#123;<br>    Init()<br><br>    TestCreateUser() <span class="hljs-comment">// 创建用户</span><br><br>    conn<span class="hljs-selector-class">.Close</span>()<br>&#125;<br><br><span class="hljs-comment">// Init 初始化 grpc 链接 注意这里链接的 端口</span><br>func Init() &#123;<br>    <span class="hljs-selector-tag">var</span> err error<br>    conn, err = grpc<span class="hljs-selector-class">.Dial</span>(<span class="hljs-string">&quot;127.0.0.1:50051&quot;</span>, grpc<span class="hljs-selector-class">.WithInsecure</span>())<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(<span class="hljs-string">&quot;grpc link err&quot;</span> + err<span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    userClient = v1<span class="hljs-selector-class">.NewUserClient</span>(conn)<br>&#125;<br><br>func TestCreateUser() &#123;<br><br>    rsp, err := userClient<span class="hljs-selector-class">.CreateUser</span>(context<span class="hljs-selector-class">.Background</span>(), &amp;v1.CreateUserInfo&#123;<br>        Mobile:   fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;1388888888%d&quot;</span>, <span class="hljs-number">1</span>),<br>        Password: <span class="hljs-string">&quot;admin123&quot;</span>,<br>        NickName: fmt<span class="hljs-selector-class">.Sprintf</span>(<span class="hljs-string">&quot;YWWW%d&quot;</span>, <span class="hljs-number">1</span>),<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != nil &#123;<br>        panic(<span class="hljs-string">&quot;grpc 创建用户失败&quot;</span> + err<span class="hljs-selector-class">.Error</span>())<br>    &#125;<br>    fmt<span class="hljs-selector-class">.Println</span>(rsp.Id)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这里别忘记启动 kratos user 服务之后，再执行 test&#x2F;user.go 文件，查询执行结果，是否有个ID输出查询自己的数据库，看看是否有插入的数据了。</p>
-<h4 id="源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口"><a href="#源码已经上传到-GitHub-上了，下一篇开始逐步完善用户服务的接口" class="headerlink" title="源码已经上传到 GitHub 上了，下一篇开始逐步完善用户服务的接口,"></a>源码已经上传到 <a target="_blank" rel="noopener" href="https://github.com/aliliin/kratos-shop">GitHub</a> 上了，下一篇开始逐步完善用户服务的接口,</h4><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>Go工程化-依赖注入 <a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-project-wire">https://go-kratos.dev/blog/go-project-wire</a></p>
-<p>Project Layout 最佳实践 <a target="_blank" rel="noopener" href="https://go-kratos.dev/blog/go-layout-operation-process">https://go-kratos.dev/blog/go-layout-operation-process</a><br>感谢您的耐心阅读，动动手指点个star吧。</p>
-<h2 id="关注我获取更新"><a href="#关注我获取更新" class="headerlink" title="关注我获取更新"></a>关注我获取更新</h2><p><img src="https://cdn.learnku.com/uploads/images/202204/27/16176/7fCV6CEU7V.png!large" srcset="/img/loading.gif" lazyload></p>
-
-            </div>
-            <hr />
-            <div>
-              <div class="post-metas mb-3">
-                
-                <div class="post-meta mr-3">
-                  <i class="iconfont icon-category"></i>
-                  
-                  <a class="hover-with-bg" href="/categories/Kratos-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9F%8E/"
-                    >Kratos 微服务商城</a
-                  >
-                  
-                </div>
-                 
-                <div class="post-meta">
-                  <i class="iconfont icon-tags"></i>
-                  
-                  <a class="hover-with-bg" href="/tags/Go/"
-                    >Go</a
-                  >
-                  
-                  <a class="hover-with-bg" href="/tags/kratos/"
-                    >kratos</a
-                  >
-                  
-                </div>
-                
-              </div>
-              
-              <p class="note note-warning">
-                 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！ 
+          <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+            <div id="toc">
+              <p class="toc-header">
+                <i class="iconfont icon-list"></i>&nbsp;目录
               </p>
-               
-              <div class="post-prevnext">
-                <article class="post-prev col-6">
-                   
-                  <a href="/2022/02/11/Mac%20%E9%80%9A%E8%BF%87%20Docker%20%E5%AE%89%E8%A3%85%20ES/">
-                    <i class="iconfont icon-arrowleft"></i>
-                    <span class="hidden-mobile">Mac 通过 Docker 安装 Elasticsearch</span>
-                    <span class="visible-mobile">上一篇</span>
-                  </a>
-                  
-                </article>
-                <article class="post-next col-6">
-                   
-                  <a href="/2022/01/28/Mac%20%E9%80%9A%E8%BF%87%20docker%20%E5%AE%89%E8%A3%85%20RocketMQ%20%E5%AE%89%E8%A3%85/">
-                    <span class="hidden-mobile">Mac 通过 Docker 安装 RocketMQ 安装</span>
-                    <span class="visible-mobile">下一篇</span>
-                    <i class="iconfont icon-arrowright"></i>
-                  </a>
-                  
-                </article>
-              </div>
-              
+              <div class="toc-body" id="toc-body"></div>
             </div>
-
-            
-            <!-- Comments -->
-            <article class="comments" id="comments" lazyload>
-              
-                
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#comments', function() {
-      var light = 'github-light';
-      var dark = 'github-dark';
-      var schema = document.documentElement.getAttribute('data-user-color-scheme');
-      if (schema === 'dark') {
-        schema = dark;
-      } else {
-        schema = light;
-      }
-      window.UtterancesThemeLight = light;
-      window.UtterancesThemeDark = dark;
-      var s = document.createElement('script');
-      s.setAttribute('src', 'https://utteranc.es/client.js');
-      s.setAttribute('repo', 'aliliin/commit-comment');
-      s.setAttribute('issue-term', 'pathname');
-      
-      s.setAttribute('theme', schema);
-      s.setAttribute('crossorigin', 'anonymous');
-      document.getElementById('comments').appendChild(s);
-    })
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-            </article>
-            
-          </article>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-      <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
 
-    </div>
-    
-  </div>
-</div>
+      <!-- Custom -->
 
-<!-- Custom -->
-
-
-    
-
-    
       <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
-    
 
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+      <div
+        class="modal fade"
+        id="modalSearch"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="ModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-scrollable modal-lg"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+              <button
+                type="button"
+                id="local-search-close"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+              <div class="md-form mb-5">
+                <input
+                  type="text"
+                  id="local-search-input"
+                  class="form-control validate"
+                />
+                <label data-error="x" data-success="v" for="local-search-input"
+                  >关键词</label
+                >
+              </div>
+              <div class="list-group" id="local-search-result"></div>
+            </div>
+          </div>
         </div>
-        <div class="list-group" id="local-search-result"></div>
       </div>
-    </div>
-  </div>
-</div>
-    
+    </main>
 
-    
-  </main>
+    <footer class="text-center mt-5 py-3">
+      <div class="footer-content">
+        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"
+          ><span>Hexo</span></a
+        >
+        <i class="iconfont icon-love"></i>
+        <a
+          href="https://github.com/fluid-dev/hexo-theme-fluid"
+          target="_blank"
+          rel="nofollow noopener"
+          ><span>Fluid</span></a
+        >
+      </div>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-  <div class="statistics">
-    
-    
-
-    
-      
+      <div class="statistics">
         <!-- 不蒜子统计PV -->
         <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
+          总访问量
+          <span id="busuanzi_value_site_pv"></span>
+          次
+        </span>
+
         <!-- 不蒜子统计UV -->
         <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
+          总访客数
+          <span id="busuanzi_value_site_uv"></span>
+          人
+        </span>
+      </div>
+    </footer>
 
+    <!-- SCRIPTS -->
 
-  
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css"
+    />
 
-  
-</footer>
+    <script>
+      NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
+      NProgress.start();
+      window.addEventListener("load", function () {
+        NProgress.done();
+      });
+    </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js"></script>
+    <script src="/js/events.js"></script>
+    <script src="/js/plugins.js"></script>
 
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+    <!-- Plugins -->
 
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
+    <script src="/js/local-search.js"></script>
 
+    <script src="/js/img-lazyload.js"></script>
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js"></script>
 
-<!-- Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js"></script>
 
-  <script  src="/js/local-search.js" ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"
+    ></script>
 
+    <script
+      defer
+      src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+    ></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js"></script>
+    <script>
+      (function (window, document) {
+        var typing = Fluid.plugins.typing;
+        var title = document.getElementById("subtitle").title;
 
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
         typing(title);
-      
-    })(window, document);
-  </script>
+      })(window, document);
+    </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
+    <!-- 主题的启动项 保持在最底部 -->
+    <script src="/js/boot.js"></script>
+  </body>
 </html>
